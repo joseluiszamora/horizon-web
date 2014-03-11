@@ -1,0 +1,47 @@
+/* LOGIN */
+.logincontainer{
+	min-height: 511px;
+}
+	.logincontainer #logo{
+		width: 218px;
+		height: 56px;
+		margin: 0px auto 50px;
+	}
+	.logincontainer .block_head{			   
+	    line-height: 54px;
+	    overflow: hidden;	   	
+		background-color: #F8F8F8;
+		border: 1px solid #E0E0E0;
+		-webkit-border-top-left-radius: 5px;
+		-webkit-border-top-right-radius: 5px;
+		-moz-border-radius-topleft: 5px;
+		-moz-border-radius-topright: 5px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;	
+	}
+	.logincontainer .block_content{			   
+	    border-left: 1px solid #E0E0E0;
+		border-right: 1px solid #E0E0E0;
+		border-bottom: 1px solid #E0E0E0;
+		-webkit-border-bottom-right-radius: 5px;
+		-webkit-border-bottom-left-radius: 5px;
+		-moz-border-radius-bottomright: 5px;
+		-moz-border-radius-bottomleft: 5px;
+		border-bottom-right-radius: 5px;
+		border-bottom-left-radius: 5px;
+		padding: 0 10px 15px;
+		margin-bottom: 20px;		
+	}
+	.logincontainer form{
+		margin: 30px auto 18px;
+    	width: 475px;
+	}
+		.logincontainer form #forgot_pass{
+			float: right;
+
+		}
+/* END LOGIN */
+
+/* REGISTER */
+
+/* END REGISTER */
