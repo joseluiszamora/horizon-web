@@ -104,6 +104,8 @@
                 echo anchor('city', 'Ciudad', array('class'=>'')); }?></li>
               <li><?php if ($this->Account_Model->get_profile() == "1"){
                 echo anchor('track', 'Tracker', array('class'=>'')); }?></li>
+              <li><?php if ($this->Account_Model->get_profile() == "1"){
+                echo anchor('diary', 'Diario', array('class'=>'')); }?></li>
               <li>
                 <div class="btn-group">
                   <button class="btn"><?php echo $this->session->userdata('email'); ?></button>
