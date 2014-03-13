@@ -4,6 +4,8 @@
       parent::__construct();
       
       $this->load->model('Diary_Model');
+      $this->load->model('User_Model');
+      $this->load->model('Client_Model');
       
       if (!($this->Account_Model->logged_in() === TRUE)) {
         redirect('account/login');
@@ -13,17 +15,36 @@
     }
 
     function index() {
-      //$data['diary'] = $this->Diary_Model->report();
+      $data['diaries'] = $this->Diary_Model->get_diaries();
+      $data['distributor'] = $this->User_Model->get_users_by_profile(4);
       $data['category'] = 'diary';
       $data['page'] = 'index';
       $this->load->view('template/template', $data);
     }
 
      function create() {
+      $data['distributor'] = $this->User_Model->get_users_by_profile(4);
+      $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
       $data['action'] = 'new';
       $data['page'] = 'form';     
       $this->load->view('template/template', $data);
+    }
+
+    function save() {
+      $data_in['FechaRegistro'] = date("y-m-d");
+      $data_in['FechaTransaction'] = $this->input->post('date');
+      $data_in['idUser'] = "1";
+      $data_in['idUserSupervisor'] = "1";
+      $data_in['idTransaction'] = "1";
+      $data_in['NumVoucher'] = $this->input->post('voucher');
+      $data_in['idCustomer'] = $this->input->post('client');
+      $data_in['Type'] = "credito";
+      $data_in['Monto'] = $this->input->post('ammount');
+      $data_in['Estado'] = "activo";
+      $data_in['Detalle'] = $this->input->post('detail');
+
+      $this->Diary_Model->create($data_in);
     }
 /*
     public function edit($id = "") {
@@ -43,48 +64,7 @@
         redirect('city');
     }
 
-    function save() {
-      $this->form_validation->set_rules('desc', 'Nombre de la ciudad', 'xss_clean|required');
-        
-      $this->form_validation->set_message('required', '%s es obligatorio.');        
-      $this->form_validation->set_error_delimiters('<div class="text-error">', '</div>');
-
-      if ($this->form_validation->run() == FALSE) {
-        if($this->input->post('form_action') == "save") {
-          $data['action'] = 'new';
-        }else {
-          $data['action'] = 'edit';
-        }
-        
-        $data['category'] = 'city';
-        $data['page'] = 'form';
-        $this->load->view('template/template', $data);
-      } else {
-        $data_in['NombreCiudad'] = $this->input->post('desc');          
-
-        // Check if Save or Edit
-        if($this->input->post('form_action') == "save") {
-          if ($this->City_Model->create($data_in) === TRUE) {
-            redirect('city');
-          } else {
-            $data['category'] = 'city';
-            $data['action'] = 'new';
-            $data['page'] = 'form';
-            $this->load->view('template/template', $data);
-          }
-        }else{
-          $data_in['idCiudad'] = $this->input->post('idCity');
-          if ($this->City_Model->update($data_in, $data_in['idCiudad']) === TRUE) {
-            redirect('city');
-          } else {
-            $data['category'] = 'city';
-            $data['action'] = 'edit';
-            $data['page'] = 'form';
-            $this->load->view('template/template', $data);
-          }
-        }
-      }
-    }
+    
 
     function delete($id) {
       $this->City_Model->delete($id);

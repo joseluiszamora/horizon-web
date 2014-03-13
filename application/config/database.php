@@ -48,18 +48,18 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = '50.87.88.149';
+/*$db['default']['hostname'] = '50.87.88.149';
 $db['default']['username'] = 'mixbo1_IsDeAl33';
 $db['default']['password'] = 'kEdoLov-ZE(g';
 $db['default']['database'] = 'mixbo1_horizonsc';
 $db['default']['dbdriver'] = 'mysql';
-/*
+*/
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = 'root';
 $db['default']['database'] = 'horizon';
 $db['default']['dbdriver'] = 'mysql';
-*/
+
 //$db['default']['port']     = "3306";
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

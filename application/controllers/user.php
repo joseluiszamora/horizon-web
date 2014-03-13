@@ -19,10 +19,8 @@
     }
 
     function create() {
-      //$this->redirect_tab('t_1', 'form', 'idUser', 'new');
       $data['profile'] = $this->Profile_Model->get_profiles($this->Account_Model->get_profile());
       $data['city'] = $this->City_Model->get_cities($this->Account_Model->get_profile());
-      //$data['area'] = $this->Area_Model->get_area_for_city($this->session->userdata('city'));
       $data['area'] = array($dropdown[""] = 'Seleccione Zona');
       $data['users'] = $this->User_Model->report('idUser');
       $data['action'] = 'new';
@@ -55,18 +53,6 @@
     }
 
     function search_tab (){
-      /*
-      $data['profile'] = $this->Profile_Model->get_profiles($this->Account_Model->get_profile());
-      $data['city'] = $this->City_Model->get_cities($this->Account_Model->get_profile());
-      $data['area'] = $this->Area_Model->get_area_for_city($this->session->userdata('city'));
-      $data['users'] = $this->User_Model->report();
-      $data['page'] = "index";
-      $data['mark'] = "search";
-      $data['category'] = 'user';
-      
-      $this->load->view('template/template', $data);    
-      */
-
       $this->form_validation->set_rules('dateStart', 'dateStart', 'xss_clean');
       $this->form_validation->set_rules('dateFinish', 'dateFinish', 'xss_clean');
       $this->form_validation->set_rules('city', 'city', 'xss_clean');
@@ -78,7 +64,6 @@
       $this->form_validation->set_message('xss_clean', 'security: danger value.');
       $this->form_validation->set_message('greater_than', '%s es obligatorio.');
 
-//dateStart   dateFinish  city  name  area  profile
       if ($this->form_validation->run() == FALSE){
       }else{
         $data_in['dateStart'] = $this->input->post('dateStart');
@@ -99,40 +84,12 @@
         }
 
         $data['profile'] = $this->Profile_Model->get_profiles($this->Account_Model->get_profile());
-        //$data['city'] = $this->City_Model->get_cities($this->Account_Model->get_profile());
-        //$data['area'] = $this->Area_Model->get_area_for_city($this->session->userdata('city'));
-        $data['users'] = $data_view;
+       $data['users'] = $data_view;
         $data['category'] = 'user';
         $data['page'] = "index";
         $data['mark'] = "search";
         $this->load->view('template/template', $data);
       }
-
-
-
-
-
-
-
-      /*$data_in['dateStart'] = $this->input->post('dateStart');
-      $data_in['dateFinish'] = $this->input->post('dateFinish');
-      $data_in['name'] = $this->input->post('name');
-      $data_in['city'] = $this->input->post('city');
-      $data_in['area'] = $this->input->post('area');
-      $data_in['profile'] = $this->input->post('profile');
-      $data_in['order'] = $this->input->post('order');
-
-      $data_view = $this->User_Model->search($data_in);
-
-      $data['profile'] = $this->Profile_Model->get_profiles($this->Account_Model->get_profile());
-      $data['city'] = $this->City_Model->get_cities($this->Account_Model->get_profile());
-      $data['area'] = $this->Area_Model->get_area_for_city($this->session->userdata('city'));
-      $data['users'] = $this->User_Model->report('idUser');      
-      $data['category'] = 'user';
-      $data['page'] = 'search';
-      $data['mark'] = 't_3';
-      
-      $this->load->view('template/template', $data);*/
     }
 
 
@@ -164,9 +121,7 @@
           $this->form_validation->set_rules('pass', 'Password', 'xss_clean');
           $this->form_validation->set_rules('password_conf', 'Confirmacion de Password', 'xss_clean');
         }
-        //$this->form_validation->set_rules('phone', 'Telefono', 'xss_clean|required|integer');
-        //$this->form_validation->set_rules('cellphone', 'Celular', 'xss_clean|required|integer');
-
+       
         $this->form_validation->set_message('required', '%s es obligatorio.');
         $this->form_validation->set_message('greater_than', '%s es obligatorio.');
         $this->form_validation->set_message('is_unique', 'Ya existe un usuario con este %s.');
@@ -187,7 +142,6 @@
 
           // if flag change pass is checked
           if($this->input->post('changepass')) 
-            //$data_in['Password'] =  $this->input->post('pass');
             $data_in['Password'] =  $this->encrypt->sha1($this->input->post('pass'));
             
           
@@ -219,7 +173,6 @@
               $this->redirect_tab('t_3', 'form', 'idUser', 'edit');
             }
           }
-          //print_r($data_in);
         }
       } else {
         redirect('account/login');
@@ -308,7 +261,6 @@
     function search(){
       $data['profile'] = $this->Profile_Model->get_profiles($this->Account_Model->get_profile());
       $data['city'] = $this->City_Model->get_cities($this->Account_Model->get_profile());
-      //$data['area'] = $this->Area_Model->get_area_for_city($this->session->userdata('city'));
       $data['area'] = array($dropdown[""] = 'Seleccione Zona');
       $data['users'] = $this->User_Model->report();
       $data['page'] = "index";
