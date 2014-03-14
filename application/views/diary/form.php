@@ -2,7 +2,7 @@
   <div class="span12 titleTop">
     <h1 class="floatLeft">Diario</h1>
   </div>
-  
+
   <div class="container formContainer logincontainer">
     <div class="span9 offset1">
       <div class="block_head row">
@@ -10,55 +10,11 @@
       </div>
       <div class="block_content row">
           <fieldset>
-            
-            <div class="control-group selected_3">
-              <label class="control-label" for="city">Distribuidor</label>
-              <div class="controls">
-                <?php
-                  echo form_dropdown('distributor', $distributor, 'large');
-                ?>
-              </div>
-            </div>
-
-            <div class="control-group selected_3">
-              <label class="control-label" for="city">Tipo</label>
-              <div class="controls">
-                <?php
-                  $options = array(
-                    'credito'  => 'Creditos',
-                    'debito'    => 'Debitos'
-                  );
-
-                  echo form_dropdown('type', $options, 'large');
-                ?>
-              </div>
-            </div>
-
-            <div class="control-group selected_3">
-              <label class="control-label" for="city">Fecha de Transacción</label>
-              <div class="controls">
-                <?php 
-                  echo form_input(array('name' => 'date', 'class' => 'span2 datepicker'), set_value('dateStart')); 
-                ?>
-              </div>
-            </div>
-          </fieldset>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="container formContainer logincontainer">
-    <div class="span9 offset1">
-      <div class="block_head row">
-        
-      </div>
-      <div class="block_content row">
-          <fieldset>
             <input id="btnAdd" class="btn btn-primary" type="submit"  value="+" />
              <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table" width="100%">
               <thead>
                 <tr>
+                  <th class="center">Distribuidor</th>
                   <th class="center">Cliente</th>
                   <th class="center">Fecha</th>
                   <th class="center">Voucher</th>
@@ -68,14 +24,19 @@
               </thead>
               <tbody id="diaryTable">
                 <tr class="even gradeX">
+                  <td class="center" id ="distributorDropdown">
+                    <?php
+                      echo form_dropdown('distributor', $distributor, '', 'class="chosen-select" ');
+                    ?>
+                  </td>
                   <td class="" id ="clientDropdown">
                     <?php
-                      echo form_dropdown('client', $clients, 'large');
+                      echo form_dropdown('client', $clients, '', 'class="chosen-select" ');
                     ?>
                   </td>
                   <td class="center">
                     <?php 
-                      echo form_input(array('name' => 'date', 'class' => 'datecontainer datepicker'), set_value('dateStart')); 
+                      echo form_input(array('name' => 'date', 'class' => 'datecontainer datepicker', 'value' => date("Y-m-d"))); 
                     ?>
                   </td>
                   <td class="center"><input id="voucher" type="text" class="span1" value="" ></td>
@@ -108,12 +69,15 @@
 </style>
 
 <script type="text/javascript">
+  // dropdown distributors
+  var distrib = $("#distributorDropdown").html();
   // dropdown users
   var drop = $("#clientDropdown").html();
 
   var registry = "<tr class='even gradeX'>";
+  registry += '<td class="center">' + distrib + '</td> ';
   registry += '<td class="center">' + drop + '</td> ';
-  registry += '<td class="center"><input type="text" class="datecontainer datepicker" value="" name="date"></td>';
+  registry += '<td class="center"><input type="text" class="datecontainer datepicker2" value="<?php echo date("Y-m-d");?>" name="date"></td>';
   registry += '<td class="center"><input id="voucher" type="text" class="span1" value="" ></td>';
   registry += '<td class="center"><input id="ammount" type="text" class="span1" value="" ></td>';
   registry += '<td class="center"><input id="detail" type="text" class="span1" value="" ></td>';
@@ -122,7 +86,7 @@
   $(document).ready(function(){
     $("#btnAdd").click(function(){
       $("#diaryTable").append(registry);
-      //$(".datepicker").datepicker();
+      $(".datepicker2").datepicker();
     });
 
     $("#btnSave").click(function(){

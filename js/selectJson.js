@@ -17,6 +17,10 @@ $(document).ready(function(){
   var url = "https://mariani.bo/horizon/index.php/";
   //var url = "http://localhost/horizon-mariani/";
 
+  // chosen selects
+  $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
+
+
   $('.datepicker').datepicker({
     format: 'yyyy-mm-dd'
   }).on('changeDate', function(ev){
