@@ -46,6 +46,40 @@
 
       $this->Diary_Model->create($data_in);
     }
+
+    function addpay() {
+      // ammount
+      $this->form_validation->set_rules('ammount', 'Cantidad', 'xss_clean|required');
+
+      $this->form_validation->set_message('required', '%s es obligatorio.');
+      
+      $data_in['FechaRegistro'] = date("y-m-d");
+      $data_in['FechaTransaction'] = date("y-m-d");
+      $data_in['idUser'] = "1";
+      $data_in['idUserSupervisor'] = "1";
+      $data_in['idTransaction'] = "1";
+      $data_in['NumVoucher'] = $this->input->post('voucher');
+      $data_in['idCustomer'] = "123";
+      $data_in['Monto'] = $this->input->post('ammount');
+      $data_in['Estado'] = '1';
+      $data_in['Detalle'] = "pago";
+
+      if ($this->Diary_Model->create($data_in) == TRUE) {
+        redirect("diary");
+      }
+    }
+
+    function getpays(){
+      $data_in['voucher'] = $this->input->post('voucher');
+      $data['pays'] = $this->Diary_Model->getpays($data_in);
+
+      echo $data['pays'];
+      //print_r($data);
+    }
+
+
+
+
 /*
     public function edit($id = "") {
       if ($id != "") {

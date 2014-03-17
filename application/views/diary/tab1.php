@@ -108,43 +108,43 @@
                             <h3 id="myModalLabel">Adicionar Pago</h3>
                           </div>
                           <div class="modal-body">
+                            <?php 
+                              echo form_open('diary/addpay');
+                              echo form_hidden('voucher', $row->NumVoucher);
+                            ?>
+
                               <fieldset>
-                                
                                 <div class="control-group selected_3">
-                                  <label class="control-label" for="city">Voucher: </label>
+                                  <label class="control-label" for="voucher">Voucher: </label>
                                   <div class="controls">
                                     <?php echo $row->NumVoucher; ?>
                                   </div>
                                 </div>
 
                                 <div class="control-group selected_3">
-                                  <label class="control-label" for="city">Monto Total: </label>
+                                  <label class="control-label" for="ammount">Monto Total: </label>
                                   <div class="controls">
                                     <?php echo $row->Monto; ?>
                                   </div>
                                 </div>
 
                                 <div class="control-group selected_3">
-                                  <label class="control-label" for="city">Monto:</label>
+                                  <label class="control-label" for="ammount">Monto:</label>
                                   <div class="controls">
                                     <?php
-                                      echo form_input(array('name' => 'ammount', 'class' => '', 'value' => '234534.567')); 
+                                      echo form_input(array('name' => 'ammount', 'class' => '', 'value' => '', 'placeholder' => $row->Monto)); 
                                     ?>
                                   </div>
                                 </div>
-
                               </fieldset>
-
 
                           </div>
                           <div class="modal-footer">
-                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                            <?php echo anchor('user/deactive/'.$row->iddiario, 'Desactivar Usuario', array('class' => 'btn btn-primary')); ?>
+                            <?php echo anchor('diary', 'Cancelar', array('class' => 'btnTitle btn btn-info')); ?>
+                            <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Guardar" />
                           </div>
                         </div>
-
-
-
+                        <?php echo form_close(); ?>
                       </td>
                     </tr>
                   <?php
@@ -220,6 +220,19 @@
    /* Formating function for row details */
   function fnFormatDetails ( oTable, nTr ){
     var aData = oTable.fnGetData( nTr );
+    
+    $.ajax({
+      type: "POST",
+      url: 'diary/getpays',
+      data: 'voucher='+aData[3],
+      dataType: 'json',
+      cache: false,
+      success: function(response) {
+        console.log("++++++++++++++++++");
+        console.log(response);
+      }
+    })
+
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" class="table table-striped table-bordered">';
     sOut +=  '<thead><tr><th class="center">Fecha de Pago</th><th class="center">Monto</th><th class="center">Detalle</th></tr></thead>';
     sOut += '<tbody>';

@@ -49,7 +49,7 @@
             <div class="form-actions span9">
               <?php echo anchor('diary', 'Cancelar', array('class' => 'btnTitle btn btn-info')); ?>
               <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Guardar" />
-            </div>              
+            </div>
           </fieldset>
       </div>
     </div>

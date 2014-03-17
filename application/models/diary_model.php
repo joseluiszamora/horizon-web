@@ -23,9 +23,30 @@ class Diary_model extends CI_Model {
 
     // get all diaries
     function get_diaries() {
-      $query = $this->db->get('daily');
+      //$query = $this->db->get('daily');
+      //return $query->result();
 
+      $this->db->select( '*' );
+      $this->db->from('daily');
+      
+      $this->db->group_by('NumVoucher'); 
+      $this->db->order_by('iddiario', "asc");
+
+      $query = $this->db->get();
       return $query->result();
+    }
+
+    function getpays($data_in){
+      $query = $this->db->get('daily');
+      $this->db->where('NumVoucher', $data_in['voucher']);
+      //return $query->result();
+
+      $result = $query->result_array();
+      $res = "";
+      foreach ($result as $r) {
+        $res .= '<tr><td class="center">'.$r['FechaRegistro'].'</td><td class="center">'.$r['NumVoucher'].'</td><td class="center">'.$r['Detalle'].'</td></tr>';
+      }
+      return $res;
     }
 /*
     function report() {
