@@ -4,7 +4,7 @@
   </div>
 
   <div class="container formContainer logincontainer">
-    <div class="span9 offset1">
+    <div class="span11">
       <div class="block_head row">
         <h2 class="span4">Diario</h2>
       </div>
@@ -41,12 +41,12 @@
                   </td>
                   <td class="center"><input id="voucher" type="text" class="span1" value="" ></td>
                   <td class="center"><input id="ammount" type="text" class="span1" value="" ></td>
-                  <td class="center"><input id="detail" type="text" class="span1" value="" ></td>
+                  <td class="center"><textarea class="span2" rows="1" cols="0" id="detail" name="detail"></textarea></td>
                 </tr>
               </tbody>
             </table>
 
-            <div class="form-actions span7">
+            <div class="form-actions span9">
               <?php echo anchor('diary', 'Cancelar', array('class' => 'btnTitle btn btn-info')); ?>
               <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Guardar" />
             </div>              
@@ -80,7 +80,7 @@
   registry += '<td class="center"><input type="text" class="datecontainer datepicker2" value="<?php echo date("Y-m-d");?>" name="date"></td>';
   registry += '<td class="center"><input id="voucher" type="text" class="span1" value="" ></td>';
   registry += '<td class="center"><input id="ammount" type="text" class="span1" value="" ></td>';
-  registry += '<td class="center"><input id="detail" type="text" class="span1" value="" ></td>';
+  registry += '<td class="center"><textarea class="span2" rows="1" cols="0" id="detail" name="detail"></textarea></td>';
   registry += "</tr>";
 
   $(document).ready(function(){
@@ -93,7 +93,7 @@
       //showLoadingAnimation($('#clientDropdown'));
 
       $("#diaryTable tr").each(function(){
-        console.log($(this).find("select[name='type']").val());
+        console.log($(this).find("select[name='client']").val());
         client = $(this).find("select[name='client']").val();
         date = $(this).find("input[name='date']").val();
         voucher = $(this).find("#voucher").val();;

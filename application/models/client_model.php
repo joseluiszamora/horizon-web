@@ -151,7 +151,7 @@ class Client_model extends CI_Model {
       $dropdown = array();
       $dropdown[0] = 'Seleccione Cliente';
       foreach ($result as $r) {
-        $dropdown[$r['idCustomer']] = $r['NombreTienda'];
+        $dropdown[$r['idCustomer']] = $r['CodeCustomer']." - ".$r['NombreTienda'];
       }
       return $dropdown;
     }

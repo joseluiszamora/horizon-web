@@ -78,6 +78,7 @@
                     <th class="center">Total</th>
                     <th class="center">Saldo</th>
                     <th class="center">Detalle</th>
+                    <th class="center">&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody id="diaryTable">
@@ -94,12 +95,63 @@
                       <td class="center"><?php echo $row->Monto; ?></td>
                       <td class="center"><?php echo "0"; ?></td>
                       <td class="center"><?php echo $row->Detalle; ?></td>
+                      <td class="center">
+                        <!--<input value="Adicionar pago" class="btn btn-primary" id="btnAdd" >-->
+
+                        <!-- Button to trigger modal -->
+                        <a href="<?php echo '#modal-'.$row->iddiario ?>" role="button" class="btn btn-primary" data-toggle="modal">Adicionar Pago</a>
+                         
+                        <!-- Modal -->
+                        <div id="<?php echo 'modal-'.$row->iddiario ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="myModalLabel">Adicionar Pago</h3>
+                          </div>
+                          <div class="modal-body">
+                              <fieldset>
+                                
+                                <div class="control-group selected_3">
+                                  <label class="control-label" for="city">Voucher: </label>
+                                  <div class="controls">
+                                    <?php echo $row->NumVoucher; ?>
+                                  </div>
+                                </div>
+
+                                <div class="control-group selected_3">
+                                  <label class="control-label" for="city">Monto Total: </label>
+                                  <div class="controls">
+                                    <?php echo $row->Monto; ?>
+                                  </div>
+                                </div>
+
+                                <div class="control-group selected_3">
+                                  <label class="control-label" for="city">Monto:</label>
+                                  <div class="controls">
+                                    <?php
+                                      echo form_input(array('name' => 'ammount', 'class' => '', 'value' => '234534.567')); 
+                                    ?>
+                                  </div>
+                                </div>
+
+                              </fieldset>
+
+
+                          </div>
+                          <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                            <?php echo anchor('user/deactive/'.$row->iddiario, 'Desactivar Usuario', array('class' => 'btn btn-primary')); ?>
+                          </div>
+                        </div>
+
+
+
+                      </td>
                     </tr>
                   <?php
                     }
                   ?>               
                 </tbody>
-                <tfoot>
+                <!--<tfoot>
                   <tr>
                     <th class="center">&nbsp;</th>
                     <th class="center">Fecha de Transacción</th>
@@ -109,6 +161,19 @@
                     <th class="center">Total</th>
                     <th class="center">Saldo</th>
                     <th class="center">Detalle</th>
+                  </tr>
+                </tfoot>-->
+                <tfoot>
+                  <tr>
+                    <th class="center">&nbsp;</th>
+                    <th><input type="text" name="search_engine" placeholder="fecha" class="search_init span1" /></th>
+                    <th><input type="text" name="search_browser" placeholder="mora" class="search_init span1" /></th>
+                    <th><input type="text" name="search_platform" placeholder="cliente" class="search_init span1" /></th>
+                    <th><input type="text" name="search_version" placeholder="Voucher" class="search_init span1" /></th>
+                    <th><input type="text" name="search_grade" placeholder="Total" class="search_init span1" /></th>
+                    <th><input type="text" name="search_version" placeholder="Saldo" class="search_init span1" /></th>
+                    <th><input type="text" name="search_grade" placeholder="detalle" class="search_init span1" /></th>
+                     <th class="center">&nbsp;</th>
                   </tr>
                 </tfoot>
             </table>
@@ -128,6 +193,8 @@
 </style>
 
 <script type="text/javascript">
+  var asInitVals = new Array();
+
   var registry = "<tr class='even gradeX'>";
   registry += '<td class="center"> <input type="text" class="span2" value="" ></td> ';
   registry += '<td class="center"> <input type="text" class="span2" value="" ></td> ';
@@ -203,6 +270,8 @@
         { "bSortable": false, "aTargets": [ 0 ] }
       ],
       "aaSorting": [[1, 'asc']]
+      /*,
+      "bVisible": false, "aTargets": [ 3 ]*/
     });
     
     /* Add event listener for opening and closing details
@@ -216,13 +285,38 @@
         /* This row is already open - close it */
         this.src = "<?php echo base_url(); ?>img/details_open.png";
         oTable.fnClose( nTr );
-      }
-      else
-      {
+      } else {
         /* Open this row */
         this.src = "<?php echo base_url(); ?>img/details_close.png";
         oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
       }
     } );
+
+
+    /* search input footer */
+    $("tfoot input").keyup( function () {
+        oTable.fnFilter( this.value, $("tfoot input").index(this) );
+      } );
+      
+      $("tfoot input").each( function (i) {
+        asInitVals[i] = this.value;
+      } );
+      
+      $("tfoot input").focus( function () {
+        if ( this.className == "search_init" )
+        {
+          this.className = "";
+          this.value = "";
+        }
+      } );
+      
+      $("tfoot input").blur( function (i) {
+        if ( this.value == "" )
+        {
+          this.className = "search_init";
+          this.value = asInitVals[$("tfoot input").index(this)];
+        }
+      } );
+   
   } );
 </script>
