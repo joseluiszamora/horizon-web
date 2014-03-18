@@ -185,6 +185,8 @@
 
 
 </div>
+
+
 <style type="text/css">
   #btnAdd{
     float: right;
@@ -208,41 +210,26 @@
   });
 
 
-
-
-
-
-
-
-
-
-
    /* Formating function for row details */
   function fnFormatDetails ( oTable, nTr ){
     var aData = oTable.fnGetData( nTr );
+    var sOut = '<table cellpadding="5" cellspacing="0" border="0" class="table table-striped table-bordered">';
+    sOut +=  '<thead><tr><th class="center">Fecha de Pago</th><th class="center">Monto</th><th class="center">Detalle</th></tr></thead>';
+   
     
     $.ajax({
       type: "POST",
       url: 'diary/getpays',
-      data: 'voucher='+aData[3],
-      dataType: 'json',
+      data: 'voucher='+aData[4],
+      dataType: "text",
       cache: false,
+      async: false,
       success: function(response) {
-        console.log("++++++++++++++++++");
-        console.log(response);
+        sOut += response;
       }
     })
 
-    var sOut = '<table cellpadding="5" cellspacing="0" border="0" class="table table-striped table-bordered">';
-    sOut +=  '<thead><tr><th class="center">Fecha de Pago</th><th class="center">Monto</th><th class="center">Detalle</th></tr></thead>';
-    sOut += '<tbody>';
-    sOut += '<tr><td class="center">12/12/2012</td><td class="center">123.54</td><td class="center">ninguna obs</td></tr>';
-    sOut += '<tr><td class="center">12/12/2012</td><td class="center">123.54</td><td class="center">ninguna obs</td></tr>';
-    sOut += '<tr><td class="center">12/12/2012</td><td class="center">123.54</td><td class="center">ninguna obs</td></tr>';
-    sOut += '</tbody>';
-    sOut += '<tfoot>';  
-    sOut += '<tr><td class="center"><b>Total:</b></td><td class="center">123.45</td><td class="center">&nbsp;</td></tr>';
-    sOut += '</tfoot>';
+    
     sOut += '</table>';
 
     return sOut;
@@ -283,8 +270,6 @@
         { "bSortable": false, "aTargets": [ 0 ] }
       ],
       "aaSorting": [[1, 'asc']]
-      /*,
-      "bVisible": false, "aTargets": [ 3 ]*/
     });
     
     /* Add event listener for opening and closing details
@@ -308,28 +293,30 @@
 
     /* search input footer */
     $("tfoot input").keyup( function () {
-        oTable.fnFilter( this.value, $("tfoot input").index(this) );
-      } );
-      
-      $("tfoot input").each( function (i) {
-        asInitVals[i] = this.value;
-      } );
-      
-      $("tfoot input").focus( function () {
-        if ( this.className == "search_init" )
-        {
-          this.className = "";
-          this.value = "";
-        }
-      } );
-      
-      $("tfoot input").blur( function (i) {
-        if ( this.value == "" )
-        {
-          this.className = "search_init";
-          this.value = asInitVals[$("tfoot input").index(this)];
-        }
-      } );
+      oTable.fnFilter( this.value, $("tfoot input").index(this) );
+    } );
+    
+    $("tfoot input").each( function (i) {
+      asInitVals[i] = this.value;
+    } );
+    
+    $("tfoot input").focus( function () {
+      if ( this.className == "search_init" )
+      {
+        this.className = "";
+        this.value = "";
+      }
+    } );
+    
+    $("tfoot input").blur( function (i) {
+      if ( this.value == "" )
+      {
+        this.className = "search_init";
+        this.value = asInitVals[$("tfoot input").index(this)];
+      }
+    } 
+
+    );
    
   } );
 </script>

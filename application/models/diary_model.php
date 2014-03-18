@@ -28,7 +28,7 @@ class Diary_model extends CI_Model {
 
       $this->db->select( '*' );
       $this->db->from('daily');
-      
+      $this->db->where('Type','C');
       $this->db->group_by('NumVoucher'); 
       $this->db->order_by('iddiario', "asc");
 
@@ -37,17 +37,20 @@ class Diary_model extends CI_Model {
     }
 
     function getpays($data_in){
-      $query = $this->db->get('daily');
-      $this->db->where('NumVoucher', $data_in['voucher']);
-      //return $query->result();
+      $querystring = '
+      SELECT * 
+      FROM daily
+      WHERE NumVoucher = '.$data_in['voucher'].'
+      AND Type = "D"
+      ';
 
-      $result = $query->result_array();
-      $res = "";
-      foreach ($result as $r) {
-        $res .= '<tr><td class="center">'.$r['FechaRegistro'].'</td><td class="center">'.$r['NumVoucher'].'</td><td class="center">'.$r['Detalle'].'</td></tr>';
-      }
-      return $res;
+      $query = $this->db->query($querystring);
+
+      return $query->result();
+      
     }
+
+
 /*
     function report() {
       $this->db->select(

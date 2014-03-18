@@ -457,3 +457,12 @@ outline-width:0;
 .formContainer select{
 	min-width: 200px !important;
 }
+
+
+.modalbig{
+	width: 950px !important;
+	left: 40% !important;
+}
+.datemedium{
+	width: 65px !important;
+}
