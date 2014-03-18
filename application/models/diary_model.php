@@ -28,7 +28,7 @@ class Diary_model extends CI_Model {
 
       $this->db->select( '*' );
       $this->db->from('daily');
-      $this->db->where('Type','C');
+      $this->db->where('Type','P');
       $this->db->group_by('NumVoucher'); 
       $this->db->order_by('iddiario', "asc");
 
@@ -41,7 +41,7 @@ class Diary_model extends CI_Model {
       SELECT * 
       FROM daily
       WHERE NumVoucher = '.$data_in['voucher'].'
-      AND Type = "D"
+      AND Type = "C"
       ';
 
       $query = $this->db->query($querystring);

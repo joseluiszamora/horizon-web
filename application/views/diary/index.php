@@ -12,13 +12,13 @@
           <li class="active"><a href="#tab1" data-toggle="tab">Todos</a></li>
           <li><?php if($this->Account_Model->get_profile() == '1' || $this->Account_Model->get_profile() == '2'){ ?>
             <!-- Button to trigger modal -->
-            <a href="#modal-diarycreate" role="button" class="btnAdd btnTitle btn btn-primary" data-toggle="modal">Nuevo</a>
+            <a href="#modal-diarycreate" role="button" class="btnAdd btnTitle btn btn-primary" data-toggle="modal">PRESTAMOS</a>
 
             <!-- Modal -->
             <div id="modal-diarycreate" class="modal hide fade modalbig" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Adicionar Pago</h3>
+                <h3 id="myModalLabel">PRESTAMOS</h3>
               </div>
               <div class="modal-body">
                 

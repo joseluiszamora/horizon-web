@@ -47,7 +47,7 @@
         $data_in['idTransaction'] = "1";
         $data_in['NumVoucher'] = $transvoucher[$i];
         $data_in['idCustomer'] = $transclient[$i];
-        $data_in['Type'] = "C";
+        $data_in['Type'] = "P";
         $data_in['Monto'] = $transammount[$i];
         $data_in['Estado'] = "activo";
         $data_in['Detalle'] = $transdetail[$i];
@@ -69,7 +69,7 @@
       $data_in['idTransaction'] = "1";
       $data_in['NumVoucher'] = $this->input->post('voucher');
       $data_in['idCustomer'] = "123";
-      $data_in['Type'] = "D";
+      $data_in['Type'] = "C";
       $data_in['Monto'] = $this->input->post('ammount');
       $data_in['Estado'] = '1';
       $data_in['Detalle'] = "pago";
