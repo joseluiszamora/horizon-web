@@ -23,11 +23,31 @@ class Diary_model extends CI_Model {
 
     // get all diaries
     function get_diaries() {
-      $this->db->select( '*' );
+      $this->db->select(
+        'daily.iddiario,
+        daily.FechaRegistro,
+        daily.FechaTransaction,
+        daily.idUser,
+        daily.idUserSupervisor,
+        daily.idTransaction,
+        daily.NumVoucher,
+        daily.idCustomer,
+        daily.Type,
+        daily.Monto,
+        daily.Estado,
+        daily.Detalle,
+        customer.CodeCustomer as code,
+        customer.NombreTienda as custname,
+        users.Email as customer'
+      );
+
+      //$this->db->select( '*' );
       $this->db->from('daily');
-      $this->db->where('Type','P');
-      $this->db->group_by('NumVoucher'); 
-      $this->db->order_by('iddiario', "asc");
+      $this->db->join('customer', 'daily.idCustomer = customer.idCustomer');
+      $this->db->join('users', 'daily.idUser = users.idUser');
+      $this->db->where('daily.Type','P');
+      $this->db->group_by('daily.NumVoucher'); 
+      $this->db->order_by('daily.iddiario', "asc");
 
       $query = $this->db->get();
       return $query->result();
@@ -73,6 +93,20 @@ Detalle
       return $query->result();
       
     }
+
+function search ($data_in){
+  $this->db->select( '*' );
+  $this->db->from('daily');
+  $this->db->where('Type','P');
+  $this->db->where('idUser',$data_in['distributor']);
+  $this->db->group_by('NumVoucher'); 
+  $this->db->order_by('iddiario', "asc");
+
+  $query = $this->db->get();
+  return $query->result();
+}
+
+
 
 function roundnumber ($numero, $decimales) {
   //$factor = pow(10, $decimales);

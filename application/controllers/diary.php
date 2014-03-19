@@ -17,15 +17,15 @@
     function index() {
       $data['diaries'] = $this->Diary_Model->get_diaries();
       $data['balance'] = $this->Diary_Model->get_balance();
-      $data['distributor'] = $this->User_Model->get_users_by_profile(4);
+      $data['distributor'] = $this->User_Model->get_users_by_profile_id_mail(4);
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
       $data['page'] = 'index';
       $this->load->view('template/template', $data);
     }
 
-     function create() {
-      $data['distributor'] = $this->User_Model->get_users_by_profile(4);
+    function create() {
+      $data['distributor'] = $this->User_Model->get_users_by_profile_id_mail(4);
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
       $data['action'] = 'new';
@@ -34,6 +34,7 @@
     }
 
     function saveblock() {
+      $transdistributor = explode("***", $this->input->post('distributor'));
       $transdate = explode("***", $this->input->post('date'));
       $transvoucher = explode("***", $this->input->post('voucher'));
       $transclient = explode("***", $this->input->post('client'));
@@ -43,7 +44,7 @@
       for ($i=0; $i < count($transdate)-1; $i++) { 
         $data_in['FechaRegistro'] = date("y-m-d");
         $data_in['FechaTransaction'] = $transdate[$i];
-        $data_in['idUser'] = "1";
+        $data_in['idUser'] = $transdistributor[$i];
         $data_in['idUserSupervisor'] = "1";
         $data_in['idTransaction'] = "1";
         $data_in['NumVoucher'] = $transvoucher[$i];
@@ -85,7 +86,7 @@
       $data['pays'] = $this->Diary_Model->getpays($data_in);
 
       $res = '<tbody>';
-      $total = 0;
+      $total = 0; 
       foreach ($data['pays'] as $r) {
         $res .= '<tr><td class="center">'.$r->FechaRegistro.'</td><td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td><td class="center">'.$r->Detalle.'</td></tr>';
         $total = $total + $r->Monto;
@@ -98,7 +99,21 @@
       echo $res;
     }
 
+    function search(){
+      $this->form_validation->set_rules('distributor', 'distributor', 'xss_clean');
+      $this->form_validation->set_message('xss_clean', 'security: danger value.');
 
+      $data_in['distributor'] = $this->input->post('distributor');
+
+      $data['diaries'] = $this->Diary_Model->search($data_in);
+      $data['balance'] = $this->Diary_Model->get_balance();
+
+      $data['distributor'] = $this->User_Model->get_users_by_profile_id_mail(4);
+      $data['clients'] = $this->Client_Model->get_clients();
+      $data['category'] = 'diary';
+      $data['page'] = 'index';
+      $this->load->view('template/template', $data);
+    }
 
 
 /*

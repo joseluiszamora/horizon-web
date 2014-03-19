@@ -20,8 +20,9 @@
         <h2 class="span4">Diario</h2>
       </div>
       <div class="block_content row">
+          <?php echo form_open('diary/search'); ?>  
+
           <fieldset>
-            
             <div class="control-group selected_3">
               <label class="control-label" for="city">Distribuidor</label>
               <div class="controls">
@@ -57,7 +58,8 @@
                 ?>
               </div>
             </div>
-
+            <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Ver" />
+            <?php echo form_close(); ?>  
           </fieldset>
       </div>
     </div>
@@ -74,6 +76,7 @@
                     <th class="center">Fecha de Transacción</th>
                     <th class="center">Mora</th>
                     <th class="center">Cliente</th>
+                    <!--<th class="center">Distribuidor</th>-->
                     <th class="center">Voucher</th>
                     <th class="center">Total</th>
                     <th class="center">Saldo</th>
@@ -100,7 +103,8 @@
                       <td class="center"><?php
                         echo dateDiff(date("Y-m-d"), $row->FechaTransaction)." días"; 
                       ?></td>
-                      <td class="center"><?php echo $row->idCustomer; ?></td>
+                      <td class="center"><?php echo $row->code." - ".$row->custname; ?></td>
+                      <!--<td class="center"><?php //echo $row->customer; ?></td>-->
                       <td class="center"><?php echo $row->NumVoucher; ?></td>
                       <td class="center"><?php echo $this->Diary_Model->roundnumber($row->Monto, 2); ?></td>
                       <td class="center"><?php echo $this->Diary_Model->roundnumber($saldo, 2); ?></td>
@@ -181,6 +185,7 @@
                     <th class="center">&nbsp;</th>
                     <th><input type="text" name="search_engine" placeholder="fecha" class="search_init span1" /></th>
                     <th><input type="text" name="search_browser" placeholder="mora" class="search_init span1" /></th>
+                    <!--<th><input type="text" name="search_platform" placeholder="distribuidor" class="search_init span1" /></th>-->
                     <th><input type="text" name="search_platform" placeholder="cliente" class="search_init span1" /></th>
                     <th><input type="text" name="search_version" placeholder="Voucher" class="search_init span1" /></th>
                     <th><input type="text" name="search_grade" placeholder="Total" class="search_init span1" /></th>

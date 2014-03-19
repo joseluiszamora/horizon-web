@@ -138,6 +138,37 @@
     }
 
 
+    function get_users_by_profile_id_mail($profile) {
+      $this->db->select(
+        'users.idUser, 
+        users.ci, 
+        users.Nombre, 
+        users.Apellido, 
+        users.Email'
+      );
+      $this->db->from('users');
+      $this->db->order_by('idUser', "asc");
+      $this->db->where('users.NivelAcceso =', $profile);
+
+      // filters by city
+      if($this->Account_Model->get_profile() == 3){
+        $this->db->where('users.idCiudadOpe', $this->Account_Model->get_city());
+        $this->db->where('users.NivelAcceso !=', 1);
+        $this->db->where('users.NivelAcceso !=', 2);
+      }
+      $query = $this->db->get();
+      $dropdown = array();
+      $dropdown[0] = 'Seleccione Usuario';
+
+      $result = $query->result_array();
+      foreach ($result as $r) {
+        $dropdown[$r['idUser']] = $r['Email'];
+      }
+
+      return $dropdown;
+    }
+
+
     public function get($id) {
       $query = $this->db->get_where('users',array('idUser'=>$id,'Enable'=>'1'));
       return $query->result();

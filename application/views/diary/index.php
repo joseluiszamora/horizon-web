@@ -39,12 +39,12 @@
                       <tr class="even gradeX">
                         <td class="center" id ="distributorDropdown">
                           <?php
-                            echo form_dropdown('distributor', $distributor, '', 'class="chosen-select span2"');
+                            echo form_dropdown('distributor', $distributor, '', 'class=""');
                           ?>
                         </td>
                         <td class="" id ="clientDropdown">
                           <?php
-                            echo form_dropdown('client', $clients, '', 'class="chosen-select span2"');
+                            echo form_dropdown('client', $clients, '', 'class=""');
                           ?>
                         </td>
                         <td class="center">
@@ -120,6 +120,7 @@
 
     $("#btnSave").click(function(){
       //showLoadingAnimation($('#clientDropdown'));
+      distributor = "";
       client = "";
       date = "";
       voucher = "";
@@ -127,6 +128,7 @@
       detail = "";
 
       $("#diaryTableModal tr").each(function(){
+        distributor += $(this).find("select[name='distributor']").val()+"***";
         client += $(this).find("select[name='client']").val()+"***";
         date += $(this).find("input[name='date']").val()+"***";
         voucher += $(this).find("#voucher").val()+"***";
@@ -137,7 +139,7 @@
       $.ajax({
         type: "POST",
         url: 'diary/saveblock',
-        data: 'client='+client+'&date='+date+'&voucher='+voucher+'&ammount='+ammount+'&detail='+detail,
+        data: 'distributor='+distributor+'&client='+client+'&date='+date+'&voucher='+voucher+'&ammount='+ammount+'&detail='+detail,
         dataType: 'json',
         cache: false,
         success: function(data) {
