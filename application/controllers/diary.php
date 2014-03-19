@@ -16,6 +16,7 @@
 
     function index() {
       $data['diaries'] = $this->Diary_Model->get_diaries();
+      $data['balance'] = $this->Diary_Model->get_balance();
       $data['distributor'] = $this->User_Model->get_users_by_profile(4);
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';

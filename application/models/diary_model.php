@@ -23,9 +23,6 @@ class Diary_model extends CI_Model {
 
     // get all diaries
     function get_diaries() {
-      //$query = $this->db->get('daily');
-      //return $query->result();
-
       $this->db->select( '*' );
       $this->db->from('daily');
       $this->db->where('Type','P');
@@ -33,6 +30,33 @@ class Diary_model extends CI_Model {
       $this->db->order_by('iddiario', "asc");
 
       $query = $this->db->get();
+      return $query->result();
+    }
+
+/*
+iddiario
+FechaRegistro
+FechaTransaction
+idUser
+idUserSupervisor
+idTransaction
+NumVoucher
+idCustomer
+Type
+Monto
+Estado
+Detalle
+*/
+    function get_balance() {
+      $querystring = '
+      SELECT NumVoucher, SUM(Monto) as total
+      FROM daily
+      WHERE Type = "C"
+      GROUP BY NumVoucher
+      ';
+
+      $query = $this->db->query($querystring);
+
       return $query->result();
     }
 

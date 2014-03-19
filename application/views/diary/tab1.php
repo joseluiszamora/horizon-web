@@ -83,7 +83,17 @@
                 </thead>
                 <tbody id="diaryTable">
 
-                  <?php foreach ($diaries as $row) {
+                  <?php 
+                    foreach ($diaries as $row) {
+                      $monto = $row->Monto;
+                      $pagado = 0;
+                      foreach($balance as $key) {
+                        if ($row->NumVoucher == $key->NumVoucher) {
+                          $pagado = $key->total;
+                        }
+                      }
+
+                      $saldo = $monto - $pagado;
                   ?>
                     <tr class="even gradeX">
                       <td class="center"><?php echo $row->FechaTransaction; ?></td>
@@ -93,13 +103,16 @@
                       <td class="center"><?php echo $row->idCustomer; ?></td>
                       <td class="center"><?php echo $row->NumVoucher; ?></td>
                       <td class="center"><?php echo $row->Monto; ?></td>
-                      <td class="center"><?php echo "0"; ?></td>
+                      <td class="center"><?php echo $saldo; ?></td>
                       <td class="center"><?php echo $row->Detalle; ?></td>
                       <td class="center">
                         <!--<input value="Adicionar pago" class="btn btn-primary" id="btnAdd" >-->
-
+                      
+                      <?php if($saldo > 0){ ?>
                         <!-- Button to trigger modal -->
                         <a href="<?php echo '#modal-'.$row->iddiario ?>" role="button" class="btn btn-primary" data-toggle="modal">Adicionar Pago</a>
+                        
+                      <?php } ?>
                          
                         <!-- Modal -->
                         <div id="<?php echo 'modal-'.$row->iddiario ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -132,7 +145,7 @@
                                   <label class="control-label" for="ammount">Monto:</label>
                                   <div class="controls">
                                     <?php
-                                      echo form_input(array('name' => 'ammount', 'class' => '', 'value' => '', 'placeholder' => $row->Monto)); 
+                                      echo form_input(array('name' => 'ammount', 'class' => '', 'value' => '', 'placeholder' => $saldo)); 
                                     ?>
                                   </div>
                                 </div>
