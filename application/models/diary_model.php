@@ -74,6 +74,11 @@ Detalle
       
     }
 
+function roundnumber ($numero, $decimales) {
+  //$factor = pow(10, $decimales);
+  //return (round($numero*$factor)/$factor); 
+  return (number_format($numero, $decimales));
+}
 
 /*
     function report() {

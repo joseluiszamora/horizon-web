@@ -39,12 +39,12 @@
                       <tr class="even gradeX">
                         <td class="center" id ="distributorDropdown">
                           <?php
-                            echo form_dropdown('distributor', $distributor, '', 'class="" ');
+                            echo form_dropdown('distributor', $distributor, '', 'class="chosen-select span2"');
                           ?>
                         </td>
                         <td class="" id ="clientDropdown">
                           <?php
-                            echo form_dropdown('client', $clients, '', 'class="" ');
+                            echo form_dropdown('client', $clients, '', 'class="chosen-select span2"');
                           ?>
                         </td>
                         <td class="center">

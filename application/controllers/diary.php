@@ -87,13 +87,13 @@
       $res = '<tbody>';
       $total = 0;
       foreach ($data['pays'] as $r) {
-        $res .= '<tr><td class="center">'.$r->FechaRegistro.'</td><td class="center">'.$r->Monto.'</td><td class="center">'.$r->Detalle.'</td></tr>';
+        $res .= '<tr><td class="center">'.$r->FechaRegistro.'</td><td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td><td class="center">'.$r->Detalle.'</td></tr>';
         $total = $total + $r->Monto;
       }
 
       $res .= '</tbody>';
       $res .= '<tfoot>';  
-      $res .= '<tr><td class="center"><b>Total:</b></td><td class="center">'.$total.'</td><td class="center">&nbsp;</td></tr>';
+      $res .= '<tr><td class="center"><b>Total:</b></td><td class="center">'.$this->Diary_Model->roundnumber($total, 2).'</td><td class="center">&nbsp;</td></tr>';
       $res .= '</tfoot>';
       echo $res;
     }

@@ -102,8 +102,8 @@
                       ?></td>
                       <td class="center"><?php echo $row->idCustomer; ?></td>
                       <td class="center"><?php echo $row->NumVoucher; ?></td>
-                      <td class="center"><?php echo $row->Monto; ?></td>
-                      <td class="center"><?php echo $saldo; ?></td>
+                      <td class="center"><?php echo $this->Diary_Model->roundnumber($row->Monto, 2); ?></td>
+                      <td class="center"><?php echo $this->Diary_Model->roundnumber($saldo, 2); ?></td>
                       <td class="center"><?php echo $row->Detalle; ?></td>
                       <td class="center">
                         <!--<input value="Adicionar pago" class="btn btn-primary" id="btnAdd" >-->
