@@ -33,31 +33,41 @@
             </div>
 
             <div class="control-group selected_3">
-              <label class="control-label" for="city">Tipo</label>
-              <div class="controls">
-                <?php
-                  $options = array(
-                    'credito'  => 'Creditos',
-                    'debito'    => 'Debitos'
-                  );
-                  echo form_dropdown('type', $options, '', 'class="chosen-select" ');
-                ?>
-              </div>
-            </div>
-
-            <div class="control-group selected_3">
               <label class="control-label" for="city">Estado</label>
               <div class="controls">
                 <?php
                   $options = array(
-                    'pendings'    => 'Pendientes',
-                    'cancel'    => 'Cancelados',
-                    'mora'    => 'En Mora'
+                    '' => 'Todos',
+                    '1' => 'Activo',
+                    '2' => 'Pagado',
+                    '3' => 'Cancelado'
                   );
-                  echo form_dropdown('type', $options, '', 'class="chosen-select" ');
+                  echo form_dropdown('status', $options, '', 'class="chosen-select" ');
                 ?>
               </div>
             </div>
+<br><br><br><br>
+            <div class="control-group selected_1">
+              <label class="control-label" for="dateStart">Desde:</label>
+              <div class="controls">
+                <?php 
+                echo form_input(array('name' => 'dateStart', 'class' => 'span2 datepicker'), set_value('dateStart')); 
+                echo form_error('dateStart');
+                ?>
+              </div>
+            </div>
+
+            <div class="control-group selected_1">
+              <label class="control-label" for="dateFinish">Hasta:</label>
+              <div class="controls">
+                <?php 
+                echo form_input(array('name' => 'dateFinish', 'class' => 'span2 datepicker'), set_value('dateFinish'));
+                echo form_error('dateFinish');
+                ?>
+              </div>
+            </div>
+
+            
             <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Ver" />
             <?php echo form_close(); ?>  
           </fieldset>
@@ -65,8 +75,8 @@
     </div>
   </div>
 
-  <div class="container formContainer logincontainer">
-    <div class="span9 offset1">
+  <div class="container formContainer">
+    <div class="span10 offset1">
       <div class="block_content row">
           <fieldset>
 
@@ -75,12 +85,13 @@
                   <tr>
                     <th class="center">Fecha de Transacción</th>
                     <th class="center">Mora</th>
+                    <th class="center">Distribuidor</th>
                     <th class="center">Cliente</th>
-                    <!--<th class="center">Distribuidor</th>-->
                     <th class="center">Voucher</th>
                     <th class="center">Total</th>
                     <th class="center">Saldo</th>
                     <th class="center">Detalle</th>
+                    <th class="center">&nbsp;</th>
                     <th class="center">&nbsp;</th>
                   </tr>
                 </thead>
@@ -103,8 +114,8 @@
                       <td class="center"><?php
                         echo dateDiff(date("Y-m-d"), $row->FechaTransaction)." días"; 
                       ?></td>
+                      <td class="center"><?php echo $row->customer; ?></td>
                       <td class="center"><?php echo $row->code." - ".$row->custname; ?></td>
-                      <!--<td class="center"><?php //echo $row->customer; ?></td>-->
                       <td class="center"><?php echo $row->NumVoucher; ?></td>
                       <td class="center"><?php echo $this->Diary_Model->roundnumber($row->Monto, 2); ?></td>
                       <td class="center"><?php echo $this->Diary_Model->roundnumber($saldo, 2); ?></td>
@@ -124,44 +135,75 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h3 id="myModalLabel">Adicionar Pago</h3>
                           </div>
-                          <div class="modal-body">
+                          <div class="modal-body container_form_no_margin">
                             <?php 
                               echo form_open('diary/addpay');
                               echo form_hidden('voucher', $row->NumVoucher);
                             ?>
 
                               <fieldset>
-                                <div class="control-group selected_3">
-                                  <label class="control-label" for="voucher">Voucher: </label>
-                                  <div class="controls">
-                                    <?php echo $row->NumVoucher; ?>
+                                <div class="row">
+                                  <div class="control-group span2">
+                                    <label class="control-label" for="voucher">Voucher: </label>
+                                    <div class="controls">
+                                      <?php echo $row->NumVoucher; ?>
+                                    </div>
                                   </div>
-                                </div>
 
-                                <div class="control-group selected_3">
-                                  <label class="control-label" for="ammount">Monto Total: </label>
-                                  <div class="controls">
-                                    <?php echo $row->Monto; ?>
+                                  <div class="control-group span2">
+                                    <label class="control-label" for="ammount">Monto Total: </label>
+                                    <div class="controls">
+                                      <?php echo $row->Monto; ?>
+                                    </div>
                                   </div>
-                                </div>
 
-                                <div class="control-group selected_3">
-                                  <label class="control-label" for="ammount">Monto:</label>
-                                  <div class="controls">
-                                    <?php
-                                      echo form_input(array('name' => 'ammount', 'class' => '', 'value' => '', 'placeholder' => $saldo)); 
-                                    ?>
+                                  <div class="control-group span2">
+                                    <label class="control-label" for="ammount">Monto:</label>
+                                    <div class="controls">
+                                      <?php
+                                        echo form_input(array('name' => 'ammount', 'class' => 'span1', 'value' => '', 'placeholder' => $saldo)); 
+                                      ?>
+                                    </div>
+                                  </div>
+                                  <div class="control-group span2">
+                                    <label class="control-label" for="ammount">Detalle:</label>
+                                    <div class="controls">
+                                      <?php
+                                        echo form_textarea(array('name' => 'detail', 'class' => 'span2', 'rows' => '2', 'cols' => '10')); 
+                                      ?>
+                                    </div>
                                   </div>
                                 </div>
                               </fieldset>
 
                           </div>
                           <div class="modal-footer">
-                            <?php echo anchor('diary', 'Cancelar', array('class' => 'btnTitle btn btn-info')); ?>
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
                             <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Guardar" />
                           </div>
+
                         </div>
                         <?php echo form_close(); ?>
+                      </td>
+                      <td class="center">
+                        <?php if($this->Account_Model->get_profile() == '1' || $this->Account_Model->get_profile() == '2' || $this->Account_Model->get_profile() == '3') { ?>
+                          <a href="#modal-delete" role="button" class="btn btn-primary" data-toggle="modal">X</a>
+                          
+                        <?php } ?>
+                        <!-- Modal -->
+                        <div id="modal-delete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="myModalLabel">Desactivar</h3>
+                          </div>
+                          <div class="modal-body">
+                            <p>Esta seguro que desea Desactivar ?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                            <?php echo anchor('diary/deactive/'.$row->iddiario, 'Desactivar', array('class' => 'btn btn-primary')); ?>
+                          </div>
+                        </div>
                       </td>
                     </tr>
                   <?php
@@ -185,13 +227,14 @@
                     <th class="center">&nbsp;</th>
                     <th><input type="text" name="search_engine" placeholder="fecha" class="search_init span1" /></th>
                     <th><input type="text" name="search_browser" placeholder="mora" class="search_init span1" /></th>
-                    <!--<th><input type="text" name="search_platform" placeholder="distribuidor" class="search_init span1" /></th>-->
+                    <th><input type="text" name="search_platform" placeholder="distribuidor" class="search_init span1" /></th>
                     <th><input type="text" name="search_platform" placeholder="cliente" class="search_init span1" /></th>
                     <th><input type="text" name="search_version" placeholder="Voucher" class="search_init span1" /></th>
                     <th><input type="text" name="search_grade" placeholder="Total" class="search_init span1" /></th>
                     <th><input type="text" name="search_version" placeholder="Saldo" class="search_init span1" /></th>
                     <th><input type="text" name="search_grade" placeholder="detalle" class="search_init span1" /></th>
-                     <th class="center">&nbsp;</th>
+                    <th class="center">&nbsp;</th>
+                    <th class="center">&nbsp;</th>
                   </tr>
                 </tfoot>
             </table>
@@ -238,7 +281,7 @@
     $.ajax({
       type: "POST",
       url: 'diary/getpays',
-      data: 'voucher='+aData[4],
+      data: 'voucher='+aData[5],
       dataType: "text",
       cache: false,
       async: false,
@@ -338,3 +381,94 @@
    
   } );
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

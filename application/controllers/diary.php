@@ -51,7 +51,7 @@
         $data_in['idCustomer'] = $transclient[$i];
         $data_in['Type'] = "P";
         $data_in['Monto'] = $transammount[$i];
-        $data_in['Estado'] = "activo";
+        $data_in['Estado'] = "1";
         $data_in['Detalle'] = $transdetail[$i];
 
         $this->Diary_Model->create($data_in);
@@ -74,7 +74,7 @@
       $data_in['Type'] = "C";
       $data_in['Monto'] = $this->input->post('ammount');
       $data_in['Estado'] = '1';
-      $data_in['Detalle'] = "pago";
+      $data_in['Detalle'] = $this->input->post('detail');
 
       if ($this->Diary_Model->create($data_in) == TRUE) {
         redirect("diary");
@@ -104,6 +104,9 @@
       $this->form_validation->set_message('xss_clean', 'security: danger value.');
 
       $data_in['distributor'] = $this->input->post('distributor');
+      $data_in['dateStart'] = $this->input->post('dateStart');
+      $data_in['dateFinish'] = $this->input->post('dateFinish');
+      $data_in['status'] = $this->input->post('status');
 
       $data['diaries'] = $this->Diary_Model->search($data_in);
       $data['balance'] = $this->Diary_Model->get_balance();
@@ -115,32 +118,17 @@
       $this->load->view('template/template', $data);
     }
 
-
-/*
-    public function edit($id = "") {
-      if ($id != "") {
-        $data['idCity'] = $id;
-        $city = $this->City_Model->get($id);
-        if (empty($city)) {
-            show_404();
-        }
-        $data['city'] = $city[0];
-        $data['category'] = 'city';
-        $data['action'] = 'edit';
-        $data['page'] = 'form';
-        $this->load->view('template/template', $data);
-      }
-      else
-        redirect('city');
+     // desactivar
+    function deactive($id) {
+      $this->Diary_Model->set_status($id, '3');
+      // Save log for this action
+      $data['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
+      $data['idAction'] = '18';
+      $data['idReferencia'] = $id;
+      $data['FechaHora'] = date("y-m-d, g:i");
+      $this->Log_Model->create($data);
+      redirect('product');
     }
-
-    
-
-    function delete($id) {
-      $this->City_Model->delete($id);
-      redirect('district');
-    } 
-*/
 
   }
 ?>

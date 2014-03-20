@@ -46,6 +46,7 @@ class Diary_model extends CI_Model {
       $this->db->join('customer', 'daily.idCustomer = customer.idCustomer');
       $this->db->join('users', 'daily.idUser = users.idUser');
       $this->db->where('daily.Type','P');
+      $this->db->where('daily.Estado','1');
       $this->db->group_by('daily.NumVoucher'); 
       $this->db->order_by('daily.iddiario', "asc");
 
@@ -84,7 +85,7 @@ Detalle
       $querystring = '
       SELECT * 
       FROM daily
-      WHERE NumVoucher = '.$data_in['voucher'].'
+      WHERE NumVoucher = "'.$data_in['voucher'].'"
       AND Type = "C"
       ';
 
@@ -95,23 +96,62 @@ Detalle
     }
 
 function search ($data_in){
-  $this->db->select( '*' );
+  $this->db->select( 'daily.iddiario,
+  daily.FechaRegistro,
+  daily.FechaTransaction,
+  daily.idUser,
+  daily.idUserSupervisor,
+  daily.idTransaction,
+  daily.NumVoucher,
+  daily.idCustomer,
+  daily.Type,
+  daily.Monto,
+  daily.Estado,
+  daily.Detalle,
+  customer.CodeCustomer as code,
+  customer.NombreTienda as custname,
+  users.Email as customer' );
   $this->db->from('daily');
+  $this->db->join('customer', 'daily.idCustomer = customer.idCustomer');
+  $this->db->join('users', 'daily.idUser = users.idUser');
   $this->db->where('Type','P');
-  $this->db->where('idUser',$data_in['distributor']);
-  $this->db->group_by('NumVoucher'); 
-  $this->db->order_by('iddiario', "asc");
 
+  if(isset($data_in['status']) && $data_in['status'] != ""){
+    $this->db->where('daily.Estado', $data_in['status']);
+  }
+  if(isset($data_in['distributor']) && $data_in['distributor'] != "" && $data_in['distributor'] != "0"){
+    $this->db->where('daily.idUser',$data_in['distributor']);
+  }
+  if(isset($data_in['dateStart']) && $data_in['dateStart'] != ""){
+    $fecha = $data_in['dateStart'];
+    $nuevafecha = strtotime ( '-1 day' , strtotime ( $fecha ) ) ;
+    $nuevafecha = date ( 'y-m-d' , $nuevafecha );
+    $this->db->where('DATE(daily.FechaTransaction) >', $nuevafecha);
+  }
+  if(isset($data_in['dateFinish']) && $data_in['dateFinish'] != ""){
+    $fecha = $data_in['dateFinish'];
+    $nuevafecha2 = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
+    $nuevafecha2 = date ( 'y-m-d' , $nuevafecha2 );
+    $this->db->where('DATE(daily.FechaTransaction) <', $nuevafecha2);
+  }
+
+  $this->db->group_by('daily.NumVoucher'); 
+  $this->db->order_by('daily.iddiario', "asc");
   $query = $this->db->get();
   return $query->result();
 }
-
-
 
 function roundnumber ($numero, $decimales) {
   //$factor = pow(10, $decimales);
   //return (round($numero*$factor)/$factor); 
   return (number_format($numero, $decimales));
+}
+
+function set_status($id, $val) {
+  $data = array('Estado' => $val);
+
+  $this->db->where('iddiario', $id);
+  $this->db->update('daily', $data);
 }
 
 /*

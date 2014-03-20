@@ -6,7 +6,7 @@
       <h1 class="floatLeft">Diario</h1>
     </div>
 
-    <div class="span10 smallTableCenter">      
+    <div class="span12">      
       <div class="tabbable">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab1" data-toggle="tab">Todos</a></li>
@@ -21,7 +21,6 @@
                 <h3 id="myModalLabel">PRESTAMOS</h3>
               </div>
               <div class="modal-body">
-                
                 <fieldset>
                   <input id="btnAddModal" class="btn btn-primary" type="submit"  value="+" />
                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-tabled" width="100%">
@@ -62,7 +61,7 @@
 
               </div>
               <div class="modal-footer">
-                <?php echo anchor('diary', 'Cancelar', array('class' => 'btnTitle btn btn-info')); ?>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
                 <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Guardar" />
               </div>
             </div>
@@ -81,6 +80,20 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="modal-confirm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Registros guardados</h3>
+  </div>
+  <div class="modal-body">
+    <p>Registros guardados correctamente ?</p>
+  </div>
+  <div class="modal-footer">
+    <?php echo anchor('diary', 'Ok', array('class' => 'btn btn-primary')); ?>
   </div>
 </div>
 
@@ -119,7 +132,6 @@
     });
 
     $("#btnSave").click(function(){
-      //showLoadingAnimation($('#clientDropdown'));
       distributor = "";
       client = "";
       date = "";
@@ -138,22 +150,26 @@
 
       $.ajax({
         type: "POST",
+        //url: 'https://mariani.bo/horizon-sc/index.php/diary/saveblock',
         url: 'diary/saveblock',
         data: 'distributor='+distributor+'&client='+client+'&date='+date+'&voucher='+voucher+'&ammount='+ammount+'&detail='+detail,
-        dataType: 'json',
+        dataType: 'text',
         cache: false,
+        async: false,
         success: function(data) {
-          //redirectxx();
+          console.log("==============================");
+          $('#modal-diarycreate').modal('hide');
+          $('#modal-confirm').modal('show');
         }
       })
 
       $('#diaryTableModal').modal('hide');
-      //hideLoadingAnimation($('#clientDropdown'));
+      //redirect();
     });
 
   });
-  
-  function redirectxx(){
-    <?php //redirect('diary'); ?>
+  function redirect(){
+    window.location.href = "<?php echo site_url('diary'); ?>";
+    return true;
   }
 </script>
