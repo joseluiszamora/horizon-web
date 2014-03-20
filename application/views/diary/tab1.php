@@ -7,8 +7,11 @@
   function dateDiff($start, $end) {
     $start_ts = strtotime($start);
     $end_ts = strtotime($end);
-    $diff = $end_ts - $start_ts;
-    return round($diff / 86400);
+    $diff = $start_ts - $end_ts;
+    $diff = round($diff / 86400);
+    if ($diff < 0)
+      $diff = 0;
+    return $diff;
   }
 
 ?>
@@ -142,7 +145,7 @@
                             ?>
 
                               <fieldset>
-                                <div class="row">
+                                <div class="row logincontainer">
                                   <div class="control-group span2">
                                     <label class="control-label" for="voucher">Voucher: </label>
                                     <div class="controls">

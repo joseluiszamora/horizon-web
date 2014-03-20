@@ -36,14 +36,15 @@
                     </thead>
                     <tbody id="diaryTableModal">
                       <tr class="even gradeX">
+                        
                         <td class="center" id ="distributorDropdown">
                           <?php
-                            echo form_dropdown('distributor', $distributor, '', 'class=""');
+                            echo form_dropdown('distributor', $distributor, '', ' ');
                           ?>
                         </td>
                         <td class="" id ="clientDropdown">
                           <?php
-                            echo form_dropdown('client', $clients, '', 'class=""');
+                            echo form_dropdown('client', $clients, '', ' ');
                           ?>
                         </td>
                         <td class="center">
@@ -90,7 +91,7 @@
     <h3 id="myModalLabel">Registros guardados</h3>
   </div>
   <div class="modal-body">
-    <p>Registros guardados correctamente ?</p>
+    <p>Registros guardados correctamente</p>
   </div>
   <div class="modal-footer">
     <?php echo anchor('diary', 'Ok', array('class' => 'btn btn-primary')); ?>

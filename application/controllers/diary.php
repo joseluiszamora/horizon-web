@@ -42,19 +42,21 @@
       $transdetail = explode("***", $this->input->post('detail'));
 
       for ($i=0; $i < count($transdate)-1; $i++) { 
-        $data_in['FechaRegistro'] = date("y-m-d");
-        $data_in['FechaTransaction'] = $transdate[$i];
-        $data_in['idUser'] = $transdistributor[$i];
-        $data_in['idUserSupervisor'] = "1";
-        $data_in['idTransaction'] = "1";
-        $data_in['NumVoucher'] = $transvoucher[$i];
-        $data_in['idCustomer'] = $transclient[$i];
-        $data_in['Type'] = "P";
-        $data_in['Monto'] = $transammount[$i];
-        $data_in['Estado'] = "1";
-        $data_in['Detalle'] = $transdetail[$i];
+        if ( $transdate[$i] != "" & $transdistributor[$i] != "0" & $transvoucher[$i] != "" & $transclient[$i] != "0" & $transammount[$i] != "" & $transammount[$i] != "" ) {
+          $data_in['FechaRegistro'] = date("y-m-d");
+          $data_in['FechaTransaction'] = $transdate[$i];
+          $data_in['idUser'] = $transdistributor[$i];
+          $data_in['idUserSupervisor'] = "1";
+          $data_in['idTransaction'] = "1";
+          $data_in['NumVoucher'] = $transvoucher[$i];
+          $data_in['idCustomer'] = $transclient[$i];
+          $data_in['Type'] = "P";
+          $data_in['Monto'] = $transammount[$i];
+          $data_in['Estado'] = "1";
+          $data_in['Detalle'] = $transdetail[$i];
 
-        $this->Diary_Model->create($data_in);
+          $this->Diary_Model->create($data_in);
+        }
       }
       redirect("diary");
     }
