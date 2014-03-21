@@ -14,8 +14,8 @@ function hideLoadingAnimation(obj){
 }
 $(document).ready(function(){
   //var url = "http://www.ruizmier.com/systems/horizon/";
-  var url = "https://mariani.bo/horizon-sc/index.php/";
-  //var url = "http://localhost/horizon/index.php/";
+  //var url = "https://mariani.bo/horizon-sc/index.php/";
+  var url = "http://localhost/horizon/index.php/";
 
   // chosen selects
   $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
@@ -321,6 +321,12 @@ $(document).ready(function(){
           $('#diaryTableModal select[name="client"]').append  (opt);
         });
         hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
+
+
+        $(".chosen-select2").chosen({
+          no_results_text: "Ningún resultado encontrado :(",
+          width: "200px"
+        }); 
       });
     
     });

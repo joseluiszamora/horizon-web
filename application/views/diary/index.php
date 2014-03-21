@@ -20,7 +20,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">PRESTAMOS</h3>
               </div>
-              <div class="modal-body">
+              <div class="modal-body" style="min-height: 500px;">
                 <fieldset>
                   <input id="btnAddModal" class="btn btn-primary" type="submit"  value="+" />
                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-tabled" width="100%">
@@ -39,12 +39,12 @@
                         
                         <td class="center" id ="distributorDropdown">
                           <?php
-                            echo form_dropdown('distributor', $distributor, '', ' ');
+                            echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
                           ?>
                         </td>
                         <td class="" id ="clientDropdown">
                           <?php
-                            echo form_dropdown('client', $clients, '', ' ');
+                            echo form_dropdown('client', $clients, '', 'class="chosen-select2"');
                           ?>
                         </td>
                         <td class="center">
@@ -140,6 +140,11 @@
     $("#btnAddModal").click(function(){
       $("#diaryTableModal").append(registry);
       $(".datepicker2").datepicker();
+
+      $(".chosen-select2").chosen({
+        no_results_text: "Ningún resultado encontrado :(",
+        width: "200px"
+      }); 
     });
 
     $("#btnSave").click(function(){
@@ -168,29 +173,15 @@
 
       var form = $("#formSaveBlock form");
       form.submit();
-      /*
-      $.ajax({
-        type: "POST",
-        //url: 'https://mariani.bo/horizon-sc/index.php/diary/saveblock',
-        url: 'diary/saveblock',
-        data: 'distributor='+distributor+'&client='+client+'&date='+date+'&voucher='+voucher+'&ammount='+ammount+'&detail='+detail,
-        dataType: 'text',
-        cache: false,
-        async: false,
-        success: function(data) {
-          console.log("==============================");
-          $('#modal-diarycreate').modal('hide');
-          $('#modal-confirm').modal('show');
-        }
-      })
-
-      $('#diaryTableModal').modal('hide');
-      //redirect();*/
     });
 
+
+    $('#modal-diarycreate').on('show', function () {
+      $(".chosen-select2").chosen({
+        no_results_text: "Ningún resultado encontrado :(",
+        width: "200px"
+      }); 
+    })
+     
   });
-  function redirect(){
-    window.location.href = "<?php echo site_url('diary'); ?>";
-    return true;
-  }
 </script>
