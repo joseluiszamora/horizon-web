@@ -62,6 +62,16 @@
 
               </div>
               <div class="modal-footer">
+                <div id="formSaveBlock">
+                  <?php echo form_open('diary/saveblock'); ?>  
+                  <input type="hidden" value="" name="distributor" id="distributor" >
+                  <input type="hidden" value="" name="date" id="date" >
+                  <input type="hidden" value="" name="voucher" id="voucher" >
+                  <input type="hidden" value="" name="client" id="client" >
+                  <input type="hidden" value="" name="ammount" id="ammount" >
+                  <input type="hidden" value="" name="detail" id="detail" >
+                  <?php echo form_close(); ?>  
+                </div>
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
                 <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Guardar" />
               </div>
@@ -149,6 +159,16 @@
         detail += $(this).find("#detail").val()+"***";
       });
 
+      $("#formSaveBlock #distributor").val(distributor);
+      $("#formSaveBlock #date").val(date);
+      $("#formSaveBlock #voucher").val(voucher);
+      $("#formSaveBlock #client").val(client);
+      $("#formSaveBlock #ammount").val(ammount);
+      $("#formSaveBlock #detail").val(detail);
+
+      var form = $("#formSaveBlock form");
+      form.submit();
+      /*
       $.ajax({
         type: "POST",
         //url: 'https://mariani.bo/horizon-sc/index.php/diary/saveblock',
@@ -165,7 +185,7 @@
       })
 
       $('#diaryTableModal').modal('hide');
-      //redirect();
+      //redirect();*/
     });
 
   });

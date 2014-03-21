@@ -63,16 +63,15 @@
 
     function addpay() {
       $this->form_validation->set_rules('ammount', 'Cantidad', 'xss_clean|required');
-
       $this->form_validation->set_message('required', '%s es obligatorio.');
       
       $data_in['FechaRegistro'] = date("y-m-d");
       $data_in['FechaTransaction'] = date("y-m-d");
-      $data_in['idUser'] = "1";
+      $data_in['idUser'] = $this->input->post('distributor');
       $data_in['idUserSupervisor'] = "1";
       $data_in['idTransaction'] = "1";
       $data_in['NumVoucher'] = $this->input->post('voucher');
-      $data_in['idCustomer'] = "123";
+      $data_in['idCustomer'] = $this->input->post('client');
       $data_in['Type'] = "C";
       $data_in['Monto'] = $this->input->post('ammount');
       $data_in['Estado'] = '1';
@@ -129,7 +128,13 @@
       $data['idReferencia'] = $id;
       $data['FechaHora'] = date("y-m-d, g:i");
       $this->Log_Model->create($data);
-      redirect('product');
+      redirect("diary");
+    }
+
+
+    function get_clients_for_distributor($idDistrib=-1) {
+      $areas = $this->User_Model->get_area_by_id($idDistrib);
+      echo(json_encode($this->Client_Model->get_customers_by_area($areas)));
     }
 
   }

@@ -14,8 +14,8 @@ function hideLoadingAnimation(obj){
 }
 $(document).ready(function(){
   //var url = "http://www.ruizmier.com/systems/horizon/";
-  var url = "https://mariani.bo/horizon/index.php/";
-  //var url = "http://localhost/horizon-mariani/";
+  var url = "https://mariani.bo/horizon-sc/index.php/";
+  //var url = "http://localhost/horizon/index.php/";
 
   // chosen selects
   $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
@@ -293,6 +293,38 @@ $(document).ready(function(){
       hideLoadingAnimation($('.formContainer select[name="product"]'));
     });
   });
+
+
+
+  // select distributor and get clients
+  $('#diaryTableModal select[name="distributor"]').change(function(){
+      $('#diaryTableModal select[name="client"] > option').remove();
+
+      var id = $(this).val();
+      console.log("---> " + id);
+
+      showLoadingAnimation($('#diaryTableModal select[name="client"]'));
+      
+      $.getJSON( url+"diary/get_clients_for_distributor/"+id, {
+        format: "jsonp",
+        async: true,
+        contentType: 'application/json; charset=utf-8', 
+        cache: false,
+        crossDomain: true
+      })
+      .done(function( limes ) {
+        $('#diaryTableModal select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');
+        $.each(limes,function(id,name){
+          var opt = $('<option>');
+          opt.val(id);
+          opt.text(name);
+          $('#diaryTableModal select[name="client"]').append  (opt);
+        });
+        hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
+      });
+    
+    });
+
 
   // LIMPIAR FORMULARIO
   $('.formContainer #btn_clean').click(function(){

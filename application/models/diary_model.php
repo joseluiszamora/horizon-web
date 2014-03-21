@@ -36,6 +36,7 @@ class Diary_model extends CI_Model {
         daily.Monto,
         daily.Estado,
         daily.Detalle,
+        customer.idCustomer,
         customer.CodeCustomer as code,
         customer.NombreTienda as custname,
         users.Email as customer'
@@ -48,6 +49,7 @@ class Diary_model extends CI_Model {
       $this->db->where('daily.Type','P');
       $this->db->where('daily.Estado','1');
       $this->db->group_by('daily.NumVoucher'); 
+      $this->db->group_by('daily.idCustomer'); 
       $this->db->order_by('daily.iddiario', "asc");
 
       $query = $this->db->get();
@@ -108,6 +110,7 @@ function search ($data_in){
   daily.Monto,
   daily.Estado,
   daily.Detalle,
+  customer.idCustomer,
   customer.CodeCustomer as code,
   customer.NombreTienda as custname,
   users.Email as customer' );
@@ -136,6 +139,7 @@ function search ($data_in){
   }
 
   $this->db->group_by('daily.NumVoucher'); 
+  $this->db->group_by('daily.idCustomer'); 
   $this->db->order_by('daily.iddiario', "asc");
   $query = $this->db->get();
   return $query->result();

@@ -239,6 +239,20 @@
       return $area;   
     }
 
+    function get_area_by_id($id) {
+      $this->db->select('zona.idZona as zona');
+      $this->db->from(' zona');
+      $this->db->join('users', 'users.idZona = zona.idZona');
+      $this->db->where('users.idUser', $id);
+      $query = $this->db->get();      
+      $result = $query->result_array();
+      $area = "all";
+      foreach ($result as $r) {
+        $area = $r['zona'];
+      }
+      return $area;   
+    }
+
     function set_user_status($usr, $val) {
       $data = array('Enable' => $val);
 

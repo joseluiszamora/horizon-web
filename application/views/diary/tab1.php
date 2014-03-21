@@ -142,6 +142,8 @@
                             <?php 
                               echo form_open('diary/addpay');
                               echo form_hidden('voucher', $row->NumVoucher);
+                              echo form_hidden('distributor', $row->idCustomer);
+                              echo form_hidden('client', $row->idUser);
                             ?>
 
                               <fieldset>
@@ -213,19 +215,22 @@
                     }
                   ?>               
                 </tbody>
-                <!--<tfoot>
+                <tfoot>
                   <tr>
                     <th class="center">&nbsp;</th>
                     <th class="center">Fecha de Transacción</th>
                     <th class="center">Mora</th>
+                    <th class="center">Distribuidor</th>
                     <th class="center">Cliente</th>
                     <th class="center">Voucher</th>
                     <th class="center">Total</th>
                     <th class="center">Saldo</th>
                     <th class="center">Detalle</th>
+                    <th class="center">&nbsp;</th>
+                    <th class="center">&nbsp;</th>
                   </tr>
-                </tfoot>-->
-                <tfoot>
+                </tfoot>
+                <!--<tfoot>
                   <tr>
                     <th class="center">&nbsp;</th>
                     <th><input type="text" name="search_engine" placeholder="fecha" class="search_init span1" /></th>
@@ -239,7 +244,7 @@
                     <th class="center">&nbsp;</th>
                     <th class="center">&nbsp;</th>
                   </tr>
-                </tfoot>
+                </tfoot>-->
             </table>
 
           </fieldset>
