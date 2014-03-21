@@ -323,13 +323,59 @@ $(document).ready(function(){
         hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
 
 
-        $(".chosen-select2").chosen({
+        $(this).parents("tr").find('select[name="client"]').chosen({
           no_results_text: "Ningún resultado encontrado :(",
           width: "200px"
         }); 
       });
     
     });
+
+
+
+/*
+ $('#diaryTableModal select[name="distributor"]').change(function(){
+      
+      $(this).parents("tr").find('select[name="client"] > option').remove();
+
+      var id = $(this).val();
+      //console.log($(this).parents("tr").find('select[name="client"]'));
+
+      //showLoadingAnimation($(this).parents("tr").find('select[name="client"]'));
+      //$(this).parents("tr").find("#clientDropdown").append('<select class="chosen-select2" name="client"><option selected="selected" value="0">Seleccione Cliente</option></select>');
+      $.getJSON( url+"diary/get_clients_for_distributor/"+id, {
+        format: "jsonp",
+        async: true,
+        contentType: 'application/json; charset=utf-8', 
+        cache: false,
+        crossDomain: true
+      })
+      .done(function( limes ) {
+        $(this).parents("tr").find('select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');
+        $.each(limes,function(id,name){
+          var opt = $('<option>');
+          opt.val(id);
+          opt.text(name);
+          $(this).parents("tr").find('select[name="client"]').append(opt);
+          console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&6");
+          console.log($(this).parents("tr").find('select[name="client"]'));
+        });
+        //hideLoadingAnimation($(this).parents("tr").find('select[name="client"]'));
+
+
+        $(".chosen-select2").chosen({
+          no_results_text: "Ningún resultado encontrado :(",
+          width: "200px"
+        });
+      });
+    
+    });
+
+
+*/
+
+
+
 
 
   // LIMPIAR FORMULARIO

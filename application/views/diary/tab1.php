@@ -49,7 +49,7 @@
                 ?>
               </div>
             </div>
-<br><br><br><br>
+            <br><br><br><br>
             <div class="control-group selected_1">
               <label class="control-label" for="dateStart">Desde:</label>
               <div class="controls">
@@ -70,10 +70,10 @@
               </div>
             </div>
 
-            
-            <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Ver" />
-            <?php echo form_close(); ?>  
-          </fieldset>
+          
+          <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Ver" />
+          <?php echo form_close(); ?>  
+        </fieldset>
       </div>
     </div>
   </div>
@@ -82,7 +82,6 @@
     <div class="span10 offset1">
       <div class="block_content row">
           <fieldset>
-
              <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table" width="100%">
                 <thead>
                   <tr>
@@ -99,7 +98,6 @@
                   </tr>
                 </thead>
                 <tbody id="diaryTable">
-
                   <?php 
                     foreach ($diaries as $row) {
                       $monto = $row->Monto;
@@ -149,6 +147,10 @@
                               <fieldset>
                                 <div class="row logincontainer">
                                   <div class="control-group span2">
+                                    <label class="control-label" for="voucher">Cliente : <?php echo $row->code." - ".$row->custname; ?></label>
+                                  </div>
+
+                                  <div class="control-group span2">
                                     <label class="control-label" for="voucher">Voucher: </label>
                                     <div class="controls">
                                       <?php echo $row->NumVoucher; ?>
@@ -191,24 +193,24 @@
                         <?php echo form_close(); ?>
                       </td>
                       <td class="center">
-                        <?php if($this->Account_Model->get_profile() == '1' || $this->Account_Model->get_profile() == '2' || $this->Account_Model->get_profile() == '3') { ?>
-                          <a href="#modal-delete" role="button" class="btn btn-primary" data-toggle="modal">X</a>
-                          
+                        <?php 
+                          if($this->Account_Model->get_profile() == '1' || $this->Account_Model->get_profile() == '2' || $this->Account_Model->get_profile() == '3') { ?>
+                          <a href="<?php echo '#modal-delete-'.$row->iddiario; ?>" role="button" class="btn btn-primary" data-toggle="modal">X</a>
+                          <!-- Modal -->
+                          <div id="<?php echo 'modal-delete-'.$row->iddiario;?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                              <h3 id="myModalLabel">Desactivar</h3>
+                            </div>
+                            <div class="modal-body">
+                              <p>Esta seguro que desea Desactivar ?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                              <?php echo anchor('diary/deactive/'.$row->iddiario, 'Desactivar', array('class' => 'btn btn-primary')); ?>
+                            </div>
+                          </div>
                         <?php } ?>
-                        <!-- Modal -->
-                        <div id="modal-delete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h3 id="myModalLabel">Desactivar</h3>
-                          </div>
-                          <div class="modal-body">
-                            <p>Esta seguro que desea Desactivar ?</p>
-                          </div>
-                          <div class="modal-footer">
-                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                            <?php echo anchor('diary/deactive/'.$row->iddiario, 'Desactivar', array('class' => 'btn btn-primary')); ?>
-                          </div>
-                        </div>
                       </td>
                     </tr>
                   <?php
