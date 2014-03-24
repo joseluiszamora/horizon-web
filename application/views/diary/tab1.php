@@ -23,14 +23,19 @@
         <h2 class="span4">Diario</h2>
       </div>
       <div class="block_content row">
-          <?php echo form_open('diary/search'); ?>  
+          <?php echo form_open('diary/search'); 
+          ?>
 
           <fieldset>
             <div class="control-group selected_3">
               <label class="control-label" for="city">Distribuidor</label>
               <div class="controls">
                 <?php
-                  echo form_dropdown('distributor', $distributor, '', 'class="chosen-select" ');
+                  if (isset($parameters['distributor'])) {
+                    echo form_dropdown('distributor', $distributor, $parameters['distributor'], 'class="chosen-select" ');
+                  }else{
+                    echo form_dropdown('distributor', $distributor, '', 'class="chosen-select" ');
+                  }
                 ?>
               </div>
             </div>
@@ -40,12 +45,16 @@
               <div class="controls">
                 <?php
                   $options = array(
-                    '' => 'Todos',
-                    '1' => 'Activo',
-                    '2' => 'Pagado',
-                    '3' => 'Cancelado'
+                    '1' => 'Pendiente',
+                    '2' => 'Pagado/Cancelado',
+                    '3' => 'Eliminado'
                   );
-                  echo form_dropdown('status', $options, '', 'class="chosen-select" ');
+
+                  if (isset($parameters['status'])) {
+                    echo form_dropdown('status', $options, $parameters['status'], 'class="chosen-select" ');
+                  }else{
+                    echo form_dropdown('status', $options, '', 'class="chosen-select" ');
+                  }
                 ?>
               </div>
             </div>
@@ -54,8 +63,11 @@
               <label class="control-label" for="dateStart">Desde:</label>
               <div class="controls">
                 <?php 
-                echo form_input(array('name' => 'dateStart', 'class' => 'span2 datepicker'), set_value('dateStart')); 
-                echo form_error('dateStart');
+                  if (isset($parameters['dateStart'])) {
+                    echo form_input(array('name' => 'dateStart', 'class' => 'span2 datepicker', 'value' => $parameters['dateStart'])); 
+                  }else{
+                    echo form_input(array('name' => 'dateStart', 'class' => 'span2 datepicker')); 
+                  }
                 ?>
               </div>
             </div>
@@ -63,9 +75,12 @@
             <div class="control-group selected_1">
               <label class="control-label" for="dateFinish">Hasta:</label>
               <div class="controls">
-                <?php 
-                echo form_input(array('name' => 'dateFinish', 'class' => 'span2 datepicker'), set_value('dateFinish'));
-                echo form_error('dateFinish');
+                <?php
+                  if (isset($parameters['dateFinish'])) {
+                    echo form_input(array('name' => 'dateFinish', 'class' => 'span2 datepicker', 'value' => $parameters['dateFinish'])); 
+                  }else{
+                    echo form_input(array('name' => 'dateFinish', 'class' => 'span2 datepicker')); 
+                  }
                 ?>
               </div>
             </div>
@@ -126,7 +141,7 @@
                       
                       <?php if($saldo > 0){ ?>
                         <!-- Button to trigger modal -->
-                        <a href="<?php echo '#modal-'.$row->iddiario ?>" role="button" class="btn btn-primary" data-toggle="modal">Adicionar Pago</a>
+                        <a href="<?php echo '#modal-'.$row->iddiario ?>" role="button" class="btn btn-primary" data-toggle="modal">+ Pago</a>
                         
                       <?php } ?>
                          

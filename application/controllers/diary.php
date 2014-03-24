@@ -112,6 +112,7 @@
       $data['diaries'] = $this->Diary_Model->search($data_in);
       $data['balance'] = $this->Diary_Model->get_balance();
 
+      $data['parameters'] = $data_in;
       $data['distributor'] = $this->User_Model->get_users_by_profile_id_mail(4);
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
