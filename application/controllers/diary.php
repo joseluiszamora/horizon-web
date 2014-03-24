@@ -17,7 +17,7 @@
     function index() {
       $data['diaries'] = $this->Diary_Model->get_diaries();
       $data['balance'] = $this->Diary_Model->get_balance();
-      $data['distributor'] = $this->User_Model->get_users_by_profile_id_mail(4);
+      $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
       $data['page'] = 'index';
@@ -25,7 +25,7 @@
     }
 
     function create() {
-      $data['distributor'] = $this->User_Model->get_users_by_profile_id_mail(4);
+      $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
       $data['action'] = 'new';
@@ -113,7 +113,7 @@
       $data['balance'] = $this->Diary_Model->get_balance();
 
       $data['parameters'] = $data_in;
-      $data['distributor'] = $this->User_Model->get_users_by_profile_id_mail(4);
+      $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
       $data['page'] = 'index';

@@ -168,6 +168,31 @@
       return $dropdown;
     }
 
+    // all users except admin
+    function get_users_by_profile_no_admin() {
+      $this->db->select(
+        'users.idUser, 
+        users.ci, 
+        users.Nombre, 
+        users.Apellido, 
+        users.Email'
+      );
+      $this->db->from('users');
+      $this->db->order_by('idUser', "asc");
+      $this->db->where('users.NivelAcceso !=', 1);
+
+      $query = $this->db->get();
+      $dropdown = array();
+      $dropdown[0] = 'Seleccione Usuario';
+
+      $result = $query->result_array();
+      foreach ($result as $r) {
+        $dropdown[$r['idUser']] = $r['Email'];
+      }
+
+      return $dropdown;
+    }
+
 
     public function get($id) {
       $query = $this->db->get_where('users',array('idUser'=>$id,'Enable'=>'1'));

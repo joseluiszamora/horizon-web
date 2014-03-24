@@ -100,6 +100,12 @@
              <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table" width="100%">
                 <thead>
                   <tr>
+                    <th class="center" colspan="5"></th>
+                    <th class="center" colspan="2">Total: 234234.00</th>
+                    <th class="center" colspan="2">Saldo: 234234.00</th>
+                    <th class="center"  colspan="3">&nbsp;</th>
+                  </tr>
+                  <tr>
                     <th class="center">Fecha de Transacción</th>
                     <th class="center">Mora</th>
                     <th class="center">Distribuidor</th>
@@ -124,12 +130,12 @@
                       }
 
                       $saldo = $monto - $pagado;
+
+                      $moradate = dateDiff(date("Y-m-d"), $row->FechaTransaction)." días";
                   ?>
                     <tr class="even gradeX">
                       <td class="center"><?php echo $row->FechaTransaction; ?></td>
-                      <td class="center"><?php
-                        echo dateDiff(date("Y-m-d"), $row->FechaTransaction)." días"; 
-                      ?></td>
+                      <td class="center"><?php echo $moradate; ?></td>
                       <td class="center"><?php echo $row->customer; ?></td>
                       <td class="center"><?php echo $row->code." - ".$row->custname; ?></td>
                       <td class="center"><?php echo $row->NumVoucher; ?></td>
@@ -305,7 +311,7 @@
     
     $.ajax({
       type: "POST",
-      url: 'diary/getpays',
+      url: '<?php echo base_url(); ?>index.php/diary/getpays',
       data: 'voucher='+aData[5],
       dataType: "text",
       cache: false,
