@@ -470,3 +470,9 @@ outline-width:0;
 .container_form_no_margin form{
 	margin: 0 0 0 20px !important;
 }
+
+.resalt{
+	padding: 2px 5px !important;
+	color: #990000 !important;
+	font-size: 15px;
+}

@@ -15,6 +15,11 @@
     }
 
     function index() {
+      $data_in['status'] = "1";
+      $data_in['type'] = "P";
+      $data['total'] = $this->Diary_Model->ammounts_search($data_in);
+      $data_in['type'] = "C";
+      $data['saldo'] = $this->Diary_Model->ammounts_search($data_in);
       $data['diaries'] = $this->Diary_Model->get_diaries();
       $data['balance'] = $this->Diary_Model->get_balance();
       $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
@@ -67,11 +72,11 @@
       
       $data_in['FechaRegistro'] = date("y-m-d");
       $data_in['FechaTransaction'] = date("y-m-d");
-      $data_in['idUser'] = $this->input->post('distributor');
+      $data_in['idUser'] = $this->input->post('client');
       $data_in['idUserSupervisor'] = "1";
       $data_in['idTransaction'] = "1";
       $data_in['NumVoucher'] = $this->input->post('voucher');
-      $data_in['idCustomer'] = $this->input->post('client');
+      $data_in['idCustomer'] = $this->input->post('distributor');
       $data_in['Type'] = "C";
       $data_in['Monto'] = $this->input->post('ammount');
       $data_in['Estado'] = '1';
@@ -113,6 +118,10 @@
       $data['balance'] = $this->Diary_Model->get_balance();
 
       $data['parameters'] = $data_in;
+      $data_in['type'] = "P";
+      $data['total'] = $this->Diary_Model->ammounts_search($data_in);
+      $data_in['type'] = "C";
+      $data['saldo'] = $this->Diary_Model->ammounts_search($data_in);
       $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
@@ -123,6 +132,12 @@
      // desactivar
     function deactive($id) {
       $this->Diary_Model->set_status($id, '3');
+      $diary = $this->Diary_Model->get($id);
+      $diaries_list = $this->Diary_Model->get_diaries_by_params($diary[0]->NumVoucher, $diary[0]->idCustomer, "C");
+
+      foreach ($diaries_list as $dl) {
+        $this->Diary_Model->set_status($dl->iddiario, '3');
+      }
       // Save log for this action
       $data['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
       $data['idAction'] = '18';

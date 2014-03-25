@@ -101,8 +101,12 @@
                 <thead>
                   <tr>
                     <th class="center" colspan="5"></th>
-                    <th class="center" colspan="2">Total: 234234.00</th>
-                    <th class="center" colspan="2">Saldo: 234234.00</th>
+                    <th class="center" colspan="2">Total: <span class="alert resalt">
+                      <?php echo $this->Diary_Model->roundnumber($total[0]->saldo, 2); ?>
+                    </span></th>
+                    <th class="center" colspan="2">Saldo: <span class="alert resalt">
+                      <?php echo $this->Diary_Model->roundnumber($total[0]->saldo - $saldo[0]->saldo, 2); ?>
+                    </span></th>
                     <th class="center"  colspan="3">&nbsp;</th>
                   </tr>
                   <tr>
