@@ -164,48 +164,46 @@
                           </div>
                           <div class="modal-body container_form_no_margin">
                             <?php 
-                              echo form_open('diary/addpay');
+                              $attributes = array('id' => 'formaddpay');
+
+                              echo form_open('diary/addpay', $attributes);
                               echo form_hidden('voucher', $row->NumVoucher);
                               echo form_hidden('distributor', $row->idCustomer);
                               echo form_hidden('client', $row->idUser);
                             ?>
 
                               <fieldset>
+                                <legend><?php echo $row->code." - ".$row->custname; ?></legend>
+
                                 <div class="row logincontainer">
-                                  <div class="control-group span2">
-                                    <label class="control-label" for="voucher">Cliente : <?php echo $row->code." - ".$row->custname; ?></label>
+                                  <div class="control-group span3">
+                                    <span class="label label-info font15">Voucher N.: <bold><?php echo $row->NumVoucher; ?></bold> </span>
+                                  </div>
+
+                                  <div class="control-group span3">
+                                    <span class="label label-info font15">Monto Total: <bold><?php echo $this->Diary_Model->roundnumber($row->Monto, 2); ?></bold> </span>
                                   </div>
 
                                   <div class="control-group span2">
-                                    <label class="control-label" for="voucher">Voucher: </label>
-                                    <div class="controls">
-                                      <?php echo $row->NumVoucher; ?>
-                                    </div>
-                                  </div>
+                                    <span class="label label-info font15">Saldo: <bold><?php echo $this->Diary_Model->roundnumber($saldo, 2); ?></bold> </span>
+                                  </div>                                  
+                                </div>
 
-                                  <div class="control-group span2">
-                                    <label class="control-label" for="ammount">Monto Total: </label>
-                                    <div class="controls">
-                                      <?php echo $row->Monto; ?>
+                                <div class="well well-small row logincontainer">
+                                    <div class="control-group span3">
+                                      <label class="control-label" for="ammount">Monto (Max: <?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>):</label>
+                                      <div class="controls">
+                                        <input type="text" max="<?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>" class="span2" value="" name="ammount" id="ammount" required/>
+                                      </div>
                                     </div>
-                                  </div>
-
-                                  <div class="control-group span2">
-                                    <label class="control-label" for="ammount">Monto:</label>
-                                    <div class="controls">
-                                      <?php
-                                        echo form_input(array('name' => 'ammount', 'class' => 'span1', 'value' => '', 'placeholder' => $saldo)); 
-                                      ?>
-                                    </div>
-                                  </div>
-                                  <div class="control-group span2">
-                                    <label class="control-label" for="ammount">Detalle:</label>
-                                    <div class="controls">
-                                      <?php
-                                        echo form_textarea(array('name' => 'detail', 'class' => 'span2', 'rows' => '2', 'cols' => '10')); 
-                                      ?>
-                                    </div>
-                                  </div>
+                                    <div class="control-group span4">
+                                      <label class="control-label" for="ammount">Detalle:</label>
+                                      <div class="controls">
+                                        <?php
+                                          echo form_textarea(array('name' => 'detail', 'class' => 'span3', 'rows' => '2', 'cols' => '10')); 
+                                        ?>
+                                      </div>
+                                    </div> 
                                 </div>
                               </fieldset>
 
@@ -414,7 +412,25 @@
     } 
 
     );
-   
+
+
+    $("#formaddpay").validate({
+      rules: {
+        ammount: {
+          required: true,
+          max: 200
+        }
+      },
+      messages: {
+        ammount: {
+          required: "Monto es obligatorio.",
+          max: "Valor excede el monto maximo"
+        }
+      }
+    });
+
+
+
   } );
 </script>
 
