@@ -476,3 +476,7 @@ outline-width:0;
 	color: #990000 !important;
 	font-size: 15px;
 }
+
+.padding0{
+	padding: 0 !important;
+}

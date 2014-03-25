@@ -22,7 +22,7 @@
       <div class="block_head row">
         <h2 class="span4">Diario</h2>
       </div>
-      <div class="block_content row">
+      <div class="block_content row padding0">
           <?php echo form_open('diary/search'); 
           ?>
 
@@ -58,15 +58,15 @@
                 ?>
               </div>
             </div>
-            <br><br><br><br>
+            
             <div class="control-group selected_1">
               <label class="control-label" for="dateStart">Desde:</label>
               <div class="controls">
                 <?php 
                   if (isset($parameters['dateStart'])) {
-                    echo form_input(array('name' => 'dateStart', 'class' => 'span2 datepicker', 'value' => $parameters['dateStart'])); 
+                    echo form_input(array('name' => 'dateStart', 'class' => 'datecontainer datepicker datemedium', 'value' => $parameters['dateStart'])); 
                   }else{
-                    echo form_input(array('name' => 'dateStart', 'class' => 'span2 datepicker')); 
+                    echo form_input(array('name' => 'dateStart', 'class' => 'datecontainer datepicker datemedium')); 
                   }
                 ?>
               </div>
@@ -77,16 +77,17 @@
               <div class="controls">
                 <?php
                   if (isset($parameters['dateFinish'])) {
-                    echo form_input(array('name' => 'dateFinish', 'class' => 'span2 datepicker', 'value' => $parameters['dateFinish'])); 
+                    echo form_input(array('name' => 'dateFinish', 'class' => 'datecontainer datepicker datemedium', 'value' => $parameters['dateFinish'])); 
                   }else{
-                    echo form_input(array('name' => 'dateFinish', 'class' => 'span2 datepicker')); 
+                    echo form_input(array('name' => 'dateFinish', 'class' => 'datecontainer datepicker datemedium')); 
                   }
                 ?>
               </div>
             </div>
 
           
-          <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Ver" />
+          <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Buscar" />
+          <!--<input id="btn_clean" class="btn btn-primary" type="reset" value="Limpiar" />-->
           <?php echo form_close(); ?>  
         </fieldset>
       </div>
