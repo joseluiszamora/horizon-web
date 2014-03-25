@@ -20,10 +20,9 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">PRESTAMOS</h3>
               </div>
-              <div class="modal-body" style="min-height: 500px;">
+              <div class="modal-body" style="min-height: 100px;">
                 <fieldset>
-                  <input id="btnAddModal" class="btn btn-primary" type="submit"  value="+" />
-                   <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-tabled" width="100%">
+                  <table cellpadding="0" cellspacing="0" border="0" class="table" id="data-tabled" width="100%">
                     <thead>
                       <tr>
                         <th class="center">Distribuidor</th>
@@ -32,6 +31,7 @@
                         <th class="center">Voucher</th>
                         <th class="center">Monto</th>
                         <th class="center">Detalle</th>
+                        <th class="center">&nbsp;</th>
                       </tr>
                     </thead>
                     <tbody id="diaryTableModal">
@@ -55,7 +55,35 @@
                         <td class="center"><input id="voucher" type="text" class="span1" value="" ></td>
                         <td class="center"><input id="ammount" type="text" class="span1" value="" ></td>
                         <td class="center"><textarea class="span2" rows="1" cols="0" id="detail" name="detail"></textarea></td>
+                        <td class="center"><input id="btnAddReg" class="btn btn-primary" type="submit"  value="+" /></td>
                       </tr>
+                    </tbody>
+                  </table>
+
+
+
+
+
+
+
+
+
+
+
+
+                  <table cellpadding="0" cellspacing="0" border="0" class="table" id="data-tabled" width="100%">
+                    <thead>
+                      <tr>
+                        <th class="center">Distribuidor</th>
+                        <th class="center">Cliente</th>
+                        <th class="center">Fecha</th>
+                        <th class="center">Voucher</th>
+                        <th class="center">Monto</th>
+                        <th class="center">Detalle</th>
+                        <th class="center">&nbsp;</th>
+                      </tr>
+                    </thead>
+                    <tbody id="diaryTableList">
                     </tbody>
                   </table>
                 </fieldset>
@@ -136,15 +164,44 @@
   registry += '<td class="center"><textarea class="span2" rows="1" cols="0" id="detail" name="detail"></textarea></td>';
   registry += "</tr>";
 
-  $(document).ready(function(){
-    $("#btnAddModal").click(function(){
-      $("#diaryTableModal").append(registry);
-      $(".datepicker2").datepicker();
+  function templateTable(distributor, client, date, voucher, ammount, detail){
+    var registry = "<tr class='even gradeX'>";
+    registry += "<td class='center'>"+distributor+"</td>";
+    registry += "<td class='center'>"+client+"</td>";
+    registry += "<td class='center'>"+date+"</td>";
+    registry += "<td class='center'>"+voucher+"</td>";
+    registry += "<td class='center'>"+ammount+"</td>";
+    registry += "<td class='center'>"+detail+"</td>";
+    registry += "<td class='center'><input class='btn btn-primary' value='X' /></td>";
+    registry += "</tr>";
 
-      $(".chosen-select2").chosen({
-        no_results_text: "Ningún resultado encontrado :(",
-        width: "200px"
-      }); 
+    return registry;
+  }
+
+  $(document).ready(function(){
+    $("#btnAddReg").click(function(){
+      distributor += $(this).parents("#diaryTableModal").find("select[name='distributor']").value();
+      client += $(this).parents("#diaryTableModal").find("select[name='client']").val();
+      date += $(this).parents("#diaryTableModal").find("input[name='date']").val();
+      voucher += $(this).parents("#diaryTableModal").find("#voucher").val();
+      ammount += $(this).parents("#diaryTableModal").find("#ammount").val();
+      detail += $(this).parents("#diaryTableModal").find("#detail").val();
+
+      console.log(distributor);
+    console.log("++++++++++++++");
+    console.log(client);
+    console.log("++++++++++++++");
+    console.log(date);
+    console.log("++++++++++++++");
+    console.log(voucher);
+    console.log("++++++++++++++");
+    console.log(ammount);
+    console.log("++++++++++++++");
+    console.log(detail);
+    console.log("++++++++++++++");
+
+      val = templateTable(distributor, client, date, voucher, ammount, detail);
+      $("#diaryTableList").append(val);
     });
 
     $("#btnSave").click(function(){
