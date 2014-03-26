@@ -351,20 +351,38 @@
     /*
      * Initialse DataTables, with no sorting on the 'details' column
      */
+
+
     var oTable = $('#data-table').dataTable( {
       "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
-          "oLanguage": {
-            "sLengthMenu": "Mostrar _MENU_ records por pagina",
-            "sZeroRecords": "Ningun dato encontrado",
-            "sInfo": "Mostrar _START_ a _END_ ( de _TOTAL_ records )",
-            "sInfoEmpty": "Mostrar 0 a 0 de 0 records",
-            "sInfoFiltered": "(Filtrado de _MAX_ records)",
-            "sSearch": "Buscar:"
-          },
-          "aoColumnDefs": [
+      "oLanguage": {
+        "sLengthMenu": "Mostrar _MENU_ records por pagina",
+        "sZeroRecords": "Ningun dato encontrado",
+        "sInfo": "Mostrar _START_ a _END_ ( de _TOTAL_ records )",
+        "sInfoEmpty": "Mostrar 0 a 0 de 0 records",
+        "sInfoFiltered": "(Filtrado de _MAX_ records)",
+        "sSearch": "Buscar:"
+      },
+      "aoColumnDefs": [
         { "bSortable": false, "aTargets": [ 0 ] }
       ],
-      "aaSorting": [[1, 'asc']]
+      "aaSorting": [[1, 'asc']],
+/*
+      "oTableTools": {
+        "aButtons": [
+          "copy",
+          "csv",
+          "xls",
+          {
+            "sExtends": "pdf",
+            "sPdfOrientation": "landscape",
+            "sPdfMessage": "Your custom message would go here."
+          }
+          "print"
+        ]
+      }
+*/
+
     });
     
     /* Add event listener for opening and closing details

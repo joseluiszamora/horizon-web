@@ -60,18 +60,7 @@
                     </tbody>
                   </table>
 
-
-
-
-
-
-
-
-
-
-
-
-                  <table cellpadding="0" cellspacing="0" border="0" class="table" id="data-tabled" width="100%">
+                  <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-tabled" width="100%">
                     <thead>
                       <tr>
                         <th class="center">Distribuidor</th>
@@ -136,9 +125,6 @@
   </div>
 </div>
 
-
-
-
 <style type="text/css">
   #btnAddModal{
     float: right;
@@ -160,49 +146,72 @@
   registry += '<td class="center">' + drop + '</td> ';
   registry += '<td class="center"><input type="text" class="datecontainer datepicker2" value="<?php echo date("Y-m-d");?>" name="date"></td>';
   registry += '<td class="center"><input id="voucher" type="text" class="span1" value="" ></td>';
-  registry += '<td class="center"><input id="ammount" type="text" class="span1" value="" ></td>';
+  registry += '<td class="center"><input id="ammount" data-max="1000" type="text" class="span1" value="" ></td>';
   registry += '<td class="center"><textarea class="span2" rows="1" cols="0" id="detail" name="detail"></textarea></td>';
   registry += "</tr>";
 
   function templateTable(distributor, client, date, voucher, ammount, detail){
     var registry = "<tr class='even gradeX'>";
-    registry += "<td class='center'>"+distributor+"</td>";
-    registry += "<td class='center'>"+client+"</td>";
-    registry += "<td class='center'>"+date+"</td>";
-    registry += "<td class='center'>"+voucher+"</td>";
-    registry += "<td class='center'>"+ammount+"</td>";
-    registry += "<td class='center'>"+detail+"</td>";
-    registry += "<td class='center'><input class='btn btn-primary' value='X' /></td>";
+    registry += "<td class='center distributor'>"+distributor+"</td>";
+    registry += "<td class='center client'>"+client+"</td>";
+    registry += "<td class='center date'>"+date+"</td>";
+    registry += "<td class='center voucher'>"+voucher+"</td>";
+    registry += "<td class='center ammount'>"+ammount+"</td>";
+    registry += "<td class='center detail'>"+detail+"</td>";
+    registry += "<td class='center'><button class='btn btn-primary span1 btnDeleteRow'>X</button></td>";
     registry += "</tr>";
 
     return registry;
   }
 
   $(document).ready(function(){
+
     $("#btnAddReg").click(function(){
-      distributor += $(this).parents("#diaryTableModal").find("select[name='distributor']").value();
-      client += $(this).parents("#diaryTableModal").find("select[name='client']").val();
-      date += $(this).parents("#diaryTableModal").find("input[name='date']").val();
-      voucher += $(this).parents("#diaryTableModal").find("#voucher").val();
-      ammount += $(this).parents("#diaryTableModal").find("#ammount").val();
-      detail += $(this).parents("#diaryTableModal").find("#detail").val();
+      flag = true;
 
-      console.log(distributor);
-    console.log("++++++++++++++");
-    console.log(client);
-    console.log("++++++++++++++");
-    console.log(date);
-    console.log("++++++++++++++");
-    console.log(voucher);
-    console.log("++++++++++++++");
-    console.log(ammount);
-    console.log("++++++++++++++");
-    console.log(detail);
-    console.log("++++++++++++++");
+      distributor = $(this).parents("#diaryTableModal").find("select[name='distributor']").val();
+      client = $(this).parents("#diaryTableModal").find("select[name='client']").val();
+      date = $(this).parents("#diaryTableModal").find("input[name='date']").val();
+      voucher = $(this).parents("#diaryTableModal").find("#voucher").val();
+      ammount = $(this).parents("#diaryTableModal").find("#ammount").val();
+      detail = $(this).parents("#diaryTableModal").find("#detail").val();
 
-      val = templateTable(distributor, client, date, voucher, ammount, detail);
-      $("#diaryTableList").append(val);
+      //validate
+      $(this).parents("#diaryTableModal").find(".text-error").remove();
+
+      if (distributor.trim() == "" || distributor.trim() == "0") {
+        flag = false;
+        $(this).parents("#diaryTableModal").find("select[name='distributor']").parents("td").append("<span class='text-error'>Seleccione un Distribuidor</span>");
+      }
+      if (client.trim() == "" || client.trim() == "0") {
+        flag = false;
+        $(this).parents("#diaryTableModal").find("select[name='client']").parents("td").append("<span class='text-error'>Seleccione un Cliente</span>");
+      }
+      if (voucher.trim() == "" || voucher.trim() == "0") {
+        flag = false;
+        $(this).parents("#diaryTableModal").find("#voucher").parents("td").append("<span class='text-error'>Introduzca un Voucher</span>");
+      }
+      if (ammount.trim() == "" || ammount.trim() == "0") {
+        flag = false;
+        $(this).parents("#diaryTableModal").find("#ammount").parents("td").append("<span class='text-error'>Introduzca una Cantidad</span>");
+      }
+
+
+      if (flag) {
+        console.log("3333333333333333");
+        val = templateTable(distributor, client, date, voucher, ammount, detail);
+
+        $("#diaryTableList").append(val);
+
+        // delete row
+        $(".btnDeleteRow").click(function(){
+          console.log("click");
+          $(this).parents("tr").remove();
+        });
+      };
+
     });
+
 
     $("#btnSave").click(function(){
       distributor = "";
@@ -212,13 +221,13 @@
       ammount = "";
       detail = "";
 
-      $("#diaryTableModal tr").each(function(){
-        distributor += $(this).find("select[name='distributor']").val()+"***";
-        client += $(this).find("select[name='client']").val()+"***";
-        date += $(this).find("input[name='date']").val()+"***";
-        voucher += $(this).find("#voucher").val()+"***";
-        ammount += $(this).find("#ammount").val()+"***";
-        detail += $(this).find("#detail").val()+"***";
+      $("#diaryTableList tr").each(function(){
+        distributor += $(this).find(".distributor").html()+"***";
+        client += $(this).find(".client").html()+"***";
+        date += $(this).find(".date").html()+"***";
+        voucher += $(this).find(".voucher").html()+"***";
+        ammount += $(this).find(".ammount").html()+"***";
+        detail += $(this).find(".detail").html()+"***";
       });
 
       $("#formSaveBlock #distributor").val(distributor);

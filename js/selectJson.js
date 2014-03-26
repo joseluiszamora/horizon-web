@@ -14,8 +14,8 @@ function hideLoadingAnimation(obj){
 }
 $(document).ready(function(){
   //var url = "http://www.ruizmier.com/systems/horizon/";
-  //var url = "https://mariani.bo/horizon-sc/index.php/";
-  var url = "http://localhost/horizon/index.php/";
+  var url = "https://mariani.bo/horizon-sc/index.php/";
+  //var url = "http://localhost/horizon/index.php/";
 
   // chosen selects
   $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 

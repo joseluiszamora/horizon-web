@@ -48,6 +48,7 @@
 
       for ($i=0; $i < count($transdate)-1; $i++) { 
         if ( $transdate[$i] != "" & $transdistributor[$i] != "0" & $transvoucher[$i] != "" & $transclient[$i] != "0" & $transammount[$i] != "" & $transammount[$i] != "" ) {
+
           $data_in['FechaRegistro'] = date("y-m-d");
           $data_in['FechaTransaction'] = $transdate[$i];
           $data_in['idUser'] = $transdistributor[$i];
