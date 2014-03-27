@@ -26,6 +26,11 @@
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
       $data['page'] = 'index';
+
+      $data_index['order'] = "customer.NombreTienda";
+      $search_parameters = http_build_query($data_index);
+      $data['search_parameters'] = $search_parameters;
+
       $this->load->view('template/template', $data);
     }
 
@@ -127,10 +132,14 @@
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
       $data['page'] = 'index';
+
+      $data_index['order'] = "customer.NombreTienda";
+      $search_parameters = http_build_query($data_in);
+      $data['search_parameters'] = $search_parameters;
+
       $this->load->view('template/template', $data);
     }
 
-     // desactivar
     function deactive($id) {
       $this->Diary_Model->set_status($id, '3');
       $diary = $this->Diary_Model->get($id);
@@ -152,6 +161,48 @@
     function get_clients_for_distributor($idDistrib=-1) {
       $areas = $this->User_Model->get_area_by_id($idDistrib);
       echo(json_encode($this->Client_Model->get_customers_by_area($areas)));
+    }
+
+
+
+
+
+    function pdf() {
+      $this->load->helper('pdfexport_helper.php');
+      $parameters_string = $this->input->post('parameters');
+
+      parse_str(html_entity_decode($parameters_string), $parameters);
+      $diaries = $this->Diary_Model->search($parameters);
+
+      $user_email = $this->Account_Model->get_email();
+      $user = $this->Account_Model->get_user_by_email($user_email);
+
+      if (isset($parameters['customer']) && ($parameters['customer']!="") && ($parameters['customer']!="0")) {
+        $parameters['customer'] = $parameters['customer'];
+      }
+/*     
+
+      if (isset($parameters['datelast']) && ($parameters['datelast']!="")) {
+        $days = $parameters['datelast'];
+        $days = intval($days)*-1;
+        $fecha = date ('Y-m-j');
+        $nuevafecha = strtotime ( $days.' day' , strtotime ( $fecha ) ) ;
+        $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+        $parameters['datelast'] = $nuevafecha;
+      }
+*/
+      $data['user_name'] = $user->Nombre . ' ' . $user->Apellido;
+      $data['parameters'] = $parameters;
+      $data['title'] = 'REPORTE DE CREDITOS';
+      $data['diaries'] = $diaries;
+      $data['category'] = 'diary';
+      $data['page'] = 'pdf';
+      $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/systems/horizon/';
+      $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/horizon/';
+      //$this->load->view('template/template_pdf', $data);
+      //print_r($data);
+      $templateView = $this->load->view('template/template_pdf', $data, TRUE);
+      exportMeAsDOMPDF($templateView, "report");
     }
 
   }

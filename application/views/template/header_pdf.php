@@ -110,6 +110,9 @@
             <div class="filters">
               <ul>
                 <?php if (isset($parameters['status']) && ($parameters['status']!="") && ($parameters['status']!="0")): ?>
+                  <li>Distribuidor: <?php echo $parameters['status']; ?></li>
+                <?php endif; ?>
+                <?php if (isset($parameters['status']) && ($parameters['status']!="") && ($parameters['status']!="0")): ?>
                   <li>Estado: <?php echo $parameters['status']; ?></li>
                 <?php endif; ?>
                 <?php if (isset($parameters['name']) && ($parameters['name']!="")): ?>

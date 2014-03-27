@@ -19,7 +19,6 @@
     <script src="<?php echo base_url(); ?>js/bootstrap-datepicker.js"></script>
     <script src="<?php echo base_url(); ?>js/selectJson.js"></script>
     <script src="<?php echo base_url(); ?>js/chosen.jquery.js"></script>
-    <script src="<?php echo base_url(); ?>js/jquery.validate.js"></script>
 
 
     <script type="text/javascript">

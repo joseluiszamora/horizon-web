@@ -85,10 +85,18 @@
               </div>
             </div>
 
-          
-          <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Buscar" />
-          <!--<input id="btn_clean" class="btn btn-primary" type="reset" value="Limpiar" />-->
-          <?php echo form_close(); ?>  
+          <div class="form-actions span7">
+            <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Buscar" />
+            <input id="btn_clean" class="btn btn-primary" type="reset" value="Limpiar" />
+
+            <div class="btnCSV">
+              <?php echo form_close(); ?>
+              <?php echo form_open('diary/pdf'); ?>
+              <?php echo form_hidden('parameters', $search_parameters); ?>
+              <?php echo form_submit('send', 'PDF'); ?>
+              <?php echo form_close(); ?>
+            </div>
+          </div>
         </fieldset>
       </div>
     </div>
