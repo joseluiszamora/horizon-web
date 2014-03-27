@@ -44,6 +44,7 @@ class Diary_model extends CI_Model {
       customer.idCustomer,
       customer.CodeCustomer as code,
       customer.NombreTienda as custname,
+      customer.Direccion as custaddress,
       users.Email as customer'
     );
 
@@ -139,6 +140,53 @@ Detalle
     return $query->result();
   }
 
+/*
+  // monto maximo para realizar prestamos
+  function get_loan_limit($idclient) {
+    $this->db->select(
+      'daily.iddiario,
+      daily.FechaRegistro,
+      daily.FechaTransaction,
+      daily.idUser,
+      daily.idUserSupervisor,
+      daily.idTransaction,
+      daily.NumVoucher,
+      daily.idCustomer,
+      daily.Type,
+      daily.Monto,
+      daily.Estado,
+      daily.Detalle,
+      customer.idCustomer,
+      customer.CodeCustomer as code,
+      customer.NombreTienda as custname,
+      customer.Direccion as custaddress
+    ');
+
+    $this->db->from('daily');
+    $this->db->join('customer', 'daily.idCustomer = customer.idCustomer');
+    $this->db->where('daily.Type','P');
+    $this->db->where('daily.Estado','1');
+    $this->db->group_by('daily.NumVoucher'); 
+    $this->db->group_by('daily.idCustomer'); 
+    $this->db->order_by('daily.iddiario', "asc");
+
+//    $query = $this->db->get();
+//    return $query->result();
+
+
+
+    $query = $this->db->get();
+    $dropdown = array();
+    $dropdown[0] = 'Seleccione Usuario';
+
+    $result = $query->result_array();
+    foreach ($result as $r) {
+      $dropdown[$r['idUser']] = $r['Email'];
+    }
+
+    return($dropdown);
+  }*/
+
   function search ($data_in){
     $this->db->select( 'daily.iddiario,
     daily.FechaRegistro,
@@ -155,6 +203,7 @@ Detalle
     customer.idCustomer,
     customer.CodeCustomer as code,
     customer.NombreTienda as custname,
+    customer.Direccion as custaddress,
     users.Email as customer' );
     $this->db->from('daily');
     $this->db->join('customer', 'daily.idCustomer = customer.idCustomer');
@@ -268,6 +317,16 @@ Detalle
     $this->db->where('iddiario', $id);
     $this->db->update('daily', $data);
 
+  }
+
+  function dateDiff($start, $end) {
+    $start_ts = strtotime($start);
+    $end_ts = strtotime($end);
+    $diff = $start_ts - $end_ts;
+    $diff = round($diff / 86400);
+    if ($diff < 0)
+      $diff = 0;
+    return $diff;
   }
 /*
   function set_status_pagos($id, $val){

@@ -162,10 +162,11 @@
       $areas = $this->User_Model->get_area_by_id($idDistrib);
       echo(json_encode($this->Client_Model->get_customers_by_area($areas)));
     }
-
-
-
-
+/*
+    function get_loan_limit($id_client=-1) {
+      $ammount = $this->Diary_Model->get_loan_limit($id_client);
+      echo(json_encode($ammount);
+    }*/
 
     function pdf() {
       $this->load->helper('pdfexport_helper.php');
@@ -180,17 +181,6 @@
       if (isset($parameters['customer']) && ($parameters['customer']!="") && ($parameters['customer']!="0")) {
         $parameters['customer'] = $parameters['customer'];
       }
-/*     
-
-      if (isset($parameters['datelast']) && ($parameters['datelast']!="")) {
-        $days = $parameters['datelast'];
-        $days = intval($days)*-1;
-        $fecha = date ('Y-m-j');
-        $nuevafecha = strtotime ( $days.' day' , strtotime ( $fecha ) ) ;
-        $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
-        $parameters['datelast'] = $nuevafecha;
-      }
-*/
       $data['user_name'] = $user->Nombre . ' ' . $user->Apellido;
       $data['parameters'] = $parameters;
       $data['title'] = 'REPORTE DE CREDITOS';
@@ -200,7 +190,7 @@
       $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/systems/horizon/';
       $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/horizon/';
       //$this->load->view('template/template_pdf', $data);
-      //print_r($data);
+      //print_r($diaries);
       $templateView = $this->load->view('template/template_pdf', $data, TRUE);
       exportMeAsDOMPDF($templateView, "report");
     }

@@ -14,8 +14,8 @@ function hideLoadingAnimation(obj){
 }
 $(document).ready(function(){
   //var url = "http://www.ruizmier.com/systems/horizon/";
-  var url = "https://mariani.bo/horizon-sc/index.php/";
-  //var url = "http://localhost/horizon/index.php/";
+  //var url = "https://mariani.bo/horizon-sc/index.php/";
+  var url = "http://localhost/horizon/index.php/";
 
   // chosen selects
   $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
@@ -298,38 +298,71 @@ $(document).ready(function(){
 
   // select distributor and get clients
   $('#diaryTableModal select[name="distributor"]').change(function(){
-      $('#diaryTableModal select[name="client"] > option').remove();
-
-      var id = $(this).val();
-      console.log("---> " + id);
-
-      showLoadingAnimation($('#diaryTableModal select[name="client"]'));
-      
-      $.getJSON( url+"diary/get_clients_for_distributor/"+id, {
-        format: "jsonp",
-        async: true,
-        contentType: 'application/json; charset=utf-8', 
-        cache: false,
-        crossDomain: true
-      })
-      .done(function( limes ) {
-        $('#diaryTableModal select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');
-        $.each(limes,function(id,name){
-          var opt = $('<option>');
-          opt.val(id);
-          opt.text(name);
-          $('#diaryTableModal select[name="client"]').append  (opt);
-        });
-        hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
-
-
-        $(this).parents("tr").find('select[name="client"]').chosen({
-          no_results_text: "Ningún resultado encontrado :(",
-          width: "200px"
-        }); 
-      });
+    $('#diaryTableModal select[name="client"] > option').remove();
+    var id = $(this).val();
+    showLoadingAnimation($('#diaryTableModal #clientDropdown'));
+/*
+    var id = $(this).val();
+    showLoadingAnimation($('#diaryTableModal select[name="client"]'));
     
+    $.getJSON( url+"diary/get_clients_for_distributor/"+id, {
+      format: "jsonp",
+      async: true,
+      contentType: 'application/json; charset=utf-8', 
+      cache: false,
+      crossDomain: true
+    })
+    .done(function( limes ) {
+      $('#diaryTableModal select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');
+      $.each(limes,function(id,name){
+        var opt = $('<option>');
+        opt.val(id);
+        opt.text(name);
+        $('#diaryTableModal select[name="client"]').append  (opt);
+      });
+      hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
+
+      console.log("****************");
+      console.log($('#diaryTableModal select[name="client"]'));
+      
+      //$('#diaryTableModal select[name="client"]').trigger("chosen:updated");
+
+      $('#diaryTableModal select[name="client"]').chosen({
+        no_results_text: "Ningún resultado encontrado :(",
+        width: "200px"
+      });
+    });*/
+  
+  });
+
+
+  // select prestamo limts 
+  $('#diaryTableModal #clientDropdown select').change(function(){
+    var id = $(this).val();
+    console.log("---> " + id);
+    //showLoadingAnimation($('#diaryTableModal select[name="client"]'));
+
+    $.getJSON( url+"diary/get_loan_limit/"+id, {
+      format: "jsonp",
+      async: true,
+      contentType: 'application/json; charset=utf-8', 
+      cache: false,
+      crossDomain: true
+    })
+    .done(function( limes ) {
+      // ammount
+      $('#diaryTableModal select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');
+      $.each(limes,function(id,name){
+        var opt = $('<option>');
+        opt.val(id);
+        opt.text(name);
+        $('#diaryTableModal select[name="client"]').append(opt);
+      });
+      console.log($('#diaryTableModal select[name="client"]'));
+      //hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
     });
+  
+  });
 
 
 

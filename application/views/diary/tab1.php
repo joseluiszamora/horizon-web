@@ -89,7 +89,7 @@
             <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Buscar" />
             <input id="btn_clean" class="btn btn-primary" type="reset" value="Limpiar" />
 
-            <div class="btnCSV">
+            <div class="btnPDF">
               <?php echo form_close(); ?>
               <?php echo form_open('diary/pdf'); ?>
               <?php echo form_hidden('parameters', $search_parameters); ?>
@@ -438,25 +438,7 @@
     } 
 
     );
-
-
-    $("#formaddpay").validate({
-      rules: {
-        ammount: {
-          required: true,
-          max: 200
-        }
-      },
-      messages: {
-        ammount: {
-          required: "Monto es obligatorio.",
-          max: "Valor excede el monto maximo"
-        }
-      }
-    });
-
-
-
+    
   } );
 </script>
 
