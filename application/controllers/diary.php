@@ -162,11 +162,11 @@
       $areas = $this->User_Model->get_area_by_id($idDistrib);
       echo(json_encode($this->Client_Model->get_customers_by_area($areas)));
     }
-/*
+
     function get_loan_limit($id_client=-1) {
       $ammount = $this->Diary_Model->get_loan_limit($id_client);
-      echo(json_encode($ammount);
-    }*/
+      echo(json_encode($ammount));
+    }
 
     function pdf() {
       $this->load->helper('pdfexport_helper.php');

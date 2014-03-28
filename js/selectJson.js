@@ -295,16 +295,14 @@ $(document).ready(function(){
   });
 
 
-
   // select distributor and get clients
   $('#diaryTableModal select[name="distributor"]').change(function(){
-    $('#diaryTableModal select[name="client"] > option').remove();
-    var id = $(this).val();
-    showLoadingAnimation($('#diaryTableModal #clientDropdown'));
-/*
+    //$('#diaryTableModal select[name="client"] > option').remove();
     var id = $(this).val();
     showLoadingAnimation($('#diaryTableModal select[name="client"]'));
+
     
+
     $.getJSON( url+"diary/get_clients_for_distributor/"+id, {
       format: "jsonp",
       async: true,
@@ -325,13 +323,13 @@ $(document).ready(function(){
       console.log("****************");
       console.log($('#diaryTableModal select[name="client"]'));
       
-      //$('#diaryTableModal select[name="client"]').trigger("chosen:updated");
+      $('#diaryTableModal select[name="client"]').trigger("chosen:updated");
 
-      $('#diaryTableModal select[name="client"]').chosen({
+      /*$('#diaryTableModal select[name="client"]').chosen({
         no_results_text: "Ningún resultado encontrado :(",
         width: "200px"
-      });
-    });*/
+      });*/
+    });
   
   });
 

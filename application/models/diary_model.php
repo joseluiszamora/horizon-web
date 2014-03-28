@@ -140,7 +140,6 @@ Detalle
     return $query->result();
   }
 
-/*
   // monto maximo para realizar prestamos
   function get_loan_limit($idclient) {
     $this->db->select(
@@ -181,11 +180,10 @@ Detalle
 
     $result = $query->result_array();
     foreach ($result as $r) {
-      $dropdown[$r['idUser']] = $r['Email'];
+      $dropdown[$r['daily.NumVoucher']] = $r['daily.Monto'];
     }
-
     return($dropdown);
-  }*/
+  }
 
   function search ($data_in){
     $this->db->select( 'daily.iddiario,

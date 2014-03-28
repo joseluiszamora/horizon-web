@@ -39,12 +39,13 @@
                         
                         <td class="center" id ="distributorDropdown">
                           <?php
-                            echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
+                            //echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
+                            echo form_dropdown('distributor', $distributor, '', 'class=""');
                           ?>
                         </td>
                         <td class="" id ="clientDropdown">
                           <?php
-                            echo form_dropdown('client', $clients, '', 'class="chosen-select2"');
+                            echo form_dropdown('client', $clients, '', 'class=""');
                           ?>
                         </td>
                         <td class="center">
