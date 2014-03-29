@@ -142,47 +142,15 @@ Detalle
 
   // monto maximo para realizar prestamos
   function get_loan_limit($idclient) {
-    $this->db->select(
-      'daily.iddiario,
-      daily.FechaRegistro,
-      daily.FechaTransaction,
-      daily.idUser,
-      daily.idUserSupervisor,
-      daily.idTransaction,
-      daily.NumVoucher,
-      daily.idCustomer,
-      daily.Type,
-      daily.Monto,
-      daily.Estado,
-      daily.Detalle,
-      customer.idCustomer,
-      customer.CodeCustomer as code,
-      customer.NombreTienda as custname,
-      customer.Direccion as custaddress
-    ');
-
+    $this->db->select( '
+      SUM(daily.Monto) as saldo
+    ' );
     $this->db->from('daily');
-    $this->db->join('customer', 'daily.idCustomer = customer.idCustomer');
-    $this->db->where('daily.Type','P');
-    $this->db->where('daily.Estado','1');
-    $this->db->group_by('daily.NumVoucher'); 
-    $this->db->group_by('daily.idCustomer'); 
-    $this->db->order_by('daily.iddiario', "asc");
-
-//    $query = $this->db->get();
-//    return $query->result();
-
-
-
+    $this->db->where('idCustomer', $idclient);
+    $this->db->where('Type', "C");
+    $this->db->where('Estado', "1");
     $query = $this->db->get();
-    $dropdown = array();
-    $dropdown[0] = 'Seleccione Usuario';
-
-    $result = $query->result_array();
-    foreach ($result as $r) {
-      $dropdown[$r['daily.NumVoucher']] = $r['daily.Monto'];
-    }
-    return($dropdown);
+    return $query->result();
   }
 
   function search ($data_in){

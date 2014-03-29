@@ -493,6 +493,7 @@ class Client_model extends CI_Model {
     function get_customers_by_area($area) {
       $this->db->select(
         'customer.idCustomer,
+        customer.CodeCustomer,
         customer.NombreTienda'
       );
       $this->db->from('customer');
@@ -507,7 +508,7 @@ class Client_model extends CI_Model {
 
       $result = $query->result_array();
       foreach ($result as $r) {
-        $dropdown[$r['idCustomer']] = $r['NombreTienda'];
+        $dropdown[$r['idCustomer']] = $r['CodeCustomer']." - ".$r['NombreTienda'];
       }
 
       return $dropdown;

@@ -1,6 +1,6 @@
-var loader = "https://mariani.bo/horizon/img/loader.gif";
+//var loader = "https://mariani.bo/horizon/img/loader.gif";
 //var loader = "http://www.ruizmier.com/systems/horizon/img/loader.gif";
-//var loader = "http://localhost/horizon-mariani/img/loader.gif";
+var loader = "http://localhost/horizon/img/loader.gif";
 
 function showLoadingAnimation(obj){
  // console.log(obj);
@@ -297,11 +297,8 @@ $(document).ready(function(){
 
   // select distributor and get clients
   $('#diaryTableModal select[name="distributor"]').change(function(){
-    //$('#diaryTableModal select[name="client"] > option').remove();
     var id = $(this).val();
     showLoadingAnimation($('#diaryTableModal select[name="client"]'));
-
-    
 
     $.getJSON( url+"diary/get_clients_for_distributor/"+id, {
       format: "jsonp",
@@ -311,6 +308,7 @@ $(document).ready(function(){
       crossDomain: true
     })
     .done(function( limes ) {
+      $('#diaryTableModal select[name="client"] > option').remove();
       $('#diaryTableModal select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');
       $.each(limes,function(id,name){
         var opt = $('<option>');
@@ -348,15 +346,7 @@ $(document).ready(function(){
       crossDomain: true
     })
     .done(function( limes ) {
-      // ammount
-      $('#diaryTableModal select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');
-      $.each(limes,function(id,name){
-        var opt = $('<option>');
-        opt.val(id);
-        opt.text(name);
-        $('#diaryTableModal select[name="client"]').append(opt);
-      });
-      console.log($('#diaryTableModal select[name="client"]'));
+      console.log(limes);
       //hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
     });
   
@@ -401,13 +391,7 @@ $(document).ready(function(){
       });
     
     });
-
-
 */
-
-
-
-
 
   // LIMPIAR FORMULARIO
   $('.formContainer #btn_clean').click(function(){
@@ -416,19 +400,6 @@ $(document).ready(function(){
     $('.formContainer textarea').attr('value', "");
   });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 $(window).resize(function() {

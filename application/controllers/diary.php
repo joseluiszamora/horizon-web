@@ -52,6 +52,9 @@
       $transdetail = explode("***", $this->input->post('detail'));
 
       for ($i=0; $i < count($transdate)-1; $i++) { 
+        print_r("MMMMMMMMMMMM");
+        print_r($transdate);
+        
         if ( $transdate[$i] != "" & $transdistributor[$i] != "0" & $transvoucher[$i] != "" & $transclient[$i] != "0" & $transammount[$i] != "" & $transammount[$i] != "" ) {
 
           $data_in['FechaRegistro'] = date("y-m-d");
@@ -69,7 +72,7 @@
           $this->Diary_Model->create($data_in);
         }
       }
-      redirect("diary");
+      //redirect("diary");
     }
 
     function addpay() {
