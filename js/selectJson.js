@@ -7,10 +7,16 @@ function showLoadingAnimation(obj){
   $(obj).parents(".controls").append("<img style='margin: 0 90px;' src='"+loader+"'>");
   $(obj).css("display", "none");
 }
+function showLoadingAnimation_td(obj){
+  $(obj).html("");
+  $(obj).append("<img style='margin: 0 90px;' src='"+loader+"'>");
+}
 function hideLoadingAnimation(obj){
- // console.log(obj);
   $(obj).css("display", "block");
   $(obj).siblings().remove();
+}
+function hideLoadingAnimation_td(obj){
+  $(obj).find("img").remove();
 }
 $(document).ready(function(){
   //var url = "http://www.ruizmier.com/systems/horizon/";
@@ -298,11 +304,9 @@ $(document).ready(function(){
   // select distributor and get clients
   $('#diaryTableModal select[name="distributor"]').change(function(){
     $('#diaryTableModal #clientDropdown').html("");
-    $('#diaryTableModal #clientDropdown').append('<select name="client"></select>');
-    
 
     var id = $(this).val();
-    //showLoadingAnimation($('#diaryTableModal select[name="client"]'));
+    showLoadingAnimation_td($('#clientDropdown'));
 
     $.getJSON( url+"diary/get_clients_for_distributor/"+id, {
       format: "jsonp",
@@ -312,7 +316,7 @@ $(document).ready(function(){
       crossDomain: true
     })
     .done(function( limes ) {
-      $('#diaryTableModal select[name="client"] > option').remove();
+      $('#diaryTableModal #clientDropdown').append('<select name="client"></select>');
       $('#diaryTableModal select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');  
       $.each(limes,function(id,name){
         var opt = $('<option>');
@@ -320,7 +324,9 @@ $(document).ready(function(){
         opt.text(name);
         $('#diaryTableModal select[name="client"]').append(opt);
       });
-      //hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
+      
+      hideLoadingAnimation_td($('#clientDropdown'));
+
       $('#diaryTableModal select[name="client"]').chosen({
         no_results_text: "Ningún resultado encontrado :(",
         width: "200px"

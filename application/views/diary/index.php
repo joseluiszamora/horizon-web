@@ -20,7 +20,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">PRESTAMOS</h3>
               </div>
-              <div class="modal-body" style="min-height: 100px;">
+              <div class="modal-body" style="min-height: 350px;">
                 <fieldset>
                   <table cellpadding="0" cellspacing="0" border="0" class="table" id="data-tabled" width="100%">
                     <thead>
@@ -192,6 +192,10 @@
         flag = false;
         $(this).parents("#diaryTableModal").find("select[name='client']").parents("td").append("<span class='text-error'>Seleccione un Cliente</span>");
       }
+      if (date.trim() == "" || date.trim() == null) {
+        flag = false;
+        $(this).parents("#diaryTableModal").find("input[name='date']").parents("td").append("<span class='text-error'>Introduzca una fecha</span>");
+      }
       if (voucher.trim() == "" || voucher.trim() == "0") {
         flag = false;
         $(this).parents("#diaryTableModal").find("#voucher").parents("td").append("<span class='text-error'>Introduzca un Voucher</span>");
@@ -229,6 +233,8 @@
         $(this).parents("#diaryTableModal").find("#ammount").val("");
         $(this).parents("#diaryTableModal").find("#detail").val("");
 
+        $('#diaryTableModal select[name="distributor"]').val('').trigger('chosen:updated');
+        $('#diaryTableModal select[name="client"]').val('').trigger('chosen:updated');
 
         // delete row
         $(".btnDeleteRow").click(function(){
