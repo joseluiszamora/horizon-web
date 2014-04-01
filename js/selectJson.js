@@ -297,8 +297,12 @@ $(document).ready(function(){
 
   // select distributor and get clients
   $('#diaryTableModal select[name="distributor"]').change(function(){
+    $('#diaryTableModal #clientDropdown').html("");
+    $('#diaryTableModal #clientDropdown').append('<select name="client"></select>');
+    
+
     var id = $(this).val();
-    showLoadingAnimation($('#diaryTableModal select[name="client"]'));
+    //showLoadingAnimation($('#diaryTableModal select[name="client"]'));
 
     $.getJSON( url+"diary/get_clients_for_distributor/"+id, {
       format: "jsonp",
@@ -309,33 +313,27 @@ $(document).ready(function(){
     })
     .done(function( limes ) {
       $('#diaryTableModal select[name="client"] > option').remove();
-      $('#diaryTableModal select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');
+      $('#diaryTableModal select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');  
       $.each(limes,function(id,name){
         var opt = $('<option>');
         opt.val(id);
         opt.text(name);
-        $('#diaryTableModal select[name="client"]').append  (opt);
+        $('#diaryTableModal select[name="client"]').append(opt);
       });
-      hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
-
-      console.log("****************");
-      console.log($('#diaryTableModal select[name="client"]'));
-      
-      $('#diaryTableModal select[name="client"]').trigger("chosen:updated");
-
-      /*$('#diaryTableModal select[name="client"]').chosen({
+      //hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
+      $('#diaryTableModal select[name="client"]').chosen({
         no_results_text: "Ningún resultado encontrado :(",
         width: "200px"
-      });*/
+      });
     });
-  
+    //$('#diaryTableModal select[name="client"]').trigger("chosen:updated");
   });
 
 
   // select prestamo limts 
   $('#diaryTableModal #clientDropdown select').change(function(){
     var id = $(this).val();
-    console.log("---> " + id);
+    //console.log("---> " + id);
     //showLoadingAnimation($('#diaryTableModal select[name="client"]'));
 
     $.getJSON( url+"diary/get_loan_limit/"+id, {
@@ -346,15 +344,14 @@ $(document).ready(function(){
       crossDomain: true
     })
     .done(function( limes ) {
-      console.log(limes);
+      $('#diaryTableModal #ammount').attr("placeholder", limes);
+      
       //hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
     });
   
   });
 
-
-
-/*
+/*  
  $('#diaryTableModal select[name="distributor"]').change(function(){
       
       $(this).parents("tr").find('select[name="client"] > option').remove();

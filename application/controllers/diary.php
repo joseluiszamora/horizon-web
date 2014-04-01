@@ -72,7 +72,7 @@
           $this->Diary_Model->create($data_in);
         }
       }
-      //redirect("diary");
+      redirect("diary");
     }
 
     function addpay() {
@@ -167,8 +167,10 @@
     }
 
     function get_loan_limit($id_client=-1) {
-      $ammount = $this->Diary_Model->get_loan_limit($id_client);
-      echo(json_encode($ammount));
+      $limit = $this->Client_Model->get_credit_limit($id_client);
+      //$ammount = $this->Diary_Model->get_loan_limit($id_client);
+      //echo(json_encode($ammount));
+      echo(json_encode($this->Diary_Model->roundnumber( $limit, 2 )));
     }
 
     function pdf() {

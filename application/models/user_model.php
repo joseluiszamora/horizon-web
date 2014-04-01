@@ -137,7 +137,6 @@
       return $dropdown;
     }
 
-
     function get_users_by_profile_id_mail($profile) {
       $this->db->select(
         'users.idUser, 

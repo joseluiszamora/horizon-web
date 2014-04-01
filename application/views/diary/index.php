@@ -40,12 +40,12 @@
                         <td class="center" id ="distributorDropdown">
                           <?php
                             //echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
-                            echo form_dropdown('distributor', $distributor, '', 'class=""');
+                            echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
                           ?>
                         </td>
                         <td class="" id ="clientDropdown">
                           <?php
-                            echo form_dropdown('client', $clients, '', 'class=""');
+                            echo form_dropdown('client', $clients, '', 'class="chosen-select2"');
                           ?>
                         </td>
                         <td class="center">
@@ -179,8 +179,8 @@
       date = $(this).parents("#diaryTableModal").find("input[name='date']").val();
       voucher = $(this).parents("#diaryTableModal").find("#voucher").val();
       ammount = $(this).parents("#diaryTableModal").find("#ammount").val();
+      ammountmax = $(this).parents("#diaryTableModal").find("#ammount").attr("placeholder");
       detail = $(this).parents("#diaryTableModal").find("#detail").val();
-
       //validate
       $(this).parents("#diaryTableModal").find(".text-error").remove();
 
@@ -195,10 +195,22 @@
       if (voucher.trim() == "" || voucher.trim() == "0") {
         flag = false;
         $(this).parents("#diaryTableModal").find("#voucher").parents("td").append("<span class='text-error'>Introduzca un Voucher</span>");
+      }else{
+        $("#diaryTableList tr").each(function(){
+          if (voucher.trim() === $(this).find(".voucher").html() ) {
+            flag = false;
+            $("#diaryTableModal").find("#voucher").parents("td").append("<span class='text-error'>Este Voucher ya fue introducido</span>");
+          }
+        });
       }
       if (ammount.trim() == "" || ammount.trim() == "0") {
         flag = false;
         $(this).parents("#diaryTableModal").find("#ammount").parents("td").append("<span class='text-error'>Introduzca una Cantidad</span>");
+      }else{
+        if ( ammountmax > ammount ) {
+          flag = false;
+          $(this).parents("#diaryTableModal").find("#voucher").parents("td").append("<span class='text-error'>Solo esta autorizadoa recibir un prestamo maximo de "+ammountmax+" Bs.</span>");
+        } 
       }
 
 
@@ -208,9 +220,18 @@
 
         $("#diaryTableList").append(val);
 
+
+        // clean inputs and selects
+        $(this).parents("#diaryTableModal").find("select[name='distributor']").val("");
+        $(this).parents("#diaryTableModal").find("select[name='client']").val("");
+        $(this).parents("#diaryTableModal").find("input[name='date']").val("");
+        $(this).parents("#diaryTableModal").find("#voucher").val("");
+        $(this).parents("#diaryTableModal").find("#ammount").val("");
+        $(this).parents("#diaryTableModal").find("#detail").val("");
+
+
         // delete row
         $(".btnDeleteRow").click(function(){
-          console.log("click");
           $(this).parents("tr").remove();
         });
       };
@@ -219,6 +240,7 @@
 
 
     $("#btnSave").click(function(){
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       distributor = "";
       client = "";
       date = "";
@@ -242,8 +264,16 @@
       $("#formSaveBlock #ammount").val(ammount);
       $("#formSaveBlock #detail").val(detail);
 
+      console.log("&&&&&&&&&&&&&&&&&&&&&");
+      console.log("distributor" + distributor);
+      console.log("date" + date);
+      console.log("voucher" + voucher);
+      console.log("client" + client);
+      console.log("ammount" + ammount);
+      console.log("detail" + detail);
+
       var form = $("#formSaveBlock form");
-      form.submit();
+      //form.submit();
     });
 
 

@@ -181,7 +181,6 @@ class Client_model extends CI_Model {
       return $query->result();
     }
 
-
     function get_id_by_code($code) {
       $this->db->where('CodeCustomer', $code);
       $query = $this->db->get('customer');
@@ -204,12 +203,9 @@ class Client_model extends CI_Model {
 
     function set_client_status($cli, $val) {
       $data = array('Estado' => $val);
-
       $this->db->where('idCustomer', $cli);
       $this->db->update('customer', $data);
     }
-
-
 
     function customer_exists($var) {
       $this->db->where('CodeCustomer', $var);
@@ -222,6 +218,22 @@ class Client_model extends CI_Model {
           return FALSE;
       }
     }
+
+
+    function get_credit_limit($id){
+      $this->db->select('rank.Limit as limitXXX');
+      $this->db->from('rank');
+      $this->db->join('customer', 'customer.idrank = rank.idrank');
+      $this->db->where('customer.idCustomer', $id);
+      $query = $this->db->get();      
+      $result = $query->result_array();
+      $limit = "0";
+      foreach ($result as $r) {
+        $limit = $r['limitXXX'];
+      }
+      return $limit;   
+    }
+
 
     function client_valide_bycode($code){
       if ($this->Account_Model->get_profile() != "1" || $this->Account_Model->get_profile() != "2"){
