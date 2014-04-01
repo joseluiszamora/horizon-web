@@ -51,16 +51,13 @@
       $transammount = explode("***", $this->input->post('ammount'));
       $transdetail = explode("***", $this->input->post('detail'));
 
-      for ($i=0; $i < count($transdate)-1; $i++) { 
-        print_r("MMMMMMMMMMMM");
-        print_r($transdate);
-        
+      for ($i=0; $i < count($transdate)-1; $i++) {
         if ( $transdate[$i] != "" & $transdistributor[$i] != "0" & $transvoucher[$i] != "" & $transclient[$i] != "0" & $transammount[$i] != "" & $transammount[$i] != "" ) {
 
           $data_in['FechaRegistro'] = date("y-m-d");
           $data_in['FechaTransaction'] = $transdate[$i];
           $data_in['idUser'] = $transdistributor[$i];
-          $data_in['idUserSupervisor'] = "1";
+          $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));;
           $data_in['idTransaction'] = "1";
           $data_in['NumVoucher'] = $transvoucher[$i];
           $data_in['idCustomer'] = $transclient[$i];
@@ -82,7 +79,7 @@
       $data_in['FechaRegistro'] = date("y-m-d");
       $data_in['FechaTransaction'] = date("y-m-d");
       $data_in['idUser'] = $this->input->post('client');
-      $data_in['idUserSupervisor'] = "1";
+      $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));;
       $data_in['idTransaction'] = "1";
       $data_in['NumVoucher'] = $this->input->post('voucher');
       $data_in['idCustomer'] = $this->input->post('distributor');
@@ -168,9 +165,16 @@
 
     function get_loan_limit($id_client=-1) {
       $limit = $this->Client_Model->get_credit_limit($id_client);
+      //print_r($limit);
+      if ($limit == 0 || $limit == "0" || $limit == null){
+        $limit = 50000;
+      }
+      $debe = $this->Diary_Model->get_all_loan($id_client);
+      $pago = $this->Diary_Model->get_all_pay($id_client);
+      $ammount = ($debe - $pago);
       //$ammount = $this->Diary_Model->get_loan_limit($id_client);
-      //echo(json_encode($ammount));
-      echo(json_encode($this->Diary_Model->roundnumber( $limit, 2 )));
+
+      echo(json_encode($this->Diary_Model->roundnumber( $limit - $ammount, 2 )));
     }
 
     function pdf() {

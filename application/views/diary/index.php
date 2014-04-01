@@ -39,7 +39,6 @@
                         
                         <td class="center" id ="distributorDropdown">
                           <?php
-                            //echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
                             echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
                           ?>
                         </td>
@@ -54,7 +53,7 @@
                           ?>
                         </td> 
                         <td class="center"><input id="voucher" type="text" class="span1" value="" ></td>
-                        <td class="center"><input id="ammount" type="text" class="span1" value="" ></td>
+                        <td class="center"><input id="ammount" type="text" class="span1 money" value="" data-max="" ></td>
                         <td class="center"><textarea class="span2" rows="1" cols="0" id="detail" name="detail"></textarea></td>
                         <td class="center"><input id="btnAddReg" class="btn btn-primary" type="submit"  value="+" /></td>
                       </tr>
@@ -179,7 +178,7 @@
       date = $(this).parents("#diaryTableModal").find("input[name='date']").val();
       voucher = $(this).parents("#diaryTableModal").find("#voucher").val();
       ammount = $(this).parents("#diaryTableModal").find("#ammount").val();
-      ammountmax = $(this).parents("#diaryTableModal").find("#ammount").attr("placeholder");
+      ammountmax = $(this).parents("#diaryTableModal").find("#ammount").attr("data-max");
       detail = $(this).parents("#diaryTableModal").find("#detail").val();
       //validate
       $(this).parents("#diaryTableModal").find(".text-error").remove();
@@ -211,19 +210,17 @@
         flag = false;
         $(this).parents("#diaryTableModal").find("#ammount").parents("td").append("<span class='text-error'>Introduzca una Cantidad</span>");
       }else{
-        if ( ammountmax > ammount ) {
+        number = Number(ammount.replace(/[^0-9\.]+/g,""));
+        numbermax = Number(ammountmax.replace(/[^0-9\.]+/g,""));
+        if ( number > numbermax ) {
           flag = false;
-          $(this).parents("#diaryTableModal").find("#voucher").parents("td").append("<span class='text-error'>Solo esta autorizadoa recibir un prestamo maximo de "+ammountmax+" Bs.</span>");
+          $(this).parents("#diaryTableModal").find("#ammount").parents("td").append("<span class='text-error'>Solo esta autorizado a recibir un prestamo maximo de "+ammountmax+" Bs.</span>");
         } 
       }
 
-
       if (flag) {
-        console.log("3333333333333333");
         val = templateTable(distributor, client, date, voucher, ammount, detail);
-
         $("#diaryTableList").append(val);
-
 
         // clean inputs and selects
         $(this).parents("#diaryTableModal").find("select[name='distributor']").val("");
@@ -231,6 +228,7 @@
         $(this).parents("#diaryTableModal").find("input[name='date']").val("");
         $(this).parents("#diaryTableModal").find("#voucher").val("");
         $(this).parents("#diaryTableModal").find("#ammount").val("");
+        $(this).parents("#diaryTableModal").find("#ammount").attr("placeholder", "");
         $(this).parents("#diaryTableModal").find("#detail").val("");
 
         $('#diaryTableModal select[name="distributor"]').val('').trigger('chosen:updated');
@@ -246,20 +244,22 @@
 
 
     $("#btnSave").click(function(){
-      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       distributor = "";
       client = "";
       date = "";
       voucher = "";
       ammount = "";
       detail = "";
+      
+      number = Number(ammount.replace(/[^0-9\.]+/g,""));
+      numbermax = Number(ammountmax.replace(/[^0-9\.]+/g,""));
 
       $("#diaryTableList tr").each(function(){
         distributor += $(this).find(".distributor").html()+"***";
         client += $(this).find(".client").html()+"***";
         date += $(this).find(".date").html()+"***";
         voucher += $(this).find(".voucher").html()+"***";
-        ammount += $(this).find(".ammount").html()+"***";
+        ammount += Number($(this).find(".ammount").html().replace(/[^0-9\.]+/g,""))+"***";
         detail += $(this).find(".detail").html()+"***";
       });
 
@@ -270,16 +270,8 @@
       $("#formSaveBlock #ammount").val(ammount);
       $("#formSaveBlock #detail").val(detail);
 
-      console.log("&&&&&&&&&&&&&&&&&&&&&");
-      console.log("distributor" + distributor);
-      console.log("date" + date);
-      console.log("voucher" + voucher);
-      console.log("client" + client);
-      console.log("ammount" + ammount);
-      console.log("detail" + detail);
-
       var form = $("#formSaveBlock form");
-      //form.submit();
+      form.submit();
     });
 
 

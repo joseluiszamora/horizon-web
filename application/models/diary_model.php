@@ -150,8 +150,51 @@ Detalle
     $this->db->where('Type', "C");
     $this->db->where('Estado', "1");
     $query = $this->db->get();
-    return $query->result();
+    $result = $query->result_array();
+    $saldo = "0";
+    foreach ($result as $r) {
+      $saldo = $r['saldo'];
+    }
+    return $saldo;   
   }
+
+  // monto total de prestamos
+  function get_all_loan($idclient) {
+    $this->db->select( '
+      SUM(daily.Monto) as saldo
+    ' );
+    $this->db->from('daily');
+    $this->db->where('idCustomer', $idclient);
+    $this->db->where('Type', "P");
+    $this->db->where('Estado', "1");
+    $query = $this->db->get();
+    $result = $query->result_array();
+    $saldo = "0";
+    foreach ($result as $r) {
+      $saldo = $r['saldo'];
+    }
+    return $saldo;   
+  }
+
+  // monto total de pagos
+  function get_all_pay($idclient) {
+    $this->db->select( '
+      SUM(daily.Monto) as saldo
+    ' );
+    $this->db->from('daily');
+    $this->db->where('idCustomer', $idclient);
+    $this->db->where('Type', "C");
+    $this->db->where('Estado', "1");
+    $query = $this->db->get();
+    $result = $query->result_array();
+    $saldo = "0";
+    foreach ($result as $r) {
+      $saldo = $r['saldo'];
+    }
+    return $saldo;   
+  }
+
+
 
   function search ($data_in){
     $this->db->select( 'daily.iddiario,

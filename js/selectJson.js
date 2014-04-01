@@ -1,4 +1,4 @@
-//var loader = "https://mariani.bo/horizon/img/loader.gif";
+//var loader = "https://mariani.bo/horizon-sc/img/loader.gif";
 //var loader = "http://www.ruizmier.com/systems/horizon/img/loader.gif";
 var loader = "http://localhost/horizon/img/loader.gif";
 
@@ -26,6 +26,8 @@ $(document).ready(function(){
   // chosen selects
   $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
 
+  // money mask
+  $('.money').mask('000,000,000,000,000.00', {reverse: true});
 
   $('.datepicker').datepicker({
     format: 'yyyy-mm-dd'
@@ -331,31 +333,29 @@ $(document).ready(function(){
         no_results_text: "Ningún resultado encontrado :(",
         width: "200px"
       });
-    });
-    //$('#diaryTableModal select[name="client"]').trigger("chosen:updated");
+
+
+      // select prestamo limts 
+      $('#diaryTableModal #clientDropdown select').change(function(){
+        var id = $(this).val();
+        console.log("---****> " + id);
+        
+        $.getJSON( url+"diary/get_loan_limit/"+id, {
+          format: "jsonp",
+          async: true,
+          contentType: 'application/json; charset=utf-8', 
+          cache: false,
+          crossDomain: true
+        })
+        .done(function( limes ) {
+          $('#diaryTableModal #ammount').attr("placeholder", limes);
+          $('#diaryTableModal #ammount').attr("data-max", limes);
+        });
+      });
+
+    });   
   });
-
-
-  // select prestamo limts 
-  $('#diaryTableModal #clientDropdown select').change(function(){
-    var id = $(this).val();
-    //console.log("---> " + id);
-    //showLoadingAnimation($('#diaryTableModal select[name="client"]'));
-
-    $.getJSON( url+"diary/get_loan_limit/"+id, {
-      format: "jsonp",
-      async: true,
-      contentType: 'application/json; charset=utf-8', 
-      cache: false,
-      crossDomain: true
-    })
-    .done(function( limes ) {
-      $('#diaryTableModal #ammount').attr("placeholder", limes);
-      
-      //hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
-    });
   
-  });
 
 /*  
  $('#diaryTableModal select[name="distributor"]').change(function(){
@@ -401,6 +401,9 @@ $(document).ready(function(){
     $('.formContainer input[type="text"]').attr('value','');
     $('.formContainer select option').attr('selected', false);
     $('.formContainer textarea').attr('value', "");
+
+    $('select[name="distributor"]').val('').trigger('chosen:updated');
+    $('select[name="status"]').val('').trigger('chosen:updated');
   });
 });
 
