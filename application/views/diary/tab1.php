@@ -134,15 +134,12 @@
                 <tbody id="diaryTable">
                   <?php 
                     foreach ($diaries as $row) {
-                      $monto = $row->Monto;
-                      $pagado = 0;
-                      foreach($balance as $key) {
-                        if ($row->NumVoucher == $key->NumVoucher) {
-                          $pagado = $key->total;
-                        }
-                      }
+                      
+                      $data_in['NumVoucher'] = $row->NumVoucher;
+                      $data_in['idCustomer'] = $row->idCustomer;
 
-                      $saldo = $monto - $pagado;
+                      $pagado = $this->Diary_Model->get_all_pay_for($data_in);                      
+                      $saldo = $row->Monto - $pagado;
 
                       $moradate = dateDiff(date("Y-m-d"), $row->FechaTransaction)." días";
                   ?>
@@ -317,7 +314,7 @@
     $.ajax({
       type: "POST",
       url: '<?php echo base_url(); ?>index.php/diary/getpays',
-      data: 'voucher='+aData[5],
+      data: 'voucher='+aData[5]+'&distributor='+aData[3]+'&customer='+aData[4],
       dataType: "text",
       cache: false,
       async: false,
@@ -331,15 +328,8 @@
     return sOut;
   }
 
-
   // add row details
   $(document).ready(function() {
-
-
-
-
-
-
 
     $(".btnSaveAddPay").click(function(){
       obj = $(this).parents(".modaladdpay").find("form");
