@@ -68,20 +68,11 @@
         <h2 class="span4">Diario</h2>
       </div>
       <div class="block_content row padding0">
-          <?php echo form_open('diary/search'); 
-          ?>
-
           <fieldset>
             <div class="control-group selected_3">
               <label class="control-label" for="city">Distribuidor</label>
               <div class="controls">
-                <?php
-                  if (isset($parameters['distributor'])) {
-                    echo form_dropdown('distributor', $distributor, $parameters['distributor'], 'class="chosen-select" ');
-                  }else{
-                    echo form_dropdown('distributor', $distributor, '', 'class="chosen-select" ');
-                  }
-                ?>
+                
               </div>
             </div>
 
@@ -133,14 +124,6 @@
           <div class="form-actions span7">
             <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Buscar" />
             <input id="btn_clean" class="btn btn-primary" type="reset" value="Limpiar" />
-
-            <div class="btnPDF">
-              <?php echo form_close(); ?>
-              <?php echo form_open('diary/pdf'); ?>
-              <?php echo form_hidden('parameters', $search_parameters); ?>
-              <?php echo form_submit('send', 'PDF'); ?>
-              <?php echo form_close(); ?>
-            </div>
           </div>
         </fieldset>
       </div>
