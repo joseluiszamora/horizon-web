@@ -109,6 +109,21 @@
                 echo anchor('track', 'Tracker', array('class'=>'')); }?></li>
               <li><?php if ($this->Account_Model->get_profile() == "1" || $this->Account_Model->get_profile() == "2" || $this->Account_Model->get_profile() == "3"){
                 echo anchor('diary', 'Diario', array('class'=>'')); }?></li>
+              
+
+              <li class="dropdown">
+                <?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'volume')){ ?>
+                  <a href="#" data-toggle="dropdown" role="button" id="drop5" class="dropdown-toggle">Dropdown 2 <b class="caret"></b></a>
+                  <ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Action</a></li>
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Another action</a></li>
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Something else here</a></li>
+                    <li class="divider" role="presentation"></li>
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Separated link</a></li>
+                  </ul>
+                <?php }?>
+              </li>
+
               <li>
                 <div class="btn-group">
                   <button class="btn"><?php echo $this->session->userdata('email'); ?></button>
