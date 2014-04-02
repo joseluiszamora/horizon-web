@@ -7,7 +7,7 @@
 
 <script type="text/javascript">
   $(function () {
-    $('#container').highcharts({
+    $('#containerchart').highcharts({
       title: {
         text: 'Monthly Average Temperature',
         x: -100 //center
@@ -63,4 +63,17 @@
 
 
 
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<div class="row" style="overflow:hidden;">
+  <div class="container formContainer logincontainer">
+    <div class="span9 offset1">
+      <div class="block_head row">
+        <h2 class="span4">Diario</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="containerchart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
