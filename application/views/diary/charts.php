@@ -61,19 +61,100 @@
   });
 </script>
 
-
-
-
 <div class="row" style="overflow:hidden;">
   <div class="container formContainer logincontainer">
     <div class="span9 offset1">
       <div class="block_head row">
         <h2 class="span4">Diario</h2>
       </div>
+      <div class="block_content row padding0">
+          <?php echo form_open('diary/search'); 
+          ?>
+
+          <fieldset>
+            <div class="control-group selected_3">
+              <label class="control-label" for="city">Distribuidor</label>
+              <div class="controls">
+                <?php
+                  if (isset($parameters['distributor'])) {
+                    echo form_dropdown('distributor', $distributor, $parameters['distributor'], 'class="chosen-select" ');
+                  }else{
+                    echo form_dropdown('distributor', $distributor, '', 'class="chosen-select" ');
+                  }
+                ?>
+              </div>
+            </div>
+
+            <div class="control-group selected_3">
+              <label class="control-label" for="city">Estado</label>
+              <div class="controls">
+                <?php
+                  $options = array(
+                    '1' => 'Pendiente',
+                    '2' => 'Pagado/Cancelado',
+                    '3' => 'Eliminado'
+                  );
+
+                  if (isset($parameters['status'])) {
+                    echo form_dropdown('status', $options, $parameters['status'], 'class="chosen-select" ');
+                  }else{
+                    echo form_dropdown('status', $options, '', 'class="chosen-select" ');
+                  }
+                ?>
+              </div>
+            </div>
+            
+            <div class="control-group selected_1">
+              <label class="control-label" for="dateStart">Desde:</label>
+              <div class="controls">
+                <?php 
+                  if (isset($parameters['dateStart'])) {
+                    echo form_input(array('name' => 'dateStart', 'class' => 'datecontainer datepicker datemedium', 'value' => $parameters['dateStart'])); 
+                  }else{
+                    echo form_input(array('name' => 'dateStart', 'class' => 'datecontainer datepicker datemedium')); 
+                  }
+                ?>
+              </div>
+            </div>
+
+            <div class="control-group selected_1">
+              <label class="control-label" for="dateFinish">Hasta:</label>
+              <div class="controls">
+                <?php
+                  if (isset($parameters['dateFinish'])) {
+                    echo form_input(array('name' => 'dateFinish', 'class' => 'datecontainer datepicker datemedium', 'value' => $parameters['dateFinish'])); 
+                  }else{
+                    echo form_input(array('name' => 'dateFinish', 'class' => 'datecontainer datepicker datemedium')); 
+                  }
+                ?>
+              </div>
+            </div>
+
+          <div class="form-actions span7">
+            <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Buscar" />
+            <input id="btn_clean" class="btn btn-primary" type="reset" value="Limpiar" />
+
+            <div class="btnPDF">
+              <?php echo form_close(); ?>
+              <?php echo form_open('diary/pdf'); ?>
+              <?php echo form_hidden('parameters', $search_parameters); ?>
+              <?php echo form_submit('send', 'PDF'); ?>
+              <?php echo form_close(); ?>
+            </div>
+          </div>
+        </fieldset>
+      </div>
     </div>
   </div>
+
+  <div class="container formContainer">
+    <div class="span10 offset1">
+      <div class="block_content row">
+          
+      </div>
+    </div>
+  </div>
+
+
 </div>
-
-
-
 <div id="containerchart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
