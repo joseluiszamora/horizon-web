@@ -72,7 +72,15 @@
             <div class="control-group selected_3">
               <label class="control-label" for="city">Distribuidor</label>
               <div class="controls">
-                
+                <?php
+                  $options = array(
+                    '1' => 'Pendiente',
+                    '2' => 'Pagado/Cancelado',
+                    '3' => 'Eliminado'
+                  );
+
+                  echo form_dropdown('status', $options, '', 'class="chosen-select" ');
+                ?>
               </div>
             </div>
 

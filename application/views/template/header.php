@@ -19,6 +19,7 @@
     <script src="<?php echo base_url(); ?>js/bootstrap-datepicker.js"></script>
     <script src="<?php echo base_url(); ?>js/selectJson.js"></script>
     <script src="<?php echo base_url(); ?>js/chosen.jquery.js"></script>
+    <script src="<?php echo base_url(); ?>js/jquery.mask.min.js"></script>
 
 
     <script type="text/javascript">
@@ -67,7 +68,7 @@
   <body>
     <div id="headerwrapper">
       <div class="topbar">
-        <div class="header" >
+        <div class="header">
           <div class="container">
             <div>
       <?php

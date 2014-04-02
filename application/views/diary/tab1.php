@@ -134,15 +134,12 @@
                 <tbody id="diaryTable">
                   <?php 
                     foreach ($diaries as $row) {
-                      $monto = $row->Monto;
-                      $pagado = 0;
-                      foreach($balance as $key) {
-                        if ($row->NumVoucher == $key->NumVoucher) {
-                          $pagado = $key->total;
-                        }
-                      }
+                      
+                      $data_in['NumVoucher'] = $row->NumVoucher;
+                      $data_in['idCustomer'] = $row->idCustomer;
 
-                      $saldo = $monto - $pagado;
+                      $pagado = $this->Diary_Model->get_all_pay_for($data_in);                      
+                      $saldo = $row->Monto - $pagado;
 
                       $moradate = dateDiff(date("Y-m-d"), $row->FechaTransaction)." días";
                   ?>
@@ -165,14 +162,14 @@
                       <?php } ?>
                          
                         <!-- Modal -->
-                        <div id="<?php echo 'modal-'.$row->iddiario ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div id="<?php echo 'modal-'.$row->iddiario ?>" class="modal hide fade modaladdpay" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h3 id="myModalLabel">Adicionar Pago</h3>
                           </div>
                           <div class="modal-body container_form_no_margin">
                             <?php 
-                              $attributes = array('id' => 'formaddpay');
+                              $attributes = array('class' => 'formaddpay');
 
                               echo form_open('diary/addpay', $attributes);
                               echo form_hidden('voucher', $row->NumVoucher);
@@ -201,7 +198,7 @@
                                     <div class="control-group span3">
                                       <label class="control-label" for="ammount">Monto (Max: <?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>):</label>
                                       <div class="controls">
-                                        <input type="text" max="<?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>" class="span2" value="" name="ammount" id="ammount" required/>
+                                        <input type="text" max="<?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>" class="span2 money" value="" name="ammount" id="ammount" required/><br>
                                       </div>
                                     </div>
                                     <div class="control-group span4">
@@ -214,15 +211,15 @@
                                     </div> 
                                 </div>
                               </fieldset>
-
+                               <?php echo form_close(); ?>
                           </div>
                           <div class="modal-footer">
                             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                            <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Guardar" />
+                            <button class="btn btn-primary btnSaveAddPay">Guardar</button>
                           </div>
 
                         </div>
-                        <?php echo form_close(); ?>
+                       
                       </td>
                       <td class="center">
                         <?php 
@@ -306,24 +303,18 @@
   registry += '<td class="center"> <input type="text" class="span2" value="" ></td> ';
   registry += '<td class="center"> <input type="text" class="span2" value="" ></td> ';
   registry += "</tr>";
-  $(document).ready(function(){
-    $("#btnAdd").click(function(){
-      $("#diaryTable").append(registry);
-    });
-  });
 
 
-   /* Formating function for row details */
+  /* Formating function for row details */
   function fnFormatDetails ( oTable, nTr ){
     var aData = oTable.fnGetData( nTr );
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" class="table table-striped table-bordered">';
     sOut +=  '<thead><tr><th class="center">Fecha de Pago</th><th class="center">Monto</th><th class="center">Detalle</th></tr></thead>';
-   
-    
+     
     $.ajax({
       type: "POST",
       url: '<?php echo base_url(); ?>index.php/diary/getpays',
-      data: 'voucher='+aData[5],
+      data: 'voucher='+aData[5]+'&distributor='+aData[3]+'&customer='+aData[4],
       dataType: "text",
       cache: false,
       async: false,
@@ -332,7 +323,6 @@
       }
     })
 
-    
     sOut += '</table>';
 
     return sOut;
@@ -340,9 +330,36 @@
 
   // add row details
   $(document).ready(function() {
-    /*
-     * Insert a 'details' column to the table
-     */
+
+    $(".btnSaveAddPay").click(function(){
+      obj = $(this).parents(".modaladdpay").find("form");
+
+      flag = true;
+      $(obj).find(".text-error").remove();
+      ammount = Number($(obj).find("#ammount").val().replace(/[^0-9\.]+/g,""));
+      max = Number($(obj).find("#ammount").attr("max").replace(/[^0-9\.]+/g,""));
+
+      if (ammount == "" || ammount == "0") {
+        flag = false;
+        $(obj).find("#ammount").parents(".controls").append("<span class='text-error'>Introduzca una Cantidad</span>");
+      }else{
+        if ( ammount > max ) {
+          flag = false;
+          $(obj).find("#ammount").parents(".controls").append("<span class='text-error'>La cantidad excede el saldo del prestamo</span>");
+        } 
+      }
+  
+      if (flag) {
+        $(obj).find("#ammount").val(ammount);
+        $(obj).submit();
+      }
+    });
+
+
+    $("#btnAdd").click(function(){
+      $("#diaryTable").append(registry);
+    });
+    
     var nCloneTh = document.createElement( 'th' );
     var nCloneTd = document.createElement( 'td' );
     nCloneTd.innerHTML = '<img src="<?php echo base_url(); ?>img/details_open.png">';
@@ -355,11 +372,6 @@
     $('#data-table tbody tr').each( function () {
       this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
     } );
-    
-    /*
-     * Initialse DataTables, with no sorting on the 'details' column
-     */
-
 
     var oTable = $('#data-table').dataTable( {
       "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
@@ -375,7 +387,7 @@
         { "bSortable": false, "aTargets": [ 0 ] }
       ],
       "aaSorting": [[1, 'asc']],
-/*
+      /*
       "oTableTools": {
         "aButtons": [
           "copy",
@@ -389,18 +401,12 @@
           "print"
         ]
       }
-*/
-
+      */
     });
     
-    /* Add event listener for opening and closing details
-     * Note that the indicator for showing which row is open is not controlled by DataTables,
-     * rather it is done here
-     */
     $('#data-table tbody td img').click(function () {
       var nTr = $(this).parents('tr')[0];
-      if ( oTable.fnIsOpen(nTr) )
-      {
+      if ( oTable.fnIsOpen(nTr) ) {
         /* This row is already open - close it */
         this.src = "<?php echo base_url(); ?>img/details_open.png";
         oTable.fnClose( nTr );
@@ -409,7 +415,7 @@
         this.src = "<?php echo base_url(); ?>img/details_close.png";
         oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
       }
-    } );
+    });
 
 
     /* search input footer */
@@ -422,16 +428,14 @@
     } );
     
     $("tfoot input").focus( function () {
-      if ( this.className == "search_init" )
-      {
+      if ( this.className == "search_init" ) {
         this.className = "";
         this.value = "";
       }
-    } );
+    });
     
     $("tfoot input").blur( function (i) {
-      if ( this.value == "" )
-      {
+      if ( this.value == "" ) {
         this.className = "search_init";
         this.value = asInitVals[$("tfoot input").index(this)];
       }

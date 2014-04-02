@@ -20,7 +20,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">PRESTAMOS</h3>
               </div>
-              <div class="modal-body" style="min-height: 100px;">
+              <div class="modal-body" style="min-height: 350px;">
                 <fieldset>
                   <table cellpadding="0" cellspacing="0" border="0" class="table" id="data-tabled" width="100%">
                     <thead>
@@ -39,7 +39,6 @@
                         
                         <td class="center" id ="distributorDropdown">
                           <?php
-                            //echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
                             echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
                           ?>
                         </td>
@@ -54,13 +53,13 @@
                           ?>
                         </td> 
                         <td class="center"><input id="voucher" type="text" class="span1" value="" ></td>
-                        <td class="center"><input id="ammount" type="text" class="span1" value="" ></td>
+                        <td class="center"><input id="ammount" type="text" class="span1 money" value="" data-max="" ></td>
                         <td class="center"><textarea class="span2" rows="1" cols="0" id="detail" name="detail"></textarea></td>
                         <td class="center"><input id="btnAddReg" class="btn btn-primary" type="submit"  value="+" /></td>
                       </tr>
                     </tbody>
                   </table>
-
+                  <div id="errorFormContainer"></div>
                   <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-tabled" width="100%">
                     <thead>
                       <tr>
@@ -180,47 +179,59 @@
       date = $(this).parents("#diaryTableModal").find("input[name='date']").val();
       voucher = $(this).parents("#diaryTableModal").find("#voucher").val();
       ammount = $(this).parents("#diaryTableModal").find("#ammount").val();
-      ammountmax = $(this).parents("#diaryTableModal").find("#ammount").attr("placeholder");
+      ammountmax = $(this).parents("#diaryTableModal").find("#ammount").attr("data-max");
       detail = $(this).parents("#diaryTableModal").find("#detail").val();
       //validate
-      $(this).parents("#diaryTableModal").find(".text-error").remove();
+      $("#modal-diarycreate #errorFormContainer").html("");
+      // error container
+      errorFormContainer = $(this).parents("#modal-diarycreate").find("#errorFormContainer");
 
+      console.log(errorFormContainer);
       if (distributor.trim() == "" || distributor.trim() == "0") {
         flag = false;
-        $(this).parents("#diaryTableModal").find("select[name='distributor']").parents("td").append("<span class='text-error'>Seleccione un Distribuidor</span>");
+        //$(this).parents("#diaryTableModal").find("select[name='distributor']").parents("td").append("<span class='text-error'>Seleccione un Distribuidor</span>");
+        $(errorFormContainer).append("<span class='text-error'>* Seleccione un Distribuidor</span><br>");
       }
       if (client.trim() == "" || client.trim() == "0") {
         flag = false;
-        $(this).parents("#diaryTableModal").find("select[name='client']").parents("td").append("<span class='text-error'>Seleccione un Cliente</span>");
+        //$(this).parents("#diaryTableModal").find("select[name='client']").parents("td").append("<span class='text-error'>Seleccione un Cliente</span>");
+        $(errorFormContainer).append("<span class='text-error'>* Seleccione un Cliente</span><br>");
+      }
+      if (date.trim() == "" || date.trim() == null) {
+        flag = false;
+        //$(this).parents("#diaryTableModal").find("input[name='date']").parents("td").append("<span class='text-error'>Introduzca una fecha</span>");
+        $(errorFormContainer).append("<span class='text-error'>* Introduzca una fecha</span><br>");
       }
       if (voucher.trim() == "" || voucher.trim() == "0") {
         flag = false;
-        $(this).parents("#diaryTableModal").find("#voucher").parents("td").append("<span class='text-error'>Introduzca un Voucher</span>");
+        //$(this).parents("#diaryTableModal").find("#voucher").parents("td")
+        $(errorFormContainer).append("<span class='text-error'>* Introduzca un Voucher</span><br>");
       }else{
         $("#diaryTableList tr").each(function(){
           if (voucher.trim() === $(this).find(".voucher").html() ) {
             flag = false;
-            $("#diaryTableModal").find("#voucher").parents("td").append("<span class='text-error'>Este Voucher ya fue introducido</span>");
+            //$("#diaryTableModal").find("#voucher").parents("td")
+            $(errorFormContainer).append("<span class='text-error'>* Este Voucher ya fue introducido</span><br>");
           }
         });
       }
       if (ammount.trim() == "" || ammount.trim() == "0") {
         flag = false;
-        $(this).parents("#diaryTableModal").find("#ammount").parents("td").append("<span class='text-error'>Introduzca una Cantidad</span>");
+        //$(this).parents("#diaryTableModal").find("#ammount").parents("td")
+        $(errorFormContainer).append("<span class='text-error'>* Introduzca una Cantidad</span><br>");
       }else{
-        if ( ammountmax > ammount ) {
+        number = Number(ammount.replace(/[^0-9\.]+/g,""));
+        numbermax = Number(ammountmax.replace(/[^0-9\.]+/g,""));
+        if ( number > numbermax ) {
           flag = false;
-          $(this).parents("#diaryTableModal").find("#voucher").parents("td").append("<span class='text-error'>Solo esta autorizadoa recibir un prestamo maximo de "+ammountmax+" Bs.</span>");
+          //$(this).parents("#diaryTableModal").find("#ammount").parents("td")
+          $(errorFormContainer).append("<span class='text-error'>* Solo esta autorizado a recibir un prestamo maximo de "+ammountmax+" Bs.</span><br>");
         } 
       }
 
-
       if (flag) {
-        console.log("3333333333333333");
         val = templateTable(distributor, client, date, voucher, ammount, detail);
-
         $("#diaryTableList").append(val);
-
 
         // clean inputs and selects
         $(this).parents("#diaryTableModal").find("select[name='distributor']").val("");
@@ -228,8 +239,11 @@
         $(this).parents("#diaryTableModal").find("input[name='date']").val("");
         $(this).parents("#diaryTableModal").find("#voucher").val("");
         $(this).parents("#diaryTableModal").find("#ammount").val("");
+        $(this).parents("#diaryTableModal").find("#ammount").attr("placeholder", "");
         $(this).parents("#diaryTableModal").find("#detail").val("");
 
+        $('#diaryTableModal select[name="distributor"]').val('').trigger('chosen:updated');
+        $('#diaryTableModal select[name="client"]').val('').trigger('chosen:updated');
 
         // delete row
         $(".btnDeleteRow").click(function(){
@@ -241,20 +255,22 @@
 
 
     $("#btnSave").click(function(){
-      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       distributor = "";
       client = "";
       date = "";
       voucher = "";
       ammount = "";
       detail = "";
+      
+      number = Number(ammount.replace(/[^0-9\.]+/g,""));
+      numbermax = Number(ammountmax.replace(/[^0-9\.]+/g,""));
 
       $("#diaryTableList tr").each(function(){
         distributor += $(this).find(".distributor").html()+"***";
         client += $(this).find(".client").html()+"***";
         date += $(this).find(".date").html()+"***";
         voucher += $(this).find(".voucher").html()+"***";
-        ammount += $(this).find(".ammount").html()+"***";
+        ammount += Number($(this).find(".ammount").html().replace(/[^0-9\.]+/g,""))+"***";
         detail += $(this).find(".detail").html()+"***";
       });
 
@@ -265,16 +281,8 @@
       $("#formSaveBlock #ammount").val(ammount);
       $("#formSaveBlock #detail").val(detail);
 
-      console.log("&&&&&&&&&&&&&&&&&&&&&");
-      console.log("distributor" + distributor);
-      console.log("date" + date);
-      console.log("voucher" + voucher);
-      console.log("client" + client);
-      console.log("ammount" + ammount);
-      console.log("detail" + detail);
-
       var form = $("#formSaveBlock form");
-      //form.submit();
+      form.submit();
     });
 
 

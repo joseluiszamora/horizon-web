@@ -1,4 +1,4 @@
-//var loader = "https://mariani.bo/horizon/img/loader.gif";
+//var loader = "https://mariani.bo/horizon-sc/img/loader.gif";
 //var loader = "http://www.ruizmier.com/systems/horizon/img/loader.gif";
 var loader = "http://localhost/horizon/img/loader.gif";
 
@@ -7,10 +7,16 @@ function showLoadingAnimation(obj){
   $(obj).parents(".controls").append("<img style='margin: 0 90px;' src='"+loader+"'>");
   $(obj).css("display", "none");
 }
+function showLoadingAnimation_td(obj){
+  $(obj).html("");
+  $(obj).append("<img style='margin: 0 90px;' src='"+loader+"'>");
+}
 function hideLoadingAnimation(obj){
- // console.log(obj);
   $(obj).css("display", "block");
   $(obj).siblings().remove();
+}
+function hideLoadingAnimation_td(obj){
+  $(obj).find("img").remove();
 }
 $(document).ready(function(){
   //var url = "http://www.ruizmier.com/systems/horizon/";
@@ -20,6 +26,8 @@ $(document).ready(function(){
   // chosen selects
   $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
 
+  // money mask
+  $('.money').mask('000,000,000,000,000.00', {reverse: true});
 
   $('.datepicker').datepicker({
     format: 'yyyy-mm-dd'
@@ -298,11 +306,9 @@ $(document).ready(function(){
   // select distributor and get clients
   $('#diaryTableModal select[name="distributor"]').change(function(){
     $('#diaryTableModal #clientDropdown').html("");
-    $('#diaryTableModal #clientDropdown').append('<select name="client"></select>');
-    
 
     var id = $(this).val();
-    //showLoadingAnimation($('#diaryTableModal select[name="client"]'));
+    showLoadingAnimation_td($('#clientDropdown'));
 
     $.getJSON( url+"diary/get_clients_for_distributor/"+id, {
       format: "jsonp",
@@ -312,7 +318,7 @@ $(document).ready(function(){
       crossDomain: true
     })
     .done(function( limes ) {
-      $('#diaryTableModal select[name="client"] > option').remove();
+      $('#diaryTableModal #clientDropdown').append('<select name="client"></select>');
       $('#diaryTableModal select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');  
       $.each(limes,function(id,name){
         var opt = $('<option>');
@@ -320,36 +326,36 @@ $(document).ready(function(){
         opt.text(name);
         $('#diaryTableModal select[name="client"]').append(opt);
       });
-      //hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
+      
+      hideLoadingAnimation_td($('#clientDropdown'));
+
       $('#diaryTableModal select[name="client"]').chosen({
         no_results_text: "Ningún resultado encontrado :(",
         width: "200px"
       });
-    });
-    //$('#diaryTableModal select[name="client"]').trigger("chosen:updated");
+
+
+      // select prestamo limts 
+      $('#diaryTableModal #clientDropdown select').change(function(){
+        var id = $(this).val();
+        console.log("---****> " + id);
+        
+        $.getJSON( url+"diary/get_loan_limit/"+id, {
+          format: "jsonp",
+          async: true,
+          contentType: 'application/json; charset=utf-8', 
+          cache: false,
+          crossDomain: true
+        })
+        .done(function( limes ) {
+          $('#diaryTableModal #ammount').attr("placeholder", limes);
+          $('#diaryTableModal #ammount').attr("data-max", limes);
+        });
+      });
+
+    });   
   });
-
-
-  // select prestamo limts 
-  $('#diaryTableModal #clientDropdown select').change(function(){
-    var id = $(this).val();
-    //console.log("---> " + id);
-    //showLoadingAnimation($('#diaryTableModal select[name="client"]'));
-
-    $.getJSON( url+"diary/get_loan_limit/"+id, {
-      format: "jsonp",
-      async: true,
-      contentType: 'application/json; charset=utf-8', 
-      cache: false,
-      crossDomain: true
-    })
-    .done(function( limes ) {
-      $('#diaryTableModal #ammount').attr("placeholder", limes);
-      
-      //hideLoadingAnimation($('#diaryTableModal select[name="client"]'));
-    });
   
-  });
 
 /*  
  $('#diaryTableModal select[name="distributor"]').change(function(){
@@ -395,6 +401,9 @@ $(document).ready(function(){
     $('.formContainer input[type="text"]').attr('value','');
     $('.formContainer select option').attr('selected', false);
     $('.formContainer textarea').attr('value', "");
+
+    $('select[name="distributor"]').val('').trigger('chosen:updated');
+    $('select[name="status"]').val('').trigger('chosen:updated');
   });
 });
 

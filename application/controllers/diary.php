@@ -18,9 +18,10 @@
       $data_in['status'] = "1";
       $data_in['type'] = "P";
       $data['total'] = $this->Diary_Model->ammounts_search($data_in);
+      $data['diaries'] = $this->Diary_Model->search($data_in);
       $data_in['type'] = "C";
       $data['saldo'] = $this->Diary_Model->ammounts_search($data_in);
-      $data['diaries'] = $this->Diary_Model->get_diaries();
+      //$data['diaries'] = $this->Diary_Model->get_diaries();
       $data['balance'] = $this->Diary_Model->get_balance();
       $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
       $data['clients'] = $this->Client_Model->get_clients();
@@ -57,16 +58,13 @@
       $transammount = explode("***", $this->input->post('ammount'));
       $transdetail = explode("***", $this->input->post('detail'));
 
-      for ($i=0; $i < count($transdate)-1; $i++) { 
-        print_r("MMMMMMMMMMMM");
-        print_r($transdate);
-        
+      for ($i=0; $i < count($transdate)-1; $i++) {
         if ( $transdate[$i] != "" & $transdistributor[$i] != "0" & $transvoucher[$i] != "" & $transclient[$i] != "0" & $transammount[$i] != "" & $transammount[$i] != "" ) {
 
           $data_in['FechaRegistro'] = date("y-m-d");
           $data_in['FechaTransaction'] = $transdate[$i];
           $data_in['idUser'] = $transdistributor[$i];
-          $data_in['idUserSupervisor'] = "1";
+          $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));;
           $data_in['idTransaction'] = "1";
           $data_in['NumVoucher'] = $transvoucher[$i];
           $data_in['idCustomer'] = $transclient[$i];
@@ -88,22 +86,39 @@
       $data_in['FechaRegistro'] = date("y-m-d");
       $data_in['FechaTransaction'] = date("y-m-d");
       $data_in['idUser'] = $this->input->post('client');
-      $data_in['idUserSupervisor'] = "1";
+      $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));;
       $data_in['idTransaction'] = "1";
       $data_in['NumVoucher'] = $this->input->post('voucher');
       $data_in['idCustomer'] = $this->input->post('distributor');
       $data_in['Type'] = "C";
       $data_in['Monto'] = $this->input->post('ammount');
-      $data_in['Estado'] = '1';
+      $data_in['Estado'] = '1'; 
       $data_in['Detalle'] = $this->input->post('detail');
 
-      if ($this->Diary_Model->create($data_in) == TRUE) {
+      $id = $this->Diary_Model->create($data_in);
+      if ($id != null) {
+        $allpays = $this->Diary_Model->get_all_pay_for($data_in);
+        $balance = $this->Diary_Model->get_ammount($data_in);
+
+        if ($allpays >= $balance[0]->Monto ){
+          $this->Diary_Model->set_status($balance[0]->iddiario, 2);
+          $diaries_list = $this->Diary_Model->get_diaries_by_params($balance[0]->NumVoucher, $balance[0]->idCustomer, "C");
+
+          foreach ($diaries_list as $dl) {
+            $this->Diary_Model->set_status($dl->iddiario, 2);
+          }
+        }
+
         redirect("diary");
       }
     }
 
+
+
     function getpays(){
       $data_in['voucher'] = $this->input->post('voucher');
+      $data_in['distributor'] = $this->input->post('distributor');
+      //$data_in['customer'] = $this->input->post('customer');
       $data['pays'] = $this->Diary_Model->getpays($data_in);
 
       $res = '<tbody>';
@@ -174,9 +189,16 @@
 
     function get_loan_limit($id_client=-1) {
       $limit = $this->Client_Model->get_credit_limit($id_client);
+      //print_r($limit);
+      if ($limit == 0 || $limit == "0" || $limit == null){
+        $limit = 50000;
+      }
+      $debe = $this->Diary_Model->get_all_loan($id_client);
+      $pago = $this->Diary_Model->get_all_pay($id_client);
+      $ammount = ($debe - $pago);
       //$ammount = $this->Diary_Model->get_loan_limit($id_client);
-      //echo(json_encode($ammount));
-      echo(json_encode($this->Diary_Model->roundnumber( $limit, 2 )));
+
+      echo(json_encode($this->Diary_Model->roundnumber( $limit - $ammount, 2 )));
     }
 
     function pdf() {

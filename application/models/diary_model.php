@@ -16,9 +16,9 @@ class Diary_model extends CI_Model {
       $data_log['idReferencia'] = $id;
       $data_log['FechaHora'] = date("y-m-d, g:i");
       $this->Log_Model->create($data_log);
-      return TRUE;
+      return $id;
     }
-    return FALSE;
+    return null;
   }
 
   function get($id) {
@@ -130,10 +130,14 @@ Detalle
   }
 
   function getpays($data_in){
+    //$data_in['voucher'] = $this->input->post('voucher');
+    //$data_in['distributor'] = $this->input->post('distributor');
+    //$data_in['customer'] = $this->input->post('customer');
     $querystring = '
       SELECT * 
       FROM daily
-      WHERE NumVoucher = "'.$data_in['voucher'].'"
+      WHERE NumVoucher = "'.$data_in['voucher'].'" 
+      AND idUser = "'.$this->Account_Model->get_user_id($data_in['distributor']).'" 
       AND Type = "C"
     ';
     $query = $this->db->query($querystring);
@@ -150,8 +154,79 @@ Detalle
     $this->db->where('Type', "C");
     $this->db->where('Estado', "1");
     $query = $this->db->get();
+    $result = $query->result_array();
+    $saldo = "0";
+    foreach ($result as $r) {
+      $saldo = $r['saldo'];
+    }
+    return $saldo;   
+  }
+
+  // monto total de prestamos
+  function get_all_loan($idclient) {
+    $this->db->select( '
+      SUM(daily.Monto) as saldo
+    ' );
+    $this->db->from('daily');
+    $this->db->where('idCustomer', $idclient);
+    $this->db->where('Type', "P");
+    $this->db->where('Estado', "1");
+    $query = $this->db->get();
+    $result = $query->result_array();
+    $saldo = "0";
+    foreach ($result as $r) {
+      $saldo = $r['saldo'];
+    }
+    return $saldo;   
+  }
+
+  // monto total de pagos
+  function get_all_pay($idclient) {
+    $this->db->select( '
+      SUM(daily.Monto) as saldo
+    ' );
+    $this->db->from('daily');
+    $this->db->where('idCustomer', $idclient);
+    $this->db->where('Type', "C");
+    $this->db->where('Estado', "1");
+    $query = $this->db->get();
+    $result = $query->result_array();
+    $saldo = "0";
+    foreach ($result as $r) {
+      $saldo = $r['saldo'];
+    }
+    return $saldo;   
+  }
+
+  // monto total pagado por prestamo
+  function get_all_pay_for($data_in){
+    $this->db->select( '
+      SUM(daily.Monto) as saldo
+    ' );
+    $this->db->from('daily');
+    $this->db->where('NumVoucher', $data_in['NumVoucher']);
+    $this->db->where('idCustomer', $data_in['idCustomer']);
+    $this->db->where('Type', "C");
+    $query = $this->db->get();
+    $result = $query->result_array();
+    $saldo = "0";
+    foreach ($result as $r) {
+      $saldo = $r['saldo'];
+    }
+    return $saldo;
+  }
+
+  // cuenta de diario por voucher y cliente
+  function get_ammount($data_in){
+    $this->db->select( ' * ' );
+    $this->db->from('daily');
+    $this->db->where('NumVoucher', $data_in['NumVoucher']);
+    $this->db->where('idCustomer', $data_in['idCustomer']);
+    $this->db->where('Type', "P");
+    $query = $this->db->get();
     return $query->result();
   }
+
 
   function search ($data_in){
     $this->db->select( 'daily.iddiario,
@@ -211,7 +286,7 @@ Detalle
     ' );
     $this->db->from('daily');
 
-    if(isset($data_in['status']) && $data_in['status'] != ""){
+    if(isset($data_in['type']) && $data_in['type'] != ""){
       $this->db->where('daily.Type', $data_in['type']);
     }
     if(isset($data_in['status']) && $data_in['status'] != ""){
@@ -282,7 +357,6 @@ Detalle
     $data = array('Estado' => $val);
     $this->db->where('iddiario', $id);
     $this->db->update('daily', $data);
-
   }
 
   function dateDiff($start, $end) {
