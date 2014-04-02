@@ -98,6 +98,7 @@
 
 
           <?php } ?></li>
+          <li class="tab2"><?php echo anchor('diary/charts', 'Estadisticas', array('class' => '')); ?></li>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab1">

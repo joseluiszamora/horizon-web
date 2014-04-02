@@ -67,7 +67,7 @@
   <body>
     <div id="headerwrapper">
       <div class="topbar">
-        <div class="header" style="display:none">
+        <div class="header" >
           <div class="container">
             <div>
       <?php

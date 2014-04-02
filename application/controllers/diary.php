@@ -34,6 +34,12 @@
       $this->load->view('template/template', $data);
     }
 
+    function charts(){
+      $data['category'] = 'diary';
+      $data['page'] = 'charts';
+      $this->load->view('template/template', $data);
+    }
+
     function create() {
       $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
       $data['clients'] = $this->Client_Model->get_clients();
