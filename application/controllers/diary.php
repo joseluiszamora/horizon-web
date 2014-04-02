@@ -95,7 +95,7 @@
       $this->form_validation->set_message('required', '%s es obligatorio.');
       
       $data_in['FechaRegistro'] = date("y-m-d");
-      $data_in['FechaTransaction'] = date("y-m-d");
+      $data_in['FechaTransaction'] = $this->input->post('date');
       $data_in['idUser'] = $this->input->post('client');
       $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));;
       $data_in['idTransaction'] = "1";
@@ -135,7 +135,7 @@
       $res = '<tbody>';
       $total = 0; 
       foreach ($data['pays'] as $r) {
-        $res .= '<tr><td class="center">'.$r->FechaRegistro.'</td><td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td><td class="center">'.$r->Detalle.'</td></tr>';
+        $res .= '<tr><td class="center">'.$r->FechaTransaction.'</td><td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td><td class="center">'.$r->Detalle.'</td></tr>';
         $total = $total + $r->Monto;
       }
 

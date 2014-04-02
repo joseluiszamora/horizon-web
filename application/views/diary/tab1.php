@@ -195,13 +195,23 @@
                                 </div>
 
                                 <div class="well well-small row logincontainer">
-                                    <div class="control-group span3">
+                                    <div class="control-group span2">
                                       <label class="control-label" for="ammount">Monto (Max: <?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>):</label>
                                       <div class="controls">
-                                        <input type="text" max="<?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>" class="span2 money" value="" name="ammount" id="ammount" required/><br>
+                                        <input type="text" max="<?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>" class="ammountfield money" value="" name="ammount" id="ammount" required/><br>
                                       </div>
                                     </div>
-                                    <div class="control-group span4">
+
+                                    <div class="control-group span2">
+                                      <label class="control-label" for="date">Fecha:</label>
+                                      <div class="controls">
+                                        <?php 
+                                          echo form_input(array('name' => 'date', 'class' => 'datecontainer datepicker datemedium', 'value' => date("Y-m-d")));
+                                        ?>
+                                      </div>
+                                    </div>
+
+                                    <div class="control-group span3">
                                       <label class="control-label" for="ammount">Detalle:</label>
                                       <div class="controls">
                                         <?php
@@ -405,7 +415,7 @@
       */
     });
     
-    $('#data-table tbody td img').click(function () {
+    $(document).on("click", '#data-table tbody td img', function() { 
       var nTr = $(this).parents('tr')[0];
       if ( oTable.fnIsOpen(nTr) ) {
         /* This row is already open - close it */
@@ -417,7 +427,6 @@
         oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
       }
     });
-
 
     /* search input footer */
     $("tfoot input").keyup( function () {

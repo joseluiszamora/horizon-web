@@ -1,4 +1,4 @@
-//var loader = "https://mariani.bo/horizon-sc/img/loader.gif";
+//var loader = "https://mariani.bo/horizon/img/loader.gif";
 //var loader = "http://www.ruizmier.com/systems/horizon/img/loader.gif";
 var loader = "http://localhost/horizon/img/loader.gif";
 
@@ -20,7 +20,7 @@ function hideLoadingAnimation_td(obj){
 }
 $(document).ready(function(){
   //var url = "http://www.ruizmier.com/systems/horizon/";
-  //var url = "https://mariani.bo/horizon-sc/index.php/";
+  //var url = "https://mariani.bo/horizon/index.php/";
   var url = "http://localhost/horizon/index.php/";
 
   // chosen selects
@@ -304,7 +304,8 @@ $(document).ready(function(){
 
 
   // select distributor and get clients
-  $('#diaryTableModal select[name="distributor"]').change(function(){
+
+  $(document).on("change", '#diaryTableModal select[name="distributor"]', function() { 
     $('#diaryTableModal #clientDropdown').html("");
 
     var id = $(this).val();
@@ -320,11 +321,15 @@ $(document).ready(function(){
     .done(function( limes ) {
       $('#diaryTableModal #clientDropdown').append('<select name="client"></select>');
       $('#diaryTableModal select[name="client"]').append('<option selected="selected" value="0">Seleccione Cliente</option>');  
+      $('#diaryTableModal select[name="client"]').append('<option value="607">000000000 - TEMPORAL</option>');
+
       $.each(limes,function(id,name){
-        var opt = $('<option>');
-        opt.val(id);
-        opt.text(name);
-        $('#diaryTableModal select[name="client"]').append(opt);
+        if (id != 607) {
+          var opt = $('<option>');
+          opt.val(id);
+          opt.text(name);
+          $('#diaryTableModal select[name="client"]').append(opt);
+        }
       });
       
       hideLoadingAnimation_td($('#clientDropdown'));
@@ -334,28 +339,28 @@ $(document).ready(function(){
         width: "200px"
       });
 
-
-      // select prestamo limts 
-      $('#diaryTableModal #clientDropdown select').change(function(){
-        var id = $(this).val();
-        console.log("---****> " + id);
-        
-        $.getJSON( url+"diary/get_loan_limit/"+id, {
-          format: "jsonp",
-          async: true,
-          contentType: 'application/json; charset=utf-8', 
-          cache: false,
-          crossDomain: true
-        })
-        .done(function( limes ) {
-          $('#diaryTableModal #ammount').attr("placeholder", limes);
-          $('#diaryTableModal #ammount').attr("data-max", limes);
-        });
-      });
-
-    });   
+    });  
   });
-  
+
+
+  // select prestamo limts 
+  $(document).on("change", '#diaryTableModal #clientDropdown select', function() {
+    var id = $(this).val();
+    console.log("---****> " + id);
+    
+    $.getJSON( url+"diary/get_loan_limit/"+id, {
+      format: "jsonp",
+      async: true,
+      contentType: 'application/json; charset=utf-8', 
+      cache: false,
+      crossDomain: true
+    })
+    .done(function( limes ) {
+      $('#diaryTableModal #ammount').attr("placeholder", limes);
+      $('#diaryTableModal #ammount').attr("data-max", limes);
+    });
+  });
+
 
 /*  
  $('#diaryTableModal select[name="distributor"]').change(function(){

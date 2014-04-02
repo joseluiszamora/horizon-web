@@ -133,11 +133,17 @@ Detalle
     //$data_in['voucher'] = $this->input->post('voucher');
     //$data_in['distributor'] = $this->input->post('distributor');
     //$data_in['customer'] = $this->input->post('customer');
-    $querystring = '
+    /*$querystring = '
       SELECT * 
       FROM daily
       WHERE NumVoucher = "'.$data_in['voucher'].'" 
       AND idUser = "'.$data_in['distributor'].'" 
+      AND Type = "C"
+    ';*/
+    $querystring = '
+      SELECT * 
+      FROM daily
+      WHERE NumVoucher = "'.$data_in['voucher'].'" 
       AND Type = "C"
     ';
     $query = $this->db->query($querystring);
