@@ -87,7 +87,7 @@
 
           <div class="form-actions span7">
             <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Buscar" />
-            <input id="btn_clean" class="btn btn-primary" type="reset" value="Limpiar" />
+            <?php echo anchor('diary', 'Limpiar', array('class' => 'btn btn-primary')); ?>
 
             <div class="btnPDF">
               <?php echo form_close(); ?>
@@ -155,7 +155,7 @@
                       <td class="center">
                         <!--<input value="Adicionar pago" class="btn btn-primary" id="btnAdd" >-->
                       
-                      <?php if($saldo > 0){ ?>
+                      <?php if($saldo > 0 && $row->Estado == "1"){ ?>
                         <!-- Button to trigger modal -->
                         <a href="<?php echo '#modal-'.$row->iddiario ?>" role="button" class="btn btn-primary" data-toggle="modal">+ Pago</a>
                         
@@ -223,23 +223,24 @@
                       </td>
                       <td class="center">
                         <?php 
-                          if($this->Account_Model->get_profile() == '1' || $this->Account_Model->get_profile() == '2' || $this->Account_Model->get_profile() == '3') { ?>
-                          <a href="<?php echo '#modal-delete-'.$row->iddiario; ?>" role="button" class="btn btn-primary" data-toggle="modal">X</a>
-                          <!-- Modal -->
-                          <div id="<?php echo 'modal-delete-'.$row->iddiario;?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                              <h3 id="myModalLabel">Desactivar</h3>
+                          if ($row->Estado != "3") {
+                            if($this->Account_Model->get_profile() == '1' || $this->Account_Model->get_profile() == '2' || $this->Account_Model->get_profile() == '3') { ?>
+                            <a href="<?php echo '#modal-delete-'.$row->iddiario; ?>" role="button" class="btn btn-primary" data-toggle="modal">X</a>
+                            <!-- Modal -->
+                            <div id="<?php echo 'modal-delete-'.$row->iddiario;?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3 id="myModalLabel">Desactivar</h3>
+                              </div>
+                              <div class="modal-body">
+                                <p>Esta seguro que desea Desactivar ?</p>
+                              </div>
+                              <div class="modal-footer">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                                <?php echo anchor('diary/deactive/'.$row->iddiario, 'Desactivar', array('class' => 'btn btn-primary')); ?>
+                              </div>
                             </div>
-                            <div class="modal-body">
-                              <p>Esta seguro que desea Desactivar ?</p>
-                            </div>
-                            <div class="modal-footer">
-                              <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                              <?php echo anchor('diary/deactive/'.$row->iddiario, 'Desactivar', array('class' => 'btn btn-primary')); ?>
-                            </div>
-                          </div>
-                        <?php } ?>
+                        <?php }} ?>
                       </td>
                     </tr>
                   <?php

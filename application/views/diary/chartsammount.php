@@ -7,58 +7,65 @@
 
 <script type="text/javascript">
   $(function () {
-    $('#containerchart').highcharts({
-      title: {
-        text: 'Monthly Average Temperature',
-        x: -100 //center
-      },
-      subtitle: {
-        text: 'Source: WorldClimate.com',
-        x: -20
-      },
-      xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Jen', 'jin', 'Jon']
-      },
-      yAxis: {
-        title: {
-            text: 'Temperature (°C)'
-        },
-        plotLines: [{
-            value: 0,
-            width: 1,
-            color: '#808080'
-        }]
-      },
-      tooltip: {
-        valueSuffix: '°C'
-      },
-      legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle',
-        borderWidth: 0
-      },
-      series: [{
-        name: 'Tokyo',
-        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-      }, {
-        name: 'New York',
-        data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-      }, {
-        name: 'Berlin',
-        data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-      }, {
-        name: 'London',
-        data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-      }, {
-        name: 'La Paz',
-        data: [20.9, 20.2, 20.7, 20.5, 20.9, 20.2, 20.0, 20.6, 20.2, 20.3, 20.6, 20.8]
-      }, {
-        name: 'Santa Cruz',
-        data: [0.9, 0.2, 0.7, 0.5, 0.9, 0.2, 0.0]
-      }]
+        $('#containerchart').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Montos de Prestamos'
+            },
+            subtitle: {
+                text: 'Prestamos realizados por distribuidores a la fecha'
+            },
+            xAxis: {
+                categories: [
+                    'erivero',
+                    'esantacruz',
+                    'fmarquez',
+                    'jpozo',
+                    'melias',
+                    'itinini',
+                    'vsossa',
+                    'rcoria'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Monto (Bs)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} Bs.</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Prestamos',
+                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5]
+    
+            }, {
+                name: 'Pagado',
+                data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3]
+    
+            }, {
+                name: 'Saldo',
+                data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6]
+    
+            }]
+        });
     });
-  });
+    
+
 </script>
 
 <div class="row" style="overflow:hidden;">
@@ -67,19 +74,19 @@
       <div class="block_head row">
         <h2 class="span4">Diario</h2>
       </div>
-      <div class="block_content row padding0">
-          <fieldset>
+      <!--<div class="block_content row padding0">
+         <fieldset>
             <div class="control-group selected_3">
               <label class="control-label" for="city">Distribuidor</label>
               <div class="controls">
                 <?php
-                  $options = array(
+                  /**$options = array(
                     '1' => 'Pendiente',
                     '2' => 'Pagado/Cancelado',
                     '3' => 'Eliminado'
                   );
 
-                  echo form_dropdown('status', $options, '', 'class="chosen-select" ');
+                  echo form_dropdown('status', $options, '', 'class="chosen-select" ');*/
                 ?>
               </div>
             </div>
@@ -88,7 +95,7 @@
               <label class="control-label" for="city">Estado</label>
               <div class="controls">
                 <?php
-                  $options = array(
+                  /*$options = array(
                     '1' => 'Pendiente',
                     '2' => 'Pagado/Cancelado',
                     '3' => 'Eliminado'
@@ -98,7 +105,7 @@
                     echo form_dropdown('status', $options, $parameters['status'], 'class="chosen-select" ');
                   }else{
                     echo form_dropdown('status', $options, '', 'class="chosen-select" ');
-                  }
+                  }*/
                 ?>
               </div>
             </div>
@@ -107,11 +114,11 @@
               <label class="control-label" for="dateStart">Desde:</label>
               <div class="controls">
                 <?php 
-                  if (isset($parameters['dateStart'])) {
+                  /*if (isset($parameters['dateStart'])) {
                     echo form_input(array('name' => 'dateStart', 'class' => 'datecontainer datepicker datemedium', 'value' => $parameters['dateStart'])); 
                   }else{
                     echo form_input(array('name' => 'dateStart', 'class' => 'datecontainer datepicker datemedium')); 
-                  }
+                  }*/
                 ?>
               </div>
             </div>
@@ -120,11 +127,11 @@
               <label class="control-label" for="dateFinish">Hasta:</label>
               <div class="controls">
                 <?php
-                  if (isset($parameters['dateFinish'])) {
+                  /*if (isset($parameters['dateFinish'])) {
                     echo form_input(array('name' => 'dateFinish', 'class' => 'datecontainer datepicker datemedium', 'value' => $parameters['dateFinish'])); 
                   }else{
                     echo form_input(array('name' => 'dateFinish', 'class' => 'datecontainer datepicker datemedium')); 
-                  }
+                  }*/
                 ?>
               </div>
             </div>
@@ -134,18 +141,16 @@
             <input id="btn_clean" class="btn btn-primary" type="reset" value="Limpiar" />
           </div>
         </fieldset>
-      </div>
+      </div>-->
     </div>
   </div>
 
   <div class="container formContainer">
     <div class="span10 offset1">
       <div class="block_content row">
-          
+        <div id="containerchart" style="min-width: 500px; height: 500px; margin: 0 auto"></div>    
       </div>
     </div>
   </div>
 
-
 </div>
-<div id="containerchart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>

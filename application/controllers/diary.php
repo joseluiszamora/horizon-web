@@ -29,15 +29,22 @@
       $data['page'] = 'index';
 
       $data_index['order'] = "customer.NombreTienda";
+      $data_index['status'] = "1";
       $search_parameters = http_build_query($data_index);
       $data['search_parameters'] = $search_parameters;
 
       $this->load->view('template/template', $data);
     }
 
-    function charts(){
+    function chartsAmmount(){
       $data['category'] = 'diary';
-      $data['page'] = 'charts';
+      $data['page'] = 'chartsammount';
+      $this->load->view('template/template', $data);
+    }
+
+    function chartsDistrib(){
+      $data['category'] = 'diary';
+      $data['page'] = 'chartsdistrib';
       $this->load->view('template/template', $data);
     }
 
@@ -49,6 +56,10 @@
       $data['page'] = 'form';     
       $this->load->view('template/template', $data);
     }
+
+    function get_user_no_admin() {
+      echo(json_encode($this->User_Model->get_users_by_profile_no_admin()));
+    } 
 
     function saveblock() {
       $transdistributor = explode("***", $this->input->post('distributor'));

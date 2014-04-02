@@ -137,7 +137,7 @@ Detalle
       SELECT * 
       FROM daily
       WHERE NumVoucher = "'.$data_in['voucher'].'" 
-      AND idUser = "'.$this->Account_Model->get_user_id($data_in['distributor']).'" 
+      AND idUser = "'.$data_in['distributor'].'" 
       AND Type = "C"
     ';
     $query = $this->db->query($querystring);

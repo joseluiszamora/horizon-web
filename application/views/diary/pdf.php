@@ -110,6 +110,7 @@
         <!--<td><?php //echo $this->Area_Model->get_area_name($diary->idSubZona); ?></td>-->
         <td class="td_4"><?php echo $this->Diary_Model->roundnumber($diary->Monto, 2); ?></td>
         <td><?php 
+          $data['distributor'] = $diary->idUser;
           $data['voucher'] = $diary->NumVoucher;
           $pays = $this->Diary_Model->getpays($data);
           $pagado = 0;

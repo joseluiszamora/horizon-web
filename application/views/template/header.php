@@ -107,7 +107,7 @@
                 echo anchor('city', 'Ciudad', array('class'=>'')); }?></li>
               <li><?php if ($this->Account_Model->get_profile() == "1"){
                 echo anchor('track', 'Tracker', array('class'=>'')); }?></li>
-              <li><?php if ($this->Account_Model->get_profile() == "1"){
+              <li><?php if ($this->Account_Model->get_profile() == "1" || $this->Account_Model->get_profile() == "2" || $this->Account_Model->get_profile() == "3"){
                 echo anchor('diary', 'Diario', array('class'=>'')); }?></li>
               <li>
                 <div class="btn-group">

@@ -402,8 +402,8 @@ $(document).ready(function(){
     $('.formContainer select option').attr('selected', false);
     $('.formContainer textarea').attr('value', "");
 
-    $('select[name="distributor"]').val('').trigger('chosen:updated');
-    $('select[name="status"]').val('').trigger('chosen:updated');
+    //$('select[name="distributor"]').val('').trigger('chosen:updated');
+    //$('select[name="status"]').val('').trigger('chosen:updated');
   });
 });
 
