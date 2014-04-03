@@ -7,7 +7,8 @@
       $this->load->model('City_Model');
       $this->load->model('Area_Model');
       $this->load->model('District_Model');
-      $this->load->model('Channel_Model');      
+      $this->load->model('Channel_Model');
+      $this->load->model('Rank_Model');
     }
 
     function index() {
@@ -58,6 +59,7 @@
         $data['channel'] = $this->Channel_Model->get_channels();
         $data['area'] = $this->Area_Model->get_area($this->Account_Model->get_city());
         $data['subarea'] = $this->Area_Model->get_sub_area_for_city($this->Account_Model->get_city());
+        $data['rank'] = $this->Rank_Model->get_ranks();
 
         $this->load->view('template/template', $data);
       }
@@ -226,6 +228,7 @@
       $this->form_validation->set_rules('latitude', 'Latitud', 'xss_clean');
       $this->form_validation->set_rules('longitude', 'Longitud', 'xss_clean');      
       $this->form_validation->set_rules('manualcode', 'Codigo', 'xss_clean|integer');
+      $this->form_validation->set_rules('limit', 'Limite', 'xss_clean|integer');
 
       $this->form_validation->set_message('required', '%s es obligatorio.');
       $this->form_validation->set_message('integer', 'Debe ser un valor numerico.');
@@ -258,6 +261,7 @@
         $data_in['idSubZona'] = $this->input->post('subarea');
         $data_in['Coordenada'] = $this->input->post('latitude').";".$this->input->post('longitude');
         $data_in['Ref0'] = $this->input->post('manualcode');
+        $data_in['idrank'] = $this->input->post('limit');
 
         $data_in['Estado'] = '1';
         $data_in['FechaAlta'] = mdate("%Y-%m-%d %h:%i:%a");
@@ -289,6 +293,7 @@
       $data['commerce'] = $this->Commerce_Model->get_commerce();
       $data['channel'] = $this->Channel_Model->get_channels();
       $data['city'] = $this->City_Model->get_cities($this->Account_Model->get_profile());
+      $data['rank'] = $this->Rank_Model->get_ranks();
 
       if ($action == 'new'){
         $data['district'] = array($dropdown[""] = 'Seleccione Barrio');

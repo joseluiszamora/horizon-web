@@ -83,8 +83,6 @@
             <a title="Effortless vehicle &amp; fleet management" href="<?php echo base_url(); ?>" class="brand"><img width="135" src="<?php echo base_url(); ?>img/logo_horizon.png" alt="Fleetio Logo"></a>
 
             <ul class="nav nav-pills" style="margin-top:15px;">
-              <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'permisos_de_acceso')){
-                echo anchor('permission', 'Permisos', array('class'=>'')); }?></li>
               <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'usuarios')){
                 echo anchor('user', 'Usuarios', array('class'=>'')); }?></li>
               <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'productos')){
@@ -95,16 +93,6 @@
                 echo anchor('transaction', 'Transacciones', array('class'=>'')); }?></li>
               <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'commerce')){
                 echo anchor('commerce', 'Comercio', array('class'=>'')); }?></li>
-              <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'district')){
-                echo anchor('district', 'Barrios', array('class'=>'')); }?></li>
-              <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'area')){
-                echo anchor('area', 'Zonas', array('class'=>'')); }?></li>
-              <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'line')){
-                echo anchor('line', 'Linea', array('class'=>'')); }?></li>
-              <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'volume')){
-                echo anchor('volume', 'Volumen', array('class'=>'')); }?></li>
-              <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'city')){
-                echo anchor('city', 'Ciudad', array('class'=>'')); }?></li>
               <li><?php if ($this->Account_Model->get_profile() == "1"){
                 echo anchor('track', 'Tracker', array('class'=>'')); }?></li>
               <li><?php if ($this->Account_Model->get_profile() == "1" || $this->Account_Model->get_profile() == "2" || $this->Account_Model->get_profile() == "3"){
@@ -112,16 +100,29 @@
               
 
               <li class="dropdown">
-                <?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'volume')){ ?>
-                  <a href="#" data-toggle="dropdown" role="button" id="drop5" class="dropdown-toggle">Dropdown 2 <b class="caret"></b></a>
-                  <ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
-                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Action</a></li>
-                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Another action</a></li>
-                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Something else here</a></li>
-                    <li class="divider" role="presentation"></li>
-                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Separated link</a></li>
-                  </ul>
-                <?php }?>
+                <a href="#" data-toggle="dropdown" role="button" id="drop5" class="dropdown-toggle">Configuracion<b class="caret"></b></a>
+                <ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
+                  <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'city')){
+                    echo anchor('city', 'Ciudad', array('class'=>'')); }?></li>
+                  <li class="divider" role="presentation"></li>  
+                  <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'district')){
+                echo anchor('district', 'Barrios', array('class'=>'')); }?></li>
+                  <li class="divider" role="presentation"></li>
+                  <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'area')){
+                    echo anchor('area', 'Zonas', array('class'=>'')); }?></li>
+                  <li class="divider" role="presentation"></li>
+                  <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'line')){
+                    echo anchor('line', 'Linea', array('class'=>'')); }?></li>
+                  <li class="divider" role="presentation"></li>
+                  <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'volume')){
+                    echo anchor('volume', 'Volumen', array('class'=>'')); }?></li>
+                  <li class="divider" role="presentation"></li>
+                  <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'permisos_de_acceso')){
+                    echo anchor('permission', 'Permisos', array('class'=>'')); }?></li>
+                  <li class="divider" role="presentation"></li>
+                  <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'permisos_de_acceso')){
+                    echo anchor('rank', 'Rangos de Prestamo', array('class'=>'')); }?></li>
+                </ul>
               </li>
 
               <li>

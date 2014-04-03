@@ -61,9 +61,9 @@
               <div class="controls">
                 <?php
                   if (isset($idclient) && isset($coordinate[0]))
-                    echo form_input(array('name' => 'latitude', 'class' => 'span3', 'value' => $coordinate[0]));
+                    echo form_input(array('name' => 'latitude', 'class' => 'span2', 'value' => $coordinate[0]));
                   else
-                    echo form_input(array('name' => 'latitude', 'class' => 'span3'), set_value('latitude'));
+                    echo form_input(array('name' => 'latitude', 'class' => 'span2'), set_value('latitude'));
 
                   echo form_error('latitude');
                 ?>
@@ -75,11 +75,26 @@
               <div class="controls">
                 <?php
                   if (isset($idclient) && isset($coordinate[1]))
-                    echo form_input(array('name' => 'longitude', 'class' => 'span3', 'value' => $coordinate[1]));
+                    echo form_input(array('name' => 'longitude', 'class' => 'span2', 'value' => $coordinate[1]));
                   else
-                    echo form_input(array('name' => 'longitude', 'class' => 'span3'), set_value('longitude'));
+                    echo form_input(array('name' => 'longitude', 'class' => 'span2'), set_value('longitude'));
 
                   echo form_error('longitude');
+                ?>
+              </div>
+            </div>
+
+            <div class="control-group selected_1">
+              <label class="control-label" for="longitude">Limite de Prestamo:</label>
+              <div class="controls">
+                <?php
+                  if (isset($idclient)){
+                    echo form_dropdown('limit', $rank, $client->idrank);
+                  }
+                  else
+                    echo form_dropdown('limit', $rank);
+
+                  echo form_error('limit');
                 ?>
               </div>
             </div>
