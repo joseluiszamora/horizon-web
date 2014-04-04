@@ -123,7 +123,7 @@
                     <th class="center">Mora</th>
                     <th class="center">Distribuidor</th>
                     <th class="center">Cliente</th>
-                    <th class="center">Voucher</th>
+                    <th class="center">Recibo</th>
                     <th class="center">Total</th>
                     <th class="center">Saldo</th>
                     <th class="center">Detalle</th>
@@ -182,7 +182,7 @@
 
                                 <div class="row logincontainer">
                                   <div class="control-group span3">
-                                    <span class="label label-info font15">Voucher N.: <bold><?php echo $row->NumVoucher; ?></bold> </span>
+                                    <span class="label label-info font15">Recibo N.: <bold><?php echo $row->NumVoucher; ?></bold> </span>
                                   </div>
 
                                   <div class="control-group span3">
@@ -264,7 +264,7 @@
                     <th class="center">Mora</th>
                     <th class="center">Distribuidor</th>
                     <th class="center">Cliente</th>
-                    <th class="center">Voucher</th>
+                    <th class="center">Recibo</th>
                     <th class="center">Total</th>
                     <th class="center">Saldo</th>
                     <th class="center">Detalle</th>

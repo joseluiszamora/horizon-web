@@ -3,7 +3,7 @@
   <!-- Portfolio row of columns -->
   <div id="productList" class="row">
     <div class="span12 titleTop">
-      <h1 class="floatLeft">Rangos de Pago</h1>
+      <h1 class="floatLeft">Rangos de Prestamo</h1>
     </div>
 
     <div class="span8 smallTableCenter">

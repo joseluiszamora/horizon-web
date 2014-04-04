@@ -28,7 +28,7 @@
                         <th class="center">Distribuidor</th>
                         <th class="center">Cliente</th>
                         <th class="center">Fecha</th>
-                        <th class="center">Voucher</th>
+                        <th class="center">Recibo</th>
                         <th class="center">Monto</th>
                         <th class="center">Detalle</th>
                         <th class="center">&nbsp;</th>
@@ -66,7 +66,7 @@
                         <th class="center">Distribuidor</th>
                         <th class="center">Cliente</th>
                         <th class="center">Fecha</th>
-                        <th class="center">Voucher</th>
+                        <th class="center">Recibo</th>
                         <th class="center">Monto</th>
                         <th class="center">Detalle</th>
                         <th class="center">&nbsp;</th>
@@ -171,6 +171,13 @@
   }
 
   $(document).ready(function(){
+    //enabled button save on form prestamos
+    $(this).attr('disabled', false);
+    //claer form prestamos inputsa
+    
+    $('#modal-diarycreate').on('show', function () {
+    
+    });
 
     $("#btnAddReg").click(function(){
       flag = true;
@@ -256,6 +263,7 @@
 
 
     $("#btnSave").click(function(){
+      sw = false;
       distributor = "";
       client = "";
       date = "";
@@ -263,8 +271,8 @@
       ammount = "";
       detail = "";
       
-      number = Number(ammount.replace(/[^0-9\.]+/g,""));
-      numbermax = Number(ammountmax.replace(/[^0-9\.]+/g,""));
+      //number = Number(ammount.replace(/[^0-9\.]+/g,""));
+      //numbermax = Number(ammountmax.replace(/[^0-9\.]+/g,""));
 
       $("#diaryTableList tr").each(function(){
         distributor += $(this).find(".distributor").html()+"***";
@@ -273,17 +281,22 @@
         voucher += $(this).find(".voucher").html()+"***";
         ammount += Number($(this).find(".ammount").html().replace(/[^0-9\.]+/g,""))+"***";
         detail += $(this).find(".detail").html()+"***";
+        sw = true;
       });
 
-      $("#formSaveBlock #distributor").val(distributor);
-      $("#formSaveBlock #date").val(date);
-      $("#formSaveBlock #voucher").val(voucher);
-      $("#formSaveBlock #client").val(client);
-      $("#formSaveBlock #ammount").val(ammount);
-      $("#formSaveBlock #detail").val(detail);
+      if (sw) {
+        $(this).attr('disabled', true);
 
-      var form = $("#formSaveBlock form");
-      form.submit();
+        $("#formSaveBlock #distributor").val(distributor);
+        $("#formSaveBlock #date").val(date);
+        $("#formSaveBlock #voucher").val(voucher);
+        $("#formSaveBlock #client").val(client);
+        $("#formSaveBlock #ammount").val(ammount);
+        $("#formSaveBlock #detail").val(detail);
+
+        var form = $("#formSaveBlock form");
+        form.submit();
+      }
     });
 
 
