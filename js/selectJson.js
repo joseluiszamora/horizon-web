@@ -37,10 +37,10 @@ $(document).ready(function(){
 
   // seleccionar, deseleccionar permisos de acceso
   $(".permissionChecked input:checkbox").click(function() {
-   // console.log("clickkkk");
+    console.log("clickkkk");
     module = $(this).attr('name');
     profile = $(this).attr('value');
-    if ($(this).attr('checked') == 'checked') {
+    if ($(this).is( ":checked")) {
       $.ajax({
         type: "POST",
         url: url+'permission/activate',

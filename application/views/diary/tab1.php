@@ -361,6 +361,7 @@
       }
   
       if (flag) {
+        $(this).attr('disabled', true);
         $(obj).find("#ammount").val(ammount);
         $(obj).submit();
       }
