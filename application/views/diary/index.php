@@ -170,14 +170,31 @@
     return registry;
   }
 
+  function clear_form_diary() {
+    obj = $('#modal-diarycreate');
+    // clean inputs and selects
+    $(obj).find("select[name='distributor']").val("");
+    $(obj).find("select[name='client']").val("");
+    $(obj).find("input[name='date']").val("");
+    $(obj).find("#voucher").val("");
+    $(obj).find("#ammount").val("");
+    $(obj).find("#ammount").attr("placeholder", "");
+    $(obj).find("#detail").val("");
+
+    $(obj).find('select[name="distributor"]').val('').trigger('chosen:updated');
+    $(obj).find('select[name="client"]').val('').trigger('chosen:updated');
+
+    //$(obj).find("#diaryTableList tr").remove();
+  }
+
   $(document).ready(function(){
     //enabled button save on form prestamos
     $(this).attr('disabled', false);
     //claer form prestamos inputsa
     
-    $('#modal-diarycreate').on('show', function () {
-    
-    });
+    /*$('#modal-diarycreate').on('show', function () {
+      clear_form_diary();
+    });*/
 
     $("#btnAddReg").click(function(){
       flag = true;
@@ -197,35 +214,29 @@
       console.log(errorFormContainer);
       if (distributor.trim() == "" || distributor.trim() == "0") {
         flag = false;
-        //$(this).parents("#diaryTableModal").find("select[name='distributor']").parents("td").append("<span class='text-error'>Seleccione un Distribuidor</span>");
         $(errorFormContainer).append("<span class='text-error'>* Seleccione un Distribuidor</span><br>");
       }
       if (client.trim() == "" || client.trim() == "0") {
         flag = false;
-        //$(this).parents("#diaryTableModal").find("select[name='client']").parents("td").append("<span class='text-error'>Seleccione un Cliente</span>");
         $(errorFormContainer).append("<span class='text-error'>* Seleccione un Cliente</span><br>");
       }
       if (date.trim() == "" || date.trim() == null) {
         flag = false;
-        //$(this).parents("#diaryTableModal").find("input[name='date']").parents("td").append("<span class='text-error'>Introduzca una fecha</span>");
         $(errorFormContainer).append("<span class='text-error'>* Introduzca una fecha</span><br>");
       }
       if (voucher.trim() == "" || voucher.trim() == "0") {
         flag = false;
-        //$(this).parents("#diaryTableModal").find("#voucher").parents("td")
         $(errorFormContainer).append("<span class='text-error'>* Introduzca un Voucher</span><br>");
       }else{
         $("#diaryTableList tr").each(function(){
           if (voucher.trim() === $(this).find(".voucher").html() ) {
             flag = false;
-            //$("#diaryTableModal").find("#voucher").parents("td")
             $(errorFormContainer).append("<span class='text-error'>* Este Voucher ya fue introducido</span><br>");
           }
         });
       }
       if (ammount.trim() == "" || ammount.trim() == "0") {
         flag = false;
-        //$(this).parents("#diaryTableModal").find("#ammount").parents("td")
         $(errorFormContainer).append("<span class='text-error'>* Introduzca una Cantidad</span><br>");
       }else{
         number = Number(ammount.replace(/[^0-9\.]+/g,""));
@@ -253,6 +264,7 @@
         $('#diaryTableModal select[name="distributor"]').val('').trigger('chosen:updated');
         $('#diaryTableModal select[name="client"]').val('').trigger('chosen:updated');
 
+        //clear_form_diary();
         // delete row
         $(".btnDeleteRow").click(function(){
           $(this).parents("tr").remove();
