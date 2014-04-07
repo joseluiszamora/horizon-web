@@ -95,7 +95,7 @@
                 echo anchor('commerce', 'Comercio', array('class'=>'')); }?></li>
               <li><?php if ($this->Account_Model->get_profile() == "1"){
                 echo anchor('track', 'Tracker', array('class'=>'')); }?></li>
-              <li><?php if ($this->Account_Model->get_profile() == "1" || $this->Account_Model->get_profile() == "2" || $this->Account_Model->get_profile() == "3"){
+              <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'diary')){
                 echo anchor('diary', 'Diario', array('class'=>'')); }?></li>
               
 
@@ -120,7 +120,7 @@
                   <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'permisos_de_acceso')){
                     echo anchor('permission', 'Permisos', array('class'=>'')); }?></li>
                   <li class="divider" role="presentation"></li>
-                  <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'permisos_de_acceso')){
+                  <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'rank')){
                     echo anchor('rank', 'Rangos de Prestamo', array('class'=>'')); }?></li>
                 </ul>
               </li>
