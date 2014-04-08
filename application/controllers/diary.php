@@ -210,7 +210,7 @@
       }
       // Save log for this action
       $data['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
-      $data['idAction'] = '18';
+      $data['idAction'] = '47';
       $data['idReferencia'] = $id;
       $data['FechaHora'] = date("y-m-d, g:i");
       $this->Log_Model->create($data);

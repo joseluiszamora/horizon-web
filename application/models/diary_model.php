@@ -9,10 +9,15 @@ class Diary_model extends CI_Model {
 
   function create($data_in) {
     if ($this->db->insert('daily', $data_in)) {
+
       // Save log for this action
+      if ($data_in['Type'] == "P") {
+        $data_log['idAction'] = '46';
+      }else {
+        $data_log['idAction'] = '49';
+      }
       $id = $this->db->insert_id();
       $data_log['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
-      $data_log['idAction'] = '1';
       $data_log['idReferencia'] = $id;
       $data_log['FechaHora'] = date("y-m-d, g:i");
       $this->Log_Model->create($data_log);
