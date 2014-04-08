@@ -26,6 +26,23 @@
       redirect('rank');
     }
 
+    //edit
+    public function edit() {
+      $id = $this->input->post('idrank');
+      $data['Limit'] = $this->input->post('ammount');
+
+      if ($this->Rank_Model->update($data, $id)) {
+        // Save log for this action
+        $data_log['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
+        $data_log['idAction'] = '51';
+        $data_log['idReferencia'] = $id;
+        $data_log['FechaHora'] = date("y-m-d, g:i");
+        $this->Log_Model->create($data_log);
+      }
+      redirect('rank');
+
+    }
+
     // eliminar
     function delete($id) {
       $this->Rank_Model->delete($id);
@@ -68,24 +85,6 @@
       $data['page'] = 'form';
 
       $this->load->view('template/template', $data);
-    }
-
-    public function edit($id = "") {
-      if ($id != "") {
-        $data['idVolume'] = $id;
-        $volume = $this->Volume_Model->get($id);
-        if (empty($volume)) {
-            show_404();
-        }
-        $data['volume'] = $volume[0];
-        $data['category'] = 'volume';
-        $data['action'] = 'edit';
-        $data['page'] = 'form';
-
-        $this->load->view('template/template', $data);
-      }
-      else
-        redirect('volume');
     }
 
     

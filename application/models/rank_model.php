@@ -19,7 +19,7 @@ class Rank_model extends CI_Model {
       $id = $this->db->insert_id();
       // Save log for this action
       $data_log['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
-      $data_log['idAction'] = '30';
+      $data_log['idAction'] = '50';
       $data_log['idReferencia'] = $id;
       $data_log['FechaHora'] = date("y-m-d, g:i");
       $this->Log_Model->create($data_log);
@@ -47,6 +47,14 @@ class Rank_model extends CI_Model {
     }
     return TRUE;
   }
+
+  function update($data, $id) {
+    $this->db->where('idrank', $id);
+    if ($this->db->update('rank', $data)) {
+      return TRUE;
+    }
+    return FALSE;
+  }
 /*
   function report_from_lines() {
     $this->db->select('*');
@@ -61,20 +69,6 @@ class Rank_model extends CI_Model {
     $this->db->from('volume');
     $query = $this->db->get();
     return $query->result();
-  }
-
-  function update($data, $id) {
-    $this->db->where('idVolume', $id);
-    if ($this->db->update('volume', $data)) {
-      // Save log for this action
-      $data_log['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
-      $data_log['idAction'] = '31';
-      $data_log['idReferencia'] = $id;
-      $data_log['FechaHora'] = date("y-m-d, g:i");
-      $this->Log_Model->create($data_log);
-      return TRUE;
-    }
-    return FALSE;
   }
 
   // get Clients dropdown
