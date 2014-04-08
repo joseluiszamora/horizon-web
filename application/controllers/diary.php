@@ -135,13 +135,38 @@
       $res = '<tbody>';
       $total = 0; 
       foreach ($data['pays'] as $r) {
-        $res .= '<tr><td class="center">'.$r->FechaTransaction.'</td><td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td><td class="center">'.$r->Detalle.'</td></tr>';
+        $res .= '<tr>';
+        $res .= '<td class="center">'.$r->FechaTransaction.'</td>';
+        $res .= '<td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td>';
+        $res .= '<td class="center">'.$r->Detalle.'</td>';
+        $res .= '<td class="center">';
+        $res .= '   <a href="#modal-delete-'.$r->iddiario.'" role="button" class="btn btn-primary" data-toggle="modal">X</a>';
+        $res .= '<div id="modal-delete-'.$r->iddiario.'" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Eliminar</h3>
+  </div>
+  <div class="modal-body">
+    <p>Esta seguro que desea Eliminar este pago ?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    '.anchor("diary/removepay/".$r->iddiario, "Desactivar", array("class" => "btn btn-primary")).'
+  </div>
+</div>';
+        $res .= '</td>';
+        $res .= '</tr>';
+
+
+
+
+
         $total = $total + $r->Monto;
       }
 
       $res .= '</tbody>';
       $res .= '<tfoot>';  
-      $res .= '<tr><td class="center"><b>Total:</b></td><td class="center">'.$this->Diary_Model->roundnumber($total, 2).'</td><td class="center">&nbsp;</td></tr>';
+      $res .= '<tr><td class="center"><b>Total:</b></td><td class="center">'.$this->Diary_Model->roundnumber($total, 2).'</td><td class="center">&nbsp;</td><td>&nbsp;</td></tr>';
       $res .= '</tfoot>';
       echo $res;
     }
@@ -183,6 +208,18 @@
       foreach ($diaries_list as $dl) {
         $this->Diary_Model->set_status($dl->iddiario, '3');
       }
+      // Save log for this action
+      $data['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
+      $data['idAction'] = '18';
+      $data['idReferencia'] = $id;
+      $data['FechaHora'] = date("y-m-d, g:i");
+      $this->Log_Model->create($data);
+      redirect("diary");
+    }
+
+    function removepay($id) {
+      $this->Diary_Model->delete($id);
+      
       // Save log for this action
       $data['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
       $data['idAction'] = '18';

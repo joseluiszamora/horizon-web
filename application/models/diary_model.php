@@ -374,20 +374,14 @@ Detalle
       $diff = 0;
     return $diff;
   }
-/*
-  function set_status_pagos($id, $val){
-    print_r("++++++++++++++");
-    print_r("********************");
-    $data = array('Estado' => $val);
-    $this->db->where('iddiario', $id);
-    $query = $this->db->get('daily');
-    $result = $query->result_array();
-    foreach ($result as $r) {
-      print_r($r);
-      $this->db->where('iddiario', $r['iddiario']);
-      $this->db->update('daily', $data);
+
+  function delete($id) {
+    if ($id != NULL) {
+      $this->db->where('iddiario', $id);
+      $this->db->delete('daily');
     }
-  }*/
+    return TRUE;
+  }
 }
 
 ?>

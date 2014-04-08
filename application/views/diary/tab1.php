@@ -320,7 +320,7 @@
   function fnFormatDetails ( oTable, nTr ){
     var aData = oTable.fnGetData( nTr );
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" class="table table-striped table-bordered">';
-    sOut +=  '<thead><tr><th class="center">Fecha de Pago</th><th class="center">Monto</th><th class="center">Detalle</th></tr></thead>';
+    sOut +=  '<thead><tr><th class="center">Fecha de Pago</th><th class="center">Monto</th><th class="center">Detalle</th><th class="center">&nbsp;</th></tr></thead>';
      
     $.ajax({
       type: "POST",
