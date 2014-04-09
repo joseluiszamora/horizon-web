@@ -6,7 +6,7 @@
       }
     </style>
   
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC-olSMpvzsaGc-iedQ0pJNRyosdvX81_I&sensor=true"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB6Bh7Kua9M0ag5hrqTld9IjNaZwyGvGt8&sensor=true"></script>
     
     <script>
 

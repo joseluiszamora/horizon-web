@@ -219,13 +219,12 @@
 
     function removepay($id) {
       $this->Diary_Model->delete($id);
-      
-      // Save log for this action
-      $data['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
-      $data['idAction'] = '18';
-      $data['idReferencia'] = $id;
-      $data['FechaHora'] = date("y-m-d, g:i");
-      $this->Log_Model->create($data);
+      //save logs
+      $data_log['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
+      $data_log['idReferencia'] = $id;
+      $data_log['idAction'] = '49';
+      $data_log['FechaHora'] = date("y-m-d, g:i");
+      $this->Log_Model->create($data_log);
       redirect("diary");
     }
 

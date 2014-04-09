@@ -383,15 +383,6 @@ Detalle
   function delete($id) {
     if ($id != NULL) {
       $this->db->where('iddiario', $id);
-
-      //save logs
-      $data_log['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
-      $data_log['idReferencia'] = $id;
-      $data_log['idAction'] = '49';
-      $data_log['FechaHora'] = date("y-m-d, g:i");
-      $this->Log_Model->create($data_log);    
-
-
       $this->db->delete('daily');
     }
     return TRUE;
