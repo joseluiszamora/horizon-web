@@ -1,0 +1,1 @@
+ App.MarcapaginasController = Ember.ArrayController.extend(); 
