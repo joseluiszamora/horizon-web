@@ -293,30 +293,30 @@ Detalle
 
   function ammounts_search($data_in){
     $this->db->select( '
-      SUM(daily.Monto) as saldo
+      SUM(Monto) as saldo
     ' );
     $this->db->from('daily');
 
     if(isset($data_in['type']) && $data_in['type'] != ""){
-      $this->db->where('daily.Type', $data_in['type']);
+      $this->db->where('Type', $data_in['type']);
     }
     if(isset($data_in['status']) && $data_in['status'] != ""){
-      $this->db->where('daily.Estado', $data_in['status']);
+      $this->db->where('Estado', $data_in['status']);
     }
     if(isset($data_in['distributor']) && $data_in['distributor'] != "" && $data_in['distributor'] != "0"){
-      $this->db->where('daily.idUser',$data_in['distributor']);
+      $this->db->where('idUser',$data_in['distributor']);
     }
     if(isset($data_in['dateStart']) && $data_in['dateStart'] != ""){
       $fecha = $data_in['dateStart'];
       $nuevafecha = strtotime ( '-1 day' , strtotime ( $fecha ) ) ;
       $nuevafecha = date ( 'y-m-d' , $nuevafecha );
-      $this->db->where('DATE(daily.FechaTransaction) >', $nuevafecha);
+      $this->db->where('DATE(FechaTransaction) >', $nuevafecha);
     }
     if(isset($data_in['dateFinish']) && $data_in['dateFinish'] != ""){
       $fecha = $data_in['dateFinish'];
       $nuevafecha2 = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
       $nuevafecha2 = date ( 'y-m-d' , $nuevafecha2 );
-      $this->db->where('DATE(daily.FechaTransaction) <', $nuevafecha2);
+      $this->db->where('DATE(FechaTransaction) <', $nuevafecha2);
     }
 
     $query = $this->db->get();

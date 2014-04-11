@@ -83,14 +83,14 @@
             <img class="logo" alt="Horizon" src="<?php echo $base_url; ?>img/logo_horizon.png" width="100" style="margin: 10px 0 0 10px;" />
             <div class="info">
               <?php
-                  /*date_default_timezone_set("America/La_Paz");
-                  $week_days = array ("Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado");
-                  $months = array ("", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-                  $year_now = date ("Y");
-                  $month_now = date ("n");
-                  $day_now = date ("j");
-                  $week_day_now = date ("w");
-                  $date = $day_now . " de " . $months[$month_now] . " de " . $year_now;*/
+                /*date_default_timezone_set("America/La_Paz");
+                $week_days = array ("Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado");
+                $months = array ("", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+                $year_now = date ("Y");
+                $month_now = date ("n");
+                $day_now = date ("j");
+                $week_day_now = date ("w");
+                $date = $day_now . " de " . $months[$month_now] . " de " . $year_now;*/
               ?>
               <ul>
                 <li><?php //echo $user_name; ?></li>
@@ -109,11 +109,22 @@
             </div>
             <div class="filters">
               <ul>
+                <?php 
+                  if (isset($parameters['distributor']) && ($parameters['distributor']!="") && ($parameters['distributor']!="0")){ ?>
+                  <li>Distribuidor: <?php echo $parameters['distributor']; ?></li>
+                <?php }else{ ?>
+                  <li>Todos los distribuidores</li>
+                <?php } ?>
                 <?php if (isset($parameters['status']) && ($parameters['status']!="") && ($parameters['status']!="0")): ?>
-                  <li>Distribuidor: <?php echo $parameters['status']; ?></li>
-                <?php endif; ?>
-                <?php if (isset($parameters['status']) && ($parameters['status']!="") && ($parameters['status']!="0")): ?>
-                  <li>Estado: <?php echo $parameters['status']; ?></li>
+                  <li>Estado: <?php 
+                    if ($parameters['status'] == "1") {
+                      echo "Pendiente";
+                    }elseif ($parameters['status'] == "2") {
+                      echo "Pagado/Cancelado";
+                    }else{
+                      echo "Eliminado";
+                    }
+                    ?></li>
                 <?php endif; ?>
                 <?php if (isset($parameters['name']) && ($parameters['name']!="")): ?>
                   <li>Nombre: <?php echo $parameters['name']; ?></li>

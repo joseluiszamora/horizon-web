@@ -144,23 +144,18 @@
         $res .= '<div id="modal-delete-'.$r->iddiario.'" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Eliminar</h3>
+    <h3 id="myModalLabel">Eliminar Cobro</h3>
   </div>
   <div class="modal-body">
-    <p>Esta seguro que desea Eliminar este pago ?</p>
+    <p>¿Está seguro que desea eliminar este pago?</p>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-    '.anchor("diary/removepay/".$r->iddiario, "Desactivar", array("class" => "btn btn-primary")).'
+    '.anchor("diary/removepay/".$r->iddiario, "Eliminar", array("class" => "btn btn-primary")).'
   </div>
 </div>';
         $res .= '</td>';
         $res .= '</tr>';
-
-
-
-
-
         $total = $total + $r->Monto;
       }
 
@@ -193,6 +188,11 @@
       $data['category'] = 'diary';
       $data['page'] = 'index';
 
+      // remake customer by name
+      if (isset($data_in['distributor']) && ($data_in['distributor']!="") && ($data_in['distributor']!="0")){
+        $dist = $this->User_Model->get($data_in['distributor']);
+        $data_in['distributor'] = $dist[0]->Nombre." ".$dist[0]->Apellido;
+      }
       $data_index['order'] = "customer.NombreTienda";
       $search_parameters = http_build_query($data_in);
       $data['search_parameters'] = $search_parameters;

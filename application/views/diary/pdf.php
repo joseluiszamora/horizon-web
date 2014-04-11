@@ -28,10 +28,6 @@
     padding: 0 4px !important;
   }
 
-
-
-
-
   .table-bordered th, .table-bordered td {
     border-left: 1px solid #000000 !important;
   }
@@ -120,7 +116,7 @@
             <table cellpadding="0" cellspacing="0" border="0" class="tableHorizon table table-bordered" >
               <tbody >
                 <?php foreach ($pays as $row){
-                  $pagado = $row->Monto;
+                  $pagado += $row->Monto;
                 ?>
                 <tr class='even gradeX'>
                   <td class="td_1"><?php echo $row->FechaTransaction;?></td>

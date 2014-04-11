@@ -1,6 +1,6 @@
-var loader = "https://mariani.bo/horizon/img/loader.gif";
+//var loader = "https://mariani.bo/horizon/img/loader.gif";
 //var loader = "http://www.ruizmier.com/systems/horizon/img/loader.gif";
-//var loader = "http://localhost/horizon/img/loader.gif";
+var loader = "http://localhost/horizon/img/loader.gif";
 
 function showLoadingAnimation(obj){
  // console.log(obj);
@@ -20,8 +20,8 @@ function hideLoadingAnimation_td(obj){
 }
 $(document).ready(function(){
   //var url = "http://www.ruizmier.com/systems/horizon/";
-  var url = "https://mariani.bo/horizon/index.php/";
-  //var url = "http://localhost/horizon/index.php/";
+  //var url = "https://mariani.bo/horizon/index.php/";
+  var url = "http://localhost/horizon/index.php/";
 
   // chosen selects
   //$(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
