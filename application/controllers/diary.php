@@ -141,7 +141,7 @@
         $res .= '<td class="center">'.$r->Detalle.'</td>';
         $res .= '<td class="center">';
         
-        if( $this->Account_Model->get_profile() != "1" ){
+        if( $this->Account_Model->get_profile() == "1" ){
           $res .= '<a href="#modal-delete-'.$r->iddiario.'" role="button" class="btn btn-primary" data-toggle="modal">X</a>';
           $res .= '<div id="modal-delete-'.$r->iddiario.'" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
           $res .= '          <div class="modal-header">';

@@ -111,7 +111,7 @@
               <ul>
                 <?php 
                   if (isset($parameters['distributor']) && ($parameters['distributor']!="") && ($parameters['distributor']!="0")){ ?>
-                  <li>Distribuidor: <?php echo $parameters['distributor']; ?></li>
+                  <li>Distribuidor: <?php echo $parameters['distributor_name']; ?></li>
                 <?php }else{ ?>
                   <li>Todos los distribuidores</li>
                 <?php } ?>
