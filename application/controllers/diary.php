@@ -140,20 +140,25 @@
         $res .= '<td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td>';
         $res .= '<td class="center">'.$r->Detalle.'</td>';
         $res .= '<td class="center">';
-        $res .= '   <a href="#modal-delete-'.$r->iddiario.'" role="button" class="btn btn-primary" data-toggle="modal">X</a>';
-        $res .= '<div id="modal-delete-'.$r->iddiario.'" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Eliminar Cobro</h3>
-  </div>
-  <div class="modal-body">
-    <p>¿Está seguro que desea eliminar este pago?</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-    '.anchor("diary/removepay/".$r->iddiario, "Eliminar", array("class" => "btn btn-primary")).'
-  </div>
-</div>';
+        
+        if( $this->Account_Model->get_profile() != "1" ){
+          $res .= '<a href="#modal-delete-'.$r->iddiario.'" role="button" class="btn btn-primary" data-toggle="modal">X</a>';
+          $res .= '<div id="modal-delete-'.$r->iddiario.'" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
+          $res .= '          <div class="modal-header">';
+          $res .= '            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
+          $res .= '            <h3 id="myModalLabel">Eliminar Cobro</h3>';
+          $res .= '          </div>';
+          $res .= '          <div class="modal-body">';
+          $res .= '            <p>¿Está seguro que desea eliminar este pago?</p>';
+          $res .= '          </div>';
+          $res .= '          <div class="modal-footer">';
+          $res .= '            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>';
+          $res .= '            '.anchor("diary/removepay/".$r->iddiario, "Eliminar", array("class" => "btn btn-primary")).'';
+          $res .= '          </div>';
+          $res .= '</div>';
+        }
+        
+        
         $res .= '</td>';
         $res .= '</tr>';
         $total = $total + $r->Monto;
@@ -191,7 +196,7 @@
       // remake customer by name
       if (isset($data_in['distributor']) && ($data_in['distributor']!="") && ($data_in['distributor']!="0")){
         $dist = $this->User_Model->get($data_in['distributor']);
-        $data_in['distributor'] = $dist[0]->Nombre." ".$dist[0]->Apellido;
+        $data_in['distributor_name'] = $dist[0]->Nombre." ".$dist[0]->Apellido;
       }
       $data_index['order'] = "customer.NombreTienda";
       $search_parameters = http_build_query($data_in);
@@ -270,10 +275,9 @@
       $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/systems/horizon/';
       $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/horizon/';
       //$this->load->view('template/template_pdf', $data);
-      //print_r($diaries);
+      //print_r($parameters);
       $templateView = $this->load->view('template/template_pdf', $data, TRUE);
       exportMeAsDOMPDF($templateView, "report");
     }
-
   }
 ?>

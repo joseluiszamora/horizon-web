@@ -89,10 +89,32 @@
                   <input type="hidden" value="" name="detail" id="detail" >
                   <?php echo form_close(); ?>  
                 </div>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+
+
+
+                <button class="btn" id="btnCancelPrestamo">Cancelar</button>
+                
+
                 <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Guardar" />
               </div>
             </div>
+
+
+            <!-- Modal cancel prestamos -->
+            <div id="modal-cancel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Cancelar Prestamos</h3>
+              </div>
+              <div class="modal-body">
+                <p>Esta seguro que desea Cancelar los prestamos, Esta accion eliminara todos los prestamos no guardados?</p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn" id="cancelPrestamosNo">No</button>
+                <button class="btn btn-primary" id="cancelPrestamosOk">Si, cancelar</button>
+              </div>
+            </div>
+
 
 
 
@@ -196,6 +218,7 @@
       clear_form_diary();
     });*/
 
+    // adicionar registro
     $("#btnAddReg").click(function(){
       flag = true;
 
@@ -273,7 +296,7 @@
 
     });
 
-
+    // guardar todos los prestamos
     $("#btnSave").click(function(){
       sw = false;
       distributor = "";
@@ -311,6 +334,30 @@
       }
     });
 
+    // cancelar los prestamos
+    $("#btnCancelPrestamo").click(function(){
+      if ($("#diaryTableList tr").size() > 0) {
+        $("#modal-cancel").modal("show");
+        $("#modal-diarycreate").css("display", "none");
+      }
+      else{
+        $("#modal-diarycreate").modal("hide");
+        clear_form_diary();
+      }
+    });
+    
+
+    $("#cancelPrestamosOk").click(function(){
+      $("#diaryTableList").html("");
+      $("#modal-cancel").modal("hide");
+      $("#modal-diarycreate").modal("hide");
+      clear_form_diary();
+    });
+
+    $("#cancelPrestamosNo").click(function(){
+      $("#modal-cancel").modal("hide");
+      $("#modal-diarycreate").css("display", "block");
+    });
 
     $('#modal-diarycreate').on('show', function () {
       $(".chosen-select2").chosen({
