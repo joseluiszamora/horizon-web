@@ -491,3 +491,40 @@ outline-width:0;
 select[name=data-table_length] {
 	width: 50px !important;
 }
+
+
+.paypendings{
+	float: left;
+	width: 100%;
+}
+
+.paypendings .head{
+	float: left;
+	width: 100%;
+	font-weight: bold;
+}
+.paypendings .body{
+	float: left;
+	width: 100%;
+}
+
+.paypendings .pp1{
+	float: left;
+	text-align: center;
+	width: 25%;
+}
+.paypendings .pp2{
+	float: left;
+	text-align: center;
+	width: 20%;
+}
+.paypendings .pp3{
+	float: left;
+	text-align: center;
+	width: 20%;
+}
+.paypendings .pp4{
+	float: left;
+	text-align: center;
+	width: 35%;
+}

@@ -119,8 +119,8 @@
                     <th class="center"  colspan="3">&nbsp;</th>
                   </tr>
                   <tr>
-                    <th class="center">Fecha de Transacción</th>
-                    <th class="center">Mora</th>
+                    <th class="center">Fecha(Transacción)</th>
+                    <th class="center">Mora(Dias)</th>
                     <th class="center">Distribuidor</th>
                     <th class="center">Cliente</th>
                     <th class="center">Recibo</th>
@@ -141,7 +141,7 @@
                       $pagado = $this->Diary_Model->get_all_pay_for($data_in);                      
                       $saldo = $row->Monto - $pagado;
 
-                      $moradate = dateDiff(date("Y-m-d"), $row->FechaTransaction)." días";
+                      $moradate = dateDiff(date("Y-m-d"), $row->FechaTransaction);
                   ?>
                     <tr class="even gradeX">
                       <td class="center"><?php echo $row->FechaTransaction; ?></td>
@@ -215,13 +215,37 @@
                                       <label class="control-label" for="ammount">Detalle:</label>
                                       <div class="controls">
                                         <?php
-                                          echo form_textarea(array('name' => 'detail', 'class' => 'span3', 'rows' => '2', 'cols' => '10')); 
+                                          echo form_textarea(array('name' => 'detail', 'class' => 'span3', 'rows' => '2', 'cols' => '10'));
                                         ?>
                                       </div>
                                     </div> 
                                 </div>
                               </fieldset>
-                               <?php echo form_close(); ?>
+                              <?php echo form_close(); ?>
+
+                              <div class="alert">Pagos Pendientes</div>
+                              <div class="paypendings">
+                                  <div class="head">
+                                    <div class="pp1">Fecha(Transacción)</div>
+                                    <div class="pp2">Recibo</div>
+                                    <div class="pp3">Total</div>
+                                    <div class="pp4">Detalle</div>
+                                  </div>
+                                  <div class="body">
+                                    <?php 
+                                      foreach ($diaries as $rowx) {
+                                        if ($rowx->code == $row->code && $rowx->iddiario != $row->iddiario ) {
+                                    ?>
+                                      <div class="pp1"><?php echo $rowx->FechaTransaction; ?> </div>
+                                      <div class="pp2"><?php echo $rowx->NumVoucher; ?> </div>
+                                      <div class="pp3"><?php echo $this->Diary_Model->roundnumber($rowx->Monto, 2); ?> </div>
+                                      <div class="pp4"><?php echo $rowx->Detalle; ?> </div>
+                                    <?php
+                                        }
+                                      }
+                                    ?>
+                                  </div>
+                                </div>
                           </div>
                           <div class="modal-footer">
                             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
@@ -260,7 +284,7 @@
                 <tfoot>
                   <tr>
                     <th class="center">&nbsp;</th>
-                    <th class="center">Fecha de Transacción</th>
+                    <th class="center">Fecha(Transacción)</th>
                     <th class="center">Mora</th>
                     <th class="center">Distribuidor</th>
                     <th class="center">Cliente</th>
@@ -341,6 +365,21 @@
 
   // add row details
   $(document).ready(function() {
+    // filter float numbers
+    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+      "signed-num-pre": function ( a ) {
+        return (a=="-" || a==="") ? 0 : a.replace(',','')*1;
+      },
+   
+      "signed-num-asc": function ( a, b ) {
+        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+      },
+   
+      "signed-num-desc": function ( a, b ) {
+        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+      }
+    });
+
 
     $(".btnSaveAddPay").click(function(){
       obj = $(this).parents(".modaladdpay").find("form");
@@ -406,7 +445,25 @@
         { "bSortable": false, "aTargets": [ 0 ] }
       ],
       "aaSorting": [[1, 'asc']],
-      "sPaginationType": "full_numbers"
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+          null,
+          { "sType" : "date" },
+          { "sType" : "numeric" },
+          { "sType" : "string" },
+          { "sType" : "string" },
+          { "sType" : "numeric" },
+          { "sType" : "signed-num" },
+          { "sType" : "signed-num" },
+          { "sType" : "string" },
+          null,
+          null
+      ]
+
+
+
+      // numWithNull NumericOrBlank NumericOrBlank date numeric 
+
       /*
       "oTableTools": {
         "aButtons": [
@@ -423,7 +480,7 @@
       }
       */
     });
-    
+
     $(document).on("click", '#data-table tbody td img', function() { 
       var nTr = $(this).parents('tr')[0];
       if ( oTable.fnIsOpen(nTr) ) {
