@@ -486,3 +486,8 @@ outline-width:0;
 .ammountfield{
 	width: 115px;
 }
+
+
+select[name=data-table_length] {
+	width: 50px !important;
+}

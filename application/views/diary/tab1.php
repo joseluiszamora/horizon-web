@@ -102,7 +102,7 @@
     </div>
   </div>
 
-  <div class="container formContainer">
+  <div class="container">
     <div class="span10 offset1">
       <div class="block_content row">
           <fieldset>
@@ -386,19 +386,27 @@
     } );
 
     var oTable = $('#data-table').dataTable( {
-      "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
+      "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span2'i><'span2'p>>",
+      "sPaginationType": "bootstrap",
       "oLanguage": {
-        "sLengthMenu": "Mostrar _MENU_ records por pagina",
+        "sLengthMenu": "Mostrar _MENU_",
         "sZeroRecords": "Ningun dato encontrado",
         "sInfo": "Mostrar _START_ a _END_ ( de _TOTAL_ records )",
         "sInfoEmpty": "Mostrar 0 a 0 de 0 records",
         "sInfoFiltered": "(Filtrado de _MAX_ records)",
-        "sSearch": "Buscar:"
+        "sSearch": "Buscar:",
+        "oPaginate": {
+          "sFirst": "<<",
+          "sLast": ">>",
+          "sNext": ">",
+          "sPrevious": "<"
+        }
       },
       "aoColumnDefs": [
         { "bSortable": false, "aTargets": [ 0 ] }
       ],
       "aaSorting": [[1, 'asc']],
+      "sPaginationType": "full_numbers"
       /*
       "oTableTools": {
         "aButtons": [
