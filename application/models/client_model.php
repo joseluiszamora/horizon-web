@@ -64,7 +64,8 @@ class Client_model extends CI_Model {
         customer.Telefono,
         customer.idCiudad,
         customer.TelfCelular,
-        customer.Estado'
+        customer.Estado,
+        rank.Days'
       );
 
       $this->db->from('customer');
@@ -73,6 +74,7 @@ class Client_model extends CI_Model {
       //$this->db->join('ciudad', 'customer.idCiudad = ciudad.idCiudad');
       $this->db->join('barrio', 'customer.idBarrio = barrio.idBarrio');
       $this->db->join('zona', 'zona.idZona = barrio.idZona');
+      $this->db->join('rank', 'customer.idrank = rank.idrank');
 
       // filters by city
       if($profile != '1'){
@@ -82,11 +84,6 @@ class Client_model extends CI_Model {
           $this->db->where('zona.idZona', $area);
         }
       }
-      //if($profile == 2 OR $profile == 3){ 
-      //  $this->db->where('customer.idCiudad', $city);
-      //}
-      // filters by Area
-      
 
       $this->db->where('customer.Estado', '1');
 
