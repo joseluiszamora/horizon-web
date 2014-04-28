@@ -1,14 +1,14 @@
 <table class="tableHorizon table table-bordered table-striped">
   <thead>
     <tr>
-      <th>Monto</th>
+      <th>Dias</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach ($ranks as $row) { ?>
       <tr>
-        <td class="text-info areaDesc"><strong><?php echo $this->Diary_Model->roundnumber($row->Limit, 2); ?></strong></td>
+        <td class="text-info areaDesc"><strong><?php echo $row->Days; ?></strong></td>
         <td>
           <?php 
             if($this->Account_Model->get_profile() == '1'){
@@ -21,7 +21,7 @@
             <div  id="<?php echo 'modal-'.$row->idrank ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Editar RangoDDD</h3>
+                <h3 id="myModalLabel">Editar Rango</h3>
               </div>
               <div class="modal-body container_form_no_margin">
                 <?php 
@@ -33,9 +33,9 @@
                 <fieldset>
                   <div class="well well-small row logincontainer">
                     <div class="control-group span2">
-                      <label class="control-label" for="ammount">Monto:</label>
+                      <label class="control-label" for="ammount">Dias:</label>
                       <div class="controls">
-                        <input type="text" class="span2 money" value="<?php echo $this->Diary_Model->roundnumber($row->Limit, 2); ?>" name="ammount" id="ammount" required/><br>
+                        <input type="text" class="span2 money" value="<?php echo $row->Days; ?>" name="ammount" id="ammount" required/><br>
                       </div>
                     </div>
                   </div>

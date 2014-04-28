@@ -30,7 +30,7 @@
               <fieldset>
                 <div class="well well-small row logincontainer">
                   <div class="control-group span2">
-                    <label class="control-label" for="ammount">Monto:</label>
+                    <label class="control-label" for="ammount">Dias:</label>
                     <div class="controls">
                       <input type="text" class="span2 money" value="" name="ammount" id="ammount" required/><br>
                     </div>
