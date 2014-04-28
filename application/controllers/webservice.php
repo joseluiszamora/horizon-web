@@ -94,6 +94,7 @@
         $tmp["Direccion"] = $row->Direccion;
         $tmp["Telefono"] = $row->Telefono;
         $tmp["TelfCelular"] = $row->TelfCelular;
+        $tmp["rank"] = $row->Days;
 
         // push album
         array_push($clients, $tmp);
