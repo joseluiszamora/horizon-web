@@ -109,11 +109,13 @@
       $code = $this->input->Post('codeCustomer');
       $JSON_decode = json_decode($code);
       $mail = $JSON_decode->userMail;
-      
       $data_in['distributor'] = $this->Account_Model->get_user_id($mail);
+      //$data_in['distributor'] = $this->Account_Model->get_user_id("jpozo@horizon.com");
       $data_in['status'] = "1";
-
       $dailies = array();
+
+      // ADD PRESTAMOS
+      $data_in['type'] = "P";
       $daily_list = $this->Diary_Model->search($data_in);
       // looping through each 
       foreach ($daily_list as $row) {
@@ -133,7 +135,29 @@
         
         array_push($dailies, $tmp);
       }
+
+      // ADD COBROS
+      $data_in['type'] = "C";
+      $daily_list = $this->Diary_Model->search($data_in);
+      // looping through each 
+      foreach ($daily_list as $row) {
+        $tmp = array();
+
+        $tmp["iddiario"] = $row->iddiario;
+        $tmp["FechaTransaction"] = $row->FechaTransaction;
+        $tmp["idTransaction"] = $row->idTransaction;
+        $tmp["NumVoucher"] = $row->NumVoucher;
+        $tmp["Type"] = $row->Type;
+        $tmp["Monto"] = $row->Monto;
+        $tmp["Estado"] = $row->Estado;
+        $tmp["idCustomer"] = $row->idCustomer;
+        $tmp["code"] = $row->code;
+        $tmp["custname"] = $row->custname;
+        $tmp["custaddress"] = $row->custaddress;
         
+        array_push($dailies, $tmp);
+      }
+
       // printing json
       echo json_encode($dailies);
     }
