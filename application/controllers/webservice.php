@@ -127,34 +127,14 @@
         $tmp["NumVoucher"] = $row->NumVoucher;
         $tmp["Type"] = $row->Type;
         $tmp["Monto"] = $row->Monto;
+        // calculate pay ammount
+        $tmp["pagado"] = $this->Diary_Model->get_all_pay_for($tmp);
         $tmp["Estado"] = $row->Estado;
         $tmp["idCustomer"] = $row->idCustomer;
         $tmp["code"] = $row->code;
         $tmp["custname"] = $row->custname;
         $tmp["custaddress"] = $row->custaddress;
-        
-        array_push($dailies, $tmp);
-      }
 
-      // ADD COBROS
-      $data_in['type'] = "C";
-      $daily_list = $this->Diary_Model->search($data_in);
-      // looping through each 
-      foreach ($daily_list as $row) {
-        $tmp = array();
-
-        $tmp["iddiario"] = $row->iddiario;
-        $tmp["FechaTransaction"] = $row->FechaTransaction;
-        $tmp["idTransaction"] = $row->idTransaction;
-        $tmp["NumVoucher"] = $row->NumVoucher;
-        $tmp["Type"] = $row->Type;
-        $tmp["Monto"] = $row->Monto;
-        $tmp["Estado"] = $row->Estado;
-        $tmp["idCustomer"] = $row->idCustomer;
-        $tmp["code"] = $row->code;
-        $tmp["custname"] = $row->custname;
-        $tmp["custaddress"] = $row->custaddress;
-        
         array_push($dailies, $tmp);
       }
 

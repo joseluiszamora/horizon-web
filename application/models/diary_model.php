@@ -248,9 +248,6 @@ Detalle
     return $query->result();
   }
 
-
-
-
   function ammounts_search($data_in){
     $this->db->select( '
       SUM(Monto) as saldo
