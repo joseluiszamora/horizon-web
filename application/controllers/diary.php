@@ -179,12 +179,11 @@
       $data_in['dateStart'] = $this->input->post('dateStart');
       $data_in['dateFinish'] = $this->input->post('dateFinish');
       $data_in['status'] = $this->input->post('status');
-
+      $data_in['type'] = "P";
       $data['diaries'] = $this->Diary_Model->search($data_in);
       $data['balance'] = $this->Diary_Model->get_balance();
 
       $data['parameters'] = $data_in;
-      $data_in['type'] = "P";
       $data['total'] = $this->Diary_Model->ammounts_search($data_in);
       $data_in['type'] = "C";
       $data['saldo'] = $this->Diary_Model->ammounts_search($data_in);

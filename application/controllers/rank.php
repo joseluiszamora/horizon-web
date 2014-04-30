@@ -40,7 +40,6 @@
         $this->Log_Model->create($data_log);
       }
       redirect('rank');
-
     }
 
     // eliminar

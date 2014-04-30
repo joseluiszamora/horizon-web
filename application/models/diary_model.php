@@ -64,36 +64,6 @@ class Diary_model extends CI_Model {
 
     $query = $this->db->get();
     return $query->result();
-    /*$querystring = "
-      SELECT 
-        daily.iddiario,
-        daily.FechaRegistro,
-        daily.FechaTransaction,
-        daily.idUser,
-        daily.idUserSupervisor,
-        daily.idTransaction,
-        daily.NumVoucher,
-        daily.idCustomer,
-        daily.Type,
-        daily.Monto,
-        daily.Estado,
-        daily.Detalle,
-        customer.idCustomer,
-        customer.CodeCustomer as code,
-        customer.NombreTienda as custname,
-        users.Email as customer
-      FROM daily, customer, users
-      WHERE daily.idCustomer = customer.idCustomer
-      AND daily.idUser = users.idUser
-      AND daily.Type = 'P'
-      AND daily.Estado = 1
-      GROUP BY daily.NumVoucher, daily.idCustomer
-      ORDER BY daily.iddiario asc
-    ";
-
-    $query = $this->db->query($querystring);
-
-    return $query->result();*/
   }
 
   // get all diaries
@@ -107,8 +77,6 @@ class Diary_model extends CI_Model {
     $query = $this->db->get();
     return $query->result();
   }
-
-
 /*
 iddiario
 FechaRegistro
@@ -135,16 +103,6 @@ Detalle
   }
 
   function getpays($data_in){
-    //$data_in['voucher'] = $this->input->post('voucher');
-    //$data_in['distributor'] = $this->input->post('distributor');
-    //$data_in['customer'] = $this->input->post('customer');
-    /*$querystring = '
-      SELECT * 
-      FROM daily
-      WHERE NumVoucher = "'.$data_in['voucher'].'" 
-      AND idUser = "'.$data_in['distributor'].'" 
-      AND Type = "C"
-    ';*/
     $querystring = '
       SELECT * 
       FROM daily
@@ -260,8 +218,10 @@ Detalle
     $this->db->from('daily');
     $this->db->join('customer', 'daily.idCustomer = customer.idCustomer');
     $this->db->join('users', 'daily.idUser = users.idUser');
-    $this->db->where('Type','P');
 
+    if(isset($data_in['type']) && $data_in['type'] != ""){
+      $this->db->where('daily.Type', $data_in['type']);
+    }
     if(isset($data_in['status']) && $data_in['status'] != ""){
       $this->db->where('daily.Estado', $data_in['status']);
     }

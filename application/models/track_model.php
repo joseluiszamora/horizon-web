@@ -42,11 +42,8 @@ class Track_model extends CI_Model {
 
       $querystring .= " ORDER BY Fecha DESC, Hora DESC LIMIT 300 ";
 
-      //print_r("OOOOOOOOOOOOO <br>".$querystring."<br>AAAAAAAAAAAAAAAAAAAA");
       $query = $this->db->query($querystring);
       return $query->result();
-
-
     }
 
     function last($search) {
