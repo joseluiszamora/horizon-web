@@ -127,13 +127,13 @@
         $tmp["NumVoucher"] = $row->NumVoucher;
         $tmp["Type"] = $row->Type;
         $tmp["Monto"] = $row->Monto;
-        // calculate pay ammount
-        $tmp["pagado"] = $this->Diary_Model->get_all_pay_for($tmp);
         $tmp["Estado"] = $row->Estado;
         $tmp["idCustomer"] = $row->idCustomer;
         $tmp["code"] = $row->code;
         $tmp["custname"] = $row->custname;
         $tmp["custaddress"] = $row->custaddress;
+        // calculate pay ammount
+        $tmp["pagado"] = $this->Diary_Model->get_all_pay_for($tmp);
 
         array_push($dailies, $tmp);
       }
