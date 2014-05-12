@@ -16,11 +16,11 @@
     }
 
 		function index() {
-      $data['line'] = json_encode($this->Line_Model->get_all_json());
-      $data['volume'] = json_encode($this->Volume_Model->get_all_json());
-      $data['linevolume'] = json_encode($this->Linevolume_Model->get_all_json());
-      $data['product'] = json_encode($this->Product_Model->get_all_json());
-      
+      $data['line'] = $this->Line_Model->get_all_json();
+      $data['volume'] = $this->Volume_Model->get_all_json();
+      $data['linevolume'] = $this->Linevolume_Model->get_all_json();
+      $data['product'] = $this->Product_Model->get_all_json();
+
       $data['category'] = 'liquidation';
       $data['page'] = 'index';
       $this->load->view('template/template_liquidation', $data);

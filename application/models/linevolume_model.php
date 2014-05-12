@@ -99,6 +99,18 @@ class Linevolume_model extends CI_Model {
       return $dropdown;
     }
 
+
+    function get_volumes_from_line($id=-1) {
+      $this->db->select('*');
+      $this->db->from('line');
+      $this->db->join('linevolume', 'line.idLine = linevolume.idLine');
+      $this->db->join('volume', 'volume.idVolume = linevolume.idVolume');
+      $this->db->where('line.idLine', $id);
+      $query = $this->db->get();
+      return $query->result();
+    }
+
+
     function get($id) {
       $query = $this->db->get_where('linevolume',array('idLineVolume'=>$id));
       return $query->result();

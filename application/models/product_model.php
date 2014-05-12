@@ -108,8 +108,26 @@ class Product_model extends CI_Model {
     }
 
     function get_all_json() {
-      $this->db->select('*');
+      $this->db->select(
+       'products.idProduct,
+        products.idLineVolume,
+        products.Nombre,
+        products.PrecioUnit,
+        products.Estado,
+        products.Descripcion,
+        line.idLine,
+        line.Descripcion as lineDescription,
+        volume.idVolume,
+        volume.Descripcion as volumeDescription,
+        linevolume.idLineVolume'
+      );
       $this->db->from('products');
+      $this->db->join('linevolume', 'products.idLineVolume = linevolume.idLineVolume');
+      $this->db->join('line', 'linevolume.idLine = line.idLine');
+      $this->db->join('volume', 'linevolume.idVolume = volume.idVolume');
+      $this->db->order_by("idLine", "desc"); 
+      $this->db->order_by("idVolume", "desc"); 
+      $this->db->where(array('Estado'=>'1'));
       $query = $this->db->get();
       return $query->result();
     }
@@ -229,6 +247,18 @@ class Product_model extends CI_Model {
         $dropdown[$r['idProduct']] = $r['Nombre'];
       }
       return $dropdown;
+    }
+
+
+    // get products by linevolume
+    function get_by_linevolume($linevolume=-1) {
+      $this->db->select('*');
+      $this->db->from('products');
+      $this->db->join('linevolume', 'linevolume.idLineVolume = products.idLineVolume');
+      $this->db->where('linevolume.idLineVolume', $linevolume);
+      $this->db->where('products.Estado', "1");
+      $query = $this->db->get();
+      return $query->result();
     }
 
 

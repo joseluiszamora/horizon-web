@@ -1,14 +1,14 @@
 <?php
-  /*
+  print_r(">>>> ".count($line));
   echo "<br><br><br><br>";
   print_r($line);
-  echo "<br><br><br><br>";
+
   print_r($volume);
   echo "<br><br><br><br>";
   print_r($linevolume);
   echo "<br><br><br><br>";
   print_r($product);
-  */
+  
 ?>
 <div class="row">
   <div class="col-lg-12">
@@ -23,7 +23,7 @@
 
         <div class="panel-body">
           <div class="table-responsive">
-            <table id="products-list" class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th>LINEA</th>
@@ -35,72 +35,38 @@
                   <th>TOTAL</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                </tr>
-                <tr>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                </tr>
-                <tr>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                </tr>
-                <tr>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                </tr>
-                <tr>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                </tr>
-                <tr>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                </tr>
-                <tr>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                  <td>qq</td>
-                </tr>
-              </tbody>
-
+            </table>
+            <?php foreach ($line as $rowline) { ?>
+              <table class="table table-bordered table-hover">
+                <tbody>
+                  <?php
+                    print_r($rowline);
+                    print_r("<br><br><br>");
+                    $volumes = $this->Linevolume_Model->get_volumes_from_line($rowline->idLine);
+                    //echo count($volumes);
+                    print_r($volumes);
+                  ?>
+                  <?php foreach ($volumes as $rowvolumes) { ?>
+                    <?php 
+                      foreach ($this->Product_Model->get_by_linevolume($rowvolumes->idLineVolume) as $rowproduct) { 
+                    ?>
+                      <tr>
+                        <td colspan="<?php echo count($this->Linevolume_Model->get_volumes_from_line($rowline->idLine))?>"><?php echo $rowline->Descripcion; ?></td>
+                        <td><?php echo $rowvolumes->Descripcion; ?></td>
+                        <td><?php echo $rowproduct->Nombre; ?></td>
+                        <td><?php echo $rowproduct->PrecioUnit; ?></td>
+                        <td><?php echo $rowproduct->idLine; ?></td>
+                        <td><?php echo $rowproduct->idVolume; ?></td>
+                        <td>qq</td>
+                        <td>qq</td>
+                      </tr>
+                    <?php } ?>
+                  <?php } ?>
+                </tbody>
+              </table>
+            <?php } ?>
+            
+            <table class="table table-bordered table-hover">
               <tfoot>
                 <tr>
                   <th colspan=4>&nbsp;</th>

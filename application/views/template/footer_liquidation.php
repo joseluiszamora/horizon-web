@@ -10,5 +10,5 @@
 <script src="<?php echo base_url(); ?>js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="<?php echo base_url(); ?>js/sb-admin.js"></script>
 
-<script src="<?php echo base_url(); ?>js/hogan-2.0.0.js"></script>
-<script src="<?php echo base_url(); ?>js/line_volumes.js"></script>
+<!--<script src="<?php //echo base_url(); ?>js/hogan-2.0.0.js"></script>
+<script src="<?php //echo base_url(); ?>js/line_volumes.js"></script>-->
