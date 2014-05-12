@@ -15,6 +15,13 @@ class Volume_model extends CI_Model {
       return $query->result();
     }
 
+    function get_all_json() {
+      $this->db->select('*');
+      $this->db->from('volume');
+      $query = $this->db->get();
+      return $query->result();
+    }
+
     function report_from_lines() {
       $this->db->select('*');
       $this->db->from('volume');

@@ -107,6 +107,13 @@ class Product_model extends CI_Model {
       return $dropdown;
     }
 
+    function get_all_json() {
+      $this->db->select('*');
+      $this->db->from('products');
+      $query = $this->db->get();
+      return $query->result();
+    }
+
     function set_product_status($pro, $val) {
       $data = array('Estado' => $val);
 

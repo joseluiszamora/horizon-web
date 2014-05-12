@@ -15,6 +15,13 @@ class Linevolume_model extends CI_Model {
       return $query->result();
     }
 
+    function get_all_json() {
+      $this->db->select('*');
+      $this->db->from('linevolume');
+      $query = $this->db->get();
+      return $query->result();
+    }
+
     function report_android() {
       $this->db->select('*');
       $this->db->from('linevolume');

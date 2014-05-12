@@ -1,3 +1,15 @@
+<?php
+  /*
+  echo "<br><br><br><br>";
+  print_r($line);
+  echo "<br><br><br><br>";
+  print_r($volume);
+  echo "<br><br><br><br>";
+  print_r($linevolume);
+  echo "<br><br><br><br>";
+  print_r($product);
+  */
+?>
 <div class="row">
   <div class="col-lg-12">
     <h3 class="page-header">CARGA DE PRODUCTOS</h3>
@@ -23,7 +35,71 @@
                   <th>TOTAL</th>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                <tr>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                </tr>
+                <tr>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                </tr>
+                <tr>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                </tr>
+                <tr>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                </tr>
+                <tr>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                </tr>
+                <tr>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                </tr>
+                <tr>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                  <td>qq</td>
+                </tr>
+              </tbody>
 
               <tfoot>
                 <tr>

@@ -22,6 +22,13 @@ class Line_model extends CI_Model {
       return $query->result();
     }
 
+    function get_all_json() {
+      $this->db->select('*');
+      $this->db->from('line');
+      $query = $this->db->get();
+      return $query->result();
+    }
+
     function create($data) {
       if ($this->db->insert('line', $data)) {
         // Save log for this action

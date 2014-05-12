@@ -7,7 +7,7 @@
 
       if (!($this->Account_Model->logged_in() === TRUE)) {
         redirect('account/login');
-      } else if (!($this->Account_Model->get_profile() == "1")) {
+      } else if (!($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'track'))) {
         show_404();
       }
     }
