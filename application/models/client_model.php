@@ -57,7 +57,8 @@ class Client_model extends CI_Model {
 
     function report_android($profile, $city, $area, $user) {
       $this->db->select(
-        'customer.CodeCustomer,
+        'customer.idCustomer,
+        customer.CodeCustomer,
         customer.NombreTienda,
         customer.NombreContacto,
         customer.Direccion,

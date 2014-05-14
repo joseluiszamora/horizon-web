@@ -88,7 +88,7 @@
       // looping through each album
       foreach ($client_list as $row) {
         $tmp = array();
-        
+        $tmp["idCustomer"] = $row->idCustomer;
         $tmp["CodeCustomer"] = $row->CodeCustomer;
         $tmp["NombreTienda"] = $row->NombreTienda;
         $tmp["NombreContacto"] = $row->NombreContacto;
