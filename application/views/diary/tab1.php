@@ -173,6 +173,7 @@
 
                               echo form_open('diary/addpay', $attributes);
                               echo form_hidden('voucher', $row->NumVoucher);
+                              echo form_hidden('idCustomer', $row->idCustomer);
                               echo form_hidden('distributor', $row->idCustomer);
                               echo form_hidden('client', $row->idUser);
                             ?>

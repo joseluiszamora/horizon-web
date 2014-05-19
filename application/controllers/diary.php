@@ -100,7 +100,7 @@
       $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));;
       $data_in['idTransaction'] = "1";
       $data_in['NumVoucher'] = $this->input->post('voucher');
-      $data_in['idCustomer'] = $this->input->post('distributor');
+      $data_in['idCustomer'] = $this->input->post('idCustomer');
       $data_in['Type'] = "C";
       $data_in['Monto'] = $this->input->post('ammount');
       $data_in['Estado'] = '1'; 

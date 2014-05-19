@@ -426,7 +426,6 @@
       $data_in['Estado'] = "1";
       $data_in['Detalle'] = $JSON_decode->Detalle;
 
-
       if ($this->Diary_Model->create($data_in) != null) {
         $result = "ok";
       }
