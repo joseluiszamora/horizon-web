@@ -1,4 +1,5 @@
 <?php
+/*
   print_r(">>>> ".count($line));
   echo "<br><br><br><br>";
   print_r($line);
@@ -8,7 +9,7 @@
   print_r($linevolume);
   echo "<br><br><br><br>";
   print_r($product);
-  
+*/
 ?>
 <div class="row">
   <div class="col-lg-12">
@@ -19,20 +20,31 @@
 <div class="row">
   <div class="col-lg-8">
       <div class="panel panel-default">
-        <div class="panel-heading"> INPUT </div>
+        <div class="panel-heading"> 
+          INPUT
+
+          <?php foreach ($line as $rowlinecheck) { 
+            //print_r($rowlinecheck);
+          ?>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="<?php echo $rowlinecheck->idLine;?>" value="<?php echo $rowlinecheck->Descripcion;?>"> <?php echo $rowlinecheck->Descripcion;?>
+            </label>
+          <?php } ?>
+          
+        </div>
 
         <div class="panel-body">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>LINEA</th>
-                  <th>VOL</th>
-                  <th>PRODUCTO</th>
-                  <th>PRECIO (Bs.)</th>
-                  <th>CARGA P</th>
-                  <th>CARGA U</th>
-                  <th>TOTAL</th>
+                  <th class="t1">LINEA</th>
+                  <th class="t2">VOL</th>
+                  <th class="t3">PRODUCTO</th>
+                  <th class="t4">PRECIO (Bs.)</th>
+                  <th class="t5">CARGA P</th>
+                  <th class="t6">CARGA U</th>
+                  <th class="t7">TOTAL</th>
                 </tr>
               </thead>
             </table>
@@ -40,25 +52,24 @@
               <table class="table table-bordered table-hover">
                 <tbody>
                   <?php
-                    print_r($rowline);
-                    print_r("<br><br><br>");
+                    //print_r($rowline);
+                    //print_r("<br><br><br>");
                     $volumes = $this->Linevolume_Model->get_volumes_from_line($rowline->idLine);
                     //echo count($volumes);
-                    print_r($volumes);
+                    //print_r($volumes);
                   ?>
                   <?php foreach ($volumes as $rowvolumes) { ?>
                     <?php 
                       foreach ($this->Product_Model->get_by_linevolume($rowvolumes->idLineVolume) as $rowproduct) { 
                     ?>
                       <tr>
-                        <td colspan="<?php echo count($this->Linevolume_Model->get_volumes_from_line($rowline->idLine))?>"><?php echo $rowline->Descripcion; ?></td>
-                        <td><?php echo $rowvolumes->Descripcion; ?></td>
-                        <td><?php echo $rowproduct->Nombre; ?></td>
-                        <td><?php echo $rowproduct->PrecioUnit; ?></td>
-                        <td><?php echo $rowproduct->idLine; ?></td>
-                        <td><?php echo $rowproduct->idVolume; ?></td>
-                        <td>qq</td>
-                        <td>qq</td>
+                        <td class="t1" colspan="<?php echo count($this->Linevolume_Model->get_volumes_from_line($rowline->idLine))?>"><?php echo $rowline->Descripcion; ?></td>
+                        <td class="t2"><?php echo $rowvolumes->Descripcion; ?></td>
+                        <td class="t3"><?php echo $rowproduct->Nombre; ?></td>
+                        <td class="t4"><?php echo $rowproduct->PrecioUnit; ?></td>
+                        <td class="t5"><?php echo $rowproduct->idLine; ?></td>
+                        <td class="t6"><?php echo $rowproduct->idVolume; ?></td>
+                        <td class="t7">qq</td>
                       </tr>
                     <?php } ?>
                   <?php } ?>
@@ -107,3 +118,34 @@
   </div>
 
 </div>
+
+<style type="text/css">
+  .t1{
+    width: 120px;  
+    float: left;
+  }
+  .t2{
+    width: 80px;  
+    float: left;
+  }
+  .t3{
+    width: 255px;  
+    float: left;
+  }
+  .t4{
+    width: 110px;  
+    float: left;
+  }
+  .t5{
+    width: 110px;  
+    float: left;
+  }
+  .t6{
+    width: 110px;  
+    float: left;
+  }
+  .t7{
+    width: 88px;  
+    float: left;
+  }
+</style>
