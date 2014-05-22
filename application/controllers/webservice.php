@@ -193,8 +193,10 @@
             //$data_in['Observacion'] = $JSON_decode->obs;
             // get client id
             $client_id = $this->Client_Model->get_client_by_code($JSON_decode->codeCustomer);
+            $customer_id = 0;
             foreach ($client_id as $row) {
               $data_in['idCustomer'] = $row->idCustomer;
+              $customer_id = $row->idCustomer;
             }
 
             if ($JSON_decode->transactionType == "preventa") {
@@ -279,7 +281,7 @@
             $data_diary['idUserSupervisor'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
             $data_diary['idTransaction'] = $insertcode;
             $data_diary['NumVoucher'] = "9999";
-            $data_diary['idCustomer'] = $client_id;
+            $data_diary['idCustomer'] = $customer_id;
             $data_diary['Type'] = "P";
             $data_diary['Monto'] = $ammount;
             $data_diary['Estado'] = "1";
