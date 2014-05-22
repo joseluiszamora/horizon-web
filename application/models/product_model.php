@@ -95,6 +95,18 @@ class Product_model extends CI_Model {
       return $query->result();
     }
 
+    function get_price($id) {
+      $this->db->where('idProduct', $id);
+      $this->db->where('Estado', '1');
+      $query = $this->db->get('products');
+      $result = $query->result_array();
+      $price = 0;
+      foreach ($result as $r) {
+        $price = $r['PrecioUnit'];
+      }
+      return $price;
+    }
+
     function get_all() {
       $this->db->where('Estado', '1');
       $query = $this->db->get('products');

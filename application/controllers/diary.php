@@ -75,7 +75,7 @@
           $data_in['FechaRegistro'] = date("y-m-d");
           $data_in['FechaTransaction'] = $transdate[$i];
           $data_in['idUser'] = $transdistributor[$i];
-          $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));;
+          $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
           $data_in['idTransaction'] = "1";
           $data_in['NumVoucher'] = $transvoucher[$i];
           $data_in['idCustomer'] = $transclient[$i];

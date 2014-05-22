@@ -207,6 +207,10 @@
 
             if ($JSON_decode->transactionType == "transaccion_0") {
               $data_in['Estado'] = "7";
+            }
+
+            if ($JSON_decode->transactionType == "prestamo") {
+              $data_in['Estado'] = "1";
             }  
           }
 
@@ -232,17 +236,27 @@
             }
           } 
 
+
+          // VAR total Prestamo ammount
+          $ammount = 0;
+
+
           // Save Product for this transaction
           foreach ( $JSON_decode->TransactionsArray as $transactions ){
+            
             $data_products['idTransaction'] = $insertcode;
             
             // get client id
             $product = $this->Product_Model->get($transactions[0]);
             foreach ($product as $row) {
               $data_products['idProduct'] = $row->idProduct;
+              $priced = $row->PrecioUnit;
             }
 
             $data_products['Cantidad'] = $transactions[1];
+
+            $ammount += ($priced * $transactions[1]);
+
             //$data_products['Observacion'] = $transactions[2];
             $data_products['Observacion'] = "";
 
@@ -255,12 +269,30 @@
               $result = "FAIL";
             }
           }
+
+
+          // if transaction is PRESTAMO
+          if ($JSON_decode->transactionType == "prestamo") {
+            $data_diary['FechaRegistro'] = date("y-m-d");
+            $data_diary['FechaTransaction'] = date("Y-m-d",strtotime($JSON_decode->timeStart));
+            $data_diary['idUser'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
+            $data_diary['idUserSupervisor'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
+            $data_diary['idTransaction'] = $insertcode;
+            $data_diary['NumVoucher'] = "9999";
+            $data_diary['idCustomer'] = $client_id;
+            $data_diary['Type'] = "P";
+            $data_diary['Monto'] = $ammount;
+            $data_diary['Estado'] = "1";
+            $data_diary['Detalle'] = "Android";
+
+            $this->Diary_Model->create($data_diary);
+          }
         }else{
           $result = "FAIL_USER";
         }
       } 
 
-      echo $result;     
+      echo $result;
       //echo $userc."##".$userq."##".$userd1."##".$userd2;
       //echo $ifexist;
     }  
