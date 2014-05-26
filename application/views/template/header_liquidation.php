@@ -10,12 +10,13 @@
     <!-- Core CSS - Include with every page -->
     <link href="<?php echo base_url(); ?>css/normalize.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>css/bootstrap-liquidations.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>css/angular/liquidation.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>css/sb-admin.css" rel="stylesheet">    
 </head>
 <body>
 
-  <div id="wrapper">
+  <div id="wrapper" ng-app="liquidation">
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">

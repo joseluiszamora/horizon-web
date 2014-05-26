@@ -1,0 +1,46 @@
+/*!
+ * CSS horizon
+ * Liquidations section
+ * jzamora 2014
+ */
+
+/* Main table */
+#liquidations table{
+  margin: 0;
+}
+#liquidations table th, #liquidations table td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+#liquidations table .line{
+  width: 57px;
+}
+#liquidations table .vol{
+  width: 44px;
+}
+#liquidations table .total{
+  width: 120px;
+}
+#liquidations table .unity{
+  width: 42px;
+}
+#liquidations table .productname{
+  width: 150px;
+}
+#liquidations .subTableContainer{
+  padding: 0;
+}
+#liquidations .subTable{
+  padding: 0;
+  border: 2px solid transparent;
+}
+#liquidations .left{
+  float: left;
+}
+#liquidations .footer{
+  background-color: #ccc;
+}
+#liquidations .tableLine{
+  margin-bottom: 10px; 
+}

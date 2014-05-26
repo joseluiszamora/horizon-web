@@ -22,7 +22,7 @@
       $data['product'] = $this->Product_Model->get_all_json();
 
       $data['category'] = 'liquidation';
-      $data['page'] = 'index';
+      $data['page'] = 'index2';
       $this->load->view('template/template_liquidation', $data);
 		}
 

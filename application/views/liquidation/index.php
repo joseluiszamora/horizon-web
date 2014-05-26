@@ -149,3 +149,6 @@
     float: left;
   }
 </style>
+<script type="text/javascript">
+  var total = 0;
+</script>
