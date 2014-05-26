@@ -6,6 +6,11 @@
     this.name = 'qwerty';
   });
 
+  app.controller('TextController', function($scope){
+    $scope.text = 'guest';
+  });  
+
+
   var lineList = [
     {
       name: 'mix',

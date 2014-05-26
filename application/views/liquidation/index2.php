@@ -4,6 +4,17 @@
   </div>
 </div>
 
+
+
+<form name="myForm" ng-controller="TextController">
+  Single word: <input type="text" name="input" ng-model="text" required ng-trim="false">
+  <tt>text = {{text}}</tt><br/>
+ </form>
+
+
+
+
+
 <div id="liquidations" class="row" >
   <div class="col-lg-12">
       <div class="panel panel-default">
