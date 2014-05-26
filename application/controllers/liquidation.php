@@ -70,6 +70,7 @@
 
         $line = array(
           'idLine'   => $rowline->idLine,
+          'show'     => true,
           'nameLine' => $rowline->Descripcion,          
           'products' => $productsContainer
         ); 

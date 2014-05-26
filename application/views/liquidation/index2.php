@@ -64,6 +64,9 @@
             <table class="table table-bordered tableLine" ng-repeat="line in liquidation.lines | orderBy: 'name'">
               <tbody>
                 <tr>
+                  lhlhkjlh
+                </tr>
+                <tr>
                   <td class="line">
                     <div class="rotate">{{ line.nameLine | uppercase }}</div>
                   </td>

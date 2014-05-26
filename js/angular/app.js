@@ -5,6 +5,7 @@
 
   app.controller('LiquidationController', ['$http', function( $http ){
     var liquidation = this;
+    
     liquidation.lines = [ ];
     
     $http.get(url + 'liquidation/get_lines').success(function(data){
