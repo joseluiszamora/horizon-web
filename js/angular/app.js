@@ -3,78 +3,79 @@
 
   app.controller('LiquidationController', function(){
     this.lines = lineList;
+    this.name = 'qwerty';
   });
 
   var lineList = [
     {
       name: 'mix',
-      totalAmmount = 0,
+      totalAmmount: 0,
       products: [
         {
           vol: '3l',
           name: 'blueberry',
-          previousDayP: 0,
-          previousDayU: 0,
-          chargeP: 0,
-          chargeU: 0,
-          chargeExtra: [
-            {P: '2'},
-            {C: '2'}
-          ],
+          price: 5.5,
+          previousDayP: 1,
+          previousDayU: 1,
+          chargeP: 2,
+          chargeU: 2,
+          chargeExtraP: 3,
+          chargeExtraU: 3,
+          chargeTotalP: 100,
+          chargeTotalU: 100,
           devolutionsP: 0,
           devolutionsU: 0,
           prestamosP: 0,
           prestamosU: 0,
           bonosP: 0,
           bonosU: 0,
-          totalSold: [
-            {P: '2'},
-            {C: '2'}
-          ]    
+          ventaP: 0,
+          ventaU: 0, 
+          totalAmmount: 1000   
         },
         {
           vol: '3l',
           name: 'berry',
+          price: 10.5,
           previousDayP: 0,
           previousDayU: 0,
           chargeP: 0,
           chargeU: 0,
-          chargeExtra: [
-            {P: '2'},
-            {C: '2'}
-          ],
+          chargeExtraP: 0,
+          chargeExtraU: 0,
+          chargeTotalP: 100,
+          chargeTotalU: 100,
           devolutionsP: 0,
           devolutionsU: 0,
           prestamosP: 0,
           prestamosU: 0,
           bonosP: 0,
           bonosU: 0,
-          totalSold: [
-            {P: '2'},
-            {C: '2'}
-          ]    
+          ventaP: 0,
+          ventaU: 0, 
+          totalAmmount: 1000   
         },
         {
           vol: '3l',
           name: 'pina colada',
+          price: 15.5,
           previousDayP: 0,
           previousDayU: 0,
           chargeP: 0,
           chargeU: 0,
-          chargeExtra: [
-            {P: '2'},
-            {C: '2'}
-          ],
+          chargeExtraP: 0,
+          chargeExtraU: 0,
+          chargeTotalP: 100,
+          chargeTotalU: 100,
           devolutionsP: 0,
           devolutionsU: 0,
           prestamosP: 0,
           prestamosU: 0,
           bonosP: 0,
           bonosU: 0,
-          totalSold: [
-            {P: '2'},
-            {C: '2'}
-          ]    
+          ventaP: 0,
+          ventaU: 0, 
+          totalAmmount: 1000   
         }
       ]
     },
