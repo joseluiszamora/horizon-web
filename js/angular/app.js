@@ -1,15 +1,23 @@
 (function(){
+  var url = "http://localhost/horizon/index.php/";
+
   var app = angular.module('liquidation', []);
 
-  app.controller('LiquidationController', function(){
-    this.lines = lineList;
-    this.name = 'qwerty';
+  app.controller('LiquidationController', ['$http', function( $http ){
+    var liquidation = this;
+    liquidation.lines = [ ];
+    
+    $http.get(url + 'liquidation/get_lines').success(function(data){
+      liquidation.lines = data;
+    });    
+  }]);
+
+  app.controller('ProductController', function(){
+    this.product = {};
+    this.productChange = function(product){
+      product = this.product;
+    }
   });
-
-  app.controller('TextController', function($scope){
-    $scope.text = 'guest';
-  });  
-
 
   var lineList = [
     {
@@ -86,106 +94,4 @@
     },
   ]
 
-
-  var productsList= [
-    {
-      line: 'mix',
-      vol: '3l',
-      name: 'blueberry',
-      previousDay: [
-        {P: '1'},
-        {C: '1'}
-      ],
-      charge: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      chargeExtra: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      devolutions: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      prestamos: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      bonos: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      totalSold: [
-        {P: '2'},
-        {C: '2'}
-      ],
-    },
-    {
-      line: 'mix',
-      vol: '3l',
-      name: 'blueberry',
-      previousDay: [
-        {P: '1'},
-        {C: '1'}
-      ],
-      charge: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      chargeExtra: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      devolutions: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      prestamos: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      bonos: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      totalSold: [
-        {P: '2'},
-        {C: '2'}
-      ],
-    },
-    {
-      line: 'mix',
-      vol: '3l',
-      name: 'blueberry',
-      previousDay: [
-        {P: '1'},
-        {C: '1'}
-      ],
-      charge: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      chargeExtra: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      devolutions: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      prestamos: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      bonos: [
-        {P: '2'},
-        {C: '2'}
-      ],
-      totalSold: [
-        {P: '2'},
-        {C: '2'}
-      ],
-    }
-  ]
 })();

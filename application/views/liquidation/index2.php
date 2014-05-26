@@ -4,17 +4,6 @@
   </div>
 </div>
 
-
-
-<form name="myForm" ng-controller="TextController">
-  Single word: <input type="text" name="input" ng-model="text" required ng-trim="false">
-  <tt>text = {{text}}</tt><br/>
- </form>
-
-
-
-
-
 <div id="liquidations" class="row" >
   <div class="col-lg-12">
       <div class="panel panel-default">
@@ -75,38 +64,48 @@
             <table class="table table-bordered tableLine" ng-repeat="line in liquidation.lines | orderBy: 'name'">
               <tbody>
                 <tr>
-                  <td class="line">{{ line.name | uppercase }}</td>
+                  <td class="line">
+                    <div class="rotate">{{ line.nameLine | uppercase }}</div>
+                  </td>
                   <td class="subTableContainer">
                     <table class="table table-bordered subTable">
                       <tbody>
+
                         <tr ng-repeat="product in line.products">
-                          <td class="vol">{{ product.vol | uppercase }}</td>
-                          <td class="productname">{{ product.name | uppercase }}</td>
-                          <!-- previous charge -->
-                          <td class="unity">{{ product.previousDayP }}</td>
-                          <td class="unity">{{ product.previousDayU }}</td>
-                          <!-- charge -->
-                          <td class="unity">{{ product.chargeP }}</td>
-                          <td class="unity">{{ product.chargeU }}</td>
-                          <!-- extra charge -->
-                          <td class="unity">{{ product.chargeExtraP }}</td>
-                          <td class="unity">{{ product.chargeExtraU }}</td>
-                          <!-- total charge -->
-                          <td class="unity">{{ product.chargeTotalP }}</td>
-                          <td class="unity">{{ product.chargeTotalU }}</td>
-                          <!-- devolutions -->
-                          <td class="unity">{{ product.devolutionsP }}</td>
-                          <td class="unity">{{ product.devolutionsU }}</td>
-                          <!-- prestamos -->
-                          <td class="unity">{{ product.prestamosP }}</td>
-                          <td class="unity">{{ product.prestamosU }}</td>
-                          <!-- bonos -->
-                          <td class="unity">{{ product.bonosP }}</td>
-                          <td class="unity">{{ product.bonosU }}</td>
-                          <!-- venta -->
-                          <td class="unity">{{ product.ventaP }}</td>
-                          <td class="unity">{{ product.ventaU }}</td>
-                          <td class="total">{{ product.totalAmmount | currency }}</td>
+                          <form name="productForm" ng-controller="ProductController as productCtrl" ng-submit="productForm.$valid && productCtrl.productChange(product)" novalidate>
+                            <td class="vol">{{ product.volume | uppercase }}</td>
+                            <td class="productname">{{ product.Nombre | uppercase }}</td>
+                            <!-- previous charge -->
+                            <td class="unity">{{ product.previousDayP }}</td>
+                            <td class="unity">{{ product.previousDayU }}</td>
+                            <!-- charge -->
+                            <td class="unity"> 
+                              <input ng-model="productCtrl.product.chargeP" type="number" class="inputSmall" />
+                            </td>
+                            <td class="unity">
+                              <input ng-model="productCtrl.product.chargeU" type="number" class="inputSmall" />
+                            </td>
+                            <!-- extra charge -->
+                            <td class="unity">{{ product.chargeExtraP }}</td>
+                            <td class="unity">{{ product.chargeExtraU }}</td>
+                            <!-- total charge -->
+                            <td class="unity">{{ productCtrl.product.chargeP + productCtrl.product.chargeU }}</td>
+                            <td class="unity">{{ product.chargeTotalU }}</td>
+                            <!-- devolutions -->
+                            <td class="unity">{{ product.devolutionsP }}</td>
+                            <td class="unity">{{ product.devolutionsU }}</td>
+                            <!-- prestamos -->
+                            <td class="unity">{{ product.prestamosP }}</td>
+                            <td class="unity">{{ product.prestamosU }}</td>
+                            <!-- bonos -->
+                            <td class="unity">{{ product.bonosP }}</td>
+                            <td class="unity">{{ product.bonosU }}</td>
+                            <!-- venta -->
+                            <td class="unity">{{ product.ventaP }}</td>
+                            <td class="unity">{{ product.ventaU }}</td>
+                            <td class="total">{{ product.totalAmmount | currency }}</td>
+                            <td><input type="submit" class="btn btn-primary pull-right" value="Submit" /></td>
+                          </form>
                         </tr>
 
                       </tbody>

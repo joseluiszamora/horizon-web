@@ -14,10 +14,10 @@
 }
 
 #liquidations table .line{
-  width: 57px;
+  width: 116px;
 }
 #liquidations table .vol{
-  width: 44px;
+  width: 100px;
 }
 #liquidations table .total{
   width: 120px;
@@ -43,4 +43,25 @@
 }
 #liquidations .tableLine{
   margin-bottom: 10px; 
+}
+
+#liquidations .inputSmall{
+  width: 45px;
+}
+
+#liquidations .rotate{
+  /* Safari */
+  -webkit-transform: rotate(-90deg);
+
+  /* Firefox */
+  -moz-transform: rotate(-90deg);
+
+  /* IE */
+  -ms-transform: rotate(-90deg);
+
+  /* Opera */
+  -o-transform: rotate(-90deg);
+
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }

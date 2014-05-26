@@ -393,13 +393,7 @@
       $JSON_decode = json_decode($code);
       $mail = $JSON_decode->userMail;
       $mainArray = array();
-      //$mail = "aticona@horizon.com";
-      //echo $mail."<br>";
-
       $transactions = $this->Transaction_Model->get_deliveries_for_this_user($mail);
-      //print_r($transactions);
-      
-    
       
       foreach ($transactions as $row) {
        
