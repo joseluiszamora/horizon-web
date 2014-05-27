@@ -92,8 +92,8 @@
                             <td class="unity">{{ product.chargeExtraP }}</td>
                             <td class="unity">{{ product.chargeExtraU }}</td>
                             <!-- total charge -->
-                            <td class="unity">{{ productCtrl.product.chargeP + productCtrl.product.chargeU }}</td>
-                            <td class="unity">{{ product.chargeTotalU }}</td>
+                            <td class="unity info">{{ productCtrl.product.chargeP + productCtrl.product.chargeU }}</td>
+                            <td class="unity info">{{ product.chargeTotalU }}</td>
                             <!-- devolutions -->
                             <td class="unity">{{ product.devolutionsP }}</td>
                             <td class="unity">{{ product.devolutionsU }}</td>

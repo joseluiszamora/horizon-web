@@ -18,6 +18,10 @@
     this.productChange = function(product){
       product = this.product;
     }
+
+    this.sum = function(){
+      
+    }
   });
 
   var lineList = [
