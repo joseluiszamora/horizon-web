@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="liquidation">
+<html ng-app="myModule">
 
 <head>
     <meta charset="utf-8">

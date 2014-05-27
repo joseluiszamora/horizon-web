@@ -22,7 +22,7 @@
       $data['product'] = $this->Product_Model->get_all_json();
 
       $data['category'] = 'liquidation';
-      $data['page'] = 'index2';
+      $data['page'] = 'add';
       $this->load->view('template/template_liquidation', $data);
 		}
 
@@ -44,8 +44,8 @@
               'idProduct'     => $rowproduct->idProduct,
               'volume'        => $rowlinevolume->Descripcion,
               'Nombre'        => $rowproduct->Nombre,
-              'previousDayP'  => 1,
-              'previousDayU'  => 1,
+              'previousDayP'  => 0,
+              'previousDayU'  => 0,
               'chargeP'       => 2,
               'chargeU'       => 2,
               'chargeExtraP'  => 3,
