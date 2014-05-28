@@ -43,20 +43,24 @@ app.controller('ProductController', function(){
 
 var productControllerObj = function ($scope){
   $scope.productControllerObj = {
-    firstName: "Joseph",
-    middleName: "Z",
-    lastName: "Smith",
-    trustName: "Doelo"
+    cargaP: 0,
+    cargaU: 0,
+    cargaExtraP: 0,
+    cargaExtraU: 0
   };
 
-  $scope.getFullName = function () {
-    return $scope.productControllerObj.firstName + " " +
-      $scope.productControllerObj.lastName;
+  $scope.getCargaP = function (){
+    return parseInt($scope.productControllerObj.cargaP) + parseInt($scope.productControllerObj.cargaExtraP);
   };
 
-  $scope.getFullNamePlus = function (){
-    return $scope.productControllerObj.trustName + " " + $scope.productControllerObj.lastName;
+  $scope.getCargaU = function (){
+    return parseInt($scope.productControllerObj.cargaU) + parseInt($scope.productControllerObj.cargaExtraU);
   };
+
+  $scope.getTotalPrice = function (product){
+    return (($scope.productControllerObj.cargaP + $scope.productControllerObj.cargaExtraP) * parseFloat(product.price));
+  };
+
   /*$scope.getFullName = function (){
     return $scope.firstName;
   };*/

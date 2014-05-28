@@ -44,6 +44,7 @@
               'idProduct'     => $rowproduct->idProduct,
               'volume'        => $rowlinevolume->Descripcion,
               'Nombre'        => $rowproduct->Nombre,
+              'price'        => $rowproduct->PrecioUnit,
               'previousDayP'  => 0,
               'previousDayU'  => 0,
               'chargeP'       => 2,

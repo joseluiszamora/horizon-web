@@ -1,34 +1,3 @@
-
-<!--<div ng-controller="firstControllerObj">
-  <h3>First controller</h3>
-  <strong>First name:</strong> {{firstModelObj.firstName}}<br />
-  <br />
-  <label>Set the first name: <input type="text" ng-model="firstModelObj.firstName"/></label><br />
-  <br />
-  <div ng-controller="secondControllerObj">
-    <h3>Second controller (inside First)</h3>
-    <strong>First name (from First):</strong> {{firstModelObj.firstName}}<br />
-    <strong>Last name (from Second):</strong> {{secondModelObj.lastName}}<br />
-    <strong>Full name:</strong> {{getFullNamePlus()}}<br />
-    <br />
-    <label>Set the first name: <input type="text" ng-model="secondModelObj.trustName"/></label><br />
-    <label>Set the last name: <input type="text" ng-model="secondModelObj.lastName"/></label><br />
-    <br />
-    <div ng-controller="thirdControllerObj">
-      <h3>Third controller (inside Second and First)</h3>
-      <strong>First name (from First):</strong> {{firstModelObj.firstName}}<br />
-      <strong>Middle name (from Third):</strong> {{thirdModelObj.middleName}}<br />
-      <strong>Last name (from Second):</strong> {{secondModelObj.lastName}}<br />
-      <strong>Last name (from Third):</strong> {{thirdModelObj.lastName}}<br />
-      <strong>Full name (redefined in Third):</strong> {{getFullName()}}<br />
-      <br />
-      <label>Set the first name: <input type="text" ng-model="firstModelObj.firstName"/></label><br />
-      <label>Set the middle name: <input type="text" ng-model="thirdModelObj.middleName"/></label><br />
-      <label>Set the last name: <input type="text" ng-model="thirdModelObj.lastName"/></label>
-    </div>
-  </div>
-</div>-->
-
 <div class="row">
   <div class="col-lg-12">
     <h3 class="page-header">CARGA DE PRODUCTOS</h3>
@@ -80,7 +49,7 @@
               </thead>
             </table>
 
-            <table class="table table-bordered tableLine" ng-repeat="line in liquidation.lines | orderBy: 'name'">
+            <table class="table table-bordered tableLine" ng-repeat="line in liquidation.lines | orderBy: 'name'" ng-controller="lineControllerObj">
               <tbody>
                 <tr>
                   <td class="line">
@@ -90,29 +59,29 @@
                     <table class="table table-bordered subTable">
                       <tbody>
                        <tr ng-repeat="product in line.products" ng-controller="productControllerObj">
-                          <label>Set the first name: <input type="text" ng-model="firstModelObj.firstName"/></label><br />
-                          <strong>First name (from First):</strong> {{productControllerObj.firstName}}<br />
-
                           <td class="vol">{{ product.volume | uppercase }}</td>
                           <td class="productname">{{ product.Nombre | uppercase }}</td>
                           <!-- previous charge -->
-                          <td class="unity">{{ getCargaP }}</td>
+                          <td class="unity">{{ product.previousDayP }}</td>
                           <td class="unity">{{ product.previousDayU }}</td>
                           <!-- charge -->
                           <td class="unity"> 
-                            <input type="text" ng-model="productControllerObj.trustName"
+                            <input ng-model="productControllerObj.cargaP" type="number" class="inputSmall"/>
                           </td>
                           <td class="unity">
-                            <input type="text" ng-model="productControllerObj.lastName"/>
+                            <input ng-model="productControllerObj.cargaU" type="number" class="inputSmall"/>
                           </td>
                           <!-- extra charge -->
-                          <td class="unity">{{ getFullNamePlus() }}</td>
-                          <td class="unity">{{ product.chargeExtraU }}</td>
+                          <td class="unity"> 
+                            <input ng-model="productControllerObj.cargaExtraP" type="number" class="inputSmall"/>
+                          </td>
+                          <td class="unity">
+                            <input ng-model="productControllerObj.cargaExtraU" type="number" class="inputSmall"/>
+                          </td>
                           <!-- total charge -->
-                          <td class="unity info">{{ getCargaSum() }}</td>
-                          <td class="unity info">{{ product.chargeTotalU }}</td>
-                          <td class="total">{{ product.totalAmmount | currency }}</td>
-                          <td><input type="submit" class="btn btn-primary pull-right" value="Ok" /></td>
+                          <td class="unity info">{{ getCargaP() }}</td>
+                          <td class="unity info">{{ getCargaU() }}</td>
+                          <td class="total">{{ getTotalPrice(product) | currency }}</td>
                         </tr>
 
                       </tbody>
