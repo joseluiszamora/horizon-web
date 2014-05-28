@@ -49,6 +49,12 @@
               </thead>
             </table>
 
+            <div class="row">
+              <form name="myForm">
+                Value1: <input type="checkbox" ng-model="lineControllerObj.visible"> <br/>
+                <tt>value1 = {{lineControllerObj.visible}}</tt><br/>
+              </form>
+            </div>
             <table class="table table-bordered tableLine" ng-repeat="line in liquidation.lines | orderBy: 'name'" ng-controller="lineControllerObj">
               <tbody>
                 <tr>
@@ -81,7 +87,7 @@
                           <!-- total charge -->
                           <td class="unity info">{{ getCargaP() }}</td>
                           <td class="unity info">{{ getCargaU() }}</td>
-                          <td class="total">{{ getTotalPrice(product) | currency }}</td>
+                          <td class="total">{{ getTotalPrice(product) | currency}}</td>
                         </tr>
 
                       </tbody>

@@ -81,3 +81,12 @@ var productControllerObj = function ($scope){
     return $scope.cargaP + $scope.cargaP;
   };*/
 };
+
+var lineControllerObj = function ($scope){
+  $scope.lineControllerObj = {
+    lineTotalAmmount: 0,
+    cargaExtraU: 0,
+    visible: true
+  };
+  
+};
