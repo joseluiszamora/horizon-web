@@ -1,33 +1,5 @@
-<!--<div ng-controller="firstControllerScope">
-  <h3>First controller</h3>
-  <strong>First name:</strong> {{firstName}}<br />
-  <label>Set the first name: <input type="text" ng-model="firstName"/></label><br />
-  <br />
-  <div ng-controller="secondControllerScope">
-    <h3>Second controller (inside First)</h3>
-    <strong>First name (from First):</strong> {{firstName}}<br />
-    <strong>Last name (new variable):</strong> {{lastName}}<br />
-    <strong>Full name:</strong> {{getFullName()}}<br />
-    <br />
-    <label>Set the first name: <input type="text" ng-model="firstName"/></label><br />
-    <label>Set the last name: <input type="text" ng-model="lastName"/></label><br />
-    <br />
-    <div ng-controller="thirdControllerScope">
-      <h3>Third controller (inside Second and First)</h3>
-      <strong>First name (from First):</strong> {{firstName}}<br />
-      <strong>Middle name (new variable):</strong> {{middleName}}<br />
-      <strong>Last name (from Second):</strong> {{$parent.lastName}}<br />
-      <strong>Last name (redefined in Third):</strong> {{lastName}}<br />
-      <strong>Full name (redefined in Third):</strong> {{getFullName()}}<br />
-      <br />
-      <label>Set the first name: <input type="text" ng-model="firstName"/></label><br />
-      <label>Set the middle name: <input type="text" ng-model="middleName"/></label><br />
-      <label>Set the last name: <input type="text" ng-model="lastName"/></label>
-    </div>
-  </div>
-</div>
--->
-<div ng-controller="firstControllerObj">
+
+<!--<div ng-controller="firstControllerObj">
   <h3>First controller</h3>
   <strong>First name:</strong> {{firstModelObj.firstName}}<br />
   <br />
@@ -37,9 +9,9 @@
     <h3>Second controller (inside First)</h3>
     <strong>First name (from First):</strong> {{firstModelObj.firstName}}<br />
     <strong>Last name (from Second):</strong> {{secondModelObj.lastName}}<br />
-    <strong>Full name:</strong> {{getFullName()}}<br />
+    <strong>Full name:</strong> {{getFullNamePlus()}}<br />
     <br />
-    <label>Set the first name: <input type="text" ng-model="firstModelObj.firstName"/></label><br />
+    <label>Set the first name: <input type="text" ng-model="secondModelObj.trustName"/></label><br />
     <label>Set the last name: <input type="text" ng-model="secondModelObj.lastName"/></label><br />
     <br />
     <div ng-controller="thirdControllerObj">
@@ -55,43 +27,13 @@
       <label>Set the last name: <input type="text" ng-model="thirdModelObj.lastName"/></label>
     </div>
   </div>
-</div>
-
+</div>-->
 
 <div class="row">
   <div class="col-lg-12">
     <h3 class="page-header">CARGA DE PRODUCTOS</h3>
   </div>
 </div>
-
-
-<div class="row">
-  <div ng-controller="ControllerZero">
-    <input ng-model="message" >
-    <button ng-click="handleClick(message);">LOG</button>
-  </div>
-
-  <div ng-controller="ControllerOne">
-    <input ng-model="message" >
-  </div>
-
-  <div ng-controller="ControllerTwo">
-    <input ng-model="message" >
-  </div>
-</div>
-
-<div class="row" ng-controller="secondController">
-  <h2>Model managed by the second controller</h2>
-  <strong>First name:</strong> {{firstName}}<br />
-  <strong>Middle name:</strong> {{middleName}}<br />
-  <strong>Last name:</strong> <span ng-bind="lastName"></span><br />
-  <strong>Full name:</strong> {{getFullName()}}<br />
-  <br />
-  <label>Set the first name: <input type="text" ng-model="firstName"/></label><br />
-  <label>Set the middle name: <input type="text" ng-model="middleName"/></label><br />
-  <label>Set the last name: <input type="text" ng-model="lastName"/></label>
-</div>
-
 
 <div id="liquidations" class="row" >
   <div class="col-lg-12">
@@ -147,38 +89,27 @@
                   <td class="subTableContainer">
                     <table class="table table-bordered subTable">
                       <tbody>
+                       <tr ng-repeat="product in line.products" ng-controller="productControllerObj">
+                          <label>Set the first name: <input type="text" ng-model="firstModelObj.firstName"/></label><br />
+                          <strong>First name (from First):</strong> {{productControllerObj.firstName}}<br />
 
-                      <div ng-controller="thirdControllerObj">
-                        <h3>Third controller (inside Second and First)</h3>
-                        <strong>First name (from First):</strong> {{firstModelObj.firstName}}<br />
-                        <strong>Middle name (from Third):</strong> {{thirdModelObj.middleName}}<br />
-                        <strong>Last name (from Second):</strong> {{secondModelObj.lastName}}<br />
-                        <strong>Last name (from Third):</strong> {{thirdModelObj.lastName}}<br />
-                        <strong>Full name (redefined in Third):</strong> {{getFullName()}}<br />
-                        <br />
-                        <label>Set the first name: <input type="text" ng-model="firstModelObj.firstName"/></label><br />
-                        <label>Set the middle name: <input type="text" ng-model="thirdModelObj.middleName"/></label><br />
-                        <label>Set the last name: <input type="text" ng-model="thirdModelObj.lastName"/></label>
-                      </div>
-                      
-                        <tr ng-repeat="product in line.products">
                           <td class="vol">{{ product.volume | uppercase }}</td>
                           <td class="productname">{{ product.Nombre | uppercase }}</td>
                           <!-- previous charge -->
-                          <td class="unity">{{ product.previousDayP }}</td>
+                          <td class="unity">{{ getCargaP }}</td>
                           <td class="unity">{{ product.previousDayU }}</td>
                           <!-- charge -->
                           <td class="unity"> 
-                            <input ng-model="productCtrl.product.chargeP" type="number" class="inputSmall" />
+                            <input type="text" ng-model="productControllerObj.trustName"
                           </td>
                           <td class="unity">
-                            <input ng-model="productCtrl.product.chargeU" type="number" class="inputSmall" />
+                            <input type="text" ng-model="productControllerObj.lastName"/>
                           </td>
                           <!-- extra charge -->
-                          <td class="unity">{{ product.chargeExtraP }}</td>
+                          <td class="unity">{{ getFullNamePlus() }}</td>
                           <td class="unity">{{ product.chargeExtraU }}</td>
                           <!-- total charge -->
-                          <td class="unity info">{{ productCtrl.product.chargeP + productCtrl.product.chargeU }}</td>
+                          <td class="unity info">{{ getCargaSum() }}</td>
                           <td class="unity info">{{ product.chargeTotalU }}</td>
                           <td class="total">{{ product.totalAmmount | currency }}</td>
                           <td><input type="submit" class="btn btn-primary pull-right" value="Ok" /></td>
