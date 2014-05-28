@@ -106,7 +106,7 @@
                       </tfooter>
                     </table>
                   </td>
-                  <td>{{ line.totalAmmount }}</td>
+                  <td>{{ getAmmountLine() }}</td>
                 </tr>
               </tbody>
             </table>

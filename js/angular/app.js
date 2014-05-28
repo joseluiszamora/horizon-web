@@ -34,12 +34,19 @@ app.controller('ProductController', function(){
   this.productChange = function(product){
     product = this.product;
   }
-
-  this.sum = function(){
-    
-  }
 });
 
+var lineControllerObj = function ($scope){
+  $scope.lineControllerObj = {
+    lineTotalAmmount: 999,
+    cargaExtraU: 0,
+    visible: true
+  };
+
+  $scope.getAmmountLine = function (){
+    return $scope.lineControllerObj.lineTotalAmmount;
+  };  
+};
 
 var productControllerObj = function ($scope){
   $scope.productControllerObj = {
@@ -58,7 +65,11 @@ var productControllerObj = function ($scope){
   };
 
   $scope.getTotalPrice = function (product){
-    return (($scope.productControllerObj.cargaP + $scope.productControllerObj.cargaExtraP) * parseFloat(product.price));
+    numProducts = $scope.productControllerObj.cargaP + $scope.productControllerObj.cargaExtraP;
+
+    //$scope.lineControllerObj.lineTotalAmmount = numProducts;
+
+    return (numProducts * parseFloat(product.price));
   };
 
   /*$scope.getFullName = function (){
@@ -80,13 +91,4 @@ var productControllerObj = function ($scope){
   $scope.getCargaSum = function (){
     return $scope.cargaP + $scope.cargaP;
   };*/
-};
-
-var lineControllerObj = function ($scope){
-  $scope.lineControllerObj = {
-    lineTotalAmmount: 0,
-    cargaExtraU: 0,
-    visible: true
-  };
-  
 };
