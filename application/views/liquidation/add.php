@@ -55,38 +55,57 @@
                 <tbody>
                   <tr>
                     <td class="line">
-                      <form name="myForm">
-                        {{ line.nameLine}} <input type="checkbox" ng-model="lineControllerObj.visible">
-                      </form>
+                      {{ line.nameLine}} <input type="checkbox" ng-model="lineControllerObj.visible">
                       <!--<div class="rotate">{{ line.nameLine | uppercase }}</div>-->
                     </td>
                     <td class="subTableContainer" >
                       <table class="table table-bordered subTable" ng-show="lineControllerObj.visible">
                         <tbody>
+
+
+                          <!--<div ng-controller="Controller">
+                            <form novalidate class="simple-form">
+                              Name: <input type="text" ng-model="user.name" /><br />
+                              E-mail: <input type="email" ng-model="user.email" /><br />
+                              Gender: <input type="radio" ng-model="user.gender" value="male" />male
+                              <input type="radio" ng-model="user.gender" value="female" />female<br />
+                              <button ng-click="reset()">RESET</button>
+                              <button ng-click="update(user)">SAVE</button>
+                            </form>
+                            <pre>form = {{user | json}}</pre>
+                            <pre>master = {{master | json}}</pre>
+                          </div>-->
+
                          <tr ng-repeat="product in line.products" ng-controller="productControllerObj">
-                            <td class="vol">{{ product.volume | uppercase }}</td>
-                            <td class="productname">{{ product.Nombre | uppercase }}</td>
-                            <!-- previous charge -->
-                            <td class="unity">{{ product.previousDayP }}</td>
-                            <td class="unity">{{ product.previousDayU }}</td>
-                            <!-- charge -->
-                            <td class="unity"> 
-                              <input ng-model="productControllerObj.cargaP" type="number" class="inputSmall"/>
-                            </td>
-                            <td class="unity">
-                              <input ng-model="productControllerObj.cargaU" type="number" class="inputSmall"/>
-                            </td>
-                            <!-- extra charge -->
-                            <td class="unity"> 
-                              <input ng-model="productControllerObj.cargaExtraP" type="number" class="inputSmall"/>
-                            </td>
-                            <td class="unity">
-                              <input ng-model="productControllerObj.cargaExtraU" type="number" class="inputSmall"/>
-                            </td>
-                            <!-- total charge -->
-                            <td class="unity info">{{ getCargaP() }}</td>
-                            <td class="unity info">{{ getCargaU() }}</td>
-                            <td class="total">{{ getTotalPrice(product) | currency}}</td>
+                            <form novalidate name="productForm">
+                              <td class="vol">{{ product.volume | uppercase }}</td>
+                              <td class="productname">{{ product.Nombre | uppercase }}</td>
+                              <!-- previous charge -->
+                              <td class="unity">{{ product.previousDayP }}</td>
+                              <td class="unity">{{ product.previousDayU }}</td>
+                              <!-- charge -->
+                              <td class="unity"> 
+                                <input ng-model="productControllerObj.cargaP" type="number" class="inputSmall"/>
+                              </td>
+                              <td class="unity">
+                                <input ng-model="productControllerObj.cargaU" type="number" class="inputSmall"/>
+                              </td>
+                              <!-- extra charge -->
+                              <td class="unity"> 
+                                <input ng-model="productControllerObj.cargaExtraP" type="number" class="inputSmall"/>
+                              </td>
+                              <td class="unity">
+                                <input ng-model="productControllerObj.cargaExtraU" type="number" class="inputSmall"/>
+                              </td>
+                              <!-- total charge -->
+                              <td class="unity info">{{ getCargaP() }}</td>
+                              <td class="unity info">{{ getCargaU() }}</td>
+                              <td class="total">{{ getTotalPrice(product) | currency}}</td>
+
+                              <td>
+                                <button ng-click="addProduct(product)">SAVE</button>
+                              </td>
+                            </form>
                           </tr>
 
                         </tbody>
@@ -97,6 +116,9 @@
                             <td class="unity">daP</td>
                             <td class="unity">daU</td>
                             <td class="unity">cP</td>
+                            <td class="unity">cU</td>
+                            <td class="unity">ceP</td>
+                            <td class="unity">ceU</td>
                             <td class="unity">cU</td>
                             <td class="unity">ceP</td>
                             <td class="unity">ceU</td>

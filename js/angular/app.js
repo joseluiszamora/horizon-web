@@ -56,7 +56,7 @@ var lineControllerObj = function ($scope, sharedProperties){
   };
 
   $scope.getAmmountLine = function (){
-    return $scope.lineControllerObj.lineTotalAmmount + "-" + sharedProperties.getProperty();
+    return $scope.lineControllerObj.lineTotalAmmount;
   };  
 };
 
@@ -80,9 +80,11 @@ var productControllerObj = function ($scope){
 
   $scope.getTotalPrice = function (product){
     numProducts = $scope.productControllerObj.cargaP + $scope.productControllerObj.cargaExtraP;
-
-    //$scope.lineControllerObj.lineTotalAmmount = numProducts;
-
     return (numProducts * parseFloat(product.price));
   };
+
+  $scope.addProduct = function(product){
+    $scope.lineControllerObj.lineTotalAmmount = parseFloat($scope.lineControllerObj.lineTotalAmmount) + parseFloat(888.88);
+    console.log($scope.getTotalPrice(product));
+  }
 };
