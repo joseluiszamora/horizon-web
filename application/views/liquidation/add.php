@@ -49,66 +49,69 @@
               </thead>
             </table>
 
-            <table class="table table-bordered tableLine" ng-repeat="line in liquidation.lines | orderBy: 'name'" ng-controller="lineControllerObj">
-              <tbody>
-                <tr>
-                  <td class="line">
-                    <form name="myForm">
-                      {{ line.nameLine}} <input type="checkbox" ng-model="lineControllerObj.visible"> <br/>
-                      <tt>value1 = {{lineControllerObj.visible}}</tt><br/>
-                    </form>
-                    <!--<div class="rotate">{{ line.nameLine | uppercase }}</div>-->
-                  </td>
-                  <td class="subTableContainer">
-                    <table class="table table-bordered subTable">
-                      <tbody>
-                       <tr ng-repeat="product in line.products" ng-controller="productControllerObj">
-                          <td class="vol">{{ product.volume | uppercase }}</td>
-                          <td class="productname">{{ product.Nombre | uppercase }}</td>
-                          <!-- previous charge -->
-                          <td class="unity">{{ product.previousDayP }}</td>
-                          <td class="unity">{{ product.previousDayU }}</td>
-                          <!-- charge -->
-                          <td class="unity"> 
-                            <input ng-model="productControllerObj.cargaP" type="number" class="inputSmall"/>
-                          </td>
-                          <td class="unity">
-                            <input ng-model="productControllerObj.cargaU" type="number" class="inputSmall"/>
-                          </td>
-                          <!-- extra charge -->
-                          <td class="unity"> 
-                            <input ng-model="productControllerObj.cargaExtraP" type="number" class="inputSmall"/>
-                          </td>
-                          <td class="unity">
-                            <input ng-model="productControllerObj.cargaExtraU" type="number" class="inputSmall"/>
-                          </td>
-                          <!-- total charge -->
-                          <td class="unity info">{{ getCargaP() }}</td>
-                          <td class="unity info">{{ getCargaU() }}</td>
-                          <td class="total">{{ getTotalPrice(product) | currency}}</td>
-                        </tr>
+            <div ng-repeat="line in liquidation.lines | orderBy: 'name'" ng-controller="lineControllerObj">
 
-                      </tbody>
-                      <tfooter> 
-                        <tr class="footer">
-                          <td class="vol">&nbsp;</td>
-                          <td class="productname">&nbsp;</td>
-                          <td class="unity">daP</td>
-                          <td class="unity">daU</td>
-                          <td class="unity">cP</td>
-                          <td class="unity">cU</td>
-                          <td class="unity">ceP</td>
-                          <td class="unity">ceU</td>
-                          <td class="total">&nbsp;</td>
-                        </tr>
-                      </tfooter>
-                    </table>
-                  </td>
-                  <td>{{ getAmmountLine() }}</td>
-                </tr>
-              </tbody>
-            </table>
+              <table class="table table-bordered tableLine">
+                <tbody>
+                  <tr>
+                    <td class="line">
+                      <form name="myForm">
+                        {{ line.nameLine}} <input type="checkbox" ng-model="lineControllerObj.visible">
+                      </form>
+                      <!--<div class="rotate">{{ line.nameLine | uppercase }}</div>-->
+                    </td>
+                    <td class="subTableContainer" >
+                      <table class="table table-bordered subTable" ng-show="lineControllerObj.visible">
+                        <tbody>
+                         <tr ng-repeat="product in line.products" ng-controller="productControllerObj">
+                            <td class="vol">{{ product.volume | uppercase }}</td>
+                            <td class="productname">{{ product.Nombre | uppercase }}</td>
+                            <!-- previous charge -->
+                            <td class="unity">{{ product.previousDayP }}</td>
+                            <td class="unity">{{ product.previousDayU }}</td>
+                            <!-- charge -->
+                            <td class="unity"> 
+                              <input ng-model="productControllerObj.cargaP" type="number" class="inputSmall"/>
+                            </td>
+                            <td class="unity">
+                              <input ng-model="productControllerObj.cargaU" type="number" class="inputSmall"/>
+                            </td>
+                            <!-- extra charge -->
+                            <td class="unity"> 
+                              <input ng-model="productControllerObj.cargaExtraP" type="number" class="inputSmall"/>
+                            </td>
+                            <td class="unity">
+                              <input ng-model="productControllerObj.cargaExtraU" type="number" class="inputSmall"/>
+                            </td>
+                            <!-- total charge -->
+                            <td class="unity info">{{ getCargaP() }}</td>
+                            <td class="unity info">{{ getCargaU() }}</td>
+                            <td class="total">{{ getTotalPrice(product) | currency}}</td>
+                          </tr>
 
+                        </tbody>
+                        <tfooter> 
+                          <tr class="footer">
+                            <td class="vol">&nbsp;</td>
+                            <td class="productname">&nbsp;</td>
+                            <td class="unity">daP</td>
+                            <td class="unity">daU</td>
+                            <td class="unity">cP</td>
+                            <td class="unity">cU</td>
+                            <td class="unity">ceP</td>
+                            <td class="unity">ceU</td>
+                            <td class="total">&nbsp;</td>
+                          </tr>
+                        </tfooter>
+                      </table>
+                    </td>
+                    <td ng-show="lineControllerObj.visible">{{ getAmmountLine() }}</td>
+                  </tr>
+                </tbody>
+              </table>
+  
+            </div>
+            
           </div>
         </div>
       </div>

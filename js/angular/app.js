@@ -18,6 +18,18 @@ app.factory('mySharedService', function($rootScope) {
     return sharedService;
 });
 
+app.service('sharedProperties', function () {
+  var property = 'First';
+  return {
+    getProperty: function () {
+      return property;
+    },
+    setProperty: function(value) {
+      property = value;
+    }
+  };
+});
+
 
 app.controller('LiquidationController', ['$http', function( $http ){
   var liquidation = this;
@@ -36,7 +48,7 @@ app.controller('ProductController', function(){
   }
 });
 
-var lineControllerObj = function ($scope){
+var lineControllerObj = function ($scope, sharedProperties){
   $scope.lineControllerObj = {
     lineTotalAmmount: 999,
     cargaExtraU: 0,
@@ -44,9 +56,11 @@ var lineControllerObj = function ($scope){
   };
 
   $scope.getAmmountLine = function (){
-    return $scope.lineControllerObj.lineTotalAmmount;
+    return $scope.lineControllerObj.lineTotalAmmount + "-" + sharedProperties.getProperty();
   };  
 };
+
+
 
 var productControllerObj = function ($scope){
   $scope.productControllerObj = {
@@ -71,24 +85,4 @@ var productControllerObj = function ($scope){
 
     return (numProducts * parseFloat(product.price));
   };
-
-  /*$scope.getFullName = function (){
-    return $scope.firstName;
-  };*/
-  /*
-  $scope.getProductName = function (product){
-    return product.Nombre;
-  };
-
-  $scope.getCargaP = function (){
-    return $scope.cargaP;
-  };
-
-  $scope.getCargaU = function (){
-    return $scope.cargaU;
-  };
-
-  $scope.getCargaSum = function (){
-    return $scope.cargaP + $scope.cargaP;
-  };*/
 };
