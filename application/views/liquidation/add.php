@@ -113,15 +113,15 @@
                           <tr class="footer">
                             <td class="vol">&nbsp;</td>
                             <td class="productname">&nbsp;</td>
-                            <td class="unity">daP</td>
-                            <td class="unity">daU</td>
-                            <td class="unity">cP</td>
-                            <td class="unity">cU</td>
-                            <td class="unity">ceP</td>
-                            <td class="unity">ceU</td>
-                            <td class="unity">cU</td>
-                            <td class="unity">ceP</td>
-                            <td class="unity">ceU</td>
+                            <td class="unity">0</td>
+                            <td class="unity">0</td>
+                            <td class="unity">{{ getCargaPLine() }}</td>
+                            <td class="unity">{{ getCargaULine() }}</td>
+                            <td class="unity">{{ getCargaExtraPLine() }}</td>
+                            <td class="unity">{{ getCargaExtraULine() }}</td>
+                            <td class="unity">{{ getTotalPLine() }}</td>
+                            <td class="unity">{{ getTotalULine() }}</td>
+                            <td class="unity">&nbsp;</td>
                             <td class="total">&nbsp;</td>
                           </tr>
                         </tfooter>

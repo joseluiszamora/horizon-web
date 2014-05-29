@@ -50,11 +50,34 @@ app.controller('ProductController', function(){
 
 var lineControllerObj = function ($scope, sharedProperties){
   $scope.lineControllerObj = {
-    lineTotalAmmount: 999,
+    cargaP: 0,
+    cargaU: 0,
+    cargaExtraP: 0,
     cargaExtraU: 0,
+    totalP: 0,
+    totalU: 0,
+    lineTotalAmmount: 0,
     visible: true
   };
 
+  $scope.getCargaPLine = function (){
+    return $scope.lineControllerObj.cargaP;
+  };
+  $scope.getCargaULine = function (){
+    return $scope.lineControllerObj.cargaU;
+  };
+  $scope.getCargaExtraPLine = function (){
+    return $scope.lineControllerObj.cargaExtraP;
+  };
+  $scope.getCargaExtraULine = function (){
+    return $scope.lineControllerObj.cargaExtraU;
+  };
+  $scope.getTotalPLine = function (){
+    return $scope.lineControllerObj.totalP;
+  };
+  $scope.getTotalULine = function (){
+    return $scope.lineControllerObj.totalU;
+  };
   $scope.getAmmountLine = function (){
     return $scope.lineControllerObj.lineTotalAmmount;
   };  
@@ -84,7 +107,14 @@ var productControllerObj = function ($scope){
   };
 
   $scope.addProduct = function(product){
-    $scope.lineControllerObj.lineTotalAmmount = parseFloat($scope.lineControllerObj.lineTotalAmmount) + parseFloat(888.88);
-    console.log($scope.getTotalPrice(product));
-  }
+    $scope.lineControllerObj.cargaP += parseInt($scope.getCargaP());
+    $scope.lineControllerObj.cargaU += parseInt($scope.getCargaU());
+    /*
+    $scope.lineControllerObj.cargaExtraP
+    $scope.lineControllerObj.cargaExtraU
+    $scope.lineControllerObj.totalP
+    $scope.lineControllerObj.totalU*/
+    $scope.lineControllerObj.lineTotalAmmount += parseFloat($scope.getTotalPrice(product));
+  };  
+
 };
