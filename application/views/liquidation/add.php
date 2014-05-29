@@ -49,17 +49,15 @@
               </thead>
             </table>
 
-            <div class="row">
-              <form name="myForm">
-                Value1: <input type="checkbox" ng-model="lineControllerObj.visible"> <br/>
-                <tt>value1 = {{lineControllerObj.visible}}</tt><br/>
-              </form>
-            </div>
             <table class="table table-bordered tableLine" ng-repeat="line in liquidation.lines | orderBy: 'name'" ng-controller="lineControllerObj">
               <tbody>
                 <tr>
                   <td class="line">
-                    <div class="rotate">{{ line.nameLine | uppercase }}</div>
+                    <form name="myForm">
+                      {{ line.nameLine}} <input type="checkbox" ng-model="lineControllerObj.visible"> <br/>
+                      <tt>value1 = {{lineControllerObj.visible}}</tt><br/>
+                    </form>
+                    <!--<div class="rotate">{{ line.nameLine | uppercase }}</div>-->
                   </td>
                   <td class="subTableContainer">
                     <table class="table table-bordered subTable">
