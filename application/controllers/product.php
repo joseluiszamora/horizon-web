@@ -19,11 +19,6 @@
       } else if (!($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'productos'))) {
         show_404();
       }
-      //$data_index['order'] = $order;
-      //$data_view = $this->Product_Model->search($data_index);
-      //print_r($data_view);
-      //$search_parameters = http_build_query($data_index);
-      //$this->redirect_tab("t_1", $data_view, $search_parameters);
       $this->activos();
     }
 
@@ -95,6 +90,7 @@
       $this->form_validation->set_rules('productname', 'Nombre del Producto', 'xss_clean|required');
       $this->form_validation->set_rules('volume', 'Volumen', 'xss_clean|required|greater_than[0]');
       $this->form_validation->set_rules('price', 'Precio Unitario', 'xss_clean|required|numeric');
+      $this->form_validation->set_rules('uxp', 'Unidades por Paquete', 'xss_clean|required|numeric');
 
       $this->form_validation->set_message('required', '%s es obligatorio.');
       $this->form_validation->set_message('greater_than', '%s es obligatorio.');
@@ -118,6 +114,7 @@
         $data_in['Nombre'] = $this->input->post('productname');
         $data_in['idLineVolume'] = $this->input->post('volume');
         $data_in['PrecioUnit'] = $this->input->post('price');
+        $data_in['uxp'] = $this->input->post('uxp');
         $data_in['Descripcion'] = $this->input->post('desc');
 
         // Check if Save or Edit

@@ -5,6 +5,7 @@
       <th><?php echo anchor('product/index/Nombre', 'Nombre' , array('class' => 'newLinkTables')); ?></th>
       <th><?php echo anchor('product/index/lineDescription', 'Linea Volumen' , array('class' => 'newLinkTables')); ?></th>
       <th><?php echo anchor('product/index/PrecioUnit', 'Precio Unitario' , array('class' => 'newLinkTables')); ?></th>
+      <th><?php echo anchor('product/index/uxp', 'Unidades por Paquete' , array('class' => 'newLinkTables')); ?></th>
       <th>Descripcion</th>
       <th>&nbsp;</th>
     </tr>
@@ -16,6 +17,7 @@
         <td><?php echo $row->Nombre; ?></td>
         <td><?php echo $row->lineDescription." - ".$row->volumeDescription; ?></td>
         <td class="align-right"><?php echo $this->Transaction_Model->roundnumber($row->PrecioUnit, 2); ?></td>
+        <td class="align-right"><?php echo $row->uxp; ?></td>
         <td><?php echo $row->Descripcion; ?></td>
         <td>
 

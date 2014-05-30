@@ -5,6 +5,7 @@
       <th>Nombre</th>
       <th>Vindea Volumen</th>
       <th>Precio Unitario</th>
+      <th>Unidades por Paquete</th>
       <th>Descripcion</th>
       <th>&nbsp;</th>
     </tr>
@@ -16,6 +17,7 @@
         <td><?php echo $row->Nombre; ?></td>
         <td><?php echo $row->lineDescription." - ".$row->volumeDescription; ?></td>
         <td class="align-right"><?php echo $this->Transaction_Model->roundnumber($row->PrecioUnit, 2); ?></td>
+        <td><?php echo $row->uxp; ?></td>
         <td class="grid_3"><?php echo $row->Descripcion; ?></td>
         <td>
           <?php 

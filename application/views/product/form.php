@@ -97,6 +97,20 @@
               </div>
             </div>
 
+            <div class="control-group selected_1">
+              <label class="control-label" for="uxp">Unidades por Paquete</label>
+              <div class="controls">
+                <?php
+                  if (isset($idproduct))
+                    echo form_input(array('name' => 'uxp', 'class' => 'span2', 'value' => $product->uxp));
+                  else
+                    echo form_input(array('name' => 'uxp', 'class' => 'span2'), set_value('uxp'));
+
+                  echo form_error('uxp');
+                ?>
+              </div>
+            </div>
+
             <div class="control-group">
               <label class="control-label" for="desc">Descripcion</label>
               <div class="controls">

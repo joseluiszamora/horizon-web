@@ -13,6 +13,7 @@ class Product_model extends CI_Model {
         products.idLineVolume,
         products.Nombre,
         products.PrecioUnit,
+        products.uxp,
         products.Estado,
         products.Descripcion,
         line.Descripcion as lineDescription,
@@ -35,6 +36,7 @@ class Product_model extends CI_Model {
         products.Nombre,
         products.idLineVolume,
         products.PrecioUnit,
+        products.uxp,
         products.Descripcion'
       );
       $this->db->from('products');
@@ -78,6 +80,7 @@ class Product_model extends CI_Model {
         products.idLineVolume,
         products.Nombre,
         products.PrecioUnit,
+        products.uxp,
         products.Estado,
         products.Descripcion,
         line.idLine,
@@ -125,6 +128,7 @@ class Product_model extends CI_Model {
         products.idLineVolume,
         products.Nombre,
         products.PrecioUnit,
+        products.uxp,
         products.Estado,
         products.Descripcion,
         line.idLine,
@@ -158,6 +162,7 @@ class Product_model extends CI_Model {
       products.idProduct, 
       products.Nombre, 
       products.PrecioUnit, 
+      products.uxp, 
       products.Estado, 
       products.Descripcion, 
       line.Descripcion lineDescription,
@@ -282,6 +287,7 @@ class Product_model extends CI_Model {
       products.idProduct, 
       products.Nombre, 
       products.PrecioUnit, 
+      products.uxp, 
       products.Estado, 
       products.Descripcion, 
       line.Descripcion lineDescription,
