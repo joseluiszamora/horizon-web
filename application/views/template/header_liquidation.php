@@ -11,8 +11,11 @@
     <link href="<?php echo base_url(); ?>css/normalize.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>css/bootstrap-liquidations.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>css/angular/liquidation.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>css/fonts.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>css/sb-admin.css" rel="stylesheet">    
+    <link href="<?php echo base_url(); ?>css/sb-admin.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>css/datepicker.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>css/chosen.css" rel="stylesheet">
 </head>
 <body>
 
@@ -237,103 +240,39 @@
 
               <li><?php echo anchor('account/logout', '<i class="fa fa-sign-out fa-fw"></i> Logout', array('')); ?></li>
           </ul>
-          <!-- /.dropdown-user -->
       </li>
-      <!-- /.dropdown -->
     </ul>
-    <!-- /.navbar-top-links -->
-
 
     <div class="navbar-default navbar-static-side" role="navigation">
-                <div class="sidebar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                        <li>
-                          <a href="tables.html">
-                            <i class="fa fa-pencil-square-o fa-fw"></i> Carga Nueva
-                          </a>
-                        </li>
+      <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+          <li>
+            <?php 
+              echo anchor('liquidation/create/', '<i class="fa fa-pencil-square-o fa-fw"></i> Carga Nueva', array('')); 
+            ?>
+          </li>
 
-                        <!--<li>
-                          <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li>
-                              <a href="flot.html">Flot Charts</a>
-                            </li>
-                            <li>
-                              <a href="morris.html">Morris.js Charts</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li>
-                          <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                        </li>
-                        <li>
-                          <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li>
-                              <a href="panels-wells.html">Panels and Wells</a>
-                            </li>
-                            <li>
-                              <a href="buttons.html">Buttons</a>
-                            </li>
-                            <li>
-                              <a href="notifications.html">Notifications</a>
-                            </li>
-                            <li>
-                              <a href="typography.html">Typography</a>
-                            </li>
-                            <li>
-                              <a href="grid.html">Grid</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li>
-                          <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li>
-                              <a href="#">Second Level Item</a>
-                            </li>
-                            <li>
-                              <a href="#">Second Level Item</a>
-                            </li>
-                            <li>
-                              <a href="#">Third Level <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level">
-                                <li>
-                                  <a href="#">Third Level Item</a>
-                                </li>
-                                <li>
-                                  <a href="#">Third Level Item</a>
-                                </li>
-                                <li>
-                                  <a href="#">Third Level Item</a>
-                                </li>
-                                <li>
-                                  <a href="#">Third Level Item</a>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </li>
-                        <li>
-                          <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li>
-                              <a href="blank.html">Blank Page</a>
-                            </li>
-                            <li>
-                              <a href="login.html">Login Page</a>
-                            </li>
-                          </ul>
-                        </li>-->
-                    </ul>
-                    <!-- /#side-menu -->
-                </div>
-                <!-- /.sidebar-collapse -->
+          <li>
+            <a href="tables.html">
+              <i class="fa fa-pencil-square-o fa-fw"></i> Cargas Realizadas
+              <span class="badge">42</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Liquidaciones Pendientes<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+              <li>
+                <a href="#">Second Level Item</a>
+              </li>
+              <li>
+                <a href="#">Second Level Item</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
-    <!-- /.navbar-static-side -->
   </nav>
 
   <div id="page-wrapper">
