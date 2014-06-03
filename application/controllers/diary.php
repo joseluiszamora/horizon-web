@@ -257,6 +257,8 @@
       $parameters_string = $this->input->post('parameters');
 
       parse_str(html_entity_decode($parameters_string), $parameters);
+      // ojo
+        $parameters['type'] = "P";
       $diaries = $this->Diary_Model->search($parameters);
 
       $user_email = $this->Account_Model->get_email();
@@ -265,6 +267,8 @@
       if (isset($parameters['customer']) && ($parameters['customer']!="") && ($parameters['customer']!="0")) {
         $parameters['customer'] = $parameters['customer'];
       }
+
+
       $data['user_name'] = $user->Nombre . ' ' . $user->Apellido;
       $data['parameters'] = $parameters;
       $data['title'] = 'REPORTE DE CREDITOS';
