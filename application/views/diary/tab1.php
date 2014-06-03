@@ -459,27 +459,12 @@
           { "sType" : "string" },
           null,
           null
-      ]
-
-
-
-      // numWithNull NumericOrBlank NumericOrBlank date numeric 
-
-      /*
-      "oTableTools": {
-        "aButtons": [
-          "copy",
-          "csv",
-          "xls",
-          {
-            "sExtends": "pdf",
-            "sPdfOrientation": "landscape",
-            "sPdfMessage": "Your custom message would go here."
-          }
-          "print"
-        ]
-      }
-      */
+      ], 
+      "aLengthMenu": [
+        [10, 25, 50, 100, 200, -1],
+        [10, 25, 50, 100, 200, "Todos"]
+      ], 
+      "iDisplayLength" : 100
     });
 
     $(document).on("click", '#data-table tbody td img', function() { 
