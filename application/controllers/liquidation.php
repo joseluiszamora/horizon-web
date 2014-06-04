@@ -1,7 +1,7 @@
 <?php
-	class Liquidation extends  CI_Controller {		
-		public function __construct() {
-			parent::__construct();
+  class Liquidation extends  CI_Controller {    
+    public function __construct() {
+      parent::__construct();
       
       $this->load->model('Line_Model');
       $this->load->model('Volume_Model');
@@ -17,17 +17,25 @@
       }
     }
 
-		function index() {
+    function index() {
       $data['category'] = 'liquidation';
       $data['page'] = 'index';
       $this->load->view('template/template_liquidation', $data);
-		}
+    }
 
     function create() {
       $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
 
       $data['category'] = 'liquidation';
       $data['page'] = 'create';
+      $this->load->view('template/template_liquidation', $data); 
+    }
+
+    function charge_list() {
+      $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
+
+      $data['category'] = 'liquidation';
+      $data['page'] = 'charge_list';
       $this->load->view('template/template_liquidation', $data); 
     }
 
@@ -148,5 +156,5 @@
       }
     }
 
-	}
+  }
 ?>

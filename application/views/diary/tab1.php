@@ -106,7 +106,7 @@
     <div class="span10 offset1">
       <div class="block_content row">
           <fieldset>
-             <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table" width="100%">
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="data-table" width="100%">
                 <thead>
                   <tr>
                     <th class="center" colspan="5"></th>
