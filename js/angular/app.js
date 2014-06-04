@@ -30,7 +30,6 @@ app.service('sharedProperties', function () {
   };
 });
 
-
 app.controller('LiquidationController', ['$http', function( $http ){
   var liquidation = this;
   
@@ -38,7 +37,8 @@ app.controller('LiquidationController', ['$http', function( $http ){
   
   $http.get(url + 'liquidation/get_lines').success(function(data){
     liquidation.lines = data;
-  });    
+  });
+
 }]);
 
 app.controller('ProductController', function(){
@@ -47,6 +47,18 @@ app.controller('ProductController', function(){
     product = this.product;
   }
 });
+
+var lineVisorObj = function ($scope, sharedProperties){
+  $scope.counter = 0;
+  $scope.settrue = function (){
+    console.log("true");
+    $scope.lineControllerObj.visible = true;
+  };
+  $scope.setfalse = function (){
+    console.log("false");
+    $scope.lineControllerObj.visible = false;
+  };
+};
 
 var lineControllerObj = function ($scope, sharedProperties){
   $scope.lineControllerObj = {
@@ -80,10 +92,29 @@ var lineControllerObj = function ($scope, sharedProperties){
   };
   $scope.getAmmountLine = function (){
     return $scope.lineControllerObj.lineTotalAmmount;
-  };  
+  };
+  $scope.getVisible = function (){
+    return $scope.lineControllerObj.visible;
+  };
+  this.qwerty = function (line){
+    line.show = false;
+    console.log(line);
+    //$scope.lineControllerObj.visible = false;
+  };
+
+  $scope.addProduct = function(){
+    //console.log(this.cargap);
+    console.log("QQQ");
+    //$scope.lineControllerObj.cargaP += parseInt($scope.getCargaP());
+    //$scope.lineControllerObj.cargaU += parseInt($scope.getCargaU());
+    /*
+    $scope.lineControllerObj.cargaExtraP
+    $scope.lineControllerObj.cargaExtraU
+    $scope.lineControllerObj.totalP
+    $scope.lineControllerObj.totalU*/
+    //$scope.lineControllerObj.lineTotalAmmount += parseFloat($scope.getTotalPrice(product));
+  };   
 };
-
-
 
 var productControllerObj = function ($scope){
   $scope.productControllerObj = {
@@ -106,15 +137,19 @@ var productControllerObj = function ($scope){
     return (numProducts * parseFloat(product.price));
   };
 
-  $scope.addProduct = function(product){
-    $scope.lineControllerObj.cargaP += parseInt($scope.getCargaP());
-    $scope.lineControllerObj.cargaU += parseInt($scope.getCargaU());
-    /*
-    $scope.lineControllerObj.cargaExtraP
-    $scope.lineControllerObj.cargaExtraU
-    $scope.lineControllerObj.totalP
-    $scope.lineControllerObj.totalU*/
-    $scope.lineControllerObj.lineTotalAmmount += parseFloat($scope.getTotalPrice(product));
-  };  
 
+
+};
+
+
+var Controller = function ($scope){
+  $scope.productControllerObj = {
+    counter: 0
+  };
+  $scope.changed = function($text) {
+    //counter++;
+    //$text.show = false;
+    //$scope.lineControllerObj.lineTotalAmmount = 999;
+    console.log($text);
+  };
 };

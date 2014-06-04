@@ -32,14 +32,25 @@
     }
 
     function charge_list() {
-      $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
-
+      $data['charges'] = $this->Liquidation_Model->report("active", "creado");
       $data['category'] = 'liquidation';
       $data['page'] = 'charge_list';
       $this->load->view('template/template_liquidation', $data); 
     }
 
-    function charges_made() {
+    function add_products() {
+      $data['line'] = $this->Line_Model->get_all_json();
+      $data['volume'] = $this->Volume_Model->get_all_json();
+      $data['linevolume'] = $this->Linevolume_Model->get_all_json();
+      $data['product'] = $this->Product_Model->get_all_json();
+
+      $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
+
+      $data['category'] = 'liquidation';
+      $data['page'] = 'add_products';
+      $this->load->view('template/template_liquidation', $data);  
+    }
+    /*function charges_made() {
       $data['line'] = $this->Line_Model->get_all_json();
       $data['volume'] = $this->Volume_Model->get_all_json();
       $data['linevolume'] = $this->Linevolume_Model->get_all_json();
@@ -50,7 +61,7 @@
       $data['category'] = 'liquidation';
       $data['page'] = 'create';
       $this->load->view('template/template_liquidation', $data);  
-    }
+    }*/
 
     function liquidations_pending() {
       
@@ -146,7 +157,8 @@
         $data_in['detalle'] = $this->input->post('desc');
         $data_in['fechaFin'] = $this->input->post('date');
         $data_in['horaFin'] = mdate("%h:%i:%a");
-        //$data_in['mark'] = $this->input->post('email');
+        $data_in['status'] = "active";
+        $data_in['mark'] = "creado";
 
         if ($this->Liquidation_Model->create($data_in) == TRUE) {
             redirect("liquidation");

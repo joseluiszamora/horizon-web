@@ -16,26 +16,25 @@
           <th class="center">Detalle</th>
           <th class="center">&nbsp;</th>
           <th class="center">&nbsp;</th>
-          <th class="center">&nbsp;</th>
         </tr>
       </thead>
       <tbody id="diaryTable">
+         <?php foreach ($charges as $row) { ?>
           <tr class="even gradeX">
-            <td class="center">SSSS</td>
-            <td class="center">SSSS</td>
-            <td class="center">SSSS</td>
-            <td class="center">SSSS</td>
-            <td class="center">SSSS</td>
+            <td class="center"><?php echo $row->idUser; ?></td>
+            <td class="center"><?php echo $row->fechaRegistro; ?></td>
+            <td class="center"><?php echo $row->ruta; ?></td>
+            <td class="center"><?php echo $row->mark; ?></td>
+            <td class="center"><?php echo $row->detalle; ?></td>
             <td class="center">
-              <?php echo anchor('diary', 'Adicionar Productos', array('class' => 'btn btn-primary')); ?>
+              <?php echo anchor('liquidation/add_products/'.$row->idLiquidacion, 'Adicionar Productos', array('class' => 'btn btn-primary')); ?>
+              <?php echo anchor('liquidation/', 'Recarga de Productos', array('class' => 'btn btn-primary')); ?>
             </td>
             <td class="center">
-              <?php echo anchor('diary', 'Recarga de Productos', array('class' => 'btn btn-primary')); ?>
-            </td>
-            <td class="center">
-              <?php echo anchor('diary', 'Eliminar', array('class' => 'btn btn-primary')); ?>
+              <?php echo anchor('liquidation/deactive/'.$row->idLiquidacion, 'Eliminar', array('class' => 'btn btn-primary')); ?>
             </td>
           </tr>
+        <?php } ?>
       </tbody>
     </table>
   </div>

@@ -25,6 +25,32 @@ class Liquidation_model extends CI_Model {
     }
     return null;
   }
+
+  function report($status="active", $mark="creado") {
+    $this->db->select(
+      'liquidacion.idLiquidacion, 
+      liquidacion.fechaRegistro, 
+      liquidacion.horaRegistro, 
+      liquidacion.idUser, 
+      liquidacion.ruta, 
+      liquidacion.detalle,
+      liquidacion.fechaFin,
+      liquidacion.horaFin,
+      liquidacion.mark,
+      liquidacion.status'
+    );
+    $this->db->from('liquidacion');
+
+    if(isset($status) AND $status != ""){
+      $this->db->where('liquidacion.status', $status);
+    }
+    if(isset($mark) AND $mark != ""){
+      $this->db->where('liquidacion.mark', $mark);
+    }
+
+    $query = $this->db->get();
+    return $query->result();
+  }
 }
 
 ?>
