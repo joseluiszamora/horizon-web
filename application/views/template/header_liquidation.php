@@ -255,7 +255,7 @@
           <li>
             <?php 
               echo anchor('liquidation/charge_list', '<i class="fa fa-pencil-square-o fa-fw"></i> Cargas Realizadas
-              <span class="badge">42</span>', array('')); 
+              <span class="badge">'.$this->Liquidation_Model->count("creado").'</span>', array('')); 
             ?>
           </li>
 

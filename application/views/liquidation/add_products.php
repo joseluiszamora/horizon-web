@@ -9,38 +9,13 @@
       <div class="panel panel-default" ng-controller="LiquidationController as liquidation">
         <div class="panel-heading">
           <ul class="selectorCheck">
-            <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'" ng-controller="Controller">
+            <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'">
               <label for="check1">{{ lineName.nameLine }}</label>
-              <input type="checkbox" id="check1" ng-model="confirmed" ng-true-value="settrue()" ng-false-value="setfalse()" ng-change="changed(lineName)">
+              <input type="checkbox" id="check1" ng-model="lineName.show">
             </li>            
           </ul>
 
         </div>
-
-
-
-
-<script>
-  function Ctrl($scope) {
-    $scope.list = [];
-    $scope.text = 'hello';
-    $scope.submiting = function() {
-      if ($scope.text) {
-        console.log("QQQ");
-        $scope.list.push(this.text);
-        $scope.text = '';
-      }
-    };
-  }
-</script>
-<form ng-submit="submiting()" ng-controller="Ctrl">
-                            Enter text and hit enter:
-                            <input type="text" ng-model="text" name="text" />
-                            <input type="submit" id="submit" value="Submit" />
-                            <pre>list={{list}}</pre>
-                          </form>
-
-
 
         <div class="panel-body">
           <div class="table-responsive">
@@ -51,10 +26,10 @@
                 <tbody>
                   <tr>
                     <td class="line">
-                      {{ line.nameLine}} <input type="checkbox" ng-model="lineControllerObj.visible">
+                      {{ line.nameLine}}
                     </td>
                     <td colspan="3" class="subTableContainer" >
-                      <table class="table table-bordered subTable" ng-show="lineControllerObj.visible">
+                      <table class="table table-bordered subTable" ng-show="getVisible(line)">
                         <thead>
                           <tr>
                             <th class="vol">VOLUMEN</th>
@@ -77,26 +52,23 @@
                           </tr>
                         </thead>
                         <tbody>
-                         <tr ng-repeat="product in line.products" ng-controller="productControllerObj">
-                          
-                          <form novalidate name="productForm" ng-submit="lineControllerObj.xcc()">
-                              <td class="vol">{{ product.volume | uppercase }}</td>
-                              <td class="productname">{{ product.Nombre | uppercase }}</td>
-                              <!-- previous charge -->
-                              <td class="unity">{{ product.previousDayP }}</td>
-                              <td class="unity">{{ product.previousDayU }}</td>
-                              <!-- charge -->
-                              <td class="unity"> 
-                                <input name="cargap" ng-model="productControllerObj.cargaP" type="number" class="inputSmall"/>
-                              </td>
-                              <td class="unity">
-                                <input name="cargau" ng-model="productControllerObj.cargaU" type="number" class="inputSmall"/>
-                              </td>
-                              <!-- total charge -->
-                              <td class="unity info">{{ getCargaP() }}</td>
-                              <td class="unity info">{{ getCargaU() }}</td>
-                              <td><input type="submit" id="submit" value="Submit" /></td>
-                            </form>
+                          <tr ng-repeat="product in line.products" ng-controller="productControllerObj">
+                            <td class="vol">{{ product.volume | uppercase }}</td>
+                            <td class="productname">{{ product.Nombre | uppercase }}</td>
+                            <!-- previous charge -->
+                            <td class="unity">{{ product.previousDayP }}</td>
+                            <td class="unity">{{ product.previousDayU }}</td>
+                            <!-- charge -->
+                            <td class="unity"> 
+                              <input name="cargap" ng-model="productControllerObj.cargaP" type="number" class="inputSmall" ng-blur="updateCargaP(product)" />
+                            </td>
+                            <td class="unity">
+                              <input name="cargau" ng-model="productControllerObj.cargaU" type="number" class="inputSmall" ng-blur="updateCargaU(product)"/>
+                            </td>
+
+                            <!-- total charge -->
+                            <td class="unity info">{{ getCargaP(product) }}</td>
+                            <td class="unity info">{{ getCargaU(product) }}</td>
                           </tr>
 
                         </tbody>
@@ -104,12 +76,12 @@
                           <tr class="footer">
                             <td class="vol">&nbsp;</td>
                             <td class="productname">&nbsp;</td>
-                            <td class="unity">0</td>
-                            <td class="unity">0</td>
-                            <td class="unity">{{ getCargaPLine() }}</td>
-                            <td class="unity">{{ getCargaULine() }}</td>
-                            <td class="unity">{{ getTotalPLine() }}</td>
-                            <td class="unity">{{ getTotalULine() }}</td>
+                            <td class="unity">{{ getCargaInicialPLine(line.products) }}</td>
+                            <td class="unity">{{ getCargaInicialULine(line.products) }}</td>
+                            <td class="unity">{{ getCargaPLine(line.products) }}</td>
+                            <td class="unity">{{ getCargaULine(line.products) }}</td>
+                            <td class="unity">{{ getTotalPLine(line.products) }}</td>
+                            <td class="unity">{{ getTotalULine(line.products) }}</td>
                           </tr>
                         </tfooter>
                       </table>

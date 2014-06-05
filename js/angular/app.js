@@ -48,18 +48,6 @@ app.controller('ProductController', function(){
   }
 });
 
-var lineVisorObj = function ($scope, sharedProperties){
-  $scope.counter = 0;
-  $scope.settrue = function (){
-    console.log("true");
-    $scope.lineControllerObj.visible = true;
-  };
-  $scope.setfalse = function (){
-    console.log("false");
-    $scope.lineControllerObj.visible = false;
-  };
-};
-
 var lineControllerObj = function ($scope, sharedProperties){
   $scope.lineControllerObj = {
     cargaP: 0,
@@ -72,64 +60,64 @@ var lineControllerObj = function ($scope, sharedProperties){
     visible: true
   };
 
-  $scope.getCargaPLine = function (){
-    return $scope.lineControllerObj.cargaP;
+  $scope.getCargaInicialPLine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.previousDayP;
+    });
+    return $sum;
   };
-  $scope.getCargaULine = function (){
-    return $scope.lineControllerObj.cargaU;
+  $scope.getCargaInicialULine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.previousDayU;
+    });
+    return $sum;
   };
-  $scope.getCargaExtraPLine = function (){
-    return $scope.lineControllerObj.cargaExtraP;
+  $scope.getCargaPLine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.chargeP;
+    });
+    return $sum;
   };
-  $scope.getCargaExtraULine = function (){
-    return $scope.lineControllerObj.cargaExtraU;
+  $scope.getCargaULine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.chargeU;
+    });
+    return $sum;
   };
-  $scope.getTotalPLine = function (){
-    return $scope.lineControllerObj.totalP;
+  $scope.getTotalPLine = function (products){
+    return $scope.getCargaInicialPLine(products) + $scope.getCargaPLine(products);
   };
-  $scope.getTotalULine = function (){
-    return $scope.lineControllerObj.totalU;
+  $scope.getTotalULine = function (products){
+    return $scope.getCargaInicialULine(products) + $scope.getCargaULine(products);
   };
   $scope.getAmmountLine = function (){
     return $scope.lineControllerObj.lineTotalAmmount;
   };
-  $scope.getVisible = function (){
-    return $scope.lineControllerObj.visible;
-  };
-  this.qwerty = function (line){
-    line.show = false;
-    console.log(line);
-    //$scope.lineControllerObj.visible = false;
-  };
-
-  $scope.addProduct = function(){
-    //console.log(this.cargap);
-    console.log("QQQ");
-    //$scope.lineControllerObj.cargaP += parseInt($scope.getCargaP());
-    //$scope.lineControllerObj.cargaU += parseInt($scope.getCargaU());
-    /*
-    $scope.lineControllerObj.cargaExtraP
-    $scope.lineControllerObj.cargaExtraU
-    $scope.lineControllerObj.totalP
-    $scope.lineControllerObj.totalU*/
-    //$scope.lineControllerObj.lineTotalAmmount += parseFloat($scope.getTotalPrice(product));
+  $scope.getVisible = function (line){
+    return line.show;
   };   
 };
 
 var productControllerObj = function ($scope){
   $scope.productControllerObj = {
+    cargaInicialP: 0,
+    cargaInicialU: 0,
     cargaP: 0,
     cargaU: 0,
     cargaExtraP: 0,
     cargaExtraU: 0
   };
 
-  $scope.getCargaP = function (){
-    return parseInt($scope.productControllerObj.cargaP) + parseInt($scope.productControllerObj.cargaExtraP);
+  $scope.getCargaP = function ($product){
+    return parseInt($product.previousDayP) + parseInt($scope.productControllerObj.cargaInicialP) + parseInt($scope.productControllerObj.cargaP);
   };
 
-  $scope.getCargaU = function (){
-    return parseInt($scope.productControllerObj.cargaU) + parseInt($scope.productControllerObj.cargaExtraU);
+  $scope.getCargaU = function ($product){
+    return parseInt($product.previousDayU) + parseInt($scope.productControllerObj.cargaInicialU) + parseInt($scope.productControllerObj.cargaU);
   };
 
   $scope.getTotalPrice = function (product){
@@ -137,19 +125,18 @@ var productControllerObj = function ($scope){
     return (numProducts * parseFloat(product.price));
   };
 
-
-
-};
-
-
-var Controller = function ($scope){
-  $scope.productControllerObj = {
-    counter: 0
+  $scope.updateCargaP = function (product) {
+    product.chargeP = $scope.productControllerObj.cargaP;
   };
-  $scope.changed = function($text) {
-    //counter++;
-    //$text.show = false;
-    //$scope.lineControllerObj.lineTotalAmmount = 999;
-    console.log($text);
+  $scope.updateCargaU = function (product) {
+    product.chargeU = $scope.productControllerObj.cargaU;
   };
 };
+
+app.directive('ngBlur', function() {
+  return function( scope, elem, attrs ) {
+    elem.bind('blur', function() {
+      scope.$apply(attrs.ngBlur);
+    });
+  };
+});

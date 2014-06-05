@@ -51,6 +51,12 @@ class Liquidation_model extends CI_Model {
     $query = $this->db->get();
     return $query->result();
   }
+
+  function count($mark="creado"){
+    $this->db->like('mark', $mark);
+    $this->db->from('liquidacion');
+    return $this->db->count_all_results();
+  }
 }
 
 ?>
