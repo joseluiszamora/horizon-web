@@ -107,22 +107,22 @@
                               <div class="section">P</div>
                               <div class="section">U</div>
                             </th>
-                            <th colspan="2" class="title">
+                            <th colspan="2" class="title" ng-show="liquidation.mark === 'cargado' || liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'" >
                               <div class="main">CARGA EXTRA 1</div>
                               <div class="section">P</div>
                               <div class="section">U</div>
                             </th>
-                            <th colspan="2" class="title">
+                            <th colspan="2" class="title" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">
                               <div class="main">CARGA EXTRA 2</div>
                               <div class="section">P</div>
                               <div class="section">U</div>
                             </th>
-                            <th colspan="2" class="title">
+                            <th colspan="2" class="title" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">
                               <div class="main">CARGA EXTRA 3</div>
                               <div class="section">P</div>
                               <div class="section">U</div>
                             </th>
-                            <th colspan="2" class="title">
+                            <th colspan="2" class="title" >
                               <div class="main">TOTAL CARGADO</div>
                               <div class="section">P</div>
                               <div class="section">U</div>
@@ -139,42 +139,52 @@
                             
                             <!-- main charge -->
                               <!-- status creado -->
-                              <div ng-show="liquidation.mark === 'creado'">
-                                <td class="unity"> 
+                                <td class="unity" ng-show="liquidation.mark === 'creado'">
                                   <input name="cargap" ng-model="productControllerObj.cargaP" type="number" class="inputSmall" ng-blur="updateCargaP(product)" />
                                 </td>
-                                <td class="unity">
+                                <td class="unity" ng-show="liquidation.mark === 'creado'">
                                   <input name="cargau" ng-model="productControllerObj.cargaU" type="number" class="inputSmall" ng-blur="updateCargaU(product)" />
                                 </td>  
-                              </div>
                               <!-- status extra1, extra2, extra3, carga final -->
-                              <div ng-show="liquidation.mark != 'creado'">
-                                <td class="unity"> {{ product.chargeP }} </td>
-                                <td class="unity"> {{ product.chargeU }} </td>
-                              </div>
-                            
-                            <!-- extra charge 1 -->
-                              <!-- status extra 1 -->
-                              <div ng-show="liquidation.mark === 'cargado'">
-                                <td class="unity"> 
-                                  <input name="cargap" ng-model="productControllerObj.chargeExtraP1" type="number" class="inputSmall" ng-blur="updateCargaExtraP1(product)" />
-                                </td>
-                                <td class="unity">
-                                  <input name="cargau" ng-model="productControllerObj.chargeExtraU1" type="number" class="inputSmall" ng-blur="updateCargaExtraU1(product)" />
-                                </td>  
-                              </div>
-                              <!-- status extra1, extra2, extra3, carga final -->
-                              <div ng-show="liquidation.mark != 'cargado'">
-                                <td class="unity"> {{ product.chargeExtraP1 }} </td>
-                                <td class="unity"> {{ product.chargeExtraU1 }} </td>
-                              </div>
+                                <td class="unity" ng-show="liquidation.mark != 'creado'">{{ product.chargeP }} </td>
+                                <td class="unity" ng-show="liquidation.mark != 'creado'"> {{ product.chargeU }} </td>
 
-                            <!-- extra charge -->
-                            <td class="unity">{{ product.previousDayP }}</td>
-                            <td class="unity">{{ product.previousDayU }}</td>
-                            <!-- extra charge -->
-                            <td class="unity">{{ product.previousDayP }}</td>
-                            <td class="unity">{{ product.previousDayU }}</td>
+                            <!-- extra charge 1-->
+                              <!-- status creado -->
+                                <td class="unity" ng-show="liquidation.mark === 'cargado'">
+                                  <input name="cargap" ng-model="productControllerObj.cargaExtraP1" type="number" class="inputSmall" ng-blur="updateCargaExtraP1(product)" />
+                                </td>
+                                <td class="unity" ng-show="liquidation.mark === 'cargado'">
+                                  <input name="cargau" ng-model="productControllerObj.cargaExtraU1" type="number" class="inputSmall" ng-blur="updateCargaExtraU1(product)" />
+                                </td>  
+                              <!-- status extra1, extra2, extra3, carga final -->
+                                <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP1 }}</td>
+                                <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraU1 }}</td>
+
+                            <!-- extra charge 2-->
+                              <!-- status creado -->
+                                <td class="unity" ng-show="liquidation.mark === 'cargaextra1'">
+                                  <input name="cargap" ng-model="productControllerObj.cargaExtraP2" type="number" class="inputSmall" ng-blur="updatecargaExtraP2(product)" />
+                                </td>
+                                <td class="unity" ng-show="liquidation.mark === 'cargaextra1'">
+                                  <input name="cargau" ng-model="productControllerObj.cargaExtraU2" type="number" class="inputSmall" ng-blur="updateCargaExtraU2(product)" />
+                                </td>  
+                              <!-- status extra1, extra2, extra3, carga final -->
+                                <td class="unity" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP2 }}</td>
+                                <td class="unity" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraU2 }}</td>
+
+                            <!-- extra charge 3-->
+                              <!-- status creado -->
+                                <td class="unity" ng-show="liquidation.mark === 'cargaextra2'">
+                                  <input name="cargap" ng-model="productControllerObj.cargaExtraP3" type="number" class="inputSmall" ng-blur="updateCargaExtraP3(product)" />
+                                </td>
+                                <td class="unity" ng-show="liquidation.mark === 'cargaextra2'">
+                                  <input name="cargau" ng-model="productControllerObj.cargaExtraU3" type="number" class="inputSmall" ng-blur="updateCargaExtraU3(product)" />
+                                </td>  
+                              <!-- status extra1, extra2, extra3, carga final -->
+                                <td class="unity" ng-show="liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP3 }}</td>
+                                <td class="unity" ng-show="liquidation.mark === 'cargaextra3'">{{ product.chargeExtraU3 }}</td>
+
                             <!-- total charge -->
                             <td class="unity info">{{ getCargaP(product) }}</td>
                             <td class="unity info">{{ getCargaU(product) }}</td>
@@ -190,13 +200,15 @@
                             <td class="unity">{{ getCargaPLine(line.products) }}</td>
                             <td class="unity">{{ getCargaULine(line.products) }}</td>
                             
-                            <td class="unity">{{ getCargaExtra1PLine(line.products) }}</td>
-                            <td class="unity">{{ getCargaExtra1ULine(line.products) }}</td>
-                            <td class="unity">{{ getCargaExtra2PLine(line.products) }}</td>
-                            <td class="unity">{{ getCargaExtra2ULine(line.products) }}</td>
-                            <td class="unity">{{ getCargaExtra3PLine(line.products) }}</td>
-                            <td class="unity">{{ getCargaExtra3ULine(line.products) }}</td>
-                            
+                            <td class="unity" ng-show="liquidation.mark === 'cargado' || liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra1PLine(line.products) }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargado' || liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra1ULine(line.products) }}</td>
+
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra2PLine(line.products) }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra2ULine(line.products) }}</td>
+
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra3PLine(line.products) }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra3ULine(line.products) }}</td>
+
                             <td class="unity">{{ getTotalPLine(line.products) }}</td>
                             <td class="unity">{{ getTotalULine(line.products) }}</td>
                           </tr>

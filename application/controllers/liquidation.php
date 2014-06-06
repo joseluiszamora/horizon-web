@@ -72,15 +72,15 @@
             'Nombre'        => $rowproduct->Nombre,
             'price'        => $rowproduct->price,
             'uxp'        => $rowproduct->uxp,
-            'previousDayP'  => round(($rowproduct->previousDay / $rowproduct->uxp), 0),
+            'previousDayP'  => floor($rowproduct->previousDay / $rowproduct->uxp),
             'previousDayU'  => round(($rowproduct->previousDay % $rowproduct->uxp), 0),
-            'chargeP'       => round(($rowproduct->charge / $rowproduct->uxp), 0),
+            'chargeP'       => floor($rowproduct->charge / $rowproduct->uxp),
             'chargeU'       => round(($rowproduct->charge % $rowproduct->uxp), 0),
-            'chargeExtraP1'  => round(($rowproduct->chargeExtra1 / $rowproduct->uxp), 0),
+            'chargeExtraP1'  => floor($rowproduct->chargeExtra1 / $rowproduct->uxp),
             'chargeExtraU1'  => round(($rowproduct->chargeExtra1 % $rowproduct->uxp), 0),
-            'chargeExtraP2'  => round(($rowproduct->chargeExtra2 / $rowproduct->uxp), 0),
+            'chargeExtraP2'  => floor($rowproduct->chargeExtra2 / $rowproduct->uxp),
             'chargeExtraU2'  => round(($rowproduct->chargeExtra2 % $rowproduct->uxp), 0),
-            'chargeExtraP3'  => round(($rowproduct->chargeExtra3 / $rowproduct->uxp), 0),
+            'chargeExtraP3'  => floor($rowproduct->chargeExtra3 / $rowproduct->uxp),
             'chargeExtraU3'  => round(($rowproduct->chargeExtra3 % $rowproduct->uxp), 0),
 
             'chargeTotalP'  => 0,
@@ -119,13 +119,28 @@
           //$data_in['idLiquidacion'] = $data['liquidation'];
           //$data_in['idProduct'] = $rowProduct['idProduct'];
           $data_in['carga1'] = $rowProduct['chargeU'] + ( $rowProduct['chargeP'] * $rowProduct['uxp'] );
+          $data_in['carga2'] = $rowProduct['chargeExtraU1'] + ( $rowProduct['chargeExtraP1'] * $rowProduct['uxp'] );
+          $data_in['carga3'] = $rowProduct['chargeExtraU2'] + ( $rowProduct['chargeExtraP2'] * $rowProduct['uxp'] );
+          $data_in['carga4'] = $rowProduct['chargeExtraU3'] + ( $rowProduct['chargeExtraP3'] * $rowProduct['uxp'] );
 
-          if ($this->Liquidation_Model->update_detail($data_in, $rowProduct['idDetalleLiquidacion'])) {
-            $data_liq['mark'] = "cargado";
-            $this->Liquidation_Model->update($data_liq, $data['liquidation']);
-          }
+          $this->Liquidation_Model->update_detail($data_in, $rowProduct['idDetalleLiquidacion']);
         }
-      }      
+      }
+      
+      if ($data['mark'] == "creado" ) {
+        $data_liq['mark'] = "cargado";
+      }
+      if ($data['mark'] == "cargado" ) {
+        $data_liq['mark'] = "cargaextra1";
+      }
+      if ($data['mark'] == "cargaextra1" ) {
+        $data_liq['mark'] = "cargaextra2";
+      }
+      if ($data['mark'] == "cargaextra2" ) {
+        $data_liq['mark'] = "cargafinal";
+      }
+
+      $this->Liquidation_Model->update($data_liq, $data['liquidation']);
     }
 
     function save() {
