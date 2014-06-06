@@ -38,6 +38,8 @@ app.controller('LiquidationController', ['$http', function( $http ){
   var liquidation = this;
   
   liquidation.lines = [ ];
+
+  liquidation.mark = mark;
   
   $http.get(url + 'liquidation/get_lines/' + idliquidation).success(function(data){
     liquidation.lines = data;
@@ -101,6 +103,52 @@ var lineControllerObj = function ($scope, sharedProperties){
     });
     return $sum;
   };
+
+
+  $scope.getCargaExtra1PLine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.chargeExtraP1;
+    });
+    return $sum;
+  };
+  $scope.getCargaExtra1ULine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.chargeExtraU1;
+    });
+    return $sum;
+  };
+  $scope.getCargaExtra2PLine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.chargeExtraP2;
+    });
+    return $sum;
+  };
+  $scope.getCargaExtra2ULine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.chargeExtraU2;
+    });
+    return $sum;
+  };
+  $scope.getCargaExtra3PLine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.chargeExtraP3;
+    });
+    return $sum;
+  };
+  $scope.getCargaExtra3ULine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.chargeExtraU3;
+    });
+    return $sum;
+  };
+
+
   $scope.getTotalPLine = function (products){
     return $scope.getCargaInicialPLine(products) + $scope.getCargaPLine(products);
   };

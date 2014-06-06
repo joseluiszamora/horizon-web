@@ -108,6 +108,21 @@
                               <div class="section">U</div>
                             </th>
                             <th colspan="2" class="title">
+                              <div class="main">CARGA EXTRA 1</div>
+                              <div class="section">P</div>
+                              <div class="section">U</div>
+                            </th>
+                            <th colspan="2" class="title">
+                              <div class="main">CARGA EXTRA 2</div>
+                              <div class="section">P</div>
+                              <div class="section">U</div>
+                            </th>
+                            <th colspan="2" class="title">
+                              <div class="main">CARGA EXTRA 3</div>
+                              <div class="section">P</div>
+                              <div class="section">U</div>
+                            </th>
+                            <th colspan="2" class="title">
                               <div class="main">TOTAL CARGADO</div>
                               <div class="section">P</div>
                               <div class="section">U</div>
@@ -123,12 +138,22 @@
                             <td class="unity">{{ product.previousDayU }}</td>
                             <!-- charge -->
                             <td class="unity"> 
-                              <input name="cargap" ng-model="productControllerObj.cargaP" type="number" class="inputSmall" ng-blur="updateCargaP(product)" />
+                              <input name="cargap" ng-model="productControllerObj.cargaP" type="number" class="inputSmall" ng-blur="updateCargaP(product)" ng-show="liquidation.mark === 'creado'" />
+                              <p ng-show="liquidation.mark != 'creado'">{{ product.chargeP }}</p>
                             </td>
                             <td class="unity">
-                              <input name="cargau" ng-model="productControllerObj.cargaU" type="number" class="inputSmall" ng-blur="updateCargaU(product)"/>
+                              <input name="cargau" ng-model="productControllerObj.cargaU" type="number" class="inputSmall" ng-blur="updateCargaU(product)" ng-show="liquidation.mark === 'creado'" />
+                              <p ng-show="liquidation.mark != 'creado'">{{ product.chargeU }}</p>
                             </td>
-
+                            <!-- extra charge -->
+                            <td class="unity">{{ product.previousDayP }}</td>
+                            <td class="unity">{{ product.previousDayU }}</td>
+                            <!-- extra charge -->
+                            <td class="unity">{{ product.previousDayP }}</td>
+                            <td class="unity">{{ product.previousDayU }}</td>
+                            <!-- extra charge -->
+                            <td class="unity">{{ product.previousDayP }}</td>
+                            <td class="unity">{{ product.previousDayU }}</td>
                             <!-- total charge -->
                             <td class="unity info">{{ getCargaP(product) }}</td>
                             <td class="unity info">{{ getCargaU(product) }}</td>
@@ -143,6 +168,14 @@
                             <td class="unity">{{ getCargaInicialULine(line.products) }}</td>
                             <td class="unity">{{ getCargaPLine(line.products) }}</td>
                             <td class="unity">{{ getCargaULine(line.products) }}</td>
+                            
+                            <td class="unity">{{ getCargaExtra1PLine(line.products) }}</td>
+                            <td class="unity">{{ getCargaExtra1ULine(line.products) }}</td>
+                            <td class="unity">{{ getCargaExtra2PLine(line.products) }}</td>
+                            <td class="unity">{{ getCargaExtra2ULine(line.products) }}</td>
+                            <td class="unity">{{ getCargaExtra3PLine(line.products) }}</td>
+                            <td class="unity">{{ getCargaExtra3ULine(line.products) }}</td>
+                            
                             <td class="unity">{{ getTotalPLine(line.products) }}</td>
                             <td class="unity">{{ getTotalULine(line.products) }}</td>
                           </tr>
