@@ -1,4 +1,6 @@
-var url = "http://localhost/horizon/index.php/";
+//var url = "http://localhost/horizon/index.php/";
+var url = "https://mariani.bo/horizon-sc/index.php/";
+
 var idliquidation = $("#idLiquidation").html();
 var mark = $("#markLiquidation").html();
 
