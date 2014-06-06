@@ -136,18 +136,39 @@
                             <!-- previous charge -->
                             <td class="unity">{{ product.previousDayP }}</td>
                             <td class="unity">{{ product.previousDayU }}</td>
-                            <!-- charge -->
-                            <td class="unity"> 
-                              <input name="cargap" ng-model="productControllerObj.cargaP" type="number" class="inputSmall" ng-blur="updateCargaP(product)" ng-show="liquidation.mark === 'creado'" />
-                              <p ng-show="liquidation.mark != 'creado'">{{ product.chargeP }}</p>
-                            </td>
-                            <td class="unity">
-                              <input name="cargau" ng-model="productControllerObj.cargaU" type="number" class="inputSmall" ng-blur="updateCargaU(product)" ng-show="liquidation.mark === 'creado'" />
-                              <p ng-show="liquidation.mark != 'creado'">{{ product.chargeU }}</p>
-                            </td>
-                            <!-- extra charge -->
-                            <td class="unity">{{ product.previousDayP }}</td>
-                            <td class="unity">{{ product.previousDayU }}</td>
+                            
+                            <!-- main charge -->
+                              <!-- status creado -->
+                              <div ng-show="liquidation.mark === 'creado'">
+                                <td class="unity"> 
+                                  <input name="cargap" ng-model="productControllerObj.cargaP" type="number" class="inputSmall" ng-blur="updateCargaP(product)" />
+                                </td>
+                                <td class="unity">
+                                  <input name="cargau" ng-model="productControllerObj.cargaU" type="number" class="inputSmall" ng-blur="updateCargaU(product)" />
+                                </td>  
+                              </div>
+                              <!-- status extra1, extra2, extra3, carga final -->
+                              <div ng-show="liquidation.mark != 'creado'">
+                                <td class="unity"> {{ product.chargeP }} </td>
+                                <td class="unity"> {{ product.chargeU }} </td>
+                              </div>
+                            
+                            <!-- extra charge 1 -->
+                              <!-- status extra 1 -->
+                              <div ng-show="liquidation.mark === 'cargado'">
+                                <td class="unity"> 
+                                  <input name="cargap" ng-model="productControllerObj.chargeExtraP1" type="number" class="inputSmall" ng-blur="updateCargaExtraP1(product)" />
+                                </td>
+                                <td class="unity">
+                                  <input name="cargau" ng-model="productControllerObj.chargeExtraU1" type="number" class="inputSmall" ng-blur="updateCargaExtraU1(product)" />
+                                </td>  
+                              </div>
+                              <!-- status extra1, extra2, extra3, carga final -->
+                              <div ng-show="liquidation.mark != 'cargado'">
+                                <td class="unity"> {{ product.chargeExtraP1 }} </td>
+                                <td class="unity"> {{ product.chargeExtraU1 }} </td>
+                              </div>
+
                             <!-- extra charge -->
                             <td class="unity">{{ product.previousDayP }}</td>
                             <td class="unity">{{ product.previousDayU }}</td>

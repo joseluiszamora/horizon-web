@@ -169,8 +169,12 @@ var productControllerObj = function ($scope){
     cargaInicialU: 0,
     cargaP: 0,
     cargaU: 0,
-    cargaExtraP: 0,
-    cargaExtraU: 0
+    cargaExtraP1: 0,
+    cargaExtraU1: 0,
+    cargaExtraP2: 0,
+    cargaExtraU2: 0,
+    cargaExtraP3: 0,
+    cargaExtraU3: 0,
   };
 
   $scope.getCargaP = function ($product){
@@ -182,7 +186,7 @@ var productControllerObj = function ($scope){
   };
 
   $scope.getTotalPrice = function (product){
-    numProducts = $scope.productControllerObj.cargaP + $scope.productControllerObj.cargaExtraP;
+    numProducts = $scope.productControllerObj.cargaP + $scope.productControllerObj.cargaExtraP1;
     return (numProducts * parseFloat(product.price));
   };
 
@@ -199,6 +203,22 @@ var productControllerObj = function ($scope){
       $scope.productControllerObj.cargaU = product.chargeU;
     }else{
       product.chargeU = $scope.productControllerObj.cargaU;
+    }
+  };
+
+  $scope.updateCargaExtraP1 = function (product) {
+    product.chargeExtraP1 = $scope.productControllerObj.cargaExtraP1;
+  };
+  $scope.updateCargaExtraU1 = function (product) {
+    if ($scope.productControllerObj.cargaExtraU1 >= product.uxp) {
+      product.chargeExtraU1 = parseInt(Math.round($scope.productControllerObj.cargaExtraU1 % product.uxp));
+
+      product.chargeExtraP1 = $scope.productControllerObj.cargaExtraP1 + parseInt(Math.round($scope.productControllerObj.cargaExtraU1 / product.uxp));
+
+      $scope.productControllerObj.cargaExtraP1 = product.chargeExtraP1;
+      $scope.productControllerObj.cargaExtraU1 = product.chargeExtraU1;
+    }else{
+      product.chargeExtraU1 = $scope.productControllerObj.chargeExtraU1;
     }
   };
 };

@@ -32,6 +32,7 @@
     }
 
     function charge_list() {
+      // creado, cargado, cargaextra1, cargaextra2, cargaextra3, cargafinal
       $data['charges'] = $this->Liquidation_Model->report("active", "all");
       $data['category'] = 'liquidation';
       $data['page'] = 'charge_list';
