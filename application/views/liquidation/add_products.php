@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-lg-12">
     <h3 class="page-header">CARGA DE PRODUCTOS</h3>
+    <div style="display:none;" id="idLiquidation"><?php echo $liquidation;?></div>
   </div>
 </div>
 

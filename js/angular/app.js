@@ -1,4 +1,5 @@
 var url = "http://localhost/horizon/index.php/";
+var idliquidation = $("#idLiquidation").html();
 
 var app = angular.module('myModule', []);
 
@@ -43,16 +44,12 @@ app.controller('LiquidationController', ['$http', function( $http ){
 
   this.saveAll = function () {
     var datasend = {  
-      lines: liquidation.lines
+      lines: liquidation.lines,
+      liquidation: idliquidation
     };
     $http.post(url + 'liquidation/save_lines', datasend).success(function (data, status, headers){
       //console.log("loool");
     });
-    /*$http({
-      method: 'POST',
-      url: url + 'liquidation/save_lines',
-      data: datasend
-    })*/
   };
 
 

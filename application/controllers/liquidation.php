@@ -38,7 +38,8 @@
       $this->load->view('template/template_liquidation', $data); 
     }
 
-    function add_products() {
+    function add_products($liquidation) {
+      $data['liquidation'] = $liquidation;
       $data['line'] = $this->Line_Model->get_all_json();
       $data['volume'] = $this->Volume_Model->get_all_json();
       $data['linevolume'] = $this->Linevolume_Model->get_all_json();
@@ -124,7 +125,7 @@
 
     function save_lines(){
       $data = json_decode(file_get_contents('php://input'), TRUE);
-      //print_r($data);
+      print_r($data['liquidation']."********************");
 
       foreach($data['lines'] as $rowLine) {
         print $rowLine['nameLine']."\n";
