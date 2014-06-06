@@ -122,6 +122,37 @@
       echo json_encode($mainArray);
     }
 
+    function save_lines(){
+      $data = json_decode(file_get_contents('php://input'), TRUE);
+      //print_r($data);
+
+      foreach($data['lines'] as $rowLine) {
+        print $rowLine['nameLine']."\n";
+        //print $rowLine['nameLine'];
+        //print "$key => $value\n";
+        foreach($rowLine['products'] as $rowProduct) {
+          print $rowProduct['Nombre']." -- ".$rowProduct['chargeP']."\n";
+          //print_r($value2."<br>");
+        }
+        /*foreach($rowLine['nameLine'] as $rowProduct) {
+          print $rowLine['Nombre']."\n";
+        }*/
+      }
+
+       /*foreach ($data as $row){
+        print_r($row[0]);
+      }*/
+      /*if ($_SERVER["REQUEST_METHOD"] === "GET"){
+        //$code =$this->input->post('lines');
+        echo "----";
+      }else{
+        //$code =$this->input->server('lines');
+        echo "******";
+      }*/
+      //$JSON_decode = json_decode($code);
+      
+    }
+
     function save() {
     /*idLiquidacion
     fechaRegistro

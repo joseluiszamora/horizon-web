@@ -1,6 +1,7 @@
 var url = "http://localhost/horizon/index.php/";
 
 var app = angular.module('myModule', []);
+
 app.factory('mySharedService', function($rootScope) {
     var sharedService = {};
     
@@ -31,6 +32,7 @@ app.service('sharedProperties', function () {
 });
 
 app.controller('LiquidationController', ['$http', function( $http ){
+  $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
   var liquidation = this;
   
   liquidation.lines = [ ];
@@ -40,11 +42,19 @@ app.controller('LiquidationController', ['$http', function( $http ){
   });
 
   this.saveAll = function () {
-    var data = liquidation.lines;
-    $http.post(url + 'liquidation/save', data).success(function (data, status, headers){
-      console.log("loool");
+    var datasend = {  
+      lines: liquidation.lines
+    };
+    $http.post(url + 'liquidation/save_lines', datasend).success(function (data, status, headers){
+      //console.log("loool");
     });
+    /*$http({
+      method: 'POST',
+      url: url + 'liquidation/save_lines',
+      data: datasend
+    })*/
   };
+
 
 /*
 this.saveAll = function () {
