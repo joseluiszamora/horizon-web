@@ -9,24 +9,12 @@ class Liquidation_model extends CI_Model {
 
   function create($data_in) {
     if ($this->db->insert('liquidacion', $data_in)) {
-
-      // Save log for this action
-      /*if ($data_in['Type'] == "P") {
-        $data_log['idAction'] = '46';
-      }else {
-        $data_log['idAction'] = '48';
-      }*/
       $id = $this->db->insert_id();
-      /*$data_log['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
-      $data_log['idReferencia'] = $id;
-      $data_log['FechaHora'] = date("y-m-d, g:i");
-      $this->Log_Model->create($data_log);*/
       return $id;
     }
-    return null;
   }
 
-  function report($status="active", $mark="creado") {
+  function report($status="active", $mark="all") {
     $this->db->select(
       'liquidacion.idLiquidacion, 
       liquidacion.fechaRegistro, 
@@ -44,7 +32,7 @@ class Liquidation_model extends CI_Model {
     if(isset($status) AND $status != ""){
       $this->db->where('liquidacion.status', $status);
     }
-    if(isset($mark) AND $mark != ""){
+    if(isset($mark) AND $mark != "all"){
       $this->db->where('liquidacion.mark', $mark);
     }
 
@@ -53,9 +41,27 @@ class Liquidation_model extends CI_Model {
   }
 
   function count($mark="creado"){
-    $this->db->like('mark', $mark);
+    if (isset($mark) && $mark != "all" ) {
+      $this->db->like('mark', $mark);
+    }
     $this->db->from('liquidacion');
     return $this->db->count_all_results();
+  }
+
+  function create_detail($data) {
+    if ($this->db->insert('detalleliquidacion', $data)) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  function update($data, $id) {
+    $this->db->where('idLiquidacion', $id);
+
+    if ($this->db->update('liquidacion', $data)) {
+      return TRUE;
+    }
+    return FALSE;
   }
 }
 

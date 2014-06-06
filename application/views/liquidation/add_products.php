@@ -83,7 +83,7 @@
                             <td class="productname">{{ product.Nombre | uppercase }}</td>
                             <!-- previous charge -->
                             <td class="unity">{{ product.previousDayP }}</td>
-                            <td class="unity">{{ product.uxp }}</td>
+                            <td class="unity">{{ product.previousDayU }}</td>
                             <!-- charge -->
                             <td class="unity"> 
                               <input name="cargap" ng-model="productControllerObj.cargaP" type="number" class="inputSmall" ng-blur="updateCargaP(product)" />

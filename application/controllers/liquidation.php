@@ -32,7 +32,7 @@
     }
 
     function charge_list() {
-      $data['charges'] = $this->Liquidation_Model->report("active", "creado");
+      $data['charges'] = $this->Liquidation_Model->report("active", "all");
       $data['category'] = 'liquidation';
       $data['page'] = 'charge_list';
       $this->load->view('template/template_liquidation', $data); 
@@ -125,51 +125,21 @@
 
     function save_lines(){
       $data = json_decode(file_get_contents('php://input'), TRUE);
-      print_r($data['liquidation']."********************");
-
       foreach($data['lines'] as $rowLine) {
-        print $rowLine['nameLine']."\n";
-        //print $rowLine['nameLine'];
-        //print "$key => $value\n";
         foreach($rowLine['products'] as $rowProduct) {
-          print $rowProduct['Nombre']." -- ".$rowProduct['chargeP']."\n";
-          //print_r($value2."<br>");
-        }
-        /*foreach($rowLine['nameLine'] as $rowProduct) {
-          print $rowLine['Nombre']."\n";
-        }*/
-      }
+          $data_in['idLiquidacion'] = $data['liquidation'];
+          $data_in['idProduct'] = $rowProduct['idProduct'];
+          $data_in['carga1'] = $rowProduct['chargeU'] + ( $rowProduct['chargeP'] * $rowProduct['uxp'] );
 
-       /*foreach ($data as $row){
-        print_r($row[0]);
-      }*/
-      /*if ($_SERVER["REQUEST_METHOD"] === "GET"){
-        //$code =$this->input->post('lines');
-        echo "----";
-      }else{
-        //$code =$this->input->server('lines');
-        echo "******";
-      }*/
-      //$JSON_decode = json_decode($code);
-      
+          if ($this->Liquidation_Model->create_detail($data_in)) {
+            $data_liq['mark'] = "cargado";
+            $this->Liquidation_Model->update($data_liq, $data['liquidation']);
+          }
+        }
+      }      
     }
 
     function save() {
-    /*idLiquidacion
-    fechaRegistro
-    horaRegistro
-    idUser
-    ruta
-    detalle
-    fechaFin
-    horaFin
-    mark
-    *******
-    distributor
-    route
-    date
-    desc
-    */
       $this->form_validation->set_rules('distributor', 'Distribuidor', 'xss_clean|required|greater_than[0]');
       $this->form_validation->set_rules('route', 'Ruta', 'xss_clean|required|greater_than[0]');
       $this->form_validation->set_rules('date', 'Fecha', 'xss_clean|required');
@@ -192,11 +162,16 @@
         $data_in['status'] = "active";
         $data_in['mark'] = "creado";
 
-        if ($this->Liquidation_Model->create($data_in) == TRUE) {
-            redirect("liquidation");
-          } else {
-            $this->redirect_form('create');
-          }
+        //save liquidation
+        $idLiquidacion = $this->Liquidation_Model->create($data_in);
+        $products = $this->Product_Model->report_android();
+        foreach ($products as $rowproduct){
+          // create liquidation detail for each product
+          $data_pro['idLiquidacion'] = $idLiquidacion;
+          $data_pro['idProduct'] = $rowproduct->idProduct;
+          $this->Liquidation_Model->create_detail($data_pro);
+        }
+        redirect("liquidation/charge_list");
       }
     }
 

@@ -51,44 +51,6 @@ app.controller('LiquidationController', ['$http', function( $http ){
       //console.log("loool");
     });
   };
-
-
-/*
-this.saveAll = function () {
-    var serverResource = $resource(url + 'liquidation/get_lines',
-    {
-      param1: "param1 default",
-      param2: "param2 default"
-    });
-
-    var getConfig = {};
-
-    if ($scope.getParam1 !== undefined && $scope.getParam1 != "") {
-      getConfig.param1 = $scope.getParam1;
-    }
-
-    if ($scope.getParam2 !== undefined && $scope.getParam2 != "") {
-      getConfig.param2 = $scope.getParam2;
-    }
-
-    serverResource.get(getConfig,
-      // Success handler
-      function (value, responseHeaders) {
-        $scope.getWithParamsResult = "GET SUCCESS\n\n" +
-          "value: " + jsonFilter(value) + "\n\n" +
-          "responseHeaders: " + jsonFilter(responseHeaders());
-      },
-      // Failure handler
-      function (httpResponse) {
-        $scope.getWithParamsResult = "GET ERROR\n\n" +
-          "httpResponse: " + jsonFilter(httpResponse);
-      }
-    );
-  };
-*/
-
-
-
 }]);
 
 app.controller('ProductController', function(){
