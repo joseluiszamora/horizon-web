@@ -10,11 +10,36 @@
         <div class="panel-heading">
           <ul class="selectorCheck">
             <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'">
-              <label for="check1">{{ lineName.nameLine }}</label>
-              <input type="checkbox" id="check1" ng-model="lineName.show">
+              <label for="{{ lineName.idLine }}">{{ lineName.nameLine }}</label>
+              <input type="checkbox" id="{{ lineName.idLine }}" ng-model="lineName.show">
             </li>            
           </ul>
 
+          <div style="float:right;">
+            <!-- Button trigger modal -->
+            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Guardar</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Guardar</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Atención!!! los cambios guardados no se podran modificar</p>
+                    <p>Esta seguro???</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button ng-click="liquidation.saveAll()" type="button" class="btn btn-primary">Guardar cambios</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
 
         <div class="panel-body">
@@ -57,7 +82,7 @@
                             <td class="productname">{{ product.Nombre | uppercase }}</td>
                             <!-- previous charge -->
                             <td class="unity">{{ product.previousDayP }}</td>
-                            <td class="unity">{{ product.previousDayU }}</td>
+                            <td class="unity">{{ product.uxp }}</td>
                             <!-- charge -->
                             <td class="unity"> 
                               <input name="cargap" ng-model="productControllerObj.cargaP" type="number" class="inputSmall" ng-blur="updateCargaP(product)" />

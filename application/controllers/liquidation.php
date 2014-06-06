@@ -86,14 +86,15 @@
               'volume'        => $rowlinevolume->Descripcion,
               'Nombre'        => $rowproduct->Nombre,
               'price'        => $rowproduct->PrecioUnit,
-              'previousDayP'  => 1,
-              'previousDayU'  => 5,
+              'uxp'        => $rowproduct->uxp,
+              'previousDayP'  => 0,
+              'previousDayU'  => 0,
               'chargeP'       => 0,
               'chargeU'       => 0,
-              'chargeExtraP'  => 3,
-              'chargeExtraU'  => 3,
-              'chargeTotalP'  => 100,
-              'chargeTotalU'  => 100,
+              'chargeExtraP'  => 0,
+              'chargeExtraU'  => 0,
+              'chargeTotalP'  => 0,
+              'chargeTotalU'  => 0,
               'devolutionsP'  => 0,
               'devolutionsU'  => 0,
               'prestamosP'    => 0,
@@ -101,8 +102,7 @@
               'bonosP'        => 0,
               'bonosU'        => 0,
               'ventaP'        => 0,
-              'ventaU'        => 0, 
-              'totalAmmount'  => 1000   
+              'ventaU'        => 0
             );
 
             array_push($productsContainer, $arrayProducts);

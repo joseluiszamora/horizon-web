@@ -39,6 +39,49 @@ app.controller('LiquidationController', ['$http', function( $http ){
     liquidation.lines = data;
   });
 
+  this.saveAll = function () {
+    var data = liquidation.lines;
+    $http.post(url + 'liquidation/save', data).success(function (data, status, headers){
+      console.log("loool");
+    });
+  };
+
+/*
+this.saveAll = function () {
+    var serverResource = $resource(url + 'liquidation/get_lines',
+    {
+      param1: "param1 default",
+      param2: "param2 default"
+    });
+
+    var getConfig = {};
+
+    if ($scope.getParam1 !== undefined && $scope.getParam1 != "") {
+      getConfig.param1 = $scope.getParam1;
+    }
+
+    if ($scope.getParam2 !== undefined && $scope.getParam2 != "") {
+      getConfig.param2 = $scope.getParam2;
+    }
+
+    serverResource.get(getConfig,
+      // Success handler
+      function (value, responseHeaders) {
+        $scope.getWithParamsResult = "GET SUCCESS\n\n" +
+          "value: " + jsonFilter(value) + "\n\n" +
+          "responseHeaders: " + jsonFilter(responseHeaders());
+      },
+      // Failure handler
+      function (httpResponse) {
+        $scope.getWithParamsResult = "GET ERROR\n\n" +
+          "httpResponse: " + jsonFilter(httpResponse);
+      }
+    );
+  };
+*/
+
+
+
 }]);
 
 app.controller('ProductController', function(){
@@ -129,7 +172,16 @@ var productControllerObj = function ($scope){
     product.chargeP = $scope.productControllerObj.cargaP;
   };
   $scope.updateCargaU = function (product) {
-    product.chargeU = $scope.productControllerObj.cargaU;
+    if ($scope.productControllerObj.cargaU >= product.uxp) {
+      product.chargeU = parseInt(Math.round($scope.productControllerObj.cargaU % product.uxp));
+
+      product.chargeP = $scope.productControllerObj.cargaP + parseInt(Math.round($scope.productControllerObj.cargaU / product.uxp));
+
+      $scope.productControllerObj.cargaP = product.chargeP;
+      $scope.productControllerObj.cargaU = product.chargeU;
+    }else{
+      product.chargeU = $scope.productControllerObj.cargaU;
+    }
   };
 };
 
