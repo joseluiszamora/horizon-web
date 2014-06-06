@@ -27,8 +27,7 @@
             <td class="center"><?php echo $row->mark; ?></td>
             <td class="center"><?php echo $row->detalle; ?></td>
             <td class="center">
-              <?php echo anchor('liquidation/add_products/'.$row->idLiquidacion, 'Adicionar Productos', array('class' => 'btn btn-primary')); ?>
-              <?php echo anchor('liquidation/', 'Recarga de Productos', array('class' => 'btn btn-primary')); ?>
+              <?php echo anchor('liquidation/add_products/'.$row->idLiquidacion, 'Ver', array('class' => 'btn btn-primary')); ?>
             </td>
             <td class="center">
               <?php echo anchor('liquidation/deactive/'.$row->idLiquidacion, 'Eliminar', array('class' => 'btn btn-primary')); ?>

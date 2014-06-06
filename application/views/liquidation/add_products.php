@@ -1,7 +1,44 @@
 <div class="row">
   <div class="col-lg-12">
     <h3 class="page-header">CARGA DE PRODUCTOS</h3>
-    <div style="display:none;" id="idLiquidation"><?php echo $liquidation;?></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-offset-1 col-md-9">
+    <fieldset> 
+      <div style="display:none;" id="idLiquidation"><?php echo $liquidation[0]->idLiquidacion;?></div>
+      <div class="form-group col-md-4 col-xs-4">
+        <label for="exampleInputEmail1">Distribuidor</label>
+        <?php echo $liquidation[0]->idUser;?>
+      </div>
+
+      <div class="form-group col-md-4 col-xs-4">
+        <label for="exampleInputEmail1">Ruta</label>
+        <?php echo $liquidation[0]->ruta;?>
+      </div>
+
+      <div class="form-group col-md-4 col-xs-4">
+        <label for="exampleInputEmail1">Fecha</label>
+        <?php echo $liquidation[0]->fechaRegistro;?>
+      </div>
+
+      <div class="form-group col-md-4 col-xs-4">
+        <label for="exampleInputEmail1">Observaciones</label>
+        <?php echo $liquidation[0]->detalle;?>
+      </div>
+      
+      <div class="form-group col-md-4 col-xs-4">
+        <label for="exampleInputEmail1">Estado</label>
+        <div id="markLiquidation"><?php echo $liquidation[0]->mark;?></div>
+      </div>
+    </fieldset>
   </div>
 </div>
 

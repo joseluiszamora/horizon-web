@@ -39,76 +39,57 @@
     }
 
     function add_products($liquidation) {
-      $data['liquidation'] = $liquidation;
-      $data['line'] = $this->Line_Model->get_all_json();
+      $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
+      /*$data['line'] = $this->Line_Model->get_all_json();
       $data['volume'] = $this->Volume_Model->get_all_json();
       $data['linevolume'] = $this->Linevolume_Model->get_all_json();
       $data['product'] = $this->Product_Model->get_all_json();
-
       $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
-
+      */
       $data['category'] = 'liquidation';
       $data['page'] = 'add_products';
       $this->load->view('template/template_liquidation', $data);  
     }
-    /*function charges_made() {
-      $data['line'] = $this->Line_Model->get_all_json();
-      $data['volume'] = $this->Volume_Model->get_all_json();
-      $data['linevolume'] = $this->Linevolume_Model->get_all_json();
-      $data['product'] = $this->Product_Model->get_all_json();
-
-      $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
-
-      $data['category'] = 'liquidation';
-      $data['page'] = 'create';
-      $this->load->view('template/template_liquidation', $data);  
-    }*/
-
     function liquidations_pending() {
       
     }
 
-    function get_lines(){
+    function get_lines($idLiquidation){
       $mainArray = array();
-
       $line = $this->Line_Model->get_all_json();
-      //echo json_encode($line);
 
       foreach ($line as $rowline) {
         $productsContainer = array();
-        $volumes = $this->Linevolume_Model->get_volumes_from_line($rowline->idLine);
+        
+        $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine);
+        
+        foreach ($products as $rowproduct){
+          $arrayProducts = array(
+            'idDetalleLiquidacion'     => $rowproduct->idDetalleLiquidacion,
+            'idProduct'     => $rowproduct->idProduct,
+            'volume'        => $rowproduct->volume,
+            'Nombre'        => $rowproduct->Nombre,
+            'price'        => $rowproduct->price,
+            'uxp'        => $rowproduct->uxp,
+            'previousDayP'  => $rowproduct->previousDay / $rowproduct->uxp,
+            'previousDayU'  => $rowproduct->previousDay % $rowproduct->uxp,
+            'chargeP'       => $rowproduct->charge / $rowproduct->uxp,
+            'chargeU'       => $rowproduct->charge % $rowproduct->uxp,
+            'chargeExtraP'  => 0,
+            'chargeExtraU'  => 0,
+            'chargeTotalP'  => 0,
+            'chargeTotalU'  => 0,
+            'devolutionsP'  => 0,
+            'devolutionsU'  => 0,
+            'prestamosP'    => 0,
+            'prestamosU'    => 0,
+            'bonosP'        => 0,
+            'bonosU'        => 0,
+            'ventaP'        => 0,
+            'ventaU'        => 0
+          );
 
-        foreach ($volumes as $rowlinevolume) { 
-          $products = $this->Product_Model->get_by_linevolume($rowlinevolume->idLineVolume);
-
-          foreach ($products as $rowproduct){
-            $arrayProducts = array(
-              'idProduct'     => $rowproduct->idProduct,
-              'volume'        => $rowlinevolume->Descripcion,
-              'Nombre'        => $rowproduct->Nombre,
-              'price'        => $rowproduct->PrecioUnit,
-              'uxp'        => $rowproduct->uxp,
-              'previousDayP'  => 0,
-              'previousDayU'  => 0,
-              'chargeP'       => 0,
-              'chargeU'       => 0,
-              'chargeExtraP'  => 0,
-              'chargeExtraU'  => 0,
-              'chargeTotalP'  => 0,
-              'chargeTotalU'  => 0,
-              'devolutionsP'  => 0,
-              'devolutionsU'  => 0,
-              'prestamosP'    => 0,
-              'prestamosU'    => 0,
-              'bonosP'        => 0,
-              'bonosU'        => 0,
-              'ventaP'        => 0,
-              'ventaU'        => 0
-            );
-
-            array_push($productsContainer, $arrayProducts);
-          }
-
+          array_push($productsContainer, $arrayProducts);
         }
 
         $line = array(
@@ -125,13 +106,15 @@
 
     function save_lines(){
       $data = json_decode(file_get_contents('php://input'), TRUE);
+      
       foreach($data['lines'] as $rowLine) {
         foreach($rowLine['products'] as $rowProduct) {
-          $data_in['idLiquidacion'] = $data['liquidation'];
-          $data_in['idProduct'] = $rowProduct['idProduct'];
+          //print_r($rowProduct['idDetalleLiquidacion']."\n");
+          //$data_in['idLiquidacion'] = $data['liquidation'];
+          //$data_in['idProduct'] = $rowProduct['idProduct'];
           $data_in['carga1'] = $rowProduct['chargeU'] + ( $rowProduct['chargeP'] * $rowProduct['uxp'] );
 
-          if ($this->Liquidation_Model->create_detail($data_in)) {
+          if ($this->Liquidation_Model->update_detail($data_in, $rowProduct['idDetalleLiquidacion'])) {
             $data_liq['mark'] = "cargado";
             $this->Liquidation_Model->update($data_liq, $data['liquidation']);
           }

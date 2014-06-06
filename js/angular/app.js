@@ -1,5 +1,6 @@
 var url = "http://localhost/horizon/index.php/";
 var idliquidation = $("#idLiquidation").html();
+var mark = $("#markLiquidation").html();
 
 var app = angular.module('myModule', []);
 
@@ -38,7 +39,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
   
   liquidation.lines = [ ];
   
-  $http.get(url + 'liquidation/get_lines').success(function(data){
+  $http.get(url + 'liquidation/get_lines/' + idliquidation).success(function(data){
     liquidation.lines = data;
   });
 
