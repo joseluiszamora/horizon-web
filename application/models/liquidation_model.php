@@ -113,6 +113,18 @@ class Liquidation_model extends CI_Model {
     }
     return FALSE;
   }
+
+  // remove detalle_liquidation without any charge
+  function clean_products_without_charges($id) {
+    $this->db->where('idLiquidacion', $id);
+    $this->db->where('carga0', 0);
+    $this->db->where('carga1', 0);
+    $this->db->where('carga2', 0);
+    $this->db->where('carga3', 0);
+    $this->db->where('carga4', 0);
+    $this->db->delete('detalleliquidacion'); 
+  }
+
 }
 
 ?>

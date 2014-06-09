@@ -51,8 +51,18 @@
       $data['page'] = 'add_products';
       $this->load->view('template/template_liquidation', $data);  
     }
-    function liquidations_pending() {
-      
+
+    function devolution($liquidation) {
+      $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
+      $data['category'] = 'liquidation';
+      $data['page'] = 'devolution';
+      $this->load->view('template/template_liquidation', $data);  
+    }
+
+    function complete_charge($liquidation) {
+      $this->Liquidation_Model->clean_products_without_charges($liquidation);
+      $data['mark'] = "devolution";
+      $this->Liquidation_Model->update($data, $liquidation);
     }
 
     function get_lines($idLiquidation){
@@ -85,8 +95,8 @@
 
             'chargeTotalP'  => 0,
             'chargeTotalU'  => 0,
-            'devolutionsP'  => 0,
-            'devolutionsU'  => 0,
+            'devolutionP'  => 0,
+            'devolutionU'  => 0,
             'prestamosP'    => 0,
             'prestamosU'    => 0,
             'bonosP'        => 0,
@@ -115,13 +125,11 @@
       
       foreach($data['lines'] as $rowLine) {
         foreach($rowLine['products'] as $rowProduct) {
-          //print_r($rowProduct['idDetalleLiquidacion']."\n");
-          //$data_in['idLiquidacion'] = $data['liquidation'];
-          //$data_in['idProduct'] = $rowProduct['idProduct'];
           $data_in['carga1'] = $rowProduct['chargeU'] + ( $rowProduct['chargeP'] * $rowProduct['uxp'] );
           $data_in['carga2'] = $rowProduct['chargeExtraU1'] + ( $rowProduct['chargeExtraP1'] * $rowProduct['uxp'] );
           $data_in['carga3'] = $rowProduct['chargeExtraU2'] + ( $rowProduct['chargeExtraP2'] * $rowProduct['uxp'] );
           $data_in['carga4'] = $rowProduct['chargeExtraU3'] + ( $rowProduct['chargeExtraP3'] * $rowProduct['uxp'] );
+          $data_in['devolucion'] = $rowProduct['devolutionU'] + ( $rowProduct['devolutionP'] * $rowProduct['uxp'] );
 
           $this->Liquidation_Model->update_detail($data_in, $rowProduct['idDetalleLiquidacion']);
         }
@@ -138,6 +146,8 @@
       }
       if ($data['mark'] == "cargaextra2" ) {
         $data_liq['mark'] = "cargafinal";
+      }else{
+        $data_liq['mark'] = "liquidation";
       }
 
       $this->Liquidation_Model->update($data_liq, $data['liquidation']);

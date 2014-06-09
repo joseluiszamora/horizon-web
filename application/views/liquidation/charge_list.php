@@ -16,6 +16,7 @@
           <th class="center">Detalle</th>
           <th class="center">&nbsp;</th>
           <th class="center">&nbsp;</th>
+          <th class="center">&nbsp;</th>
         </tr>
       </thead>
       <tbody id="diaryTable">
@@ -27,7 +28,17 @@
             <td class="center"><?php echo $row->mark; ?></td>
             <td class="center"><?php echo $row->detalle; ?></td>
             <td class="center">
-              <?php echo anchor('liquidation/add_products/'.$row->idLiquidacion, 'Ver', array('class' => 'btn btn-primary')); ?>
+              <?php echo anchor('liquidation/complete_charge/'.$row->idLiquidacion, 'Carga Completa', array('class' => 'btn btn-primary')); ?>
+            </td>
+            <td class="center">
+              <?php 
+                if ( $row->mark == "creado" || $row->mark == "cargado" || $row->mark == "cargaextra1" || $row->mark == "cargaextra2" || $row->mark == "cargaextra3" ) {
+                  echo anchor('liquidation/add_products/'.$row->idLiquidacion, 'Ver', array('class' => 'btn btn-primary'));
+                }
+                if ($row->mark == "devolution") {
+                  echo anchor('liquidation/devolution/'.$row->idLiquidacion, 'Devoluciones', array('class' => 'btn btn-primary')); 
+                }
+              ?>
             </td>
             <td class="center">
               <?php echo anchor('liquidation/deactive/'.$row->idLiquidacion, 'Eliminar', array('class' => 'btn btn-primary')); ?>

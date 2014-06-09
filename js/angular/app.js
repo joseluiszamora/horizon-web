@@ -1,5 +1,5 @@
-//var url = "http://localhost/horizon/index.php/";
-var url = "https://mariani.bo/horizon-sc/index.php/";
+var url = "http://localhost/horizon/index.php/";
+//var url = "https://mariani.bo/horizon-sc/index.php/";
 
 var idliquidation = $("#idLiquidation").html();
 var mark = $("#markLiquidation").html();
@@ -54,7 +54,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
       mark: mark
     };
     $http.post(url + 'liquidation/save_lines', datasend).success(function (data, status, headers){
-      //console.log("loool");
+      window.location = url + "liquidation/charge_list";
     });
   };
 }]);
@@ -166,6 +166,20 @@ var lineControllerObj = function ($scope, sharedProperties){
     $sum += $scope.getCargaExtra3ULine(products);
     return $sum;
   };
+  $scope.getDevolutionPLine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.devolutionP;
+    });
+    return $sum;
+  };
+  $scope.getDevolutionULine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.devolutionU;
+    });
+    return $sum;
+  };
   $scope.getAmmountLine = function (){
     return $scope.lineControllerObj.lineTotalAmmount;
   };
@@ -186,6 +200,8 @@ var productControllerObj = function ($scope){
     cargaExtraU2: 0,
     cargaExtraP3: 0,
     cargaExtraU3: 0,
+    devolutionP: 0,
+    devolutionU: 0
   };
 
   $scope.getCargaP = function ($product){
@@ -314,6 +330,28 @@ var productControllerObj = function ($scope){
       $scope.productControllerObj.cargaExtraU3 = product.chargeExtraU3;
     }else{
       product.chargeExtraU3 = $scope.productControllerObj.cargaExtraU3;
+    }
+  };
+
+
+
+
+
+
+
+  $scope.updateDevolutionP = function (product) {
+    product.devolutionP = $scope.productControllerObj.devolutionP;
+  };
+  $scope.updateDevolutionU = function (product) {
+    if ($scope.productControllerObj.devolutionU >= product.uxp) {
+      product.devolutionU = Math.round($scope.productControllerObj.devolutionU % product.uxp);
+
+      product.devolutionP = $scope.productControllerObj.devolutionP + Math.floor($scope.productControllerObj.devolutionU / product.uxp);
+
+      $scope.productControllerObj.devolutionP = product.devolutionP;
+      $scope.productControllerObj.devolutionU = product.devolutionU;
+    }else{
+      product.devolutionU = $scope.productControllerObj.devolutionU;
     }
   };
 

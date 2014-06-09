@@ -41,6 +41,34 @@
           ?>
         </div>
         
+        <div class="form-group col-md-6 col-xs-6">
+          <?php 
+            $data = array(
+              'name'        => 'lastliquid',
+              'id'        => 'lastliquid',
+              'value'       => 'accept',
+              'checked'     => FALSE
+            );
+
+            echo form_checkbox($data);
+          ?>
+          <label for="lastliquid">Desea cargar la ultima liquidación?</label>
+        </div>
+
+        <div class="form-group col-md-6 col-xs-6">
+          <?php 
+            $data2 = array(
+              'name'        => 'noregularproducts',
+              'id'        => 'noregularproducts',
+              'value'       => 'accept',
+              'checked'     => FALSE
+            );
+
+            echo form_checkbox($data2);
+          ?>
+          <label for="noregularproducts">Desea adicionar productos no regulares?</label>
+        </div>
+
         <div class="form-group col-md-10 col-xs-10">
           <input type="submit" value="Crear" name="submit" class="btn btn-primary">
           <a class="btnTitle btn btn-info" href="http://localhost/horizon/index.php/user">Cancelar</a>

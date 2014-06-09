@@ -26,6 +26,3 @@
 		$(this).datepicker('hide');
 	});
 </script>
-
-<!--<script src="<?php //echo base_url(); ?>js/hogan-2.0.0.js"></script>
-<script src="<?php //echo base_url(); ?>js/line_volumes.js"></script>-->

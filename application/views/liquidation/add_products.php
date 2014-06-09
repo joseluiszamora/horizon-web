@@ -16,27 +16,27 @@
       <div style="display:none;" id="idLiquidation"><?php echo $liquidation[0]->idLiquidacion;?></div>
       <div class="form-group col-md-4 col-xs-4">
         <label for="exampleInputEmail1">Distribuidor</label>
-        <?php echo $liquidation[0]->idUser;?>
+        <?php echo $liquidation[0]->idUser; ?>
       </div>
 
       <div class="form-group col-md-4 col-xs-4">
         <label for="exampleInputEmail1">Ruta</label>
-        <?php echo $liquidation[0]->ruta;?>
+        <?php echo $liquidation[0]->ruta; ?>
       </div>
 
       <div class="form-group col-md-4 col-xs-4">
         <label for="exampleInputEmail1">Fecha</label>
-        <?php echo $liquidation[0]->fechaRegistro;?>
+        <?php echo $liquidation[0]->fechaRegistro; ?>
       </div>
 
       <div class="form-group col-md-4 col-xs-4">
         <label for="exampleInputEmail1">Observaciones</label>
-        <?php echo $liquidation[0]->detalle;?>
+        <?php echo $liquidation[0]->detalle; ?>
       </div>
       
       <div class="form-group col-md-4 col-xs-4">
         <label for="exampleInputEmail1">Estado</label>
-        <div id="markLiquidation"><?php echo $liquidation[0]->mark;?></div>
+        <div id="markLiquidation"><?php echo $liquidation[0]->mark; ?></div>
       </div>
     </fieldset>
   </div>
@@ -226,27 +226,26 @@
     </div>
 
     <div class="col-lg-4">
-    <div class="panel panel-default">
-      <div class="panel-heading"> TOTALES</div>
-      <div class="panel-body">
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>VENTA</th>
-                <th>COBRO</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>444.00</td>
-                <td>999.00</td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="panel panel-default">
+        <div class="panel-heading"> TOTALES</div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>VENTA</th>
+                  <th>COBRO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>444.00</td>
+                  <td>999.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
 </div>
