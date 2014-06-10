@@ -166,6 +166,7 @@ var lineControllerObj = function ($scope, sharedProperties){
     $sum += $scope.getCargaExtra3ULine(products);
     return $sum;
   };
+  
   $scope.getDevolutionPLine = function (products){
     $sum = 0;
     angular.forEach(products, function(value) {
@@ -173,6 +174,7 @@ var lineControllerObj = function ($scope, sharedProperties){
     });
     return $sum;
   };
+  
   $scope.getDevolutionULine = function (products){
     $sum = 0;
     angular.forEach(products, function(value) {
@@ -180,9 +182,16 @@ var lineControllerObj = function ($scope, sharedProperties){
     });
     return $sum;
   };
-  $scope.getAmmountLine = function (){
-    return $scope.lineControllerObj.lineTotalAmmount;
+  
+  $scope.getAmmountLine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(product) {
+      //$sum = product.totalAmmount;
+    });
+    $sum = Math.round(($sum) * 100)/100;;
+    return $sum;
   };
+
   $scope.getVisible = function (line){
     return line.show;
   };   
@@ -201,7 +210,14 @@ var productControllerObj = function ($scope){
     cargaExtraP3: 0,
     cargaExtraU3: 0,
     devolutionP: 0,
-    devolutionU: 0
+    devolutionU: 0,
+    prestamosP: 0,
+    prestamosU: 0,
+    bonosP: 0,
+    bonosU: 0,
+    ventaP: 0,
+    ventaU: 0,
+    totalAmmount: 0
   };
 
   $scope.getCargaP = function ($product){
@@ -222,6 +238,12 @@ var productControllerObj = function ($scope){
       $sum += parseInt($scope.productControllerObj.cargaExtraP2);
       break;
     case "cargaextra2":
+      $sum += parseInt($product.chargeP);
+      $sum += parseInt($product.chargeExtraP1);
+      $sum += parseInt($product.chargeExtraP3);
+      $sum += parseInt($scope.productControllerObj.cargaExtraP3);
+      break;
+    case "liquidation":
       $sum += parseInt($product.chargeP);
       $sum += parseInt($product.chargeExtraP1);
       $sum += parseInt($product.chargeExtraP3);
@@ -257,12 +279,59 @@ var productControllerObj = function ($scope){
       $sum += parseInt($product.chargeExtraU3);
       $sum += parseInt($scope.productControllerObj.cargaExtraU3);
       break;
+    case "liquidation":
+      $sum += parseInt($product.chargeU);
+      $sum += parseInt($product.chargeExtraU1);
+      $sum += parseInt($product.chargeExtraU3);
+      $sum += parseInt($scope.productControllerObj.cargaExtraU3);
+      break;
     default:
       return 0;
     }
 
     return $sum;
   };
+
+  $scope.getVentaP = function (product){
+    $sum = 0;
+    $sum += $scope.getCargaP(product);
+    $sum -= parseInt(Math.floor($scope.getTotalSold(product) / product.uxp));
+    //product.ventaP = $sum;
+    //$scope.productControllerObj.ventaP = $sum;
+    return $sum;
+  };
+  $scope.getVentaU = function (product){
+    $sum = 0;
+    $sum += parseInt($scope.getCargaP(product) * product.uxp);
+    $sum += $scope.getCargaU(product);
+    $sum -= $scope.getTotalSold(product);
+    $sum = parseInt(Math.round($sum % product.uxp));
+    //$scope.productControllerObj.ventaU = $sum;
+    //product.ventaU = $sum;
+    return $sum;
+  };
+
+  $scope.getTotalAmmount = function (product){
+    $sum = 0;
+    $sum += parseInt($scope.getVentaP(product) * product.uxp);
+    $sum += parseInt($scope.getVentaU(product));
+    $sum = Math.round(($sum * product.price) * 100)/100;;
+    //product.totalAmmount = $sum;
+    return $sum;
+  };
+
+  $scope.getTotalSold = function (product){
+    $sum = 0;
+    $sum += parseInt(product.devolutionP * product.uxp);
+    $sum += parseInt(product.devolutionU);
+    $sum += parseInt(product.prestamosP * product.uxp);
+    $sum += parseInt(product.prestamosU);
+    $sum += parseInt(product.bonosP * product.uxp);
+    $sum += parseInt(product.bonosU);
+    $sum += parseInt(product.ventaP * product.uxp);
+    $sum += parseInt(product.ventaU);
+    return $sum;
+  }  
 
   $scope.getTotalPrice = function (product){
     numProducts = $scope.productControllerObj.cargaP + $scope.productControllerObj.cargaExtraP1;

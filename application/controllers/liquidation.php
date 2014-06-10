@@ -39,6 +39,13 @@
       $this->load->view('template/template_liquidation', $data); 
     }
 
+    function liquidation_list() {
+      $data['charges'] = $this->Liquidation_Model->report("active", "liquidation");
+      $data['category'] = 'liquidation';
+      $data['page'] = 'liquidation_list';
+      $this->load->view('template/template_liquidation', $data); 
+    }
+
     function add_products($liquidation) {
       $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
       /*$data['line'] = $this->Line_Model->get_all_json();
@@ -57,6 +64,13 @@
       $data['category'] = 'liquidation';
       $data['page'] = 'devolution';
       $this->load->view('template/template_liquidation', $data);  
+    }
+
+    function liquidation_mod($liquidation) {
+      $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
+      $data['category'] = 'liquidation';
+      $data['page'] = 'liquidation';
+      $this->load->view('template/template_liquidation', $data);
     }
 
     function complete_charge($liquidation) {
@@ -90,19 +104,26 @@
             'chargeExtraU1'  => round(($rowproduct->chargeExtra1 % $rowproduct->uxp), 0),
             'chargeExtraP2'  => floor($rowproduct->chargeExtra2 / $rowproduct->uxp),
             'chargeExtraU2'  => round(($rowproduct->chargeExtra2 % $rowproduct->uxp), 0),
+            
             'chargeExtraP3'  => floor($rowproduct->chargeExtra3 / $rowproduct->uxp),
             'chargeExtraU3'  => round(($rowproduct->chargeExtra3 % $rowproduct->uxp), 0),
 
             'chargeTotalP'  => 0,
             'chargeTotalU'  => 0,
-            'devolutionP'  => 0,
-            'devolutionU'  => 0,
+
+            'devolutionP'  => floor($rowproduct->devolucion / $rowproduct->uxp),
+            'devolutionU'  => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
+            
             'prestamosP'    => 0,
             'prestamosU'    => 0,
+            
             'bonosP'        => 0,
             'bonosU'        => 0,
+            
             'ventaP'        => 0,
-            'ventaU'        => 0
+            'ventaU'        => 0,
+
+            'totalAmmount'  => 0
           );
 
           array_push($productsContainer, $arrayProducts);

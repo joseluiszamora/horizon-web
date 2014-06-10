@@ -73,8 +73,8 @@
 
           <li>
             <?php 
-              echo anchor('liquidation/charge_list', '<i class="fa fa-pencil-square-o fa-fw"></i> Liquidaciones Pendientes
-              <span class="badge">'.$this->Liquidation_Model->count("all").'</span>', array('')); 
+              echo anchor('liquidation/liquidation_list', '<i class="fa fa-pencil-square-o fa-fw"></i> Liquidaciones Pendientes
+              <span class="badge">'.$this->Liquidation_Model->count("liquidation").'</span>', array('')); 
             ?>
           </li>
         </ul>
