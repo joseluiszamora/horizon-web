@@ -24,19 +24,14 @@
     }
 
     function create() {
-      $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
-
-      $data['category'] = 'liquidation';
-      $data['page'] = 'create';
-      $this->load->view('template/template_liquidation', $data); 
+      $data['distributor'] = $this->User_Model->get_users_and_zones();
+      $this->load->view('liquidation/create', $data); 
     }
 
     function charge_list() {
       // creado, cargado, cargaextra1, cargaextra2, cargaextra3, cargafinal
       $data['charges'] = $this->Liquidation_Model->report("active", "all");
-      $data['category'] = 'liquidation';
-      $data['page'] = 'charge_list';
-      $this->load->view('template/template_liquidation', $data); 
+      $this->load->view('liquidation/charge_list', $data); 
     }
 
     function liquidation_list() {
@@ -206,7 +201,7 @@
           $data_pro['idProduct'] = $rowproduct->idProduct;
           $this->Liquidation_Model->create_detail($data_pro);
         }
-        redirect("liquidation/charge_list");
+        redirect("liquidation/index");
       }
     }
 

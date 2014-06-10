@@ -35,6 +35,34 @@ app.service('sharedProperties', function () {
   };
 });
 
+
+// lateral Menu Controller
+app.controller('PanelController', function(){
+  this.tab = 1;
+  this.selectTab = function(setTab){
+    this.tab = setTab;
+  };
+  this.isSelected = function (checkTab) {
+    return this.tab === checkTab;
+  }
+});
+
+app.directive('chargeNew', function(){
+  return{
+    restrict: 'E',
+    templateUrl: 'create/'
+  };
+});
+
+app.directive('chargeList', function(){
+  return{
+    restrict: 'E',
+    templateUrl: 'charge_list/'
+  };
+});
+
+
+
 app.controller('LiquidationController', ['$http', function( $http ){
   $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
   var liquidation = this;

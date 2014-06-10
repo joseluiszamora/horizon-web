@@ -16,6 +16,7 @@
     <link href="<?php echo base_url(); ?>css/sb-admin.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>css/datepicker.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>css/chosen.css" rel="stylesheet">
+
 </head>
 <body>
 

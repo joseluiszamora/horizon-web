@@ -15,14 +15,3 @@
 <!-- ANGULAR -->
 <script src="<?php echo base_url(); ?>js/angular/angular.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>js/angular/app.js" type="text/javascript"></script>
-
-<script type="text/javascript">
- 	// chosen selects
-  	$(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
-
-	$('.datepicker').datepicker({
-		format: 'yyyy-mm-dd'
-	}).on('changeDate', function(ev){
-		$(this).datepicker('hide');
-	});
-</script>
