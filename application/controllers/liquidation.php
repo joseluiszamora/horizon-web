@@ -205,5 +205,34 @@
       }
     }
 
+
+    function pdf($liquidation) {
+      $this->load->helper('pdfexport_helper.php');
+      $data['title'] = 'PLANILLA DE CARGA DE PRODUCTOS';
+      $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
+      $data['lines'] = $this->get_lines($liquidation);
+      $data['category'] = 'liquidation';
+      $data['page'] = 'pdf_1';
+      $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/horizon/';
+      $templateView = $this->load->view('liquidation/template_pdf_1', $data, TRUE);
+      exportMeAsDOMPDF($templateView, "report");
+    }
+
+    /*function pdf($liquidation) {
+      $this->load->helper('pdfexport_helper.php');
+
+      $user_email = $this->Account_Model->get_email();
+      $user = $this->Account_Model->get_user_by_email($user_email);
+
+      
+      $data['title'] = 'PRODUCTOS';
+      $data['products'] = $products;
+      $data['category'] = 'liquidation';
+      $data['page'] = 'pdf_1';
+      $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/horizon/';
+      $templateView = $this->load->view('liquidation/template_pdf_1', $data, TRUE);
+      exportMeAsDOMPDF($templateView, "report");
+    }*/
+
   }
 ?>

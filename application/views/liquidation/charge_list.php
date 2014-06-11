@@ -31,6 +31,9 @@
               <?php echo anchor('liquidation/complete_charge/'.$row->idLiquidacion, 'Carga Completa', array('class' => 'btn btn-primary')); ?>
             </td>
             <td class="center">
+              <?php echo anchor('liquidation/pdf/'.$row->idLiquidacion, 'Pdf', array('class' => 'btn btn-primary')); ?>
+            </td>
+            <td class="center">
               <?php 
                 if ( $row->mark == "creado" || $row->mark == "cargado" || $row->mark == "cargaextra1" || $row->mark == "cargaextra2" || $row->mark == "cargaextra3" ) {
                   echo anchor('liquidation/add_products/'.$row->idLiquidacion, 'Ver', array('class' => 'btn btn-primary'));
