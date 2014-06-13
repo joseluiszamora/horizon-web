@@ -19,7 +19,7 @@
 
 <style type="text/css">
   body{
-    background-color: #FAFAFA;
+    background-color: #FAFAFA !important;
   }
   .link_home{
     color: #333333;

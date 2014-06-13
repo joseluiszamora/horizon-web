@@ -80,7 +80,7 @@
      */
       ?>
     </div>
-            <a title="Effortless vehicle &amp; fleet management" href="<?php echo base_url(); ?>" class="brand"><img width="135" src="<?php echo base_url(); ?>img/logo_horizon.png" alt="Fleetio Logo"></a>
+            <a title="Inicio" href="<?php echo base_url()."index.php/home"; ?>" class="brand"><img width="135" src="<?php echo base_url(); ?>img/logo_horizon.png" alt="Fleetio Logo"></a>
 
             <ul class="nav nav-pills" style="margin-top:15px;">
               <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'usuarios')){
