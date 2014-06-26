@@ -12,6 +12,15 @@
     ?>
       <fieldset>
         <div class="form-group">
+          <label for="distributor" class="control-label col-xs-2">Ciudad</label>
+          <div class="col-xs-7">
+            <?php
+              echo form_dropdown('city', $cities, '', 'class="chosen-select form-control" ');
+            ?>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label for="distributor" class="control-label col-xs-2">Distribuidor</label>
           <div class="col-xs-7">
             <?php

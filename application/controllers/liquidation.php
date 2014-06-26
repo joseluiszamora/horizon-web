@@ -9,6 +9,8 @@
       $this->load->model('Product_Model');
       $this->load->model('User_Model');
       $this->load->model('Liquidation_Model');
+      $this->load->model('City_Model');
+      $this->load->model('Area_Model');
 
       if (!($this->Account_Model->logged_in() === TRUE)) {
         redirect('account/login');
@@ -25,7 +27,35 @@
 
     function create() {
       $data['distributor'] = $this->User_Model->get_users_and_zones();
-      $this->load->view('liquidation/create', $data); 
+      $data['cities'] = $this->City_Model->get_cities($this->Account_Model->get_profile());
+      $areas = $this->Area_Model->report("1", 'zona.idZona');
+      $area_list = $this->Area_Model->get_area_list("all", "1");
+
+      $dropdown_list = array();
+      foreach ($areas as $row){
+        if ($row->Estado == "1" && $row->level == "0"){
+          $dropdown = array();
+          $dropdown[0] = 'Seleccione Zona';
+          foreach ($area_list as $row_area){
+            if ($row_area->Estado == "1" && $row_area->level == "1" && $row_area->parent == $row->idZona){
+              $dropdown[$row_area->idZona] = $row_area->Descripcion;
+            }
+          }
+          //$dropdown_list.push($dropdown);
+          array_push($dropdown_list, $dropdown);
+        }
+      }
+      print_r($dropdown_list);
+
+      //print_r($area_list);
+/*
+      
+      $area_list = $this->Area_Model->get_area_list("all", "1");
+      print_r($data);
+      foreach ($area_list as $row_area){
+      }
+*/
+      //$this->load->view('liquidation/create', $data); 
     }
 
     function charge_list() {

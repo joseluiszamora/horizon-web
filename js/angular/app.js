@@ -1,5 +1,5 @@
-//var url = "http://localhost/horizon/index.php/";
-var url = "https://mariani.bo/horizon-sc/index.php/";
+var url = "http://localhost/horizon/index.php/";
+//var url = "https://mariani.bo/horizon-sc/index.php/";
 
 var idliquidation = $("#idLiquidation").html();
 var mark = $("#markLiquidation").html();
@@ -50,14 +50,14 @@ app.controller('PanelController', function(){
 app.directive('chargeNew', function(){
   return{
     restrict: 'E',
-    templateUrl: 'create/'
+    templateUrl: 'liquidation/create/'
   };
 });
 
 app.directive('chargeList', function(){
   return{
     restrict: 'E',
-    templateUrl: 'charge_list/'
+    templateUrl: 'liquidation/charge_list/'
   };
 });
 
