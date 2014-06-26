@@ -1554,7 +1554,7 @@ textarea.input-lg, select.input-lg[multiple] {
 .has-warning .form-control-feedback {
     color: #8A6D3B;
 }
-.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline {
+.has-error .help-block, .has-error.control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline {
     color: #A94442;
 }
 .has-error .form-control {

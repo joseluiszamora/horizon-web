@@ -38,7 +38,7 @@ app.service('sharedProperties', function () {
 
 // lateral Menu Controller
 app.controller('PanelController', function(){
-  this.tab = 1;
+  this.tab = 2;
   this.selectTab = function(setTab){
     this.tab = setTab;
   };
@@ -50,14 +50,14 @@ app.controller('PanelController', function(){
 app.directive('chargeNew', function(){
   return{
     restrict: 'E',
-    templateUrl: 'liquidation/create/'
+    templateUrl: 'create/'
   };
 });
 
 app.directive('chargeList', function(){
   return{
     restrict: 'E',
-    templateUrl: 'liquidation/charge_list/'
+    templateUrl: 'charge_list/'
   };
 });
 

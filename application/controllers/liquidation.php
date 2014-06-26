@@ -30,32 +30,23 @@
       $data['cities'] = $this->City_Model->get_cities($this->Account_Model->get_profile());
       $areas = $this->Area_Model->report("1", 'zona.idZona');
       $area_list = $this->Area_Model->get_area_list("all", "1");
-
+      
       $dropdown_list = array();
       foreach ($areas as $row){
         if ($row->Estado == "1" && $row->level == "0"){
           $dropdown = array();
-          $dropdown[0] = 'Seleccione Zona';
+          $dropdown[0] = 'Seleccione Ruta';
           foreach ($area_list as $row_area){
             if ($row_area->Estado == "1" && $row_area->level == "1" && $row_area->parent == $row->idZona){
               $dropdown[$row_area->idZona] = $row_area->Descripcion;
             }
           }
-          //$dropdown_list.push($dropdown);
-          array_push($dropdown_list, $dropdown);
+          $dropdown_list[$row->idZona] = $dropdown;
         }
       }
-      print_r($dropdown_list);
+      $data['dropdown_list'] = $dropdown_list;
+      $this->load->view('liquidation/create', $data); 
 
-      //print_r($area_list);
-/*
-      
-      $area_list = $this->Area_Model->get_area_list("all", "1");
-      print_r($data);
-      foreach ($area_list as $row_area){
-      }
-*/
-      //$this->load->view('liquidation/create', $data); 
     }
 
     function charge_list() {

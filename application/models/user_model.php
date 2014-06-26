@@ -208,15 +208,25 @@
       $this->db->where('users.NivelAcceso !=', 1);
 
       $query = $this->db->get();
+      $drop = '<select class="form-control" name="distributor"><option value="0">Seleccione Distribuidor</option>';
+      
+      $result = $query->result_array();
+      foreach ($result as $r) {
+        $drop .= '<option data-zone="'.$r['idZona'].'" value="'.$r['idUser'].'">'.$r['Nombre']." ".$r['Apellido'].'</option>';
+        //$dropdown["_".$r['idZona']] = ;
+      }
+
+      $drop .= '</select>';
+  /*
       $dropdown = array();
       $dropdown[0] = 'Seleccione Usuario';
 
       $result = $query->result_array();
       foreach ($result as $r) {
-        $dropdown[$r['idUser']] = $r['Nombre']." ".$r['Apellido'];
+        $dropdown["_".$r['idZona']] = $r['Nombre']." ".$r['Apellido'];
       }
-
-      return $dropdown;
+*/
+      return $drop;
     }
 
 
