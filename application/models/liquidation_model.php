@@ -15,9 +15,23 @@ class Liquidation_model extends CI_Model {
   }
 
   function get($id) {
-    $this->db->select('*');
+    $this->db->select('
+      liquidacion.idLiquidacion,
+      liquidacion.fechaRegistro,
+      liquidacion.horaRegistro,
+      users.Nombre,
+      users.Apellido,
+      liquidacion.detalle,
+      liquidacion.fechaFin,
+      liquidacion.horaFin,
+      liquidacion.mark,
+      liquidacion.status,
+      zona.Descripcion
+    ');
     $this->db->from('liquidacion');
-    $this->db->where(array('idLiquidacion'=>$id,'status'=>'active'));
+    $this->db->join('users', 'users.idUser = liquidacion.idUser');
+    $this->db->join('zona', 'zona.idZona = liquidacion.ruta');
+    $this->db->where(array('liquidacion.idLiquidacion'=>$id,'status'=>'active'));
     $query = $this->db->get();
     return $query->result();
   }
@@ -55,27 +69,41 @@ class Liquidation_model extends CI_Model {
     return $query->result();
   }
 
-
   function report($status="active", $mark="all") {
     $this->db->select(
       'liquidacion.idLiquidacion, 
       liquidacion.fechaRegistro, 
       liquidacion.horaRegistro, 
-      liquidacion.idUser, 
+      users.Nombre,
+      users.Apellido,
       liquidacion.ruta, 
       liquidacion.detalle,
       liquidacion.fechaFin,
       liquidacion.horaFin,
       liquidacion.mark,
-      liquidacion.status'
+      liquidacion.status,
+      zona.Descripcion'
     );
     $this->db->from('liquidacion');
+    $this->db->join('users', 'users.idUser = liquidacion.idUser');
+    $this->db->join('zona', 'zona.idZona = liquidacion.ruta');
 
     if(isset($status) AND $status != ""){
       $this->db->where('liquidacion.status', $status);
     }
+
     if(isset($mark) AND $mark != "all"){
-      $this->db->where('liquidacion.mark', $mark);
+      if($mark == "charges"){
+        $this->db->where('liquidacion.mark', "creado");
+        $this->db->or_where('liquidacion.mark', "cargado");
+        $this->db->or_where('liquidacion.mark', "cargaextra1");
+        $this->db->or_where('liquidacion.mark', "cargaextra2");
+        $this->db->or_where('liquidacion.mark', "cargaextra3");
+      }elseif ($mark == "devolutions") {
+        $this->db->where('liquidacion.mark', "cargafinal");
+      }else{
+        $this->db->where('liquidacion.mark', $mark);
+      }
     }
 
     $query = $this->db->get();
@@ -83,10 +111,24 @@ class Liquidation_model extends CI_Model {
   }
 
   function count($mark="creado"){
-    if (isset($mark) && $mark != "all" ) {
-      $this->db->like('mark', $mark);
-    }
     $this->db->from('liquidacion');
+    $this->db->where('status', "active");
+
+    if (isset($mark) && $mark != "all" ) {
+       if($mark == "charges"){
+        $this->db->where('mark', "creado");
+        $this->db->or_where('mark', "cargado");
+        $this->db->or_where('mark', "cargaextra1");
+        $this->db->or_where('mark', "cargaextra2");
+        $this->db->or_where('mark', "cargaextra3");
+      }elseif ($mark == "devolutions") {
+        $this->db->where('mark', "cargafinal");
+      }else{
+        $this->db->where('mark', $mark);
+      }
+    }
+
+
     return $this->db->count_all_results();
   }
 

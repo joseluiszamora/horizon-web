@@ -16,12 +16,12 @@
       <div style="display:none;" id="idLiquidation"><?php echo $liquidation[0]->idLiquidacion;?></div>
       <div class="form-group col-md-4 col-xs-4">
         <label for="exampleInputEmail1">Distribuidor</label>
-        <?php echo $liquidation[0]->idUser; ?>
+        <?php echo $liquidation[0]->Nombre." ".$liquidation[0]->Apellido; ?>
       </div>
 
       <div class="form-group col-md-4 col-xs-4">
         <label for="exampleInputEmail1">Ruta</label>
-        <?php echo $liquidation[0]->ruta; ?>
+        <?php echo $liquidation[0]->Descripcion; ?>
       </div>
 
       <div class="form-group col-md-4 col-xs-4">

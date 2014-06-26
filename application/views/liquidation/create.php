@@ -4,6 +4,26 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="modalConfirmSave" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="row" >
   <div class="col-md-offset-1 col-md-9 form-horizontal">
     <?php
@@ -179,13 +199,29 @@
     }
 
     if ($flag) {
-      console.log($distribval);
+      var url = "http://localhost/horizon/index.php/";
+      $desc = $('textarea[name="desc"]').val();
+      $lastliquid = $('#lastliquid').is( ":checked");
+      $noregular = $('#noregularproducts').is( ":checked");
+      /*console.log($distribval);
       console.log($zoneval);
       console.log($dateval);
-      
-      console.log($('textarea[name="desc"]').val());
-      console.log($('#lastliquid').is( ":checked"));
-      console.log($('#noregularproducts').is( ":checked"));
+      console.log($desc);
+      console.log($lastliquid);
+      console.log($noregular);
+*/
+
+      $.ajax({
+        type: "POST",
+        url: url+'liquidation/saved/',
+        data: 'distributor='+$distribval+'&route='+$zoneval+'&date='+$dateval+'&desc='+$desc+'&lastliquid='+$lastliquid+'&noregular='+$noregular,
+        
+        async: false,
+        cache: false
+      }).done(function( data ) {
+        //$("#modalConfirmSave").modal("show");
+        window.location.href = url + "liquidation/charge_list";
+      });
     };
   });
 </script>

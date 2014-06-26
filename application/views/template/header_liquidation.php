@@ -17,6 +17,17 @@
     <link href="<?php echo base_url(); ?>css/datepicker.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>css/chosen.css" rel="stylesheet">
 
+    <!-- Core Scripts  -->
+<script src="<?php echo base_url(); ?>js/jquery-1.11.0.min.js"></script>
+<script src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="<?php echo base_url(); ?>js/sb-admin.js"></script>
+<script src="<?php echo base_url(); ?>js/chosen.jquery.js"></script>
+<script src="<?php echo base_url(); ?>js/bootstrap-datepicker.js"></script>
+
+<!-- ANGULAR -->
+<script src="<?php echo base_url(); ?>js/angular/angular.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>js/angular/app.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -54,3 +65,62 @@
       </ul>
 
     </nav>
+
+
+    <div class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+      <!--<ul class="nav" id="side-menu">
+        <li ng-class="{active: tab.isSelected(1)}">
+          <a href ng-click="tab.selectTab(1)" ><i class="fa fa-pencil-square-o fa-fw"></i> Estadisticas</a>
+        </li>
+
+        <li ng-class="{active: tab.isSelected(2)}">
+          <a href ng-click="tab.selectTab(2)" ><i class="fa fa-pencil-square-o fa-fw"></i> Carga Nueva</a>
+        </li>
+
+        <li ng-class="{active: tab.isSelected(3)}">
+          <a href ng-click="tab.selectTab(3)"><i class="fa fa-pencil-square-o fa-fw"></i> Cargas Realizadas</a>
+        </li>
+
+        <li ng-class="{active: tab.isSelected(4)}">
+          <a href ng-click="tab.selectTab(4)"><i class="fa fa-pencil-square-o fa-fw"></i> Liquidaciones Pendientes</a>
+        </li>
+      </ul>-->
+
+      <ul class="nav" id="side-menu">
+        <li>
+          <?php 
+            echo anchor('liquidation', '<i class="fa fa-pencil-square-o fa-fw"></i> Estadisticas', array('')); 
+          ?>
+        </li>
+        <li>
+          <?php 
+            echo anchor('liquidation/create', '<i class="fa fa-pencil-square-o fa-fw"></i> Carga Nueva', array('')); 
+          ?>
+        </li>
+
+        <li>
+          <?php 
+            echo anchor('liquidation/charge_list', '<i class="fa fa-pencil-square-o fa-fw"></i> Cargas Realizadas
+            <span class="badge">'.$this->Liquidation_Model->count("charges").'</span>', array('')); 
+          ?>
+        </li>
+
+        <li>
+          <?php 
+            echo anchor('liquidation/devolutions', '<i class="fa fa-pencil-square-o fa-fw"></i> Cargas Completas
+            <span class="badge">'.$this->Liquidation_Model->count("devolutions").'</span>', array('')); 
+          ?>
+        </li>
+
+        <li>
+          <?php 
+            echo anchor('liquidation/liquidation_list', '<i class="fa fa-pencil-square-o fa-fw"></i> Liquidaciones Pendientes
+            <span class="badge">'.$this->Liquidation_Model->count("liquidation").'</span>', array('')); 
+          ?>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="page-wrapper">

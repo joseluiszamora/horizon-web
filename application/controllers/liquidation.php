@@ -45,14 +45,26 @@
         }
       }
       $data['dropdown_list'] = $dropdown_list;
-      $this->load->view('liquidation/create', $data); 
 
+
+      $data['category'] = 'liquidation';
+      $data['page'] = 'create';
+      $this->load->view('template/template_liquidation', $data);
     }
 
     function charge_list() {
       // creado, cargado, cargaextra1, cargaextra2, cargaextra3, cargafinal
-      $data['charges'] = $this->Liquidation_Model->report("active", "all");
-      $this->load->view('liquidation/charge_list', $data); 
+      $data['charges'] = $this->Liquidation_Model->report("active", "charges");
+      $data['category'] = 'liquidation';
+      $data['page'] = 'charge_list';
+      $this->load->view('template/template_liquidation', $data); 
+    }
+
+    function devolutions() {
+      $data['charges'] = $this->Liquidation_Model->report("active", "devolutions");
+      $data['category'] = 'liquidation';
+      $data['page'] = 'devolution_list';
+      $this->load->view('template/template_liquidation', $data); 
     }
 
     function liquidation_list() {
@@ -73,6 +85,7 @@
       $data['category'] = 'liquidation';
       $data['page'] = 'add_products';
       $this->load->view('template/template_liquidation', $data);  
+      //print_r($data);
     }
 
     function devolution($liquidation) {
@@ -91,8 +104,10 @@
 
     function complete_charge($liquidation) {
       $this->Liquidation_Model->clean_products_without_charges($liquidation);
-      $data['mark'] = "devolution";
+      $data['mark'] = "cargafinal";
       $this->Liquidation_Model->update($data, $liquidation);
+
+      redirect("liquidation/charge_list");
     }
 
     function get_lines($idLiquidation){
@@ -171,22 +186,19 @@
           $this->Liquidation_Model->update_detail($data_in, $rowProduct['idDetalleLiquidacion']);
         }
       }
-      
+
       if ($data['mark'] == "creado" ) {
         $data_liq['mark'] = "cargado";
-      }
-      if ($data['mark'] == "cargado" ) {
+      }elseif ($data['mark'] == "cargado") {
         $data_liq['mark'] = "cargaextra1";
-      }
-      if ($data['mark'] == "cargaextra1" ) {
+      }elseif ($data['mark'] == "cargaextra1") {
         $data_liq['mark'] = "cargaextra2";
-      }
-      if ($data['mark'] == "cargaextra2" ) {
+      }elseif ($data['mark'] == "cargaextra2") {
         $data_liq['mark'] = "cargafinal";
       }else{
         $data_liq['mark'] = "liquidation";
       }
-
+      
       $this->Liquidation_Model->update($data_liq, $data['liquidation']);
     }
 
@@ -226,6 +238,30 @@
       }
     }
 
+    function saved() {
+      $data_in['fechaRegistro'] = $this->input->post('date');
+      $data_in['horaRegistro'] = mdate("%h:%i:%a");
+      $data_in['idUser'] = $this->input->post('distributor');
+      $data_in['ruta'] = $this->input->post('route');
+      $data_in['detalle'] = $this->input->post('desc');
+      $data_in['fechaFin'] = $this->input->post('date');
+      $data_in['horaFin'] = mdate("%h:%i:%a");
+      $data_in['status'] = "active";
+      $data_in['mark'] = "creado";
+
+      //save liquidation
+      $idLiquidacion = $this->Liquidation_Model->create($data_in);
+      $products = $this->Product_Model->report_android();
+      foreach ($products as $rowproduct){
+        // create liquidation detail for each product
+        $data_pro['idLiquidacion'] = $idLiquidacion;
+        $data_pro['idProduct'] = $rowproduct->idProduct;
+        $this->Liquidation_Model->create_detail($data_pro);
+      }
+      return true;
+      //redirect("liquidation/index");
+    }
+
 
     function pdf($liquidation) {
       $this->load->helper('pdfexport_helper.php');
@@ -239,6 +275,11 @@
       exportMeAsDOMPDF($templateView, "report");
     }
 
+    function deactive($liquidation) {
+      $data_liq['status'] = "deactive";
+      $this->Liquidation_Model->update($data_liq, $liquidation);
+      redirect("liquidation/charge_list");
+    }
     /*function pdf($liquidation) {
       $this->load->helper('pdfexport_helper.php');
 

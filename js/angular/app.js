@@ -1,8 +1,8 @@
 var url = "http://localhost/horizon/index.php/";
 //var url = "https://mariani.bo/horizon-sc/index.php/";
 
-var idliquidation = $("#idLiquidation").html();
-var mark = $("#markLiquidation").html();
+idliquidation = $("#idLiquidation").html();
+mark = $("#markLiquidation").html();
 
 var app = angular.module('myModule', []);
 
@@ -35,10 +35,9 @@ app.service('sharedProperties', function () {
   };
 });
 
-
 // lateral Menu Controller
 app.controller('PanelController', function(){
-  this.tab = 2;
+  this.tab = 1;
   this.selectTab = function(setTab){
     this.tab = setTab;
   };
@@ -46,7 +45,7 @@ app.controller('PanelController', function(){
     return this.tab === checkTab;
   }
 });
-
+/*
 app.directive('chargeNew', function(){
   return{
     restrict: 'E',
@@ -61,7 +60,7 @@ app.directive('chargeList', function(){
   };
 });
 
-
+*/
 
 app.controller('LiquidationController', ['$http', function( $http ){
   $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -69,17 +68,18 @@ app.controller('LiquidationController', ['$http', function( $http ){
   
   liquidation.lines = [ ];
 
-  liquidation.mark = mark;
+  liquidation.mark = $("#markLiquidation").html();
+  liquidation.idLiquidation = $("#idLiquidation").html();
   
-  $http.get(url + 'liquidation/get_lines/' + idliquidation).success(function(data){
+  $http.get(url + 'liquidation/get_lines/' + liquidation.idLiquidation).success(function(data){
     liquidation.lines = data;
   });
 
   this.saveAll = function () {
     var datasend = {  
       lines: liquidation.lines,
-      liquidation: idliquidation,
-      mark: mark
+      liquidation: $("#idLiquidation").html(),
+      mark: $("#markLiquidation").html()
     };
     $http.post(url + 'liquidation/save_lines', datasend).success(function (data, status, headers){
       window.location = url + "liquidation/charge_list";
@@ -252,6 +252,7 @@ var productControllerObj = function ($scope){
     $sum = 0;
     $sum += parseInt($product.previousDayP);
 
+    mark = $("#markLiquidation").html();
     switch(mark) {
     case "creado":
       $sum += parseInt($scope.productControllerObj.cargaP);
@@ -280,7 +281,7 @@ var productControllerObj = function ($scope){
     default:
       return 0;
     }
-
+    
     return $sum;
   };
 
@@ -288,6 +289,7 @@ var productControllerObj = function ($scope){
     $sum = 0;
     $sum += parseInt($product.previousDayU);
 
+    mark = $("#markLiquidation").html();
     switch(mark) {
     case "creado":
       $sum += parseInt($scope.productControllerObj.cargaU);
