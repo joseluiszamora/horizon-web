@@ -18,16 +18,16 @@
     <link href="<?php echo base_url(); ?>css/chosen.css" rel="stylesheet">
 
     <!-- Core Scripts  -->
-<script src="<?php echo base_url(); ?>js/jquery-1.11.0.min.js"></script>
-<script src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
-<script src="<?php echo base_url(); ?>js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="<?php echo base_url(); ?>js/sb-admin.js"></script>
-<script src="<?php echo base_url(); ?>js/chosen.jquery.js"></script>
-<script src="<?php echo base_url(); ?>js/bootstrap-datepicker.js"></script>
+    <script src="<?php echo base_url(); ?>js/jquery-1.11.0.min.js"></script>
+    <script src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url(); ?>js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="<?php echo base_url(); ?>js/sb-admin.js"></script>
+    <script src="<?php echo base_url(); ?>js/chosen.jquery.js"></script>
+    <script src="<?php echo base_url(); ?>js/bootstrap-datepicker.js"></script>
 
-<!-- ANGULAR -->
-<script src="<?php echo base_url(); ?>js/angular/angular.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>js/angular/app.js" type="text/javascript"></script>
+    <!-- ANGULAR -->
+    <script src="<?php echo base_url(); ?>js/angular/angular.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>js/angular/app.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -88,6 +88,11 @@
       </ul>-->
 
       <ul class="nav" id="side-menu">
+        <li>
+          <?php 
+            echo anchor('home', '<i class="glyphicon glyphicon-home"></i>  Inicio', array('')); 
+          ?>
+        </li>
         <li>
           <?php 
             echo anchor('liquidation', '<i class="fa fa-pencil-square-o fa-fw"></i> Estadisticas', array('')); 

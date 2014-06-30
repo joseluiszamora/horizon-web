@@ -120,6 +120,7 @@
 
       } else {
         $data_in['Descripcion'] = $this->input->post('desc');
+        $data_in['uxplinea'] = $this->input->post('uxplinea');
 
         // Check if Save or Edit
         if($this->input->post('form_action') == "save") {

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-12">
-    <h3 class="page-header">LIQUIDACIÓN DE PRODUCTOS</h3>
+    <h3 class="page-header">VER</h3>
   </div>
 </div>
 
@@ -10,12 +10,12 @@
       <div style="display:none;" id="idLiquidation"><?php echo $liquidation[0]->idLiquidacion;?></div>
       <div class="form-group col-md-4 col-xs-4">
         <label for="exampleInputEmail1">Distribuidor</label>
-        <?php echo $liquidation[0]->idUser; ?>
+        <?php echo $liquidation[0]->Nombre." ".$liquidation[0]->Apellido; ?>
       </div>
 
       <div class="form-group col-md-4 col-xs-4">
         <label for="exampleInputEmail1">Ruta</label>
-        <?php echo $liquidation[0]->ruta; ?>
+        <?php echo $liquidation[0]->Descripcion; ?>
       </div>
 
       <div class="form-group col-md-4 col-xs-4">
@@ -46,32 +46,6 @@
               <input type="checkbox" id="{{ lineName.idLine }}" ng-model="lineName.show">
             </li>            
           </ul>
-
-          <div style="float:right;">
-            <!-- Button trigger modal -->
-            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Guardar</button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Guardar</h4>
-                  </div>
-                  <div class="modal-body">
-                    <p>Atención!!! los cambios guardados no se podran modificar</p>
-                    <p>Esta seguro???</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button ng-click="liquidation.saveAll()" type="button" class="btn btn-primary">Guardar cambios</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
         </div>
 
         <div class="panel-body">
@@ -101,47 +75,26 @@
                               <div class="section">P</div>
                               <div class="section">U</div>
                             </th>
-                            <th colspan="2" class="title">
-                              <div class="main">C. EXTRA 1</div>
+                            <th colspan="2" class="title" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'" >
+                              <div class="main">CARGA EXTRA 1</div>
                               <div class="section">P</div>
                               <div class="section">U</div>
                             </th>
-                            <th colspan="2" class="title">
-                              <div class="main">C. EXTRA 2</div>
+                            <th colspan="2" class="title" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">
+                              <div class="main">CARGA EXTRA 2</div>
                               <div class="section">P</div>
                               <div class="section">U</div>
                             </th>
-                            <th colspan="2" class="title">
-                              <div class="main">C. EXTRA 3</div>
-                              <div class="section">P</div>
-                              <div class="section">U</div>
-                            </th>
-                            <th colspan="2" class="title" >
-                              <div class="main">TOTAL C.</div>
+                            <th colspan="2" class="title" ng-show="liquidation.mark === 'cargaextra3'">
+                              <div class="main">CARGA EXTRA 3</div>
                               <div class="section">P</div>
                               <div class="section">U</div>
                             </th>
                             <th colspan="2" class="title" >
-                              <div class="main">DEVOLUCIONES</div>
+                              <div class="main">TOTAL CARGADO</div>
                               <div class="section">P</div>
                               <div class="section">U</div>
                             </th>
-                            <th colspan="2" class="title" >
-                              <div class="main">PRESTAMOS</div>
-                              <div class="section">P</div>
-                              <div class="section">U</div>
-                            </th>
-                            <th colspan="2" class="title" >
-                              <div class="main">BONIFICACIÓN</div>
-                              <div class="section">P</div>
-                              <div class="section">U</div>
-                            </th>
-                            <th colspan="2" class="title" >
-                              <div class="main">VENTA</div>
-                              <div class="section">P</div>
-                              <div class="section">U</div>
-                            </th>
-                            <th class="title">TOTAL (Bs)</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -157,40 +110,22 @@
                             <td class="unity"> {{ product.chargeU }} </td>
 
                             <!-- extra charge 1-->
-                            <td class="unity">{{ product.chargeExtraP1 }}</td>
-                            <td class="unity">{{ product.chargeExtraU1 }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP1 }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraU1 }}</td>
 
                             <!-- extra charge 2-->
-                            <td class="unity">{{ product.chargeExtraP2 }}</td>
-                            <td class="unity">{{ product.chargeExtraU2 }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP2 }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraU2 }}</td>
 
                             <!-- extra charge 3-->
-                            <td class="unity">{{ product.chargeExtraP3 }}</td>
-                            <td class="unity">{{ product.chargeExtraU3 }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP3 }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra3'">{{ product.chargeExtraU3 }}</td>
 
                             <!-- total charge -->
                             <td class="unity info">{{ getCargaP(product) }}</td>
                             <td class="unity info">{{ getCargaU(product) }}</td>
-
-                            <!-- devolution charge -->
-                            <td class="unity">{{ product.devolutionP }}</td>
-                            <td class="unity">{{ product.devolutionU }}</td>
-
-                            <!-- devolution prestamos -->
-                            <td class="unity">{{ product.prestamosP }}</td>
-                            <td class="unity">{{ product.prestamosU }}</td>
-
-                            <!-- devolution bonificacion -->
-                            <td class="unity">{{ product.bonosP }}</td>
-                            <td class="unity">{{ product.bonosU }}</td>
-                            
-                            <!-- TOTAL venta -->
-                            <td class="unity">{{ getVentaP(product) }}</td>
-                            <td class="unity">{{ getVentaU(product) }}</td>
-
-                            <!-- total venta -->
-                            <td class="unity">{{ getTotalAmmount(product) }}</td>
                           </tr>
+
                         </tbody>
                         <tfooter> 
                           <tr class="footer">
@@ -201,31 +136,17 @@
                             <td class="unity">{{ getCargaPLine(line.products) }}</td>
                             <td class="unity">{{ getCargaULine(line.products) }}</td>
                             
-                            <td class="unity">{{ getCargaExtra1PLine(line.products) }}</td>
-                            <td class="unity">{{ getCargaExtra1ULine(line.products) }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra1PLine(line.products) }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra1ULine(line.products) }}</td>
 
-                            <td class="unity">{{ getCargaExtra2PLine(line.products) }}</td>
-                            <td class="unity">{{ getCargaExtra2ULine(line.products) }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra2PLine(line.products) }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra2ULine(line.products) }}</td>
 
-                            <td class="unity">{{ getCargaExtra3PLine(line.products) }}</td>
-                            <td class="unity">{{ getCargaExtra3ULine(line.products) }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra3'">{{ getCargaExtra3PLine(line.products) }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'cargaextra3'">{{ getCargaExtra3ULine(line.products) }}</td>
 
                             <td class="unity">{{ getTotalPLine(line.products) }}</td>
                             <td class="unity">{{ getTotalULine(line.products) }}</td>
-
-                            <td class="unity">{{ getDevolutionPLine(line.products) }}</td>
-                            <td class="unity">{{ getDevolutionULine(line.products) }}</td>
-
-                            <td class="unity">0</td>
-                            <td class="unity">0</td>
-
-                            <td class="unity">0</td>
-                            <td class="unity">0</td>
-
-                            <td class="unity">0</td>
-                            <td class="unity">0</td>
-
-                            <td class="unity success">{{ getAmmountLine(line.products) }}</td>
                           </tr>
                         </tfooter>
                       </table>

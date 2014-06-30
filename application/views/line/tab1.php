@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th>Descripción</th>
+      <th>Unidades por Paquete</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -9,6 +10,7 @@
     <?php foreach ($lines as $row) { ?>
       <tr>
         <td class="text-info areaDesc"><strong><?php echo $row->Descripcion; ?></strong></td>
+        <td class="text-info areaDesc"><strong><?php echo $row->uxplinea; ?></strong></td>
         <td>
           <div class="btnActionsForm2">
             <?php 

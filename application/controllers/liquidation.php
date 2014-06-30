@@ -88,6 +88,13 @@
       //print_r($data);
     }
 
+    function show($liquidation) {
+      $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
+      $data['category'] = 'liquidation';
+      $data['page'] = 'show';
+      $this->load->view('template/template_liquidation', $data);
+    }
+
     function devolution($liquidation) {
       $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
       $data['category'] = 'liquidation';
@@ -163,13 +170,77 @@
         $line = array(
           'idLine'   => $rowline->idLine,
           'show'     => true,
-          'nameLine' => $rowline->Descripcion,          
+          'nameLine' => $rowline->Descripcion,
+          'lineUxp' => $rowline->uxplinea,
           'products' => $productsContainer
         ); 
         array_push($mainArray, $line);
       }
 
       echo json_encode($mainArray);
+    }
+
+    function get_lines_view($idLiquidation){
+      $mainArray = array();
+      $line = $this->Line_Model->get_all_json();
+
+      foreach ($line as $rowline) {
+        $productsContainer = array();
+        
+        $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine);
+        
+        foreach ($products as $rowproduct){
+          $arrayProducts = array(
+            'idDetalleLiquidacion'     => $rowproduct->idDetalleLiquidacion,
+            'idProduct'     => $rowproduct->idProduct,
+            'volume'        => $rowproduct->volume,
+            'Nombre'        => $rowproduct->Nombre,
+            'price'        => $rowproduct->price,
+            'uxp'        => $rowproduct->uxp,
+            'previousDayP'  => floor($rowproduct->previousDay / $rowproduct->uxp),
+            'previousDayU'  => round(($rowproduct->previousDay % $rowproduct->uxp), 0),
+            'chargeP'       => floor($rowproduct->charge / $rowproduct->uxp),
+            'chargeU'       => round(($rowproduct->charge % $rowproduct->uxp), 0),
+            'chargeExtraP1'  => floor($rowproduct->chargeExtra1 / $rowproduct->uxp),
+            'chargeExtraU1'  => round(($rowproduct->chargeExtra1 % $rowproduct->uxp), 0),
+            'chargeExtraP2'  => floor($rowproduct->chargeExtra2 / $rowproduct->uxp),
+            'chargeExtraU2'  => round(($rowproduct->chargeExtra2 % $rowproduct->uxp), 0),
+            
+            'chargeExtraP3'  => floor($rowproduct->chargeExtra3 / $rowproduct->uxp),
+            'chargeExtraU3'  => round(($rowproduct->chargeExtra3 % $rowproduct->uxp), 0),
+
+            'chargeTotalP'  => 0,
+            'chargeTotalU'  => 0,
+
+            'devolutionP'  => floor($rowproduct->devolucion / $rowproduct->uxp),
+            'devolutionU'  => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
+            
+            'prestamosP'    => 0,
+            'prestamosU'    => 0,
+            
+            'bonosP'        => 0,
+            'bonosU'        => 0,
+            
+            'ventaP'        => 0,
+            'ventaU'        => 0,
+
+            'totalAmmount'  => 0
+          );
+
+          array_push($productsContainer, $arrayProducts);
+        }
+
+        $line = array(
+          'idLine'   => $rowline->idLine,
+          'show'     => true,
+          'nameLine' => $rowline->Descripcion,
+          'lineUxp' => $rowline->uxplinea,
+          'products' => $productsContainer
+        ); 
+        array_push($mainArray, $line);
+      }
+
+      return $mainArray;
     }
 
     function save_lines(){
@@ -267,10 +338,11 @@
       $this->load->helper('pdfexport_helper.php');
       $data['title'] = 'PLANILLA DE CARGA DE PRODUCTOS';
       $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
-      $data['lines'] = $this->get_lines($liquidation);
+      $data['lines'] = $this->get_lines_view($liquidation);
       $data['category'] = 'liquidation';
       $data['page'] = 'pdf_1';
       $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/horizon/';
+      //$this->load->view('liquidation/template_pdf_1', $data);
       $templateView = $this->load->view('liquidation/template_pdf_1', $data, TRUE);
       exportMeAsDOMPDF($templateView, "report");
     }

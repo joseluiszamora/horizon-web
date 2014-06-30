@@ -29,7 +29,7 @@
             <td class="center"><?php echo $row->mark; ?></td>
             <td class="center"><?php echo $row->detalle; ?></td>
             <td class="center">
-              <?php echo anchor('liquidation/complete_charge/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-ok"></span> Carga Completa', array('class' => 'btn btn-success')); ?>
+              <?php echo anchor('liquidation/devolution/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-ok"></span> Devoluciones', array('class' => 'btn btn-success')); ?>
             </td>
             <td class="center">
               <?php echo anchor('liquidation/pdf/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-download-alt"></span> Pdf', array('class' => 'btn btn-info')); ?>

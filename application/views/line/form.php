@@ -36,7 +36,19 @@
 
                   echo form_error('desc');
                 ?>
+              </div>
+            </div>
+            <div class="control-group selected_2">
+              <label class="control-label" for="name">Unidades por Paquete</label>
+              <div class="controls">
+                <?php
+                  if (isset($line))
+                    echo form_input(array('name' => 'uxplinea', 'class' => 'span3', 'value' => $line->uxplinea));
+                  else
+                    echo form_input(array('name' => 'uxplinea', 'class' => 'span3'), set_value('uxplinea'));
 
+                  echo form_error('uxplinea');
+                ?>
               </div>
             </div>
 

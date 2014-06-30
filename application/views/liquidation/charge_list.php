@@ -14,10 +14,7 @@
           <th class="center">Ruta</th>
           <th class="center">Estado</th>
           <th class="center">Detalle</th>
-          <th class="center">&nbsp;</th>
-          <th class="center">&nbsp;</th>
-          <th class="center">&nbsp;</th>
-          <th class="center">&nbsp;</th>  
+          <th class="center" colspan="4">&nbsp;</th>
         </tr>
       </thead>
       <tbody id="diaryTable">
@@ -42,7 +39,7 @@
               ?>
             </td>
             <td class="center">
-              <?php if ($row->mark == "creado") { ?>
+              <?php if ($row->mark != "creado") { ?>
                 <button class="btn btn-success" data-toggle="modal" data-target="<?php echo "#myModalComplete".$row->idLiquidacion;?>">
                   <span class="glyphicon glyphicon-ok"></span> Carga Completa
                 </button>
