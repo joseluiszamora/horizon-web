@@ -89,6 +89,21 @@ class Line_model extends CI_Model {
       $this->db->where('idCustomer', $cli);
       $this->db->update('Customer', $data);
     }
+
+    function get_no_regular_lines() {
+      $dropdown = array();
+      $this->db->select('*');
+      $this->db->from('line');
+      $this->db->order_by('Descripcion', "asc");
+      $this->db->where('regular', "no");
+      $query = $this->db->get();
+      
+      $result = $query->result_array();
+      foreach ($result as $r) {
+        $dropdown[$r['idLine']] = $r['Descripcion'];
+      }
+      return $dropdown;
+    }
 }
 
 ?>

@@ -26,8 +26,9 @@
     }
 
     function create() {
-      $data['distributor'] = $this->User_Model->get_users_and_zones();
+      $data['distributor'] = $this->Liquidation_Model->get_enabled_users_and_zones();
       $data['cities'] = $this->City_Model->get_cities($this->Account_Model->get_profile());
+      $data['linenoregular'] = $this->Line_Model->get_no_regular_lines();
       $areas = $this->Area_Model->report("1", 'zona.idZona');
       $area_list = $this->Area_Model->get_area_list("all", "1");
       
@@ -119,11 +120,10 @@
 
     function get_lines($idLiquidation){
       $mainArray = array();
-      $line = $this->Line_Model->get_all_json();
+      $line = $this->Liquidation_Model->get_lines_actives($idLiquidation);
 
       foreach ($line as $rowline) {
-        $productsContainer = array();
-        
+        $productsContainer = array();        
         $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine);
         
         foreach ($products as $rowproduct){
@@ -182,7 +182,7 @@
 
     function get_lines_view($idLiquidation){
       $mainArray = array();
-      $line = $this->Line_Model->get_all_json();
+      $line = $this->Line_Model->get_lines_actives();
 
       foreach ($line as $rowline) {
         $productsContainer = array();
@@ -320,17 +320,26 @@
       $data_in['status'] = "active";
       $data_in['mark'] = "creado";
 
-      //save liquidation
       $idLiquidacion = $this->Liquidation_Model->create($data_in);
-      $products = $this->Product_Model->report_android();
+      // add regular products
+      $products = $this->Product_Model->get_regular_products();
       foreach ($products as $rowproduct){
-        // create liquidation detail for each product
         $data_pro['idLiquidacion'] = $idLiquidacion;
         $data_pro['idProduct'] = $rowproduct->idProduct;
         $this->Liquidation_Model->create_detail($data_pro);
       }
-      return true;
-      //redirect("liquidation/index");
+
+      //add NO regular products
+      $lines = explode("***", $this->input->post('noregular'));
+      foreach ($lines as $line) {
+        $productsnoregular = $this->Product_Model->get_products_by_line($line);
+        foreach ($productsnoregular as $rowproduct){
+          $data_pro['idLiquidacion'] = $idLiquidacion;
+          $data_pro['idProduct'] = $rowproduct->idProduct;
+          $this->Liquidation_Model->create_detail($data_pro);
+        }
+      }
+      echo $idLiquidacion;
     }
 
 

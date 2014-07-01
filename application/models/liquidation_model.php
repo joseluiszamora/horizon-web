@@ -36,6 +36,38 @@ class Liquidation_model extends CI_Model {
     return $query->result();
   }
 
+
+  // get all users distributor, with his zones
+    function get_enabled_users_and_zones() {
+      $this->db->select(
+        'users.idUser,
+        users.Nombre, 
+        users.Apellido,
+        zona.idZona,
+        zona.Descripcion'
+      );
+      $this->db->from('users');
+      $this->db->join('zona', 'zona.idZona = users.idZona');
+      $this->db->order_by('idUser', "asc");
+      $this->db->where('users.NivelAcceso !=', 1);
+
+      $query = $this->db->get();
+      $drop = '<select class="form-control" name="distributor"><option value="0">Seleccione Distribuidor</option>';
+      
+      $result = $query->result_array();
+      foreach ($result as $r) {
+        // check if this user dont have pending liquidations
+        $this->db->like('liquidacion.idUser', $r['idUser']);
+        $this->db->from('liquidacion');
+        if ($this->db->count_all_results() <= 0) {
+          $drop .= '<option data-zone="'.$r['idZona'].'" value="'.$r['idUser'].'">'.$r['Nombre']." ".$r['Apellido']." ".$r['Apellido'].'</option>';
+        }
+      }
+
+      $drop .= '</select>';
+      return $drop;
+    }
+
   function get_detail_list($id, $line) {
     $this->db->select(
       'products.idProduct as idProduct,
@@ -65,6 +97,25 @@ class Liquidation_model extends CI_Model {
     $this->db->join('line', 'linevolume.idLine = line.idLine');
     $this->db->join('volume', 'linevolume.idVolume = volume.idVolume');
     $this->db->where(array( 'detalleliquidacion.idLiquidacion' => $id, 'line.idLine' => $line ));
+    $query = $this->db->get();
+    return $query->result();
+  }
+
+  function get_lines_actives($idLiquidation) {
+    $this->db->select(
+      'line.idLine,
+      line.Descripcion,
+      line.uxplinea,
+      line.regular
+      '
+    );
+
+    $this->db->from('detalleliquidacion');
+    $this->db->join('products', 'products.idProduct = detalleliquidacion.idProduct');
+    $this->db->join('linevolume', 'products.idLineVolume = linevolume.idLineVolume');
+    $this->db->join('line', 'linevolume.idLine = line.idLine');
+    $this->db->where('detalleliquidacion.idLiquidacion', $idLiquidation);
+    $this->db->group_by("line.idLine");
     $query = $this->db->get();
     return $query->result();
   }

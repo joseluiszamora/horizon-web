@@ -45,6 +45,24 @@ class Product_model extends CI_Model {
       return $query->result();
     }
 
+    function get_regular_products() {
+      $this->db->select(
+        'products.idProduct,
+        products.Nombre,
+        products.idLineVolume,
+        products.PrecioUnit,
+        products.uxp,
+        products.Descripcion'
+      );
+      $this->db->from('products');
+      $this->db->join('linevolume', 'products.idLineVolume = linevolume.idLineVolume');
+      $this->db->join('line', 'linevolume.idLine = line.idLine');
+      $this->db->where('products.Estado', '1');
+      $this->db->where('line.regular', 'si');
+      $query = $this->db->get();
+      return $query->result();
+    }
+
     function create($data_in) {
       if ($this->db->insert('products', $data_in)) {
         // Save log for this action
@@ -246,7 +264,24 @@ class Product_model extends CI_Model {
       return $query->result();
     }
 
-
+    function get_products_by_line($line=-1) {
+      $this->db->select(
+        'products.idProduct,
+        products.Nombre,
+        products.idLineVolume,
+        products.PrecioUnit,
+        products.uxp,
+        products.Descripcion'
+      );
+      $this->db->from('products');
+      $this->db->join('linevolume', 'products.idLineVolume = linevolume.idLineVolume');
+      $this->db->join('line', 'linevolume.idLine = line.idLine');
+      $this->db->where('products.Estado', '1');
+      $this->db->where('line.idLine', $line);
+      $query = $this->db->get();
+      return $query->result();
+    }
+    
     // get lines volumes dropdown
     function get_products_by_line_volume($line=-1, $volume=-1) {
       $this->db->select('*');

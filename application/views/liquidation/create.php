@@ -91,7 +91,7 @@
                   );
                   echo form_checkbox($data);
                 ?>
-                <b>Desea cargar la ultima liquidación?</b>
+                <b>NO cargar la ultima liquidación</b>
               </label>
             </div>
           </div>
@@ -116,6 +116,14 @@
           </div>
         </div>
 
+        <div class="form-group" id="noRegularSelect">
+          <div class="col-xs-offset-2 col-xs-10">
+            <?php
+              echo form_dropdown('noregular', $linenoregular, '', 'id="noregulardropdown" data-placeholder="Linea de productos no regulares..." class="chosen-select" multiple style="width:400px;"');
+            ?>
+          </div>
+        </div>
+
         <div class="form-group">
           <div class="col-xs-offset-2 col-xs-10">
             <input id="saveform" type="submit" value="Crear" name="submit" class="btn btn-primary">
@@ -129,13 +137,12 @@
   </div>
 </div>
 
-
-
 <script type="text/javascript">
   // chosen selects
   $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
 
   $(".routedropdown").hide();
+  $("#noRegularSelect").hide();
 
   var myDate = new Date();
   var prettyDate = myDate.getFullYear() + '-' + (myDate.getMonth()+1) + '-' + myDate.getDate();
@@ -150,9 +157,6 @@
   $('select[name="distributor"]').change(function(){
     $(".routedropdown").hide();
     $(".routedropdown").removeClass("selected");
-    //$("#" + $(this).val()).show();
-    //console.log($(this).attr("value"));
-    //console.log($(this).attr("data-zone"));
     $zoneid = $('select[name="distributor"]').find('option[value='+$(this).val()+']').attr("data-zone");
     $(".routedropdown[id="+$zoneid+"]").show();
     $(".routedropdown[id="+$zoneid+"]").addClass("selected");
@@ -160,7 +164,16 @@
 
   });
 
+  $('#noregularproducts').change(function() {
+    if ($(this).is(":checked")) {
+      $("#noRegularSelect").show();
+    }else{
+      $("#noRegularSelect").hide();
+    }
+  });
+
   $("#saveform").click(function(){
+    console.log("2222");
     $flag = false;
     // check distrib
     $distrib = $('select[name="distributor"]');
@@ -202,29 +215,33 @@
       $date.parents(".form-group").find("label").removeClass("has-error");
     }
 
+    // check no regular products
+    var noregulararray = "";
+    if ($('#noregularproducts').is( ":checked")) {
+      $('#noregulardropdown :selected').each(function(i, selected){ 
+        //noregulararray[i] = $(selected).text(); 
+        noregulararray += $(selected).val() + "***";
+      });
+    }
+
     if ($flag) {
-      var url = "http://localhost/horizon/index.php/";
+      //var url = "http://localhost/horizon/index.php/";
+      var url = "https://mariani.bo/horizon-sc/index.php/";
       $desc = $('textarea[name="desc"]').val();
       $lastliquid = $('#lastliquid').is( ":checked");
-      $noregular = $('#noregularproducts').is( ":checked");
-      /*console.log($distribval);
-      console.log($zoneval);
-      console.log($dateval);
-      console.log($desc);
-      console.log($lastliquid);
-      console.log($noregular);
-*/
+      //$noregular = $('#noregularproducts').is( ":checked");
 
       $.ajax({
         type: "POST",
         url: url+'liquidation/saved/',
-        data: 'distributor='+$distribval+'&route='+$zoneval+'&date='+$dateval+'&desc='+$desc+'&lastliquid='+$lastliquid+'&noregular='+$noregular,
+        data: 'distributor='+$distribval+'&route='+$zoneval+'&date='+$dateval+'&desc='+$desc+'&lastliquid='+$lastliquid+'&noregular='+noregulararray,
         
         async: false,
         cache: false
       }).done(function( data ) {
         //$("#modalConfirmSave").modal("show");
-        window.location.href = url + "liquidation/charge_list";
+        //console.log(url + "liquidation/charge_list/" + data);
+        window.location.href = url + "liquidation/add_products/" + data;
       });
     };
   });
@@ -233,5 +250,8 @@
 <style type="text/css">
   .chosen-single, .chosen-drop, .chosen-results{
     width: 400px !important;
+  }
+  .chosen-choices .search-field input{
+    height: 30px !important;
   }
 </style>
