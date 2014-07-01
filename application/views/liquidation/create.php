@@ -137,8 +137,12 @@
 
   $(".routedropdown").hide();
 
+  var myDate = new Date();
+  var prettyDate = myDate.getFullYear() + '-' + (myDate.getMonth()+1) + '-' + myDate.getDate();
+  $('.datepicker').val(prettyDate);
+  //2014-07-18
   $('.datepicker').datepicker({
-    format: 'yyyy-mm-dd'
+    format: 'yyyy-mm-dd',
   }).on('changeDate', function(ev){
     $(this).datepicker('hide');
   });
