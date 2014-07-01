@@ -319,6 +319,7 @@
       $data_in['horaFin'] = mdate("%h:%i:%a");
       $data_in['status'] = "active";
       $data_in['mark'] = "creado";
+      //$data_in['lastliquid'] = $this->input->post('lastliquid');
 
       $idLiquidacion = $this->Liquidation_Model->create($data_in);
       // add regular products
