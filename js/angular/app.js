@@ -120,79 +120,166 @@ var lineControllerObj = function ($scope, sharedProperties){
     });
     return $sum;
   };
-  $scope.getCargaPLine = function (products){
-    $sum = 0;
+  $scope.getCargaPLine = function (products, uxpline){
+    $sumCargaPLine = 0;
     angular.forEach(products, function(value) {
-      $sum += value.chargeP;
+      $sumCargaPLine += value.chargeP;
     });
+
+    if (uxpline > 0) {
+      $sumUlines = $scope.getCargaRealULine(products);
+      $sumCargaPLine += parseInt(Math.floor($sumUlines / uxpline));
+    }
+
+    return $sumCargaPLine;
+  };
+  $scope.getCargaULine = function (products, uxpline){
+    $sum = 0;
+    $sum += $scope.getCargaRealULine(products);
+
+    if (uxpline > 0) {
+      $sum = parseInt(Math.round($sum % uxpline));
+    };
+
     return $sum;
   };
-  $scope.getCargaULine = function (products){
+
+  $scope.getCargaRealULine = function (products){
     $sum = 0;
     angular.forEach(products, function(value) {
       $sum += value.chargeU;
     });
+
     return $sum;
   };
-  $scope.getCargaExtra1PLine = function (products){
-    $sum = 0;
+
+
+  $scope.getCargaExtra1PLine = function (products, uxpline){
+    $sumCargaExtraPLine = 0;
     angular.forEach(products, function(value) {
-      $sum += value.chargeExtraP1;
+      $sumCargaExtraPLine += value.chargeExtraP1;
     });
+
+    if (uxpline > 0) {
+      $sumCargaExtraPLine += parseInt(Math.floor(($scope.getCargaExtra1RealULine(products)) / uxpline));
+    }
+
+    return $sumCargaExtraPLine;
+  };
+  $scope.getCargaExtra1ULine = function (products, uxpline){
+    $sum = 0;
+    $sum += $scope.getCargaExtra1RealULine(products);
+    
+    if (uxpline > 0) {
+      $sum = parseInt(Math.round($sum % uxpline));
+    };
+
     return $sum;
   };
-  $scope.getCargaExtra1ULine = function (products){
+  $scope.getCargaExtra1RealULine = function (products){
     $sum = 0;
     angular.forEach(products, function(value) {
       $sum += parseInt(value.chargeExtraU1);
     });
     return $sum;
   };
-  $scope.getCargaExtra2PLine = function (products){
-    $sum = 0;
+
+
+  $scope.getCargaExtra2PLine = function (products, uxpline){
+    $sumCargaExtra2PLine = 0;
     angular.forEach(products, function(value) {
-      $sum += value.chargeExtraP2;
+      $sumCargaExtra2PLine += value.chargeExtraP2;
     });
+
+    if (uxpline > 0) {
+      $sumCargaExtra2PLine += parseInt(Math.floor(($scope.getCargaExtra2RealULine(products)) / uxpline));
+    }
+
+    return $sumCargaExtra2PLine;
+  };
+  $scope.getCargaExtra2ULine = function (products, uxpline){
+    $sum = 0;
+    $sum += $scope.getCargaExtra2RealULine(products);
+    if (uxpline > 0) {
+      $sum = parseInt(Math.round($sum % uxpline));
+    };
+
     return $sum;
   };
-  $scope.getCargaExtra2ULine = function (products){
+  $scope.getCargaExtra2RealULine = function (products){
     $sum = 0;
     angular.forEach(products, function(value) {
       $sum += value.chargeExtraU2;
     });
+
     return $sum;
   };
-  $scope.getCargaExtra3PLine = function (products){
-    $sum = 0;
+
+  $scope.getCargaExtra3PLine = function (products, uxpline){
+    $sumCargaExtra3PLine = 0;
     angular.forEach(products, function(value) {
-      $sum += value.chargeExtraP3;
+      $sumCargaExtra3PLine += value.chargeExtraP3;
     });
+    if (uxpline > 0) {
+      $sumCargaExtra3PLine += parseInt(Math.floor(($scope.getCargaExtra3RealULine(products)) / uxpline));
+    }
+    return $sumCargaExtra3PLine;
+  };
+  $scope.getCargaExtra3ULine = function (products, uxpline){
+    $sum = 0;
+    $sum += $scope.getCargaExtra3RealULine(products);
+    if (uxpline > 0) {
+      $sum = parseInt(Math.round($sum % uxpline));
+    };
     return $sum;
   };
-  $scope.getCargaExtra3ULine = function (products){
+  $scope.getCargaExtra3RealULine = function (products){
     $sum = 0;
     angular.forEach(products, function(value) {
       $sum += value.chargeExtraU3;
     });
     return $sum;
   };
-  $scope.getTotalPLine = function (products){
-    $sum = 0;
-    $sum += $scope.getCargaInicialPLine(products);
-    $sum += $scope.getCargaPLine(products);
-    $sum += $scope.getCargaExtra1PLine(products);
-    $sum += $scope.getCargaExtra2PLine(products);
-    $sum += $scope.getCargaExtra3PLine(products);
-    return $sum;
+  $scope.getTotalPLine = function (products, uxpline){
+    $sumTotalPLine = 0;
+    $sumUlines = 0;
+    $sumTotalPLine += $scope.getCargaInicialPLine(products);
+    $sumTotalPLine += $scope.getCargaPLine(products);
+    $sumTotalPLine += $scope.getCargaExtra1PLine(products);
+    $sumTotalPLine += $scope.getCargaExtra2PLine(products);
+    $sumTotalPLine += $scope.getCargaExtra3PLine(products);
+    
+    if (uxpline > 0) {
+      $sumUlines = $scope.getCountTotalULine(products, uxpline);
+      $sumTotalPLine += parseInt(Math.floor($sumUlines / uxpline));
+    }
+
+    return $sumTotalPLine;
   };
-  $scope.getTotalULine = function (products){
+  $scope.getTotalULine = function (products, uxpline){
     $sum = 0;
     $sum += $scope.getCargaInicialULine(products);
     $sum += $scope.getCargaULine(products);
     $sum += $scope.getCargaExtra1ULine(products);
     $sum += $scope.getCargaExtra2ULine(products);
     $sum += $scope.getCargaExtra3ULine(products);
+    
+    if (uxpline > 0) {
+      $sum = parseInt(Math.round($sum % uxpline));
+    };
+    
     return $sum;
+  };
+
+  $scope.getCountTotalULine = function (products, uxpline){
+    $sumlocal = 0;
+    $sumlocal += $scope.getCargaInicialULine(products);
+    $sumlocal += $scope.getCargaULine(products);
+    $sumlocal += $scope.getCargaExtra1ULine(products);
+    $sumlocal += $scope.getCargaExtra2ULine(products);
+    $sumlocal += $scope.getCargaExtra3ULine(products);
+    
+    return $sumlocal;
   };
   
   $scope.getDevolutionPLine = function (products){
@@ -370,6 +457,15 @@ var productControllerObj = function ($scope){
 
   $scope.updateCargaP = function (product) {
     product.chargeP = $scope.productControllerObj.cargaP;
+    /*
+    var regexp = /^\d+$/;
+    var val = $scope.productControllerObj.cargaP;
+    if (regexp.test(val) && val.length > 0) {
+      product.chargeP = $scope.productControllerObj.cargaP;
+    }else{
+      product.chargeP = 0;
+    }
+    */
   };
   $scope.updateCargaU = function (product) {
     if ($scope.productControllerObj.cargaU >= product.uxp) {
