@@ -1,5 +1,5 @@
-var url = "http://localhost/horizon/index.php/";
-//var url = "https://mariani.bo/horizon-sc/index.php/";
+//var url = "http://localhost/horizon/index.php/";
+var url = "https://mariani.bo/horizon-sc/index.php/";
 
 idliquidation = $("#idLiquidation").html();
 mark = $("#markLiquidation").html();
@@ -81,7 +81,8 @@ app.controller('LiquidationController', ['$http', function( $http ){
       liquidation: $("#idLiquidation").html(),
       mark: $("#markLiquidation").html()
     };
-    $http.post(url + 'liquidation/save_lines', datasend).success(function (data, status, headers){
+    $http.post(url + 'liquidation/save_lines', datasend).success(
+      function (data, status, headers){
       window.location = url + "liquidation/charge_list";
     });
   };
@@ -340,6 +341,7 @@ var productControllerObj = function ($scope){
     $sum += parseInt($product.previousDayP);
 
     mark = $("#markLiquidation").html();
+    console.log(mark);
     switch(mark) {
     case "creado":
       $sum += parseInt($scope.productControllerObj.cargaP);
@@ -405,6 +407,37 @@ var productControllerObj = function ($scope){
     default:
       return 0;
     }
+
+    return $sum;
+  };
+
+  $scope.getCargaPTotal = function ($product){
+    $partialsum = 0;
+    $partialsum += parseInt($product.previousDayU);
+    $partialsum += parseInt($product.chargeU);
+    $partialsum += parseInt($product.chargeExtraU1);
+    $partialsum += parseInt($product.chargeExtraU2);
+    $partialsum += parseInt($product.chargeExtraU3);
+
+    $sum = 0;
+    $sum += parseInt(Math.floor($partialsum / $product.uxp));
+    $sum += parseInt($product.previousDayP);
+    $sum += parseInt($product.chargeP);
+    $sum += parseInt($product.chargeExtraP1);
+    $sum += parseInt($product.chargeExtraP2);
+    $sum += parseInt($product.chargeExtraP3);
+    return $sum;
+  };
+
+  $scope.getCargaUTotal = function ($product){
+    $sum = 0;
+    $sum += parseInt($product.previousDayU);
+    $sum += parseInt($product.chargeU);
+    $sum += parseInt($product.chargeExtraU1);
+    $sum += parseInt($product.chargeExtraU2);
+    $sum += parseInt($product.chargeExtraU3);
+    
+    $sum = parseInt(Math.round($sum % $product.uxp));
 
     return $sum;
   };

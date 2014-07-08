@@ -57,7 +57,8 @@ class Liquidation_model extends CI_Model {
       $result = $query->result_array();
       foreach ($result as $r) {
         // check if this user dont have pending liquidations
-        $this->db->like('liquidacion.idUser', $r['idUser']);
+        $this->db->where('liquidacion.idUser', $r['idUser']);
+        $this->db->where('liquidacion.status', 'active');
         $this->db->from('liquidacion');
         if ($this->db->count_all_results() <= 0) {
           $drop .= '<option data-zone="'.$r['idZona'].'" value="'.$r['idUser'].'">'.$r['Nombre']." ".$r['Apellido']." ".$r['Apellido'].'</option>';
@@ -85,7 +86,7 @@ class Liquidation_model extends CI_Model {
       detalleliquidacion.prestamo as prestamo,
       detalleliquidacion.bonificacion as bonificacion,
       detalleliquidacion.devolucion as devolucion,
-      detalleliquidacion.estado as estado,
+      detalleliquidacion.status as estado,
       detalleliquidacion.detalle as detalle,
       detalleliquidacion.excepcion as excepcion
       '
@@ -194,6 +195,14 @@ class Liquidation_model extends CI_Model {
     $this->db->where('idLiquidacion', $id);
 
     if ($this->db->update('liquidacion', $data)) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  function update_detail_liquidations($data, $id) {
+    $this->db->where('idLiquidacion', $id);
+    if ($this->db->update('detalleliquidacion', $data)) {
       return TRUE;
     }
     return FALSE;

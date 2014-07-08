@@ -358,8 +358,11 @@
     }
 
     function deactive($liquidation) {
+      // desactivar liquidacion
       $data_liq['status'] = "deactive";
       $this->Liquidation_Model->update($data_liq, $liquidation);
+      // desactivar todos detalle liquidation
+      $this->Liquidation_Model->update_detail_liquidations($data_liq, $liquidation);
       redirect("liquidation/charge_list");
     }
     /*function pdf($liquidation) {

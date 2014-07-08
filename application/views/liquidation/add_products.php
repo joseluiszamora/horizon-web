@@ -5,55 +5,41 @@
 </div>
 
 <div class="row">
-  <div class="col-lg-12">
-    
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-offset-1 col-md-9">
+  <div class="col-md-12">
     <fieldset> 
       <div style="display:none;" id="idLiquidation"><?php echo $liquidation[0]->idLiquidacion;?></div>
-      <div class="form-group col-md-4 col-xs-4">
+      <div class="form-group col-md-2 col-xs-4">
         <label for="exampleInputEmail1">Distribuidor</label>
+        <br>
         <?php echo $liquidation[0]->Nombre." ".$liquidation[0]->Apellido; ?>
       </div>
 
-      <div class="form-group col-md-4 col-xs-4">
+      <div class="form-group col-md-1 col-xs-4">
         <label for="exampleInputEmail1">Ruta</label>
+        <br>
         <?php echo $liquidation[0]->Descripcion; ?>
       </div>
 
-      <div class="form-group col-md-4 col-xs-4">
+      <div class="form-group col-md-1 col-xs-4">
         <label for="exampleInputEmail1">Fecha</label>
+        <br>
         <?php echo $liquidation[0]->fechaRegistro; ?>
+      </div>
+
+      <div class="form-group col-md-1 col-xs-4">
+        <label for="exampleInputEmail1">Estado</label>
+        <br>
+        <div id="markLiquidation"><?php echo $liquidation[0]->mark; ?></div>
       </div>
 
       <div class="form-group col-md-4 col-xs-4">
         <label for="exampleInputEmail1">Observaciones</label>
+        <br>
         <?php echo $liquidation[0]->detalle; ?>
       </div>
-      
-      <div class="form-group col-md-4 col-xs-4">
-        <label for="exampleInputEmail1">Estado</label>
-        <div id="markLiquidation"><?php echo $liquidation[0]->mark; ?></div>
-      </div>
-    </fieldset>
-  </div>
-</div>
 
-<div id="liquidations" class="row" >
-  <div class="col-lg-12">
-      <div class="panel panel-default" ng-controller="LiquidationController as liquidation">
-        <div class="panel-heading">
-          <ul class="selectorCheck">
-            <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'">
-              <label for="{{ lineName.idLine }}">{{ lineName.nameLine }}</label>
-              <input type="checkbox" id="{{ lineName.idLine }}" ng-model="lineName.show">
-            </li>            
-          </ul>
-
-          <div style="float:right;">
+      <div class="form-group col-md-3 col-xs-4">
+        <div style="float:right;">
             <!-- Button trigger modal -->
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Guardar</button>
 
@@ -76,8 +62,22 @@
                 </div>
               </div>
             </div>
-
           </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+
+<div id="liquidations" class="row" >
+  <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <ul class="selectorCheck">
+            <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'">
+              <label for="{{ lineName.idLine }}">{{ lineName.nameLine }}</label>
+              <input type="checkbox" id="{{ lineName.idLine }}" ng-model="lineName.show">
+            </li>            
+          </ul>
         </div>
 
         <div class="panel-body">
@@ -220,30 +220,6 @@
               </table>
   
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-4">
-      <div class="panel panel-default">
-        <div class="panel-heading"> TOTALES</div>
-        <div class="panel-body">
-          <div class="table-responsive">
-            <table class="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>VENTA</th>
-                  <th>COBRO</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>444.00</td>
-                  <td>999.00</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>

@@ -5,49 +5,41 @@
 </div>
 
 <div class="row">
-  <div class="col-md-offset-1 col-md-9">
+  <div class="col-md-12">
     <fieldset> 
       <div style="display:none;" id="idLiquidation"><?php echo $liquidation[0]->idLiquidacion;?></div>
-      <div class="form-group col-md-4 col-xs-4">
+      <div class="form-group col-md-2 col-xs-4">
         <label for="exampleInputEmail1">Distribuidor</label>
+        <br>
         <?php echo $liquidation[0]->Nombre." ".$liquidation[0]->Apellido; ?>
       </div>
 
-      <div class="form-group col-md-4 col-xs-4">
+      <div class="form-group col-md-1 col-xs-4">
         <label for="exampleInputEmail1">Ruta</label>
+        <br>
         <?php echo $liquidation[0]->Descripcion; ?>
       </div>
 
-      <div class="form-group col-md-4 col-xs-4">
+      <div class="form-group col-md-1 col-xs-4">
         <label for="exampleInputEmail1">Fecha</label>
+        <br>
         <?php echo $liquidation[0]->fechaRegistro; ?>
+      </div>
+
+      <div class="form-group col-md-1 col-xs-4">
+        <label for="exampleInputEmail1">Estado</label>
+        <br>
+        <div id="markLiquidation"><?php echo $liquidation[0]->mark; ?></div>
       </div>
 
       <div class="form-group col-md-4 col-xs-4">
         <label for="exampleInputEmail1">Observaciones</label>
+        <br>
         <?php echo $liquidation[0]->detalle; ?>
       </div>
-      
-      <div class="form-group col-md-4 col-xs-4">
-        <label for="exampleInputEmail1">Estado</label>
-        <div id="markLiquidation"><?php echo $liquidation[0]->mark; ?></div>
-      </div>
-    </fieldset>
-  </div>
-</div>
 
-<div id="liquidations" class="row" >
-  <div class="col-lg-12">
-      <div class="panel panel-default" ng-controller="LiquidationController as liquidation">
-        <div class="panel-heading">
-          <ul class="selectorCheck">
-            <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'">
-              <label for="{{ lineName.idLine }}">{{ lineName.nameLine }}</label>
-              <input type="checkbox" id="{{ lineName.idLine }}" ng-model="lineName.show">
-            </li>            
-          </ul>
-
-          <div style="float:right;">
+      <div class="form-group col-md-3 col-xs-4">
+        <div style="float:right;">
             <!-- Button trigger modal -->
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Guardar</button>
 
@@ -70,8 +62,23 @@
                 </div>
               </div>
             </div>
-
           </div>
+      </div>
+
+    </fieldset>
+  </div>
+</div>
+
+<div id="liquidations" class="row" >
+  <div class="col-lg-12">
+      <div class="panel panel-default" ng-controller="LiquidationController as liquidation">
+        <div class="panel-heading">
+          <ul class="selectorCheck">
+            <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'">
+              <label for="{{ lineName.idLine }}">{{ lineName.nameLine }}</label>
+              <input type="checkbox" id="{{ lineName.idLine }}" ng-model="lineName.show">
+            </li>            
+          </ul>
         </div>
 
         <div class="panel-body">
@@ -153,8 +160,8 @@
                             <td class="unity">{{ product.chargeExtraU3 }}</td>
 
                             <!-- total charge -->
-                            <td class="unity info">{{ getCargaP(product) }}</td>
-                            <td class="unity info">{{ getCargaU(product) }}</td>
+                            <td class="unity info">{{ getCargaPTotal(product) }}</td>
+                            <td class="unity info">{{ getCargaUTotal(product) }}</td>
 
                             <!-- total charge -->
                             <td class="unity success">
@@ -171,20 +178,20 @@
                             <td class="productname">&nbsp;</td>
                             <td class="unity">{{ getCargaInicialPLine(line.products) }}</td>
                             <td class="unity">{{ getCargaInicialULine(line.products) }}</td>
-                            <td class="unity">{{ getCargaPLine(line.products) }}</td>
-                            <td class="unity">{{ getCargaULine(line.products) }}</td>
+                            <td class="unity">{{ getCargaPLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaULine(line.products, line.lineUxp) }}</td>
                             
-                            <td class="unity">{{ getCargaExtra1PLine(line.products) }}</td>
-                            <td class="unity">{{ getCargaExtra1ULine(line.products) }}</td>
+                            <td class="unity">{{ getCargaExtra1PLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaExtra1ULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">{{ getCargaExtra2PLine(line.products) }}</td>
-                            <td class="unity">{{ getCargaExtra2ULine(line.products) }}</td>
+                            <td class="unity">{{ getCargaExtra2PLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaExtra2ULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">{{ getCargaExtra3PLine(line.products) }}</td>
-                            <td class="unity">{{ getCargaExtra3ULine(line.products) }}</td>
+                            <td class="unity">{{ getCargaExtra3PLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaExtra3ULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">{{ getTotalPLine(line.products) }}</td>
-                            <td class="unity">{{ getTotalULine(line.products) }}</td>
+                            <td class="unity">{{ getTotalPLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getTotalULine(line.products, line.lineUxp) }}</td>
 
                             <td class="unity">{{ getDevolutionPLine(line.products) }}</td>
                             <td class="unity">{{ getDevolutionULine(line.products) }}</td>
