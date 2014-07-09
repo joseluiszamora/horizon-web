@@ -32,13 +32,13 @@
         <div id="markLiquidation"><?php echo $liquidation[0]->mark; ?></div>
       </div>
 
-      <div class="form-group col-md-4 col-xs-4">
+      <div class="form-group col-md-3 col-xs-4">
         <label for="exampleInputEmail1">Observaciones</label>
         <br>
         <?php echo $liquidation[0]->detalle; ?>
       </div>
 
-      <div class="form-group col-md-3 col-xs-4">
+      <div class="form-group col-md-2 col-xs-4">
         <div style="float:right;">
             <!-- Button trigger modal -->
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Guardar</button>
@@ -140,10 +140,10 @@
                             <!-- main charge -->
                               <!-- status creado -->
                                 <td class="unity" ng-show="liquidation.mark === 'creado'">
-                                  <input name="cargap" ng-model="productControllerObj.cargaP" type="number" min="0" class="inputSmall" ng-blur="updateCargaP(product)" />
+                                  <input name="cargap" ng-model="productControllerObj.cargaP" type="number" min="0" class="inputSmall" ng-blur="updateCargaP(product)" ng-change="updateCargaP(product)" ng-keyup="updateCargaP(product)" />
                                 </td>
                                 <td class="unity" ng-show="liquidation.mark === 'creado'">
-                                  <input name="cargau" ng-model="productControllerObj.cargaU" type="number" min="0" class="inputSmall" ng-blur="updateCargaU(product)" />
+                                  <input name="cargau" ng-model="productControllerObj.cargaU" type="number" min="0" class="inputSmall" ng-blur="updateCargaU(product)" ng-change="updateCargaU(product)" ng-keyup="updateCargaU(product)" />
                                 </td>  
                               <!-- status extra1, extra2, extra3, carga final -->
                                 <td class="unity" ng-show="liquidation.mark != 'creado'">{{ product.chargeP }} </td>
@@ -152,10 +152,10 @@
                             <!-- extra charge 1-->
                               <!-- status creado -->
                                 <td class="unity" ng-show="liquidation.mark === 'cargado'">
-                                  <input name="cargap" ng-model="productControllerObj.cargaExtraP1" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraP1(product)" />
+                                  <input name="cargap" ng-model="productControllerObj.cargaExtraP1" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraP1(product)" ng-change="updateCargaExtraP1(product)" ng-keyup="updateCargaExtraP1(product)" />
                                 </td>
                                 <td class="unity" ng-show="liquidation.mark === 'cargado'">
-                                  <input name="cargau" ng-model="productControllerObj.cargaExtraU1" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraU1(product)" />
+                                  <input name="cargau" ng-model="productControllerObj.cargaExtraU1" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraU1(product)" ng-change="updateCargaExtraU1(product)" ng-keyup="updateCargaExtraU1(product)" />
                                 </td>  
                               <!-- status extra1, extra2, extra3, carga final -->
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP1 }}</td>
@@ -164,10 +164,10 @@
                             <!-- extra charge 2-->
                               <!-- status creado -->
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra1'">
-                                  <input name="cargap" ng-model="productControllerObj.cargaExtraP2" type="number" min="0" class="inputSmall" ng-blur="updatecargaExtraP2(product)" />
+                                  <input name="cargap" ng-model="productControllerObj.cargaExtraP2" type="number" min="0" class="inputSmall" ng-blur="updatecargaExtraP2(product)" ng-change="updatecargaExtraP2(product)" ng-keyup="updatecargaExtraP2(product)" />
                                 </td>
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra1'">
-                                  <input name="cargau" ng-model="productControllerObj.cargaExtraU2" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraU2(product)" />
+                                  <input name="cargau" ng-model="productControllerObj.cargaExtraU2" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraU2(product)" ng-change="updateCargaExtraU2(product)" ng-keyup="updateCargaExtraU2(product)" />
                                 </td>  
                               <!-- status extra1, extra2, extra3, carga final -->
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP2 }}</td>
@@ -176,10 +176,10 @@
                             <!-- extra charge 3-->
                               <!-- status creado -->
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra2'">
-                                  <input name="cargap" ng-model="productControllerObj.cargaExtraP3" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraP3(product)" />
+                                  <input name="cargap" ng-model="productControllerObj.cargaExtraP3" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraP3(product)" ng-change="updateCargaExtraP3(product)" ng-keyup="updateCargaExtraP3(product)" />
                                 </td>
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra2'">
-                                  <input name="cargau" ng-model="productControllerObj.cargaExtraU3" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraU3(product)" />
+                                  <input name="cargau" ng-model="productControllerObj.cargaExtraU3" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraU3(product)" ng-change="updateCargaExtraU3(product)" ng-keyup="updateCargaExtraU3(product)" />
                                 </td>  
                               <!-- status extra1, extra2, extra3, carga final -->
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP3 }}</td>

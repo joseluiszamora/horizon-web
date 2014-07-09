@@ -32,13 +32,13 @@
         <div id="markLiquidation"><?php echo $liquidation[0]->mark; ?></div>
       </div>
 
-      <div class="form-group col-md-4 col-xs-4">
+      <div class="form-group col-md-3 col-xs-4">
         <label for="exampleInputEmail1">Observaciones</label>
         <br>
         <?php echo $liquidation[0]->detalle; ?>
       </div>
 
-      <div class="form-group col-md-3 col-xs-4">
+      <div class="form-group col-md-2 col-xs-4">
         <div style="float:right;">
             <!-- Button trigger modal -->
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Guardar</button>
@@ -165,10 +165,10 @@
 
                             <!-- total charge -->
                             <td class="unity success">
-                              <input name="cargap" ng-model="productControllerObj.devolutionP" type="number" class="inputSmall" ng-blur="updateDevolutionP(product)" />
+                              <input name="cargap" ng-model="productControllerObj.devolutionP" type="number" min="0" class="inputSmall" ng-blur="updateDevolutionP(product)" ng-change="updateDevolutionP(product)" ng-keyup="updateDevolutionP(product)" />
                             </td>
                             <td class="unity success">
-                              <input name="cargau" ng-model="productControllerObj.devolutionU" type="number" class="inputSmall" ng-blur="updateDevolutionU(product)" />
+                              <input name="cargau" ng-model="productControllerObj.devolutionU" type="number" min="0" class="inputSmall" ng-blur="updateDevolutionU(product)" ng-change="updateDevolutionU(product)" ng-keyup="updateDevolutionU(product)" />
                             </td>  
                           </tr>
                         </tbody>
@@ -193,8 +193,8 @@
                             <td class="unity">{{ getTotalPLine(line.products, line.lineUxp) }}</td>
                             <td class="unity">{{ getTotalULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">{{ getDevolutionPLine(line.products) }}</td>
-                            <td class="unity">{{ getDevolutionULine(line.products) }}</td>
+                            <td class="unity">{{ getDevolutionPLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getDevolutionULine(line.products, line.lineUxp) }}</td>
                           </tr>
                         </tfooter>
                       </table>

@@ -81,6 +81,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
       liquidation: $("#idLiquidation").html(),
       mark: $("#markLiquidation").html()
     };
+    
     $http.post(url + 'liquidation/save_lines', datasend).success(
       function (data, status, headers){
       window.location = url + "liquidation/charge_list";
@@ -268,7 +269,6 @@ var lineControllerObj = function ($scope, sharedProperties){
     if (uxpline > 0) {
       $sum = parseInt(Math.round($sum % uxpline));
     };
-    
     return $sum;
   };
 
@@ -283,19 +283,61 @@ var lineControllerObj = function ($scope, sharedProperties){
     return $sumlocal;
   };
   
-  $scope.getDevolutionPLine = function (products){
+  $scope.getDevolutionPLine = function (products, uxpline){
     $sum = 0;
+    $sumU = 0;
+
     angular.forEach(products, function(value) {
       $sum += value.devolutionP;
+      $sumU += value.devolutionU;
     });
+
+    if (uxpline > 0) {
+      $sum += parseInt(Math.floor($sumU / uxpline));
+    }
+    
     return $sum;
   };
   
-  $scope.getDevolutionULine = function (products){
+  $scope.getDevolutionULine = function (products, uxpline){
     $sum = 0;
     angular.forEach(products, function(value) {
       $sum += value.devolutionU;
     });
+
+    if (uxpline > 0) {
+      $sum = parseInt(Math.round($sum % uxpline));
+    };
+
+    return $sum;
+  };
+
+  $scope.getAjustePLine = function (products, uxpline){
+    $sum = 0;
+    $sumU = 0;
+
+    angular.forEach(products, function(value) {
+      $sum += value.ajusteP;
+      $sumU += value.ajusteU;
+    });
+
+    if (uxpline > 0) {
+      $sum += parseInt(Math.floor($sumU / uxpline));
+    }
+    
+    return $sum;
+  };
+  
+  $scope.getAjusteULine = function (products, uxpline){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.ajusteU;
+    });
+
+    if (uxpline > 0) {
+      $sum = parseInt(Math.round($sum % uxpline));
+    };
+
     return $sum;
   };
   
@@ -331,6 +373,8 @@ var productControllerObj = function ($scope){
     prestamosU: 0,
     bonosP: 0,
     bonosU: 0,
+    ajusteP: 0,
+    ajusteU: 0,
     ventaP: 0,
     ventaU: 0,
     totalAmmount: 0
@@ -561,14 +605,25 @@ var productControllerObj = function ($scope){
     }
   };
 
+  $scope.updateAjusteP = function (product) {
+    product.ajusteP = $scope.productControllerObj.ajusteP;
+  };
+  $scope.updateAjusteU = function (product) {
+    if ($scope.productControllerObj.ajusteU >= product.uxp) {
+      product.ajusteU = Math.round($scope.productControllerObj.ajusteU % product.uxp);
 
+      product.ajusteP = $scope.productControllerObj.ajusteP + Math.floor($scope.productControllerObj.ajusteU / product.uxp);
 
-
-
-
+      $scope.productControllerObj.ajusteP = product.ajusteP;
+      $scope.productControllerObj.ajusteU = product.ajusteU;
+    }else{
+      product.ajusteU = $scope.productControllerObj.ajusteU;
+    }
+  };
 
   $scope.updateDevolutionP = function (product) {
     product.devolutionP = $scope.productControllerObj.devolutionP;
+    //console.log(product.devolutionP);
   };
   $scope.updateDevolutionU = function (product) {
     if ($scope.productControllerObj.devolutionU >= product.uxp) {
@@ -581,6 +636,7 @@ var productControllerObj = function ($scope){
     }else{
       product.devolutionU = $scope.productControllerObj.devolutionU;
     }
+    //console.log(product.devolutionU);
   };
 
 };

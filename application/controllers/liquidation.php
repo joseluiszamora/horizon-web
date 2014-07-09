@@ -146,22 +146,25 @@
             'chargeExtraP3'  => floor($rowproduct->chargeExtra3 / $rowproduct->uxp),
             'chargeExtraU3'  => round(($rowproduct->chargeExtra3 % $rowproduct->uxp), 0),
 
-            'chargeTotalP'  => 0,
-            'chargeTotalU'  => 0,
+            'chargeTotalP'   => 0,
+            'chargeTotalU'   => 0,
 
-            'devolutionP'  => floor($rowproduct->devolucion / $rowproduct->uxp),
-            'devolutionU'  => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
+            'devolutionP'    => floor($rowproduct->devolucion / $rowproduct->uxp),
+            'devolutionU'    => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
             
-            'prestamosP'    => 0,
-            'prestamosU'    => 0,
+            'prestamosP'     => 0,
+            'prestamosU'     => 0,
             
-            'bonosP'        => 0,
-            'bonosU'        => 0,
-            
-            'ventaP'        => 0,
-            'ventaU'        => 0,
+            'bonosP'         => 0,
+            'bonosU'         => 0,
 
-            'totalAmmount'  => 0
+            'ajusteP'     => floor($rowproduct->excepcion / $rowproduct->uxp),
+            'ajusteU'     => round(($rowproduct->excepcion % $rowproduct->uxp), 0),
+            
+            'ventaP'         => 0,
+            'ventaU'         => 0,
+
+            'totalAmmount'   => 0
           );
 
           array_push($productsContainer, $arrayProducts);
@@ -220,6 +223,9 @@
             
             'bonosP'        => 0,
             'bonosU'        => 0,
+            
+            'ajusteP'     => floor($rowproduct->excepcion / $rowproduct->uxp),
+            'ajusteU'     => round(($rowproduct->excepcion % $rowproduct->uxp), 0),
             
             'ventaP'        => 0,
             'ventaU'        => 0,
