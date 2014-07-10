@@ -158,8 +158,12 @@
             'bonosP'         => 0,
             'bonosU'         => 0,
 
-            'ajusteP'     => floor($rowproduct->excepcion / $rowproduct->uxp),
-            'ajusteU'     => round(($rowproduct->excepcion % $rowproduct->uxp), 0),
+            'ajusteP'     => 0,
+            'ajusteU'     => 0,
+
+            'calculatedP' => floor(($rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3 - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) / $rowproduct->uxp),
+
+            'calculatedU' => round((($rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3 - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) % $rowproduct->uxp), 0),
             
             'ventaP'         => 0,
             'ventaU'         => 0,

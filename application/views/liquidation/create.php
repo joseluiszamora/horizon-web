@@ -225,8 +225,8 @@
     }
 
     if ($flag) {
-      //var url = "http://localhost/horizon/index.php/";
-      var url = "https://mariani.bo/horizon-sc/index.php/";
+      var url = "http://localhost/horizon/index.php/";
+      //var url = "https://mariani.bo/horizon-sc/index.php/";
       $desc = $('textarea[name="desc"]').val();
       $lastliquid = $('#lastliquid').is( ":checked");
       //$noregular = $('#noregularproducts').is( ":checked");

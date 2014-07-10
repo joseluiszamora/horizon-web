@@ -1,5 +1,5 @@
-//var url = "http://localhost/horizon/index.php/";
-var url = "https://mariani.bo/horizon-sc/index.php/";
+var url = "http://localhost/horizon/index.php/";
+//var url = "https://mariani.bo/horizon-sc/index.php/";
 
 idliquidation = $("#idLiquidation").html();
 mark = $("#markLiquidation").html();
@@ -81,7 +81,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
       liquidation: $("#idLiquidation").html(),
       mark: $("#markLiquidation").html()
     };
-    
+    //console.log(datasend.lines);
     $http.post(url + 'liquidation/save_lines', datasend).success(
       function (data, status, headers){
       window.location = url + "liquidation/charge_list";
@@ -375,6 +375,8 @@ var productControllerObj = function ($scope){
     bonosU: 0,
     ajusteP: 0,
     ajusteU: 0,
+    calculatedP: 0,
+    calculatedU: 0,
     ventaP: 0,
     ventaU: 0,
     totalAmmount: 0
@@ -385,7 +387,7 @@ var productControllerObj = function ($scope){
     $sum += parseInt($product.previousDayP);
 
     mark = $("#markLiquidation").html();
-    console.log(mark);
+    //console.log(mark);
     switch(mark) {
     case "creado":
       $sum += parseInt($scope.productControllerObj.cargaP);
@@ -505,6 +507,12 @@ var productControllerObj = function ($scope){
     return $sum;
   };
 
+
+
+
+
+
+
   $scope.getTotalAmmount = function (product){
     $sum = 0;
     $sum += parseInt($scope.getVentaP(product) * product.uxp);
@@ -606,24 +614,39 @@ var productControllerObj = function ($scope){
   };
 
   $scope.updateAjusteP = function (product) {
-    product.ajusteP = $scope.productControllerObj.ajusteP;
+    $subtotal = product.previousDayP + product.chargeP + product.chargeExtraP1 + product.chargeExtraP2 + product.chargeExtraP3 - product.devolutionP - product.prestamosP - product.bonosP;
+
+    product.calculatedP = $scope.productControllerObj.calculatedP + $subtotal;
+
+    //$scope.productControllerObj.calculatedP = product.calculatedP;
   };
   $scope.updateAjusteU = function (product) {
-    if ($scope.productControllerObj.ajusteU >= product.uxp) {
-      product.ajusteU = Math.round($scope.productControllerObj.ajusteU % product.uxp);
+    //console.log(product);
+    $subtotal = product.previousDayU + product.chargeU + product.chargeExtraU1 + product.chargeExtraU2 + product.chargeExtraU3 - product.devolutionU - product.prestamosU - product.bonosU;
 
-      product.ajusteP = $scope.productControllerObj.ajusteP + Math.floor($scope.productControllerObj.ajusteU / product.uxp);
+    $subtotal += $scope.productControllerObj.calculatedU;
 
-      $scope.productControllerObj.ajusteP = product.ajusteP;
-      $scope.productControllerObj.ajusteU = product.ajusteU;
+    //product.calculatedU = $subtotal;
+    if ($subtotal >= product.uxp) {
+      product.calculatedU = Math.round($subtotal % product.uxp);
+
+      $subtotalP = product.previousDayP + product.chargeP + product.chargeExtraP1 + product.chargeExtraP2 + product.chargeExtraP3 - product.devolutionP - product.prestamosP - product.bonosP;
+
+      $subtotalP += $scope.productControllerObj.calculatedP;
+
+
+      product.calculatedP = $subtotalP + Math.floor($subtotal / product.uxp);
+
+      //$scope.productControllerObj.calculatedP = product.calculatedP;
+      //$scope.productControllerObj.calculatedU = product.calculatedU;
     }else{
-      product.ajusteU = $scope.productControllerObj.ajusteU;
+      product.calculatedU = $subtotal;
     }
   };
 
   $scope.updateDevolutionP = function (product) {
     product.devolutionP = $scope.productControllerObj.devolutionP;
-    //console.log(product.devolutionP);
+    //console.log(product);
   };
   $scope.updateDevolutionU = function (product) {
     if ($scope.productControllerObj.devolutionU >= product.uxp) {

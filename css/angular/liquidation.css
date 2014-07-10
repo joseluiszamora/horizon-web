@@ -42,7 +42,8 @@
   background-color: #ccc;
 }
 #liquidations .tableLine{
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
+  font-size: 12px;
 }
 
 #liquidations .inputSmall{

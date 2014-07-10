@@ -71,7 +71,7 @@
 
 <div id="liquidations" class="row" >
   <div class="col-lg-12">
-      <div class="panel panel-default" ng-controller="LiquidationController as liquidation">
+      <div class="panel panel-default">
         <div class="panel-heading">
           <ul class="selectorCheck">
             <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'">
@@ -144,17 +144,17 @@
                               <div class="section">U</div>
                             </th>
                             <th colspan="2" class="title" >
-                              <div class="main">VENTA REF.</div>
-                              <div class="section">P</div>
-                              <div class="section">U</div>
-                            </th>
-                            <th colspan="2" class="title" >
                               <div class="main">AJUSTE</div>
                               <div class="section">P</div>
                               <div class="section">U</div>
                             </th>
                             <th colspan="2" class="title" >
                               <div class="main">VENTA CALC.</div>
+                              <div class="section">P</div>
+                              <div class="section">U</div>
+                            </th>
+                            <th colspan="2" class="title" >
+                              <div class="main">VENTA ANDROID</div>
                               <div class="section">P</div>
                               <div class="section">U</div>
                             </th>
@@ -201,21 +201,21 @@
                             <td class="unity">{{ product.bonosP }}</td>
                             <td class="unity">{{ product.bonosU }}</td>
                             
-                            <!-- TOTAL venta -->
-                            <td class="unity info">{{ getCargaP(product) }}</td>
-                            <td class="unity info">{{ getCargaU(product) }}</td>
-
                             <!-- Ajuste -->
                             <td class="unity danger">
-                              <input name="cargap" ng-model="productControllerObj.ajusteP" type="number" min="0" class="inputSmall" ng-blur="updateAjusteP(product)" />
+                              <input name="cargap" ng-model="productControllerObj.calculatedP" type="number" min="0" class="inputSmall" ng-blur="updateAjusteP(product)" ng-change="updateAjusteP(product)" ng-keyup="updateAjusteP(product)" />
                             </td>
                             <td class="unity danger">
-                              <input name="cargau" ng-model="productControllerObj.ajusteU" type="number" min="0" class="inputSmall" ng-blur="updateAjusteU(product)" />
+                              <input name="cargau" ng-model="productControllerObj.calculatedU" type="number" min="0" class="inputSmall" ng-blur="updateAjusteU(product)" ng-change="updateAjusteU(product)" ng-keyup="updateAjusteU(product)" />
                             </td>
 
                             <!-- TOTAL venta CALC -->
-                            <td class="unity info">{{ getCargaP(product) }}</td>
-                            <td class="unity info">{{ getCargaU(product) }}</td>
+                            <td class="unity info">{{ product.calculatedP }}</td>
+                            <td class="unity info">{{ product.calculatedU }}</td>
+
+                            <!-- Venta Android -->
+                            <td class="unity success">0</td>
+                            <td class="unity success">0</td>
 
                             <!-- total venta -->
                             <td class="unity">{{ getTotalAmmount(product) }}</td>

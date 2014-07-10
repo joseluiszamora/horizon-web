@@ -71,7 +71,7 @@
 
 <div id="liquidations" class="row" >
   <div class="col-lg-12">
-      <div class="panel panel-default" ng-controller="LiquidationController as liquidation">
+      <div class="panel panel-default">
         <div class="panel-heading">
           <ul class="selectorCheck">
             <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'">
