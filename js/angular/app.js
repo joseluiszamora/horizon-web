@@ -1,5 +1,5 @@
-var url = "http://localhost/horizon/index.php/";
-//var url = "https://mariani.bo/horizon-sc/index.php/";
+//var url = "http://localhost/horizon/index.php/";
+var url = "https://mariani.bo/horizon-sc/index.php/";
 
 idliquidation = $("#idLiquidation").html();
 mark = $("#markLiquidation").html();
@@ -620,8 +620,8 @@ var productControllerObj = function ($scope){
 
     //$scope.productControllerObj.calculatedP = product.calculatedP;
   };
+
   $scope.updateAjusteU = function (product) {
-    //console.log(product);
     $subtotal = product.previousDayU + product.chargeU + product.chargeExtraU1 + product.chargeExtraU2 + product.chargeExtraU3 - product.devolutionU - product.prestamosU - product.bonosU;
 
     $subtotal += $scope.productControllerObj.calculatedU;
@@ -633,7 +633,6 @@ var productControllerObj = function ($scope){
       $subtotalP = product.previousDayP + product.chargeP + product.chargeExtraP1 + product.chargeExtraP2 + product.chargeExtraP3 - product.devolutionP - product.prestamosP - product.bonosP;
 
       $subtotalP += $scope.productControllerObj.calculatedP;
-
 
       product.calculatedP = $subtotalP + Math.floor($subtotal / product.uxp);
 

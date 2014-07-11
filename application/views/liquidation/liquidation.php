@@ -203,10 +203,11 @@
                             
                             <!-- Ajuste -->
                             <td class="unity danger">
-                              <input name="cargap" ng-model="productControllerObj.calculatedP" type="number" min="0" class="inputSmall" ng-blur="updateAjusteP(product)" ng-change="updateAjusteP(product)" ng-keyup="updateAjusteP(product)" />
+                              <!--<input name="cargap" ng-model="productControllerObj.calculatedP" type="number" min="0" class="inputSmall" ng-blur="updateAjusteP(product)" ng-change="updateAjusteP(product)" ng-keyup="updateAjusteP(product)" />-->
+                              <input name="cargap" ng-model="productControllerObj.calculatedP" type="number" min="0" class="inputSmall" ng-blur="updateAjusteP(product)" />
                             </td>
                             <td class="unity danger">
-                              <input name="cargau" ng-model="productControllerObj.calculatedU" type="number" min="0" class="inputSmall" ng-blur="updateAjusteU(product)" ng-change="updateAjusteU(product)" ng-keyup="updateAjusteU(product)" />
+                              <input name="cargau" ng-model="productControllerObj.calculatedU" type="number" min="0" class="inputSmall" ng-blur="updateAjusteU(product)" />
                             </td>
 
                             <!-- TOTAL venta CALC -->
