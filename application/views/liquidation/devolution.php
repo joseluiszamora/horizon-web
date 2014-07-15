@@ -32,7 +32,7 @@
         <div id="markLiquidation"><?php echo $liquidation[0]->mark; ?></div>
       </div>
 
-      <div class="form-group col-md-3 col-xs-4">
+      <div class="form-group col-md-2 col-xs-4">
         <label for="exampleInputEmail1">Observaciones</label>
         <br>
         <?php echo $liquidation[0]->detalle; ?>
@@ -58,6 +58,37 @@
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     <button ng-click="liquidation.saveAll()" type="button" class="btn btn-primary">Guardar cambios</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="form-group col-md-2 col-xs-4">
+        <div style="float:right;">
+            <!-- Button trigger modal -->
+            <button class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModalIrregular">Producto Irregular</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModalIrregular" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content"> 
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Adicionar productos no Regulares</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      <?php
+                        echo "<div style='display:none;' id='idLiquidacion'>".$liquidation[0]->idLiquidacion."</div>";
+                        echo form_dropdown('noregular', $irregularlines, '', 'id="noregulardropdown" data-placeholder="Linea de productos no regulares..." class="chosen-select" multiple style="width:400px;"');
+                      ?>
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" id="add_no_regular">Agregar</button>
                   </div>
                 </div>
               </div>
@@ -209,3 +240,40 @@
       </div>
     </div>
 </div>
+
+<script type="text/javascript">
+  // chosen selects
+  $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
+  $("#add_no_regular").click(function(){
+    // check no regular products
+    var idliquid = $("#idLiquidacion").html();
+    var noregulararray = "";
+    $('#noregulardropdown :selected').each(function(i, selected){ 
+      noregulararray += $(selected).val() + "***";
+    });
+
+    var url = "http://localhost/horizon/index.php/";
+    //var url = "https://mariani.bo/horizon-sc/index.php/";
+    $.ajax({
+      type: "POST",
+      url: url+'liquidation/add_irregular_products/',
+      data: 'idliquid='+idliquid+'&noregular='+noregulararray,
+      
+      async: false,
+      cache: false
+    }).done(function( data ) {
+      //$("#modalConfirmSave").modal("show");
+      //console.log(url + "liquidation/charge_list/" + data);
+      window.location.reload();
+    });
+  });
+</script>
+
+<style type="text/css">
+  .chosen-single, .chosen-drop, .chosen-results, #noregulardropdown_chosen{
+    width: 400px !important;
+  }
+  .chosen-choices .search-field input{
+    height: 30px !important;
+  }
+</style>

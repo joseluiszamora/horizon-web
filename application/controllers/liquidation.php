@@ -89,6 +89,22 @@
       //print_r($data);
     }
 
+    function add_irregular_products(){
+      $idliquid = $this->input->post('idliquid');
+
+      //add NO regular products
+      $lines = explode("***", $this->input->post('noregular'));
+      foreach ($lines as $line) {
+        $productsnoregular = $this->Product_Model->get_products_by_line($line);
+        foreach ($productsnoregular as $rowproduct){
+          $data_pro['idLiquidacion'] = $idliquid;
+          $data_pro['idProduct'] = $rowproduct->idProduct;
+          $this->Liquidation_Model->create_detail($data_pro);
+        }
+      }
+      redirect("liquidation/charge_list");
+    }
+
     function show($liquidation) {
       $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
       $data['category'] = 'liquidation';
@@ -98,6 +114,7 @@
 
     function devolution($liquidation) {
       $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
+      $data['irregularlines'] = $this->Liquidation_Model->get_no_regular_lines($liquidation);
       $data['category'] = 'liquidation';
       $data['page'] = 'devolution';
       $this->load->view('template/template_liquidation', $data);  

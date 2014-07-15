@@ -38,36 +38,36 @@ class Liquidation_model extends CI_Model {
 
 
   // get all users distributor, with his zones
-    function get_enabled_users_and_zones() {
-      $this->db->select(
-        'users.idUser,
-        users.Nombre, 
-        users.Apellido,
-        zona.idZona,
-        zona.Descripcion'
-      );
-      $this->db->from('users');
-      $this->db->join('zona', 'zona.idZona = users.idZona');
-      $this->db->order_by('idUser', "asc");
-      $this->db->where('users.NivelAcceso !=', 1);
+  function get_enabled_users_and_zones() {
+    $this->db->select(
+      'users.idUser,
+      users.Nombre, 
+      users.Apellido,
+      zona.idZona,
+      zona.Descripcion'
+    );
+    $this->db->from('users');
+    $this->db->join('zona', 'zona.idZona = users.idZona');
+    $this->db->order_by('idUser', "asc");
+    $this->db->where('users.NivelAcceso !=', 1);
 
-      $query = $this->db->get();
-      $drop = '<select class="form-control" name="distributor"><option value="0">Seleccione Distribuidor</option>';
-      
-      $result = $query->result_array();
-      foreach ($result as $r) {
-        // check if this user dont have pending liquidations
-        $this->db->where('liquidacion.idUser', $r['idUser']);
-        $this->db->where('liquidacion.status', 'active');
-        $this->db->from('liquidacion');
-        if ($this->db->count_all_results() <= 0) {
-          $drop .= '<option data-zone="'.$r['idZona'].'" value="'.$r['idUser'].'">'.$r['Nombre']." ".$r['Apellido']." ".$r['Apellido'].'</option>';
-        }
+    $query = $this->db->get();
+    $drop = '<select class="form-control" name="distributor"><option value="0">Seleccione Distribuidor</option>';
+    
+    $result = $query->result_array();
+    foreach ($result as $r) {
+      // check if this user dont have pending liquidations
+      $this->db->where('liquidacion.idUser', $r['idUser']);
+      $this->db->where('liquidacion.status', 'active');
+      $this->db->from('liquidacion');
+      if ($this->db->count_all_results() <= 0) {
+        $drop .= '<option data-zone="'.$r['idZona'].'" value="'.$r['idUser'].'">'.$r['Nombre']." ".$r['Apellido']." ".$r['Apellido'].'</option>';
       }
-
-      $drop .= '</select>';
-      return $drop;
     }
+
+    $drop .= '</select>';
+    return $drop;
+  }
 
   function get_detail_list($id, $line) {
     $this->db->select(
@@ -100,6 +100,32 @@ class Liquidation_model extends CI_Model {
     $this->db->where(array( 'detalleliquidacion.idLiquidacion' => $id, 'line.idLine' => $line ));
     $query = $this->db->get();
     return $query->result();
+  }
+
+  function get_no_regular_lines($idLiquidation) {
+    $dropdown = array();
+    $this->db->select('*');
+    $this->db->from('line');
+    $this->db->order_by('Descripcion', "asc");
+    $this->db->where('regular', "no");
+    $query = $this->db->get();
+    
+    $result = $query->result_array();
+    foreach ($result as $r) {
+/*
+      $this->db->from('detalleliquidacion');
+      $this->db->join('products', 'products.idProduct = detalleliquidacion.idProduct');
+      $this->db->join('linevolume', 'products.idLineVolume = linevolume.idLineVolume');
+      $this->db->join('line', 'linevolume.idLine = line.idLine');
+      $this->db->where('line.idLine', $r['idLine']);
+
+      if ($this->db->count_all_results() <= 0) {
+        $dropdown[$r['idLine']] = $r['Descripcion'];
+      }
+*/
+      $dropdown[$r['idLine']] = $r['Descripcion'];
+    }
+    return $dropdown;
   }
 
   function get_lines_actives($idLiquidation) {
