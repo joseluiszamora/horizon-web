@@ -252,8 +252,8 @@
       noregulararray += $(selected).val() + "***";
     });
 
-    var url = "http://localhost/horizon/index.php/";
-    //var url = "https://mariani.bo/horizon-sc/index.php/";
+    //var url = "http://localhost/horizon/index.php/";
+    var url = "https://mariani.bo/horizon-sc/index.php/";
     $.ajax({
       type: "POST",
       url: url+'liquidation/add_irregular_products/',
