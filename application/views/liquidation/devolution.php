@@ -252,8 +252,8 @@
       noregulararray += $(selected).val() + "***";
     });
 
-    //var url = "http://localhost/horizon/index.php/";
-    var url = "https://mariani.bo/horizon-sc/index.php/";
+    var url = "http://localhost/horizon/index.php/";
+    //var url = "https://mariani.bo/horizon-sc/index.php/";
     $.ajax({
       type: "POST",
       url: url+'liquidation/add_irregular_products/',
@@ -262,8 +262,6 @@
       async: false,
       cache: false
     }).done(function( data ) {
-      //$("#modalConfirmSave").modal("show");
-      //console.log(url + "liquidation/charge_list/" + data);
       window.location.reload();
     });
   });

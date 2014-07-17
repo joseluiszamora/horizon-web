@@ -107,21 +107,21 @@
         <li>
           <?php 
             echo anchor('liquidation/charge_list', '<i class="fa fa-pencil-square-o fa-fw"></i> Cargas Extras
-            <span class="badge">'.$this->Liquidation_Model->count("charges").'</span>', array('')); 
+            <span class="badge">'.$this->Liquidation_Model->count("active", "charges").'</span>', array('')); 
           ?>
         </li>
 
         <li>
           <?php 
             echo anchor('liquidation/devolutions', '<i class="fa fa-pencil-square-o fa-fw"></i> Devoluciones
-            <span class="badge">'.$this->Liquidation_Model->count("devolutions").'</span>', array('')); 
+            <span class="badge">'.$this->Liquidation_Model->count("active", "devolutions").'</span>', array('')); 
           ?>
         </li>
 
         <li>
           <?php 
             echo anchor('liquidation/liquidation_list', '<i class="fa fa-pencil-square-o fa-fw"></i> Liquidaciones
-            <span class="badge">'.$this->Liquidation_Model->count("liquidation").'</span>', array('')); 
+            <span class="badge">'.$this->Liquidation_Model->count("active", "liquidation").'</span>', array('')); 
           ?>
         </li>
       </ul>
