@@ -107,6 +107,7 @@ Detalle
       SELECT * 
       FROM daily
       WHERE NumVoucher = "'.$data_in['voucher'].'" 
+      AND idCustomer = "'.$data_in['customer'].'" 
       AND Type = "C"
     ';
     $query = $this->db->query($querystring);

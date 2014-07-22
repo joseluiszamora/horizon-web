@@ -189,6 +189,19 @@ class Client_model extends CI_Model {
       return $id;
     }
 
+    function get_id_by_code_and_name($codename) {
+      // ejm:   031000908 - SUSANA NINA
+      
+      $porciones = explode(" - ", $codename);
+      $this->db->where('CodeCustomer', $porciones[0]);
+      $query = $this->db->get('customer');
+      $result = $query->result_array();
+      foreach ($result as $r) {
+        $id = $r['idCustomer'];
+      }
+      return $id;
+    }
+
     function get_code_by_id($code) {
       $this->db->where('idCustomer', $code);
       $query = $this->db->get('customer');

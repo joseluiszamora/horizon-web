@@ -127,10 +127,14 @@
 
 
     function getpays(){
+      // customer  011884 - ALBERTO BALCAZAR
       $data_in['voucher'] = $this->input->post('voucher');
       $data_in['distributor'] = $this->input->post('distributor');
-      //$data_in['customer'] = $this->input->post('customer');
+      $data_in['customer'] = $this->Client_Model->get_id_by_code_and_name($this->input->post('customer'));
       $data['pays'] = $this->Diary_Model->getpays($data_in);
+
+
+
 
       $res = '<tbody>';
       $total = 0; 

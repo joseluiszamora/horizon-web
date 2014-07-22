@@ -342,10 +342,18 @@ var lineControllerObj = function ($scope, sharedProperties){
   };
   
   $scope.getAmmountLine = function (products){
-    $sum = 0;
+    $sum = 250;
     angular.forEach(products, function(product) {
+      //console.log($scope.getVentaP(product));
+      /*
       //$sum += $scope.getTotalAmmount(product);
+      $sum += parseInt($scope.getVentaP(product) * product.uxp);
+      $sum += parseInt($scope.getVentaU(product));
+      $sum = Math.round(($sum * product.price) * 100)/100;
+      //product.totalAmmount = $sum;
+      */
     });
+
     $sum = Math.round(($sum) * 100)/100;;
     return $sum;
   };
