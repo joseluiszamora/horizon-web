@@ -31,6 +31,19 @@ class Diary_model extends CI_Model {
     return $query->result();
   }
 
+  function check_if_exist($code) {
+    $this->db->where('NumVoucher', $code);
+    //$this->db->where('idCustomer', $customer);
+    $this->db->where('Type', "P");
+    $this->db->where('Estado', "1");
+    $this->db->from('daily');
+    if ($this->db->count_all_results() > 0) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   // get all diaries
   function get_diaries() {
     $this->db->select(
@@ -58,8 +71,8 @@ class Diary_model extends CI_Model {
     $this->db->join('users', 'daily.idUser = users.idUser');
     $this->db->where('daily.Type','P');
     $this->db->where('daily.Estado','1');
-    $this->db->group_by('daily.NumVoucher'); 
-    $this->db->group_by('daily.idCustomer'); 
+    $this->db->group_by('daily.NumVoucher');
+    $this->db->group_by('daily.idCustomer');
     $this->db->order_by('daily.iddiario', "asc");
 
     $query = $this->db->get();
@@ -103,13 +116,16 @@ Detalle
   }
 
   function getpays($data_in){
-    $querystring = '
+    $querystring = '';
+    $querystring .= '
       SELECT * 
       FROM daily
       WHERE NumVoucher = "'.$data_in['voucher'].'" 
-      AND idCustomer = "'.$data_in['customer'].'" 
-      AND Type = "C"
     ';
+    if(isset($data_in['customer'])){
+      $querystring .= ' AND idCustomer = "'.$data_in['customer'].'" ';
+    }
+    $querystring .= ' AND Type = "C" ';
     $query = $this->db->query($querystring);
     return $query->result();
   }
@@ -242,9 +258,9 @@ Detalle
       $this->db->where('DATE(daily.FechaTransaction) <', $nuevafecha2);
     }
 
-    $this->db->group_by('daily.NumVoucher'); 
-    $this->db->group_by('daily.idCustomer'); 
-    $this->db->order_by('daily.iddiario', "asc");
+    $this->db->group_by('daily.NumVoucher');
+    $this->db->group_by('daily.idCustomer');
+    $this->db->order_by('daily.NumVoucher', "asc");
     $query = $this->db->get();
     return $query->result();
   }

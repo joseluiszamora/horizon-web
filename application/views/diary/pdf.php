@@ -108,6 +108,7 @@
         <td><?php 
           $data['distributor'] = $diary->idUser;
           $data['voucher'] = $diary->NumVoucher;
+          $data['customer'] = $diary->idCustomer;
           $pays = $this->Diary_Model->getpays($data);
           $pagado = 0;
 

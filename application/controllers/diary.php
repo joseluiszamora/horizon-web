@@ -53,13 +53,13 @@
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
       $data['action'] = 'new';
-      $data['page'] = 'form';     
+      $data['page'] = 'form';
       $this->load->view('template/template', $data);
     }
 
     function get_user_no_admin() {
       echo(json_encode($this->User_Model->get_users_by_profile_no_admin()));
-    } 
+    }
 
     function saveblock() {
       $transdistributor = explode("***", $this->input->post('distributor'));
@@ -90,10 +90,18 @@
       redirect("diary");
     }
 
+    function check_if_exist() {
+      $code = $this->input->post('code');
+      if ($this->Diary_Model->check_if_exist($code)) {
+        echo "false";
+      }else{
+        echo "true";
+      }
+    }
+
     function addpay() {
       $this->form_validation->set_rules('ammount', 'Cantidad', 'xss_clean|required');
       $this->form_validation->set_message('required', '%s es obligatorio.');
-      
       $data_in['FechaRegistro'] = date("y-m-d");
       $data_in['FechaTransaction'] = $this->input->post('date');
       $data_in['idUser'] = $this->input->post('client');
@@ -103,7 +111,7 @@
       $data_in['idCustomer'] = $this->input->post('idCustomer');
       $data_in['Type'] = "C";
       $data_in['Monto'] = $this->input->post('ammount');
-      $data_in['Estado'] = '1'; 
+      $data_in['Estado'] = '1';
       $data_in['Detalle'] = $this->input->post('detail');
 
       $id = $this->Diary_Model->create($data_in);
@@ -262,7 +270,7 @@
 
       parse_str(html_entity_decode($parameters_string), $parameters);
       // ojo
-        $parameters['type'] = "P";
+      $parameters['type'] = "P";
       $diaries = $this->Diary_Model->search($parameters);
 
       $user_email = $this->Account_Model->get_email();

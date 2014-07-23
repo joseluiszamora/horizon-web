@@ -36,7 +36,6 @@
                     </thead>
                     <tbody id="diaryTableModal">
                       <tr class="even gradeX">
-                        
                         <td class="center" id ="distributorDropdown">
                           <?php
                             echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
@@ -213,7 +212,7 @@
     //enabled button save on form prestamos
     $(this).attr('disabled', false);
     //claer form prestamos inputsa
-    
+
     /*$('#modal-diarycreate').on('show', function () {
       clear_form_diary();
     });*/
@@ -221,7 +220,6 @@
     // adicionar registro
     $("#btnAddReg").click(function(){
       flag = true;
-
       distributor = $(this).parents("#diaryTableModal").find("select[name='distributor']").val();
       client = $(this).parents("#diaryTableModal").find("select[name='client']").val();
       date = $(this).parents("#diaryTableModal").find("input[name='date']").val();
@@ -229,6 +227,7 @@
       ammount = $(this).parents("#diaryTableModal").find("#ammount").val();
       ammountmax = $(this).parents("#diaryTableModal").find("#ammount").attr("data-max");
       detail = $(this).parents("#diaryTableModal").find("#detail").val();
+
       //validate
       $("#modal-diarycreate #errorFormContainer").html("");
       // error container
@@ -247,17 +246,32 @@
         flag = false;
         $(errorFormContainer).append("<span class='text-error'>* Introduzca una fecha</span><br>");
       }
+
       if (voucher.trim() == "" || voucher.trim() == "0") {
         flag = false;
         $(errorFormContainer).append("<span class='text-error'>* Introduzca un Voucher</span><br>");
       }else{
-        $("#diaryTableList tr").each(function(){
-          if (voucher.trim() === $(this).find(".voucher").html() ) {
-            flag = false;
-            $(errorFormContainer).append("<span class='text-error'>* Este Voucher ya fue introducido</span><br>");
+        // check voucher
+        /*$.ajax({
+          url: "http://localhost/horizon/index.php/diary/check_if_exist",
+          data: "code=" + voucher.trim(),
+          type: "POST",
+          async: true,
+          success: function(data) {
+            if (data == "true"){*/
+              $("#diaryTableList tr").each(function(){
+                if (voucher.trim() === $(this).find(".voucher").html() ) {
+                  flag = false;
+                  $(errorFormContainer).append("<span class='text-error'>* Este Voucher ya fue introducido</span><br>");
+                }
+              });
+        /*    }else{
+              voucher = voucher.trim() + ".1";
+            }
           }
-        });
+        });*/
       }
+
       if (ammount.trim() == "" || ammount.trim() == "0") {
         flag = false;
         $(errorFormContainer).append("<span class='text-error'>* Introduzca una Cantidad</span><br>");
@@ -268,7 +282,7 @@
           flag = false;
           //$(this).parents("#diaryTableModal").find("#ammount").parents("td")
           $(errorFormContainer).append("<span class='text-error'>* Solo esta autorizado a recibir un prestamo maximo de "+ammountmax+" Bs.</span><br>");
-        } 
+        }
       }
 
       if (flag) {
@@ -294,6 +308,7 @@
         });
       };
 
+
     });
 
     // guardar todos los prestamos
@@ -305,9 +320,7 @@
       voucher = "";
       ammount = "";
       detail = "";
-      
       //number = Number(ammount.replace(/[^0-9\.]+/g,""));
-      //numbermax = Number(ammountmax.replace(/[^0-9\.]+/g,""));
 
       $("#diaryTableList tr").each(function(){
         distributor += $(this).find(".distributor").html()+"***";
@@ -345,7 +358,6 @@
         clear_form_diary();
       }
     });
-    
 
     $("#cancelPrestamosOk").click(function(){
       $("#diaryTableList").html("");
@@ -363,8 +375,7 @@
       $(".chosen-select2").chosen({
         no_results_text: "Ningún resultado encontrado :(",
         width: "200px"
-      }); 
+      });
     })
-     
   });
 </script>
