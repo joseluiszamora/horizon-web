@@ -219,7 +219,8 @@
                             <td class="unity success">0</td>
 
                             <!-- total venta -->
-                            <td class="unity">{{ getTotalAmmount(product) }}</td>
+                            <!--<td class="unity">{{ getTotalAmmount(product) }}</td>-->
+                            <td class="unity">{{ product.totalAmmount }}</td>
                           </tr>
                         </tbody>
                         <tfooter>

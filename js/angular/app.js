@@ -117,8 +117,8 @@ var lineControllerObj = function ($scope, sharedProperties){
       //$sum += parseInt($scope.getVentaP(product) * product.uxp);
       //$sum += parseInt($scope.getVentaU(product));
       //$sum = Math.round(($sum * product.price) * 100)/100;;
-
-      console.log(product.price+" - "+product.totalAmmount);
+      $sum += product.totalAmmount;
+      //console.log(product.price+" - "+product.totalAmmount);
       /*
       //$sum += $scope.getTotalAmmount(product);
       $sum += parseInt($scope.getVentaP(product) * product.uxp);
@@ -646,6 +646,7 @@ var productControllerObj = function ($scope){
 
       product.calculatedP = $subtotalP + Math.floor($subtotal / product.uxp);
 
+      product.totalAmmount = ((product.calculatedP + product.calculatedU)*product.price);
       //$scope.productControllerObj.calculatedP = product.calculatedP;
       //$scope.productControllerObj.calculatedU = product.calculatedU;
     }else{

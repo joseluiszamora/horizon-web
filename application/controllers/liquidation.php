@@ -183,7 +183,7 @@
             'ventaP'         => 0,
             'ventaU'         => 0,
 
-            'totalAmmount'   => round((($partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) * $rowproduct->price), 0)
+            'totalAmmount'   => (($partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) * $rowproduct->price)
             //'totalAmmount'   => $partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion
           );
 
