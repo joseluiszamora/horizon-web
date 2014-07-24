@@ -1,8 +1,7 @@
 <?php
-  class Liquidation extends  CI_Controller {    
+  class Liquidation extends  CI_Controller {
     public function __construct() {
       parent::__construct();
-      
       $this->load->model('Line_Model');
       $this->load->model('Volume_Model');
       $this->load->model('Linevolume_Model');
@@ -31,7 +30,6 @@
       $data['linenoregular'] = $this->Line_Model->get_no_regular_lines();
       $areas = $this->Area_Model->report("1", 'zona.idZona');
       $area_list = $this->Area_Model->get_area_list("all", "1");
-      
       $dropdown_list = array();
       foreach ($areas as $row){
         if ($row->Estado == "1" && $row->level == "0"){
@@ -140,9 +138,8 @@
       $line = $this->Liquidation_Model->get_lines_actives($idLiquidation);
 
       foreach ($line as $rowline) {
-        $productsContainer = array();        
+        $productsContainer = array();
         $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine);
-        
         foreach ($products as $rowproduct){
           $arrayProducts = array(
             'idDetalleLiquidacion'     => $rowproduct->idDetalleLiquidacion,
@@ -159,7 +156,7 @@
             'chargeExtraU1'  => round(($rowproduct->chargeExtra1 % $rowproduct->uxp), 0),
             'chargeExtraP2'  => floor($rowproduct->chargeExtra2 / $rowproduct->uxp),
             'chargeExtraU2'  => round(($rowproduct->chargeExtra2 % $rowproduct->uxp), 0),
-            
+
             'chargeExtraP3'  => floor($rowproduct->chargeExtra3 / $rowproduct->uxp),
             'chargeExtraU3'  => round(($rowproduct->chargeExtra3 % $rowproduct->uxp), 0),
 
@@ -168,10 +165,10 @@
 
             'devolutionP'    => floor($rowproduct->devolucion / $rowproduct->uxp),
             'devolutionU'    => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
-            
+
             'prestamosP'     => 0,
             'prestamosU'     => 0,
-            
+
             'bonosP'         => 0,
             'bonosU'         => 0,
 
@@ -181,7 +178,7 @@
             'calculatedP' => floor(($rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3 - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) / $rowproduct->uxp),
 
             'calculatedU' => round((($rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3 - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) % $rowproduct->uxp), 0),
-            
+
             'ventaP'         => 0,
             'ventaU'         => 0,
 
@@ -197,7 +194,7 @@
           'nameLine' => $rowline->Descripcion,
           'lineUxp' => $rowline->uxplinea,
           'products' => $productsContainer
-        ); 
+        );
         array_push($mainArray, $line);
       }
 
@@ -206,13 +203,11 @@
 
     function get_lines_view($idLiquidation){
       $mainArray = array();
-      $line = $this->Line_Model->get_lines_actives();
+      $line = $this->Liquidation_Model->get_lines_actives($idLiquidation);
 
       foreach ($line as $rowline) {
         $productsContainer = array();
-        
         $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine);
-        
         foreach ($products as $rowproduct){
           $arrayProducts = array(
             'idDetalleLiquidacion'     => $rowproduct->idDetalleLiquidacion,
@@ -229,29 +224,33 @@
             'chargeExtraU1'  => round(($rowproduct->chargeExtra1 % $rowproduct->uxp), 0),
             'chargeExtraP2'  => floor($rowproduct->chargeExtra2 / $rowproduct->uxp),
             'chargeExtraU2'  => round(($rowproduct->chargeExtra2 % $rowproduct->uxp), 0),
-            
+
             'chargeExtraP3'  => floor($rowproduct->chargeExtra3 / $rowproduct->uxp),
             'chargeExtraU3'  => round(($rowproduct->chargeExtra3 % $rowproduct->uxp), 0),
 
-            'chargeTotalP'  => 0,
-            'chargeTotalU'  => 0,
+            'chargeTotalP'   => 0,
+            'chargeTotalU'   => 0,
 
-            'devolutionP'  => floor($rowproduct->devolucion / $rowproduct->uxp),
-            'devolutionU'  => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
-            
-            'prestamosP'    => 0,
-            'prestamosU'    => 0,
-            
-            'bonosP'        => 0,
-            'bonosU'        => 0,
-            
-            'ajusteP'     => floor($rowproduct->excepcion / $rowproduct->uxp),
-            'ajusteU'     => round(($rowproduct->excepcion % $rowproduct->uxp), 0),
-            
-            'ventaP'        => 0,
-            'ventaU'        => 0,
+            'devolutionP'    => floor($rowproduct->devolucion / $rowproduct->uxp),
+            'devolutionU'    => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
 
-            'totalAmmount'  => 0
+            'prestamosP'     => 0,
+            'prestamosU'     => 0,
+
+            'bonosP'         => 0,
+            'bonosU'         => 0,
+
+            'ajusteP'     => 0,
+            'ajusteU'     => 0,
+
+            'calculatedP' => floor(($rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3 - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) / $rowproduct->uxp),
+
+            'calculatedU' => round((($rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3 - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) % $rowproduct->uxp), 0),
+
+            'ventaP'         => 0,
+            'ventaU'         => 0,
+
+            'totalAmmount'   => 0
           );
 
           array_push($productsContainer, $arrayProducts);
@@ -263,7 +262,7 @@
           'nameLine' => $rowline->Descripcion,
           'lineUxp' => $rowline->uxplinea,
           'products' => $productsContainer
-        ); 
+        );
         array_push($mainArray, $line);
       }
 
@@ -380,7 +379,7 @@
       $data['page'] = 'pdf_1';
       $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/horizon/';
       //$this->load->view('liquidation/template_pdf_1', $data);
-      $templateView = $this->load->view('liquidation/template_pdf_1', $data, TRUE);
+      $templateView = $this->load->view('liquidation/pdf_1', $data, TRUE);
       exportMeAsDOMPDF($templateView, "report");
     }
 
@@ -398,7 +397,6 @@
       $user_email = $this->Account_Model->get_email();
       $user = $this->Account_Model->get_user_by_email($user_email);
 
-      
       $data['title'] = 'PRODUCTOS';
       $data['products'] = $products;
       $data['category'] = 'liquidation';

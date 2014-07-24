@@ -22,4 +22,3 @@
 </head>
 <body>
   <div id="wrapper">
-  <img id="back" src="<?php echo $base_url; ?>img/planilla.png">
