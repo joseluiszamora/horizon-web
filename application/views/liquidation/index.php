@@ -1,4 +1,4 @@
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="<?php echo base_url(); ?>js/d3js/d3.min.js"></script>
 <script src="<?php echo base_url(); ?>js/d3js/RadarChart.js"></script>
 <style>
 
