@@ -141,6 +141,7 @@
         $productsContainer = array();
         $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine);
         foreach ($products as $rowproduct){
+          $partialcharge = $rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3;
           $arrayProducts = array(
             'idDetalleLiquidacion'     => $rowproduct->idDetalleLiquidacion,
             'idProduct'     => $rowproduct->idProduct,
@@ -160,8 +161,8 @@
             'chargeExtraP3'  => floor($rowproduct->chargeExtra3 / $rowproduct->uxp),
             'chargeExtraU3'  => round(($rowproduct->chargeExtra3 % $rowproduct->uxp), 0),
 
-            'chargeTotalP'   => 0,
-            'chargeTotalU'   => 0,
+            'chargeTotalP'   => floor(($partialcharge) / $rowproduct->uxp),
+            'chargeTotalU'   => round((($partialcharge) % $rowproduct->uxp), 0),
 
             'devolutionP'    => floor($rowproduct->devolucion / $rowproduct->uxp),
             'devolutionU'    => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
@@ -175,14 +176,15 @@
             'ajusteP'     => 0,
             'ajusteU'     => 0,
 
-            'calculatedP' => floor(($rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3 - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) / $rowproduct->uxp),
+            'calculatedP' => floor(($partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) / $rowproduct->uxp),
 
-            'calculatedU' => round((($rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3 - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) % $rowproduct->uxp), 0),
+            'calculatedU' => round((($partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) % $rowproduct->uxp), 0),
 
             'ventaP'         => 0,
             'ventaU'         => 0,
 
-            'totalAmmount'   => 0
+            'totalAmmount'   => round((($partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) * $rowproduct->price), 0)
+            //'totalAmmount'   => $partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion
           );
 
           array_push($productsContainer, $arrayProducts);

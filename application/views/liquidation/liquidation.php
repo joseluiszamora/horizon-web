@@ -200,7 +200,7 @@
                             <!-- devolution bonificacion -->
                             <td class="unity">{{ product.bonosP }}</td>
                             <td class="unity">{{ product.bonosU }}</td>
-                            
+
                             <!-- Ajuste -->
                             <td class="unity danger">
                               <!--<input name="cargap" ng-model="productControllerObj.calculatedP" type="number" min="0" class="inputSmall" ng-blur="updateAjusteP(product)" ng-change="updateAjusteP(product)" ng-keyup="updateAjusteP(product)" />-->
@@ -222,7 +222,7 @@
                             <td class="unity">{{ getTotalAmmount(product) }}</td>
                           </tr>
                         </tbody>
-                        <tfooter> 
+                        <tfooter>
                           <tr class="footer">
                             <td class="vol">&nbsp;</td>
                             <td class="productname">&nbsp;</td>
@@ -230,7 +230,7 @@
                             <td class="unity">{{ getCargaInicialULine(line.products) }}</td>
                             <td class="unity">{{ getCargaPLine(line.products, line.lineUxp) }}</td>
                             <td class="unity">{{ getCargaULine(line.products, line.lineUxp) }}</td>
-                            
+
                             <td class="unity">{{ getCargaExtra1PLine(line.products, line.lineUxp) }}</td>
                             <td class="unity">{{ getCargaExtra1ULine(line.products, line.lineUxp) }}</td>
 

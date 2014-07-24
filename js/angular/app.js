@@ -108,6 +108,31 @@ var lineControllerObj = function ($scope, sharedProperties){
     visible: true
   };
 
+  $scope.getAmmountLine = function (products){
+    $sum = 0;
+    angular.forEach(products, function(product) {
+
+      //$scope.productControllerObj.cargaExtraP1
+
+      //$sum += parseInt($scope.getVentaP(product) * product.uxp);
+      //$sum += parseInt($scope.getVentaU(product));
+      //$sum = Math.round(($sum * product.price) * 100)/100;;
+
+      console.log(product.price+" - "+product.totalAmmount);
+      /*
+      //$sum += $scope.getTotalAmmount(product);
+      $sum += parseInt($scope.getVentaP(product) * product.uxp);
+      $sum += parseInt($scope.getVentaU(product));
+      $sum = Math.round(($sum * product.price) * 100)/100;
+      //product.totalAmmount = $sum;
+      */
+    });
+
+    $sum = Math.round(($sum) * 100)/100;;
+    return $sum;
+  };
+
+
   $scope.getCargaInicialPLine = function (products){
     $sum = 0;
     angular.forEach(products, function(value) {
@@ -340,23 +365,6 @@ var lineControllerObj = function ($scope, sharedProperties){
 
     return $sum;
   };
-  
-  $scope.getAmmountLine = function (products){
-    $sum = 250;
-    angular.forEach(products, function(product) {
-      //console.log($scope.getVentaP(product));
-      /*
-      //$sum += $scope.getTotalAmmount(product);
-      $sum += parseInt($scope.getVentaP(product) * product.uxp);
-      $sum += parseInt($scope.getVentaU(product));
-      $sum = Math.round(($sum * product.price) * 100)/100;
-      //product.totalAmmount = $sum;
-      */
-    });
-
-    $sum = Math.round(($sum) * 100)/100;;
-    return $sum;
-  };
 
   $scope.getVisible = function (line){
     return line.show;
@@ -515,12 +523,6 @@ var productControllerObj = function ($scope){
     return $sum;
   };
 
-
-
-
-
-
-
   $scope.getTotalAmmount = function (product){
     $sum = 0;
     $sum += parseInt($scope.getVentaP(product) * product.uxp);
@@ -624,8 +626,8 @@ var productControllerObj = function ($scope){
   $scope.updateAjusteP = function (product) {
     $subtotal = product.previousDayP + product.chargeP + product.chargeExtraP1 + product.chargeExtraP2 + product.chargeExtraP3 - product.devolutionP - product.prestamosP - product.bonosP;
 
-    product.calculatedP = $scope.productControllerObj.calculatedP + $subtotal;
-
+    //product.calculatedP = $scope.productControllerObj.calculatedP + $subtotal;
+    product.calculatedP = $scope.productControllerObj.calculatedP;
     //$scope.productControllerObj.calculatedP = product.calculatedP;
   };
 
