@@ -77,13 +77,12 @@
             <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'">
               <label for="{{ lineName.idLine }}">{{ lineName.nameLine }}</label>
               <input type="checkbox" id="{{ lineName.idLine }}" ng-model="lineName.show">
-            </li>            
+            </li>
           </ul>
         </div>
 
         <div class="panel-body">
           <div class="table-responsive">
-            
             <div ng-repeat="line in liquidation.lines | orderBy: 'name'" ng-controller="lineControllerObj">
 
               <table class="table table-bordered tableLine">
@@ -168,7 +167,7 @@
                             <!-- previous charge -->
                             <td class="unity">{{ product.previousDayP }}</td>
                             <td class="unity">{{ product.previousDayU }}</td>
-                            
+
                             <!-- main charge -->
                             <td class="unity">{{ product.chargeP }} </td>
                             <td class="unity"> {{ product.chargeU }} </td>

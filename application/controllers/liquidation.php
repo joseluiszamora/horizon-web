@@ -56,21 +56,21 @@
       $data['charges'] = $this->Liquidation_Model->report("active", "charges");
       $data['category'] = 'liquidation';
       $data['page'] = 'charge_list';
-      $this->load->view('template/template_liquidation', $data); 
+      $this->load->view('template/template_liquidation', $data);
     }
 
     function devolutions() {
       $data['charges'] = $this->Liquidation_Model->report("active", "devolutions");
       $data['category'] = 'liquidation';
       $data['page'] = 'devolution_list';
-      $this->load->view('template/template_liquidation', $data); 
+      $this->load->view('template/template_liquidation', $data);
     }
 
     function liquidation_list() {
       $data['charges'] = $this->Liquidation_Model->report("active", "liquidation");
       $data['category'] = 'liquidation';
       $data['page'] = 'liquidation_list';
-      $this->load->view('template/template_liquidation', $data); 
+      $this->load->view('template/template_liquidation', $data);
     }
 
     function add_products($liquidation) {
@@ -83,7 +83,7 @@
       */
       $data['category'] = 'liquidation';
       $data['page'] = 'add_products';
-      $this->load->view('template/template_liquidation', $data);  
+      $this->load->view('template/template_liquidation', $data);
       //print_r($data);
     }
 

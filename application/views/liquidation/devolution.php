@@ -108,13 +108,12 @@
             <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'">
               <label for="{{ lineName.idLine }}">{{ lineName.nameLine }}</label>
               <input type="checkbox" id="{{ lineName.idLine }}" ng-model="lineName.show">
-            </li>            
+            </li>
           </ul>
         </div>
 
         <div class="panel-body">
           <div class="table-responsive">
-            
             <div ng-repeat="line in liquidation.lines | orderBy: 'name'" ng-controller="lineControllerObj">
 
               <table class="table table-bordered tableLine">
@@ -173,7 +172,7 @@
                             <!-- previous charge -->
                             <td class="unity">{{ product.previousDayP }}</td>
                             <td class="unity">{{ product.previousDayU }}</td>
-                            
+
                             <!-- main charge -->
                             <td class="unity">{{ product.chargeP }} </td>
                             <td class="unity"> {{ product.chargeU }} </td>
@@ -200,10 +199,10 @@
                             </td>
                             <td class="unity success">
                               <input name="cargau" ng-model="productControllerObj.devolutionU" type="number" min="0" class="inputSmall" ng-blur="updateDevolutionU(product)" ng-change="updateDevolutionU(product)" ng-keyup="updateDevolutionU(product)" />
-                            </td>  
+                            </td>
                           </tr>
                         </tbody>
-                        <tfooter> 
+                        <tfooter>
                           <tr class="footer">
                             <td class="vol">&nbsp;</td>
                             <td class="productname">&nbsp;</td>
@@ -211,7 +210,7 @@
                             <td class="unity">{{ getCargaInicialULine(line.products) }}</td>
                             <td class="unity">{{ getCargaPLine(line.products, line.lineUxp) }}</td>
                             <td class="unity">{{ getCargaULine(line.products, line.lineUxp) }}</td>
-                            
+
                             <td class="unity">{{ getCargaExtra1PLine(line.products, line.lineUxp) }}</td>
                             <td class="unity">{{ getCargaExtra1ULine(line.products, line.lineUxp) }}</td>
 
@@ -258,7 +257,7 @@
       type: "POST",
       url: url+'liquidation/add_irregular_products/',
       data: 'idliquid='+idliquid+'&noregular='+noregulararray,
-      
+
       async: false,
       cache: false
     }).done(function( data ) {

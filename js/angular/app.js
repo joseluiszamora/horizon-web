@@ -1,4 +1,4 @@
-var url = "http://localhost/horizon/index.php/";
+  var url = "http://localhost/horizon/index.php/";
 //var url = "https://mariani.bo/horizon-sc/index.php/";
 
 idliquidation = $("#idLiquidation").html();
@@ -65,18 +65,18 @@ app.directive('chargeList', function(){
 app.controller('LiquidationController', ['$http', function( $http ){
   $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
   var liquidation = this;
-  
   liquidation.lines = [ ];
 
   liquidation.mark = $("#markLiquidation").html();
   liquidation.idLiquidation = $("#idLiquidation").html();
-  
+
   $http.get(url + 'liquidation/get_lines/' + liquidation.idLiquidation).success(function(data){
     liquidation.lines = data;
   });
 
   this.saveAll = function () {
-    var datasend = {  
+    console.log(liquidation.lines);
+    /*var datasend = {
       lines: liquidation.lines,
       liquidation: $("#idLiquidation").html(),
       mark: $("#markLiquidation").html()
@@ -85,7 +85,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
     $http.post(url + 'liquidation/save_lines', datasend).success(
       function (data, status, headers){
       window.location = url + "liquidation/charge_list";
-    });
+    });*/
   };
 }]);
 
@@ -629,6 +629,10 @@ var productControllerObj = function ($scope){
     //product.calculatedP = $scope.productControllerObj.calculatedP + $subtotal;
     product.calculatedP = $scope.productControllerObj.calculatedP;
     //$scope.productControllerObj.calculatedP = product.calculatedP;
+
+    product.ajusteP = $scope.productControllerObj.calculatedP;
+
+    //console.log($scope.productControllerObj.calculatedP);
   };
 
   $scope.updateAjusteU = function (product) {
@@ -652,12 +656,29 @@ var productControllerObj = function ($scope){
     }else{
       product.calculatedU = $subtotal;
     }
+
+    //product.ajusteU = $scope.productControllerObj.ajusteU;
+
+    // Change ajuste U
+    $calculatedU = $scope.productControllerObj.calculatedU;
+    product.calculatedU = Math.round($calculatedU % product.uxp);
+
+    $scope.productControllerObj.calculatedU = Math.round($calculatedU % product.uxp);
+
+    // Change ajuste P
+    $calculatedP = Math.floor((product.calculatedP + $calculatedU) / product.uxp);
+    console.log($calculatedP);
+    product.calculatedP += $calculatedP;
+    $scope.productControllerObj.calculatedP += $calculatedP;
+
+    console.log(product);
   };
 
   $scope.updateDevolutionP = function (product) {
     product.devolutionP = $scope.productControllerObj.devolutionP;
     //console.log(product);
   };
+
   $scope.updateDevolutionU = function (product) {
     if ($scope.productControllerObj.devolutionU >= product.uxp) {
       product.devolutionU = Math.round($scope.productControllerObj.devolutionU % product.uxp);
