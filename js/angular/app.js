@@ -75,8 +75,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
   });
 
   this.saveAll = function () {
-    console.log(liquidation.lines);
-    /*var datasend = {
+    var datasend = {
       lines: liquidation.lines,
       liquidation: $("#idLiquidation").html(),
       mark: $("#markLiquidation").html()
@@ -85,7 +84,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
     $http.post(url + 'liquidation/save_lines', datasend).success(
       function (data, status, headers){
       window.location = url + "liquidation/charge_list";
-    });*/
+    });
   };
 }]);
 

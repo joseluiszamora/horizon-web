@@ -73,6 +73,14 @@
       $this->load->view('template/template_liquidation', $data);
     }
 
+    function history_list() {
+      $data['distributor'] = $this->Liquidation_Model->get_users_and_zones();
+      $data['charges'] = $this->Liquidation_Model->report("active", "completado");
+      $data['category'] = 'liquidation';
+      $data['page'] = 'history_list';
+      $this->load->view('template/template_liquidation', $data);
+    }
+
     function add_products($liquidation) {
       $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
       /*$data['line'] = $this->Line_Model->get_all_json();
@@ -273,7 +281,7 @@
 
     function save_lines(){
       $data = json_decode(file_get_contents('php://input'), TRUE);
-      
+
       foreach($data['lines'] as $rowLine) {
         foreach($rowLine['products'] as $rowProduct) {
           $data_in['carga1'] = $rowProduct['chargeU'] + ( $rowProduct['chargeP'] * $rowProduct['uxp'] );
@@ -294,10 +302,12 @@
         $data_liq['mark'] = "cargaextra2";
       }elseif ($data['mark'] == "cargaextra2") {
         $data_liq['mark'] = "cargafinal";
+      }elseif ($data['mark'] == "liquidation"){
+        $data_liq['mark'] = "completado";
       }else{
         $data_liq['mark'] = "liquidation";
       }
-      
+
       $this->Liquidation_Model->update($data_liq, $data['liquidation']);
     }
 
@@ -371,7 +381,6 @@
       echo $idLiquidacion;
     }
 
-
     function pdf($liquidation) {
       $this->load->helper('pdfexport_helper.php');
       $data['title'] = 'PLANILLA DE CARGA DE PRODUCTOS';
@@ -408,5 +417,22 @@
       exportMeAsDOMPDF($templateView, "report");
     }*/
 
+
+    function search(){
+      $this->form_validation->set_rules('distributor', 'distributor', 'xss_clean');
+      $this->form_validation->set_message('xss_clean', 'security: danger value.');
+
+      $data_in['distributor'] = $this->input->post('distributor');
+      $data_in['status'] = $this->input->post('status');
+      $data_in['dateStart'] = $this->input->post('dateStart');
+      $data_in['dateFinish'] = $this->input->post('dateFinish');
+
+      $data['parameters'] = $data_in;
+      $data['distributor'] = $this->Liquidation_Model->get_users_and_zones();
+      $data['charges'] = $this->Liquidation_Model->search($data_in);
+      $data['category'] = 'liquidation';
+      $data['page'] = 'history_list';
+      $this->load->view('template/template_liquidation', $data);
+    }
   }
 ?>

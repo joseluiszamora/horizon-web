@@ -38,6 +38,31 @@ class Liquidation_model extends CI_Model {
 
 
   // get all users distributor, with his zones
+  function get_users_and_zones() {
+    $this->db->select(
+      'users.idUser,
+      users.Nombre, 
+      users.Apellido,
+      zona.idZona,
+      zona.Descripcion'
+    );
+    $this->db->from('users');
+    $this->db->join('zona', 'zona.idZona = users.idZona');
+    $this->db->order_by('idUser', "asc");
+    $this->db->where('users.NivelAcceso !=', 1);
+
+    $query = $this->db->get();
+    $drop = '<select class="form-control chosen-select" name="distributor"><option value="0">Seleccione Distribuidor</option>';
+
+    $result = $query->result_array();
+    foreach ($result as $r) {
+      $drop .= '<option value="'.$r['idUser'].'">'.$r['Nombre']." ".$r['Apellido']." ".$r['Apellido'].'</option>';
+    }
+
+    $drop .= '</select>';
+    return $drop;
+  }
+
   function get_enabled_users_and_zones() {
     $this->db->select(
       'users.idUser,
@@ -53,11 +78,12 @@ class Liquidation_model extends CI_Model {
 
     $query = $this->db->get();
     $drop = '<select class="form-control" name="distributor"><option value="0">Seleccione Distribuidor</option>';
-    
+
     $result = $query->result_array();
     foreach ($result as $r) {
       // check if this user dont have pending liquidations
       $this->db->where('liquidacion.idUser', $r['idUser']);
+      $this->db->where('liquidacion.mark !=', 'completado');
       $this->db->where('liquidacion.status', 'active');
       $this->db->from('liquidacion');
       if ($this->db->count_all_results() <= 0) {
@@ -187,6 +213,50 @@ class Liquidation_model extends CI_Model {
     return $query->result();
   }
 
+
+  function search($data_in) {
+    $this->db->select(
+      'liquidacion.idLiquidacion,
+      liquidacion.fechaRegistro,
+      liquidacion.horaRegistro,
+      users.Nombre,
+      users.Apellido,
+      liquidacion.ruta,
+      liquidacion.detalle,
+      liquidacion.fechaFin,
+      liquidacion.horaFin,
+      liquidacion.mark,
+      liquidacion.status,
+      zona.Descripcion'
+    );
+    $this->db->from('liquidacion');
+    $this->db->join('users', 'users.idUser = liquidacion.idUser');
+    $this->db->join('zona', 'zona.idZona = liquidacion.ruta');
+
+    if(isset($data_in['status']) && $data_in['status'] != ""){
+      //$this->db->where('liquidacion.status', $data_in['status']);
+    }
+    if(isset($data_in['distributor']) && $data_in['distributor'] != "" && $data_in['distributor'] != "0"){
+      $this->db->where('liquidacion.idUser',$data_in['distributor']);
+    }
+    if(isset($data_in['dateStart']) && $data_in['dateStart'] != ""){
+      $fecha = $data_in['dateStart'];
+      $nuevafecha = strtotime ( '-1 day' , strtotime ( $fecha ) ) ;
+      $nuevafecha = date ( 'y-m-d' , $nuevafecha );
+      $this->db->where('DATE(liquidacion.fechaRegistro) >', $nuevafecha);
+    }
+    if(isset($data_in['dateFinish']) && $data_in['dateFinish'] != ""){
+      $fecha = $data_in['dateFinish'];
+      $nuevafecha2 = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
+      $nuevafecha2 = date ( 'y-m-d' , $nuevafecha2 );
+      $this->db->where('DATE(liquidacion.fechaRegistro) <', $nuevafecha2);
+    }
+
+    $this->db->order_by('liquidacion.fechaRegistro', "asc");
+    $query = $this->db->get();
+    return $query->result();
+  }
+
   function count($status="active", $mark="all"){
     $this->db->from('liquidacion');
     $this->db->join('users', 'users.idUser = liquidacion.idUser');
@@ -253,7 +323,7 @@ class Liquidation_model extends CI_Model {
     $this->db->where('carga2', 0);
     $this->db->where('carga3', 0);
     $this->db->where('carga4', 0);
-    $this->db->delete('detalleliquidacion'); 
+    $this->db->delete('detalleliquidacion');
   }
 
 }

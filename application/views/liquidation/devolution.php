@@ -241,8 +241,6 @@
 </div>
 
 <script type="text/javascript">
-  // chosen selects
-  $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
   $("#add_no_regular").click(function(){
     // check no regular products
     var idliquid = $("#idLiquidacion").html();
