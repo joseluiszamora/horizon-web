@@ -232,43 +232,10 @@
                   </tr>
                 </tbody>
               </table>
-  
+
             </div>
           </div>
         </div>
       </div>
     </div>
 </div>
-
-<script type="text/javascript">
-  $("#add_no_regular").click(function(){
-    // check no regular products
-    var idliquid = $("#idLiquidacion").html();
-    var noregulararray = "";
-    $('#noregulardropdown :selected').each(function(i, selected){ 
-      noregulararray += $(selected).val() + "***";
-    });
-
-    var url = "http://localhost/horizon/index.php/";
-    //var url = "https://mariani.bo/horizon-sc/index.php/";
-    $.ajax({
-      type: "POST",
-      url: url+'liquidation/add_irregular_products/',
-      data: 'idliquid='+idliquid+'&noregular='+noregulararray,
-
-      async: false,
-      cache: false
-    }).done(function( data ) {
-      window.location.reload();
-    });
-  });
-</script>
-
-<style type="text/css">
-  .chosen-single, .chosen-drop, .chosen-results, #noregulardropdown_chosen{
-    width: 400px !important;
-  }
-  .chosen-choices .search-field input{
-    height: 30px !important;
-  }
-</style>

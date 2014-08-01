@@ -26,20 +26,7 @@
 
 <div class="row" >
   <div class="col-md-offset-1 col-md-9 form-horizontal">
-    <?php
-      //$attributes = array('class' => 'form-horizontal');
-      //echo form_open('liquidation/save', $attributes);
-    ?>
       <fieldset>
-        <!--<div class="form-group">
-          <label for="distributor" class="col-xs-2 control-label">Ciudad</label>
-          <div class="col-xs-7">
-            <?php
-              //echo form_dropdown('city', $cities, '', 'class="chosen-select form-control" ');
-            ?>
-          </div>
-        </div>-->
-
         <div class="form-group">
           <label for="distributor" class="control-label col-xs-2">Distribuidor</label>
           <div class="col-xs-7">
@@ -63,7 +50,7 @@
         <div class="form-group">
           <label for="date" class="control-label col-xs-2">Fecha</label>
           <div class="col-xs-3">
-            <?php 
+            <?php
               echo form_input(array('name' => 'date', 'class' => 'datecontainer datepicker datemedium form-control'));
             ?>
           </div>
@@ -72,7 +59,7 @@
         <div class="form-group">
           <label for="desc" class="control-label col-xs-2">Observaciones</label>
           <div class="col-xs-7">
-            <?php 
+            <?php
               echo form_textarea(array('name' => 'desc', 'class' => 'form-control', 'rows' => '3', 'cols' => '4'), set_value('desc'));
             ?>
           </div>
@@ -82,7 +69,7 @@
           <div class="col-xs-offset-2 col-xs-10">
             <div class="checkbox">
               <label>
-                <?php 
+                <?php
                   $data = array(
                     'name'        => 'lastliquid',
                     'id'        => 'lastliquid',
@@ -133,125 +120,5 @@
         </div>
 
       </fieldset>
-    <?php //echo form_close(); ?>
   </div>
 </div>
-
-<script type="text/javascript">
-  // chosen selects
-  $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
-
-  $(".routedropdown").hide();
-  $("#noRegularSelect").hide();
-
-  var myDate = new Date();
-  var prettyDate = myDate.getFullYear() + '-' + (myDate.getMonth()+1) + '-' + myDate.getDate();
-  $('.datepicker').val(prettyDate);
-  //2014-07-18
-  $('.datepicker').datepicker({
-    format: 'yyyy-mm-dd',
-  }).on('changeDate', function(ev){
-    $(this).datepicker('hide');
-  });
-  
-  $('select[name="distributor"]').change(function(){
-    $(".routedropdown").hide();
-    $(".routedropdown").removeClass("selected");
-    $zoneid = $('select[name="distributor"]').find('option[value='+$(this).val()+']').attr("data-zone");
-    $(".routedropdown[id="+$zoneid+"]").show();
-    $(".routedropdown[id="+$zoneid+"]").addClass("selected");
-
-
-  });
-
-  $('#noregularproducts').change(function() {
-    if ($(this).is(":checked")) {
-      $("#noRegularSelect").show();
-    }else{
-      $("#noRegularSelect").hide();
-    }
-  });
-
-  $("#saveform").click(function(){
-    console.log("2222");
-    $flag = false;
-    // check distrib
-    $distrib = $('select[name="distributor"]');
-    $distribval = $('select[name="distributor"]').val();
-    if ($distribval == 0 || $distribval == "") {
-      $flag = false;
-      $distrib.addClass("has-error");
-      $distrib.parents(".form-group").find("label").addClass("has-error");
-      return false;
-    }else{
-      $flag = true;
-      $distrib.removeClass("has-error");
-      $distrib.parents(".form-group").find("label").removeClass("has-error");
-    }
-
-    // check Route
-    $zone = $(".routedropdown.selected").find('select[name="zone"]');
-    $zoneval = $zone.val();
-    if ($zoneval == 0 || $zoneval == "") {
-      $flag = false;
-      $zone.parents(".form-group").find("label").addClass("has-error");
-      return false;
-    }else{
-      $flag = true;
-      $zone.parents(".form-group").find("label").removeClass("has-error");
-    } 
-
-    // check Date
-    $date = $('input[name="date"]');
-    $dateval = $('input[name="date"]').val();
-    if ($dateval == 0 || $dateval == "") {
-      $flag = false;
-      $date.addClass("has-error");
-      $date.parents(".form-group").find("label").addClass("has-error");
-      return false;
-    }else{
-      $flag = true;
-      $date.removeClass("has-error");
-      $date.parents(".form-group").find("label").removeClass("has-error");
-    }
-
-    // check no regular products
-    var noregulararray = "";
-    if ($('#noregularproducts').is( ":checked")) {
-      $('#noregulardropdown :selected').each(function(i, selected){ 
-        //noregulararray[i] = $(selected).text(); 
-        noregulararray += $(selected).val() + "***";
-      });
-    }
-
-    if ($flag) {
-      var url = "http://localhost/horizon/index.php/";
-      //var url = "https://mariani.bo/horizon-sc/index.php/";
-      $desc = $('textarea[name="desc"]').val();
-      $lastliquid = $('#lastliquid').is( ":checked");
-      //$noregular = $('#noregularproducts').is( ":checked");
-
-      $.ajax({
-        type: "POST",
-        url: url+'liquidation/saved/',
-        data: 'distributor='+$distribval+'&route='+$zoneval+'&date='+$dateval+'&desc='+$desc+'&lastliquid='+$lastliquid+'&noregular='+noregulararray,
-        
-        async: false,
-        cache: false
-      }).done(function( data ) {
-        //$("#modalConfirmSave").modal("show");
-        //console.log(url + "liquidation/charge_list/" + data);
-        window.location.href = url + "liquidation/add_products/" + data;
-      });
-    };
-  });
-</script>
-
-<style type="text/css">
-  .chosen-single, .chosen-drop, .chosen-results{
-    width: 400px !important;
-  }
-  .chosen-choices .search-field input{
-    height: 30px !important;
-  }
-</style>

@@ -34,40 +34,11 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-12">
-    <div class="form-inline" role="form">
-      <div class="form-group col-sm-2">
-        <label>Fecha</label>
-        <input type="text" name="desde" id="lt-desde" placeholder="Desde" class="" value="01/07/2014"/>
-      </div>
-      <div class="form-group col-sm-2">
-        <input type="text" name="hasta" id="lt-hasta" placeholder="Hasta" class="" value="31/07/2014"/>
-      </div>
-      <div class="form-group col-sm-2">
-        <label>Usuario</label>
-        <select class="">
-          <option>Usuario 1</option>
-          <option>Usuario 2</option>
-          <option>Usuario 3</option>
-          <option>Usuario 4</option>
-        </select>
-      </div>
-      <div class="form-group col-sm-2">
-        <label>Funcionario</label>
-        <select class="">
-          <option>Funcionario 1</option>
-          <option>Funcionario 2</option>
-          <option>Funcionario 3</option>
-          <option>Funcionario 4</option>
-        </select>
-      </div>
-      <button type="submit" class="">Graficar</button>
-    </div>
+  <div id="body">
+    <div id="chart"></div>
   </div>
 
-  <div class="col-sm-12">
-    <div id="barchart"></div>
-  </div>
+  <div id="barchart"></div>
 </div>
 
 

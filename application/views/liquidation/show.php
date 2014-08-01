@@ -127,7 +127,7 @@
                           </tr>
 
                         </tbody>
-                        <tfooter> 
+                        <tfooter>
                           <tr class="footer">
                             <td class="vol">&nbsp;</td>
                             <td class="productname">&nbsp;</td>
@@ -135,7 +135,7 @@
                             <td class="unity">{{ getCargaInicialULine(line.products) }}</td>
                             <td class="unity">{{ getCargaPLine(line.products) }}</td>
                             <td class="unity">{{ getCargaULine(line.products) }}</td>
-                            
+
                             <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra1PLine(line.products) }}</td>
                             <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra1ULine(line.products) }}</td>
 
@@ -154,7 +154,6 @@
                   </tr>
                 </tbody>
               </table>
-  
             </div>
           </div>
         </div>

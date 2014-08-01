@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody id="diaryTable">
-         <?php foreach ($charges as $row) { 
+         <?php foreach ($charges as $row) {
           ?>
           <tr class="even gradeX">
             <td class="center"><?php echo $row->Nombre." ".$row->Apellido; ?></td>
@@ -35,7 +35,7 @@
               <?php echo anchor('liquidation/pdf/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-download-alt"></span> Pdf', array('class' => 'btn btn-info')); ?>
               <?php echo anchor('liquidation/show/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-th-large"></span> Ver', array('class' => 'btn btn-info')); ?>
             </td>
-            
+
             <td class="center">
               <button class="btn btn-danger" data-toggle="modal" data-target="<?php echo "#myModalDelete".$row->idLiquidacion;?>">
                 <span class="glyphicon glyphicon-trash"></span> Eliminar

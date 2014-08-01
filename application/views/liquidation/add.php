@@ -61,21 +61,6 @@
                     <td class="subTableContainer" >
                       <table class="table table-bordered subTable" ng-show="lineControllerObj.visible">
                         <tbody>
-
-
-                          <!--<div ng-controller="Controller">
-                            <form novalidate class="simple-form">
-                              Name: <input type="text" ng-model="user.name" /><br />
-                              E-mail: <input type="email" ng-model="user.email" /><br />
-                              Gender: <input type="radio" ng-model="user.gender" value="male" />male
-                              <input type="radio" ng-model="user.gender" value="female" />female<br />
-                              <button ng-click="reset()">RESET</button>
-                              <button ng-click="update(user)">SAVE</button>
-                            </form>
-                            <pre>form = {{user | json}}</pre>
-                            <pre>master = {{master | json}}</pre>
-                          </div>-->
-
                          <tr ng-repeat="product in line.products" ng-controller="productControllerObj">
                             <form novalidate name="productForm">
                               <td class="vol">{{ product.volume | uppercase }}</td>
@@ -84,14 +69,14 @@
                               <td class="unity">{{ product.previousDayP }}</td>
                               <td class="unity">{{ product.previousDayU }}</td>
                               <!-- charge -->
-                              <td class="unity"> 
+                              <td class="unity">
                                 <input ng-model="productControllerObj.cargaP" type="number" class="inputSmall"/>
                               </td>
                               <td class="unity">
                                 <input ng-model="productControllerObj.cargaU" type="number" class="inputSmall"/>
                               </td>
                               <!-- extra charge -->
-                              <td class="unity"> 
+                              <td class="unity">
                                 <input ng-model="productControllerObj.cargaExtraP" type="number" class="inputSmall"/>
                               </td>
                               <td class="unity">
@@ -109,7 +94,7 @@
                           </tr>
 
                         </tbody>
-                        <tfooter> 
+                        <tfooter>
                           <tr class="footer">
                             <td class="vol">&nbsp;</td>
                             <td class="productname">&nbsp;</td>
@@ -131,9 +116,7 @@
                   </tr>
                 </tbody>
               </table>
-  
             </div>
-            
           </div>
         </div>
       </div>

@@ -269,10 +269,162 @@
                   </tr>
                 </tbody>
               </table>
-  
             </div>
           </div>
         </div>
+
+
       </div>
     </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row" >
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        GASTOS
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered subTable">
+            <thead>
+              <tr>
+                <th class="vol">GASTO</th>
+                <th class="productname">MONTO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="unity">Refrigerios</td>
+                <td class="unity">0</td>
+              </tr>
+              <tr>
+                <td class="unity">Gasolina</td>
+                <td class="unity">0</td>
+              </tr>
+              <tr>
+                <td class="unity">0</td>
+                <td class="unity">0</td>
+              </tr>
+            </tbody>
+            <tfooter>
+              <tr class="footer">
+                <td class="unity">TOTAL GASTO</td>
+                <td class="unity success">0</td>
+              </tr>
+            </tfooter>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        COBRANZAS
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered subTable">
+            <thead>
+              <tr>
+                <th class="vol">RECIBO</th>
+                <th class="productname">MONTO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="unity">0</td>
+                <td class="unity">0</td>
+              </tr>
+            </tbody>
+            <tfooter>
+              <tr class="footer">
+                <td class="unity">TOTAL</td>
+                <td class="unity success">0</td>
+              </tr>
+            </tfooter>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        TOTALES
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered subTable">
+            <tbody>
+              <tr>
+                <td class="unity">GRAN TOTAL</td>
+                <td class="unity success">999</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

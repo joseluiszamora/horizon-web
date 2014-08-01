@@ -54,7 +54,7 @@
                       <h4 class="modal-title" id="myModalLabel">Finalizar carga</h4>
                     </div>
                     <div class="modal-body">
-                      Esta seguro de Finalizar esta carga? 
+                      Esta seguro de Finalizar esta carga?
                       <br>
                       Ya no sera posible adicionar mas productos.
                     </div>
@@ -71,7 +71,6 @@
               <?php echo anchor('liquidation/pdf/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-download-alt"></span> Pdf', array('class' => 'btn btn-info')); ?>
               <?php echo anchor('liquidation/show/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-th-large"></span> Ver', array('class' => 'btn btn-info')); ?>
             </td>
-            
             <td class="center">
               <button class="btn btn-danger" data-toggle="modal" data-target="<?php echo "#myModalDelete".$row->idLiquidacion;?>">
                 <span class="glyphicon glyphicon-trash"></span> Eliminar
@@ -96,12 +95,6 @@
                 </div>
               </div>
             </td>
-              <?php //echo anchor('liquidation/complete_charge/'.$row->idLiquidacion, 'Carga Completa', array('class' => 'btn btn-primary'));
-
-              /*if ($row->mark == "devolution") {
-                echo anchor('liquidation/devolution/'.$row->idLiquidacion, 'Devoluciones', array('class' => 'btn btn-primary')); 
-              }*/
-              ?>
           </tr>
         <?php } ?>
       </tbody>

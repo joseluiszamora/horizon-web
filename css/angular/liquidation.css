@@ -95,3 +95,26 @@
 .selectorCheck li label{
   line-height: 14px;
 }
+
+
+/* CHOSEN SELECTORS */
+.chosen-single, .chosen-drop, .chosen-results, #noregulardropdown_chosen{
+  width: 400px !important;
+}
+.chosen-choices .search-field input{
+  height: 30px !important;
+}
+
+/*  Section Tables  */
+
+.panel-body{
+  width: 100%;
+  max-height: 500px;
+  overflow: auto;
+}
+
+
+.totalammount{
+  font-weight: bold;
+  font-size: 15px;
+}

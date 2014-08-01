@@ -6,7 +6,7 @@
 
 <div class="row">
   <div class="col-md-12">
-    <fieldset> 
+    <fieldset>
       <div style="display:none;" id="idLiquidation"><?php echo $liquidation[0]->idLiquidacion;?></div>
       <div class="form-group col-md-2 col-xs-4">
         <label for="exampleInputEmail1">Distribuidor</label>
@@ -76,13 +76,12 @@
             <li ng-repeat="lineName in liquidation.lines | orderBy: 'name'">
               <label for="{{ lineName.idLine }}">{{ lineName.nameLine }}</label>
               <input type="checkbox" id="{{ lineName.idLine }}" ng-model="lineName.show">
-            </li>            
+            </li>
           </ul>
         </div>
 
         <div class="panel-body">
           <div class="table-responsive">
-            
             <div ng-repeat="line in liquidation.lines | orderBy: 'name'" ng-controller="lineControllerObj">
 
               <table class="table table-bordered tableLine">
@@ -136,7 +135,6 @@
                             <!-- previous charge -->
                             <td class="unity">{{ product.previousDayP }}</td>
                             <td class="unity">{{ product.previousDayU }}</td>
-                            
                             <!-- main charge -->
                               <!-- status creado -->
                                 <td class="unity" ng-show="liquidation.mark === 'creado'">
@@ -144,7 +142,7 @@
                                 </td>
                                 <td class="unity" ng-show="liquidation.mark === 'creado'">
                                   <input name="cargau" ng-model="productControllerObj.cargaU" type="number" min="0" class="inputSmall" ng-blur="updateCargaU(product)" ng-change="updateCargaU(product)" ng-keyup="updateCargaU(product)" />
-                                </td>  
+                                </td>
                               <!-- status extra1, extra2, extra3, carga final -->
                                 <td class="unity" ng-show="liquidation.mark != 'creado'">{{ product.chargeP }} </td>
                                 <td class="unity" ng-show="liquidation.mark != 'creado'"> {{ product.chargeU }} </td>
@@ -156,7 +154,7 @@
                                 </td>
                                 <td class="unity" ng-show="liquidation.mark === 'cargado'">
                                   <input name="cargau" ng-model="productControllerObj.cargaExtraU1" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraU1(product)" ng-change="updateCargaExtraU1(product)" ng-keyup="updateCargaExtraU1(product)" />
-                                </td>  
+                                </td>
                               <!-- status extra1, extra2, extra3, carga final -->
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP1 }}</td>
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraU1 }}</td>
@@ -168,7 +166,7 @@
                                 </td>
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra1'">
                                   <input name="cargau" ng-model="productControllerObj.cargaExtraU2" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraU2(product)" ng-change="updateCargaExtraU2(product)" ng-keyup="updateCargaExtraU2(product)" />
-                                </td>  
+                                </td>
                               <!-- status extra1, extra2, extra3, carga final -->
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP2 }}</td>
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ product.chargeExtraU2 }}</td>
@@ -180,7 +178,7 @@
                                 </td>
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra2'">
                                   <input name="cargau" ng-model="productControllerObj.cargaExtraU3" type="number" min="0" class="inputSmall" ng-blur="updateCargaExtraU3(product)" ng-change="updateCargaExtraU3(product)" ng-keyup="updateCargaExtraU3(product)" />
-                                </td>  
+                                </td>
                               <!-- status extra1, extra2, extra3, carga final -->
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra3'">{{ product.chargeExtraP3 }}</td>
                                 <td class="unity" ng-show="liquidation.mark === 'cargaextra3'">{{ product.chargeExtraU3 }}</td>
@@ -191,7 +189,7 @@
                           </tr>
 
                         </tbody>
-                        <tfooter> 
+                        <tfooter>
                           <tr class="footer">
                             <td class="vol">&nbsp;</td>
                             <td class="productname">&nbsp;</td>
@@ -199,7 +197,7 @@
                             <td class="unity">{{ getCargaInicialULine(line.products) }}</td>
                             <td class="unity">{{ getCargaPLine(line.products, line.lineUxp) }}</td>
                             <td class="unity">{{ getCargaULine(line.products, line.lineUxp) }}</td>
-                            
+
                             <td class="unity" ng-show="liquidation.mark === 'cargado' || liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra1PLine(line.products, line.lineUxp) }}</td>
                             <td class="unity" ng-show="liquidation.mark === 'cargado' || liquidation.mark === 'cargaextra1' || liquidation.mark === 'cargaextra2' || liquidation.mark === 'cargaextra3'">{{ getCargaExtra1ULine(line.products, line.lineUxp) }}</td>
 
@@ -218,7 +216,7 @@
                   </tr>
                 </tbody>
               </table>
-  
+
             </div>
           </div>
         </div>
