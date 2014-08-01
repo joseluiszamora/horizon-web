@@ -64,7 +64,6 @@
             </div>
           </div>
       </div>
-
     </fieldset>
   </div>
 </div>
@@ -286,7 +285,7 @@
       </div>
       <div class="panel-body">
         <div class="table-responsive">
-          <table class="table table-bordered subTable">
+          <table class="table table-bordered subTable" >
             <thead>
               <tr>
                 <th class="vol">GASTO</th>
@@ -294,23 +293,17 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="unity">Refrigerios</td>
-                <td class="unity">0</td>
-              </tr>
-              <tr>
-                <td class="unity">Gasolina</td>
-                <td class="unity">0</td>
-              </tr>
-              <tr>
-                <td class="unity">0</td>
-                <td class="unity">0</td>
+              <tr ng-repeat="expense in liquidation.expenses">
+                <td class="unity">{{ expense.title | uppercase }}</td>
+                <td class="unity">
+                  <input ng-model="expenseController.ammount" type="number" min="0" class="inputSmall" ng-change="updateAmmount(expense)" ng-controller="expenseController" />
+                </td>
               </tr>
             </tbody>
             <tfooter>
               <tr class="footer">
                 <td class="unity">TOTAL GASTO</td>
-                <td class="unity success">0</td>
+                <td class="unity success" ng-controller="expenseController">{{ getTotalExpenses(liquidation.expenses) }}</td>
               </tr>
             </tfooter>
           </table>
@@ -369,13 +362,13 @@
               <tr>
                 <td class="unity bold">+ COBRANZAS</td>
                 <td class="unity success">
-                  {{ liquidation.getAmmountLineTotal() | number:2 }}
+                  0
                 </td>
               </tr>
               <tr>
                 <td class="unity bold">- GASTOS</td>
-                <td class="unity success">
-                  {{ liquidation.getAmmountLineTotal() | number:2 }}
+                <td class="unity success" ng-controller="expenseController">
+                  {{ getTotalExpenses(liquidation.expenses) }}
                 </td>
               </tr>
               <tr>

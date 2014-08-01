@@ -66,6 +66,10 @@ app.controller('LiquidationController', ['$http', function( $http ){
   $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
   var liquidation = this;
   liquidation.lines = [ ];
+  liquidation.expenses = [ 
+    { "title" : "refrigerios", "ammount" : 0 }, 
+    { "title" : "gasolina", "ammount" : 0 }
+  ];
 
   liquidation.mark = $("#markLiquidation").html();
   liquidation.idLiquidation = $("#idLiquidation").html();
@@ -95,8 +99,12 @@ app.controller('LiquidationController', ['$http', function( $http ){
       });
     });
 
+    //console.log(expenseController.getTotalExpenses(liquidation.expenses));
+    //console.log($scope.getTotalExpenses(liquidation.expenses));
+
     return $sum;
   };
+
 
 }]);
 
@@ -702,7 +710,28 @@ var productControllerObj = function ($scope){
     }
     //console.log(product.devolutionU);
   };
+};
 
+var expenseController = function ($scope){
+  $scope.expenseController = {
+    title: "",
+    ammount: 0
+  };
+
+  $scope.updateAmmount = function ($expense){
+    $sum = 0;
+    //console.log($scope.expenseController.ammount);
+    $expense.ammount = $scope.expenseController.ammount;
+  };
+
+  $scope.getTotalExpenses = function (expense){
+    $sum = 0;
+    angular.forEach(expense, function(expense) {
+      $sum += expense.ammount;  
+    });
+    
+    return $sum;
+  };
 };
 
 app.directive('ngBlur', function() {
