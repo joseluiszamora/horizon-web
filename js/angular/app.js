@@ -1,4 +1,4 @@
-  var url = "http://localhost/horizon/index.php/";
+var url = "http://localhost/horizon/index.php/";
 //var url = "https://mariani.bo/horizon-sc/index.php/";
 
 idliquidation = $("#idLiquidation").html();
@@ -86,6 +86,18 @@ app.controller('LiquidationController', ['$http', function( $http ){
       window.location = url + "liquidation/charge_list";
     });
   };
+
+  this.getAmmountLineTotal= function (){
+    $sum = 0;
+    angular.forEach(liquidation.lines, function(line) {
+      angular.forEach(line.products, function(product) {
+        $sum += product.totalAmmount;
+      });
+    });
+
+    return $sum;
+  };
+
 }]);
 
 app.controller('ProductController', function(){
@@ -130,7 +142,6 @@ var lineControllerObj = function ($scope, sharedProperties){
     $sum = Math.round(($sum) * 100)/100;;
     return $sum;
   };
-
 
   $scope.getCargaInicialPLine = function (products){
     $sum = 0;

@@ -203,10 +203,10 @@
                             <!-- Ajuste -->
                             <td class="unity danger">
                               <!--<input name="cargap" ng-model="productControllerObj.calculatedP" type="number" min="0" class="inputSmall" ng-blur="updateAjusteP(product)" ng-change="updateAjusteP(product)" ng-keyup="updateAjusteP(product)" />-->
-                              <input name="cargap" ng-model="productControllerObj.calculatedP" type="number" min="0" class="inputSmall" ng-blur="updateAjusteP(product)" />
+                              <input name="cargap" ng-model="productControllerObj.calculatedP" type="number" class="inputSmall" ng-blur="updateAjusteP(product)" />
                             </td>
                             <td class="unity danger">
-                              <input name="cargau" ng-model="productControllerObj.calculatedU" type="number" min="0" class="inputSmall" ng-blur="updateAjusteU(product)" />
+                              <input name="cargau" ng-model="productControllerObj.calculatedU" type="number" class="inputSmall" ng-blur="updateAjusteU(product)" />
                             </td>
 
                             <!-- TOTAL venta CALC -->
@@ -277,63 +277,6 @@
       </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <div class="row" >
   <div class="col-lg-4">
@@ -419,7 +362,9 @@
             <tbody>
               <tr>
                 <td class="unity">GRAN TOTAL</td>
-                <td class="unity success">999</td>
+                <td class="unity success">
+                  {{ liquidation.getAmmountLineTotal() }}
+                </td>
               </tr>
             </tbody>
           </table>

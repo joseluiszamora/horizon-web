@@ -195,20 +195,17 @@ class Liquidation_model extends CI_Model {
     if(isset($status) AND $status != ""){
       $this->db->where('liquidacion.status', $status);
     }
-
     if(isset($mark) AND $mark != "all"){
       if($mark == "charges"){
-        $this->db->where('liquidacion.mark', "creado");
-        $this->db->or_where('liquidacion.mark', "cargado");
-        $this->db->or_where('liquidacion.mark', "cargaextra1");
-        $this->db->or_where('liquidacion.mark', "cargaextra2");
-        $this->db->or_where('liquidacion.mark', "cargaextra3");
+        $marks = array('creado', 'cargado', 'cargaextra1', 'cargaextra2', 'cargaextra3');
+        $this->db->where_in('liquidacion.mark', $marks);
       }elseif ($mark == "devolutions") {
         $this->db->where('liquidacion.mark', "cargafinal");
       }else{
         $this->db->where('liquidacion.mark', $mark);
       }
     }
+    
     $query = $this->db->get();
     return $query->result();
   }
@@ -269,11 +266,8 @@ class Liquidation_model extends CI_Model {
 
     if(isset($mark) AND $mark != "all"){
       if($mark == "charges"){
-        $this->db->where('liquidacion.mark', "creado");
-        $this->db->or_where('liquidacion.mark', "cargado");
-        $this->db->or_where('liquidacion.mark', "cargaextra1");
-        $this->db->or_where('liquidacion.mark', "cargaextra2");
-        $this->db->or_where('liquidacion.mark', "cargaextra3");
+        $marks = array('creado', 'cargado', 'cargaextra1', 'cargaextra2', 'cargaextra3');
+        $this->db->where_in('liquidacion.mark', $marks);
       }elseif ($mark == "devolutions") {
         $this->db->where('liquidacion.mark', "cargafinal");
       }else{
