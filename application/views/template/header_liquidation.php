@@ -16,6 +16,7 @@
     <link href="<?php echo base_url(); ?>css/sb-admin.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>css/datepicker.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>css/chosen.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>css/liquidation.css" rel="stylesheet">
 
     <!-- Core Scripts  -->
     <script src="<?php echo base_url(); ?>js/jquery-1.11.0.min.js"></script>

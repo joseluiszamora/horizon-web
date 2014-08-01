@@ -45,7 +45,7 @@ $(document).ready(function(){
 
   // save form
   $("#saveform").click(function(){
-  	$(this).prop( "disabled", true );
+    $(this).prop( "disabled", true );
     $flag = false;
     // check distrib
     $distrib = $('select[name="distributor"]');
@@ -106,8 +106,7 @@ $(document).ready(function(){
         async: false,
         cache: false
       }).done(function( data ) {
-      	//console.log(data);
-      	window.location.href = url + "liquidation/add_products/" + data;
+        window.location.href = url + "liquidation/add_products/" + data;
       });
     };
   });

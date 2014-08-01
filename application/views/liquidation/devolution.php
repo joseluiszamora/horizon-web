@@ -238,4 +238,17 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
 </div>
+=======
+</div>
+
+<style type="text/css">
+  .chosen-single, .chosen-drop, .chosen-results, #noregulardropdown_chosen{
+    width: 400px !important;
+  }
+  .chosen-choices .search-field input{
+    height: 30px !important;
+  }
+</style>
+>>>>>>> last changes geobolivia

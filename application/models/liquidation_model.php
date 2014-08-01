@@ -66,7 +66,7 @@ class Liquidation_model extends CI_Model {
   function get_enabled_users_and_zones() {
     $this->db->select(
       'users.idUser,
-      users.Nombre, 
+      users.Nombre,
       users.Apellido,
       zona.idZona,
       zona.Descripcion'
@@ -77,7 +77,7 @@ class Liquidation_model extends CI_Model {
     $this->db->where('users.NivelAcceso !=', 1);
 
     $query = $this->db->get();
-    $drop = '<select class="form-control" name="distributor"><option value="0">Seleccione Distribuidor</option>';
+    $drop = '<select class="form-control chosen-select" name="distributor"><option value="0">Seleccione Distribuidor</option>';
 
     $result = $query->result_array();
     foreach ($result as $r) {
@@ -175,12 +175,12 @@ class Liquidation_model extends CI_Model {
 
   function report($status="active", $mark="all") {
     $this->db->select(
-      'liquidacion.idLiquidacion, 
-      liquidacion.fechaRegistro, 
-      liquidacion.horaRegistro, 
+      'liquidacion.idLiquidacion,
+      liquidacion.fechaRegistro,
+      liquidacion.horaRegistro,
       users.Nombre,
       users.Apellido,
-      liquidacion.ruta, 
+      liquidacion.ruta,
       liquidacion.detalle,
       liquidacion.fechaFin,
       liquidacion.horaFin,
@@ -195,6 +195,7 @@ class Liquidation_model extends CI_Model {
     if(isset($status) AND $status != ""){
       $this->db->where('liquidacion.status', $status);
     }
+
     if(isset($mark) AND $mark != "all"){
       if($mark == "charges"){
         $marks = array('creado', 'cargado', 'cargaextra1', 'cargaextra2', 'cargaextra3');
@@ -205,7 +206,7 @@ class Liquidation_model extends CI_Model {
         $this->db->where('liquidacion.mark', $mark);
       }
     }
-    
+
     $query = $this->db->get();
     return $query->result();
   }
