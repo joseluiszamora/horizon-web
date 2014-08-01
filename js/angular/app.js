@@ -712,3 +712,8 @@ app.directive('ngBlur', function() {
     });
   };
 });
+
+
+angular.module('numberFilter', []).controller('LiquidationController', ['$scope', function($scope) {
+  $scope.val = 1234.56789;
+}]);

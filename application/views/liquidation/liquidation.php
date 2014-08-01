@@ -219,32 +219,32 @@
 
                             <!-- total venta -->
                             <!--<td class="unity">{{ getTotalAmmount(product) }}</td>-->
-                            <td class="unity">{{ product.totalAmmount }}</td>
+                            <td class="unity">{{ product.totalAmmount | number:2 }}</td>
                           </tr>
                         </tbody>
                         <tfooter>
                           <tr class="footer">
                             <td class="vol">&nbsp;</td>
                             <td class="productname">&nbsp;</td>
-                            <td class="unity">{{ getCargaInicialPLine(line.products) }}</td>
-                            <td class="unity">{{ getCargaInicialULine(line.products) }}</td>
-                            <td class="unity">{{ getCargaPLine(line.products, line.lineUxp) }}</td>
-                            <td class="unity">{{ getCargaULine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaInicialPLine(line.products) | number:2 }}</td>
+                            <td class="unity">{{ getCargaInicialULine(line.products) | number:2 }}</td>
+                            <td class="unity">{{ getCargaPLine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getCargaULine(line.products, line.lineUxp) | number:2 }}</td>
 
-                            <td class="unity">{{ getCargaExtra1PLine(line.products, line.lineUxp) }}</td>
-                            <td class="unity">{{ getCargaExtra1ULine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaExtra1PLine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getCargaExtra1ULine(line.products, line.lineUxp) | number:2 }}</td>
 
-                            <td class="unity">{{ getCargaExtra2PLine(line.products, line.lineUxp) }}</td>
-                            <td class="unity">{{ getCargaExtra2ULine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaExtra2PLine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getCargaExtra2ULine(line.products, line.lineUxp) | number:2 }}</td>
 
-                            <td class="unity">{{ getCargaExtra3PLine(line.products, line.lineUxp) }}</td>
-                            <td class="unity">{{ getCargaExtra3ULine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaExtra3PLine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getCargaExtra3ULine(line.products, line.lineUxp) | number:2 }}</td>
 
-                            <td class="unity">{{ getTotalPLine(line.products, line.lineUxp) }}</td>
-                            <td class="unity">{{ getTotalULine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getTotalPLine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getTotalULine(line.products, line.lineUxp) | number:2 }}</td>
 
-                            <td class="unity">{{ getDevolutionPLine(line.products, line.lineUxp) }}</td>
-                            <td class="unity">{{ getDevolutionULine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getDevolutionPLine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getDevolutionULine(line.products, line.lineUxp) | number:2 }}</td>
 
                             <td class="unity">0</td>
                             <td class="unity">0</td>
@@ -261,7 +261,7 @@
                             <td class="unity">0</td>
                             <td class="unity">0</td>
 
-                            <td class="unity success">{{ getAmmountLine(line.products) }}</td>
+                            <td class="unity success">{{ getAmmountLine(line.products) | number:2 }}</td>
                           </tr>
                         </tfooter>
                       </table>
@@ -361,9 +361,27 @@
           <table class="table table-bordered subTable">
             <tbody>
               <tr>
-                <td class="unity">GRAN TOTAL</td>
+                <td class="unity bold">TOTAL VENTAS</td>
                 <td class="unity success">
-                  {{ liquidation.getAmmountLineTotal() }}
+                  {{ liquidation.getAmmountLineTotal() | number:2 }}
+                </td>
+              </tr>
+              <tr>
+                <td class="unity bold">+ COBRANZAS</td>
+                <td class="unity success">
+                  {{ liquidation.getAmmountLineTotal() | number:2 }}
+                </td>
+              </tr>
+              <tr>
+                <td class="unity bold">- GASTOS</td>
+                <td class="unity success">
+                  {{ liquidation.getAmmountLineTotal() | number:2 }}
+                </td>
+              </tr>
+              <tr>
+                <td class="unity bold">A ENTREGAR</td>
+                <td class="unity success">
+                  {{ liquidation.getAmmountLineTotal() | number:2 }}
                 </td>
               </tr>
             </tbody>
