@@ -30,7 +30,7 @@ class Liquidation_model extends CI_Model {
     ');
     $this->db->from('liquidacion');
     $this->db->join('users', 'users.idUser = liquidacion.idUser');
-    $this->db->join('zona', 'zona.idZona = liquidacion.ruta');
+    $this->db->join('zona', 'zona.idZona = liquidacion.ruta', 'left');
     $this->db->where(array('liquidacion.idLiquidacion'=>$id,'status'=>'active'));
     $query = $this->db->get();
     return $query->result();
@@ -190,7 +190,7 @@ class Liquidation_model extends CI_Model {
     );
     $this->db->from('liquidacion');
     $this->db->join('users', 'users.idUser = liquidacion.idUser');
-    $this->db->join('zona', 'zona.idZona = liquidacion.ruta');
+    $this->db->join('zona', 'zona.idZona = liquidacion.ruta', 'left');
 
     if(isset($status) AND $status != ""){
       $this->db->where('liquidacion.status', $status);
@@ -229,7 +229,7 @@ class Liquidation_model extends CI_Model {
     );
     $this->db->from('liquidacion');
     $this->db->join('users', 'users.idUser = liquidacion.idUser');
-    $this->db->join('zona', 'zona.idZona = liquidacion.ruta');
+    $this->db->join('zona', 'zona.idZona = liquidacion.ruta', 'left');
 
     if(isset($data_in['status']) && $data_in['status'] != ""){
       //$this->db->where('liquidacion.status', $data_in['status']);
@@ -258,7 +258,7 @@ class Liquidation_model extends CI_Model {
   function count($status="active", $mark="all"){
     $this->db->from('liquidacion');
     $this->db->join('users', 'users.idUser = liquidacion.idUser');
-    $this->db->join('zona', 'zona.idZona = liquidacion.ruta');
+    $this->db->join('zona', 'zona.idZona = liquidacion.ruta', 'left');
     //$this->db->where('status', "active");
 
     if(isset($status) AND $status != ""){

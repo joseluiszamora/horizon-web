@@ -746,3 +746,44 @@ app.directive('ngBlur', function() {
 angular.module('numberFilter', []).controller('LiquidationController', ['$scope', function($scope) {
   $scope.val = 1234.56789;
 }]);
+
+
+
+
+
+
+
+
+
+
+app.controller("StoreController", function(){
+  this.products = [
+    {
+      name: 'Awesome Multi-touch Keyboard',
+      price: 250.00,
+      description: "...",
+      images: [],
+      reviews: [
+        {
+          stars: 5,
+          body: "I love this product!",
+          author: "joe@thomas.com"
+        },{
+          stars: 1,
+          body: "This product sucks",
+          author: "tim@hater.com"
+        }
+      ]
+    }
+  ]
+});
+
+app.controller("ReviewController", function(){
+  this.review = {}; 
+
+  this.addReview = function(review) {
+    console.log(review);
+    this.review.push(review);
+  };
+
+});

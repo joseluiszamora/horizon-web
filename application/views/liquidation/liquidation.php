@@ -225,25 +225,25 @@
                           <tr class="footer">
                             <td class="vol">&nbsp;</td>
                             <td class="productname">&nbsp;</td>
-                            <td class="unity">{{ getCargaInicialPLine(line.products) | number:2 }}</td>
-                            <td class="unity">{{ getCargaInicialULine(line.products) | number:2 }}</td>
-                            <td class="unity">{{ getCargaPLine(line.products, line.lineUxp) | number:2 }}</td>
-                            <td class="unity">{{ getCargaULine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getCargaInicialPLine(line.products) }}</td>
+                            <td class="unity">{{ getCargaInicialULine(line.products) }}</td>
+                            <td class="unity">{{ getCargaPLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">{{ getCargaExtra1PLine(line.products, line.lineUxp) | number:2 }}</td>
-                            <td class="unity">{{ getCargaExtra1ULine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getCargaExtra1PLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaExtra1ULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">{{ getCargaExtra2PLine(line.products, line.lineUxp) | number:2 }}</td>
-                            <td class="unity">{{ getCargaExtra2ULine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getCargaExtra2PLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaExtra2ULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">{{ getCargaExtra3PLine(line.products, line.lineUxp) | number:2 }}</td>
-                            <td class="unity">{{ getCargaExtra3ULine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getCargaExtra3PLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCargaExtra3ULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">{{ getTotalPLine(line.products, line.lineUxp) | number:2 }}</td>
-                            <td class="unity">{{ getTotalULine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getTotalPLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getTotalULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">{{ getDevolutionPLine(line.products, line.lineUxp) | number:2 }}</td>
-                            <td class="unity">{{ getDevolutionULine(line.products, line.lineUxp) | number:2 }}</td>
+                            <td class="unity">{{ getDevolutionPLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getDevolutionULine(line.products, line.lineUxp) }}</td>
 
                             <td class="unity">0</td>
                             <td class="unity">0</td>
@@ -384,3 +384,29 @@
     </div>
   </div>
 </div>
+
+
+
+<ul id="fff" ng-controller="StoreController">
+  <li class="list-group-item" >
+    <div class="panel">
+      <h4> Reviews </h4>
+      
+      <form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(reviewCtrl.review)" >
+        <blockquote ng-repeat="review in product.reviews">
+          <b>Stars: {{reviewCtrl.review.stars}}</b>
+          {{reviewCtrl.review.body}}
+          <cite>by: {{reviewCtrl.review.author}}</cite>
+        </blockquote>
+
+        <select ng-model="reviewCtrl.review.stars">
+          <option value="1">1 star</option>
+          <option value="2">2 stars</option>
+        </select>
+        <textarea ng-model="reviewCtrl.review.body"></textarea>
+        <label>by:</label>  <input type="text" ng-model="reviewCtrl.review.author" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </li>  
+</ul>

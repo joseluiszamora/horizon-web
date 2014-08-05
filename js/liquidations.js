@@ -45,7 +45,7 @@ $(document).ready(function(){
 
   // save form
   $("#saveform").click(function(){
-    $(this).prop( "disabled", true );
+  	$(this).prop( "disabled", true );
     $flag = false;
     // check distrib
     $distrib = $('select[name="distributor"]');
@@ -64,7 +64,7 @@ $(document).ready(function(){
     // check Route
     $zone = $(".routedropdown.selected").find('select[name="zone"]');
     $zoneval = $zone.val();
-    if ($zoneval == 0 || $zoneval == "") {
+    /*if ($zoneval == 0 || $zoneval == "") {
       $flag = false;
       $zone.parents(".form-group").find("label").addClass("has-error");
       $(this).prop( "disabled", false );
@@ -72,7 +72,7 @@ $(document).ready(function(){
     }else{
       $flag = true;
       $zone.parents(".form-group").find("label").removeClass("has-error");
-    }
+    }*/
     // check Date
     $date = $('input[name="date"]');
     $dateval = $('input[name="date"]').val();
@@ -106,7 +106,8 @@ $(document).ready(function(){
         async: false,
         cache: false
       }).done(function( data ) {
-        window.location.href = url + "liquidation/add_products/" + data;
+      	//console.log(data);
+      	window.location.href = url + "liquidation/add_products/" + data;
       });
     };
   });
