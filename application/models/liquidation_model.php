@@ -231,9 +231,9 @@ class Liquidation_model extends CI_Model {
     $this->db->join('users', 'users.idUser = liquidacion.idUser');
     $this->db->join('zona', 'zona.idZona = liquidacion.ruta', 'left');
 
-    if(isset($data_in['status']) && $data_in['status'] != ""){
-      //$this->db->where('liquidacion.status', $data_in['status']);
-    }
+    $this->db->where('liquidacion.status', 'active');
+    $this->db->where('liquidacion.mark', 'completado');
+
     if(isset($data_in['distributor']) && $data_in['distributor'] != "" && $data_in['distributor'] != "0"){
       $this->db->where('liquidacion.idUser',$data_in['distributor']);
     }

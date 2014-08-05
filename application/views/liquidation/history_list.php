@@ -16,10 +16,10 @@
                 <?php echo $distributor; ?>
               </div>
 
-              <label for="distributor" class="control-label col-xs-1">Estado</label>
+              <!--<label for="distributor" class="control-label col-xs-1">Estado</label>
               <div class="col-xs-3">
                 <?php
-                  $options = array(
+                  /*$options = array(
                     'creado' => 'Creado',
                     'cargado' => 'Carga Inicial',
                     'cargaextra1' => 'Carga Extra 1',
@@ -34,9 +34,9 @@
                     echo form_dropdown('status', $options, $parameters['status'], 'class="chosen-select" ');
                   }else{
                     echo form_dropdown('status', $options, '', 'class="form-control chosen-select" ');
-                  }
+                  }*/
                 ?>
-              </div>
+              </div>-->
             </div>
 
             <div class="form-group">
