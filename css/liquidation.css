@@ -4,9 +4,11 @@
 .chosen-choices .search-field input{
 	height: 30px !important;
 }
-
 .panel-body {
     max-height: 700px;
     overflow: auto;
     width: 100%;
+}
+input.ng-invalid {
+  border: 1px solid red;
 }

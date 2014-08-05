@@ -293,6 +293,13 @@
               </tr>
             </thead>
             <tbody>
+              <tr ng-repeat="expense in liquidation.expenses">
+                <td class="unity">{{ expense.title | uppercase }}</td>
+                <td class="unity">
+                  <input ng-model="expenseController.ammount" type="number" min=0 class="inputSmall" ng-change="updateAmmount(expense)" ng-controller="expenseController" />
+                </td>
+              </tr>
+
               <tr>
                 <td colspan="2">
                   <form name="expenseForm" ng-submit="liquidation.addExpense(reviewCtrl.review)" >
@@ -302,17 +309,11 @@
                 </td>
               </tr>
 
-              <tr ng-repeat="expense in liquidation.expenses">
-                <td class="unity">{{ expense.title | uppercase }}</td>
-                <td class="unity">
-                  <input ng-model="expenseController.ammount" type="number" min="0" class="inputSmall" ng-change="updateAmmount(expense)" ng-controller="expenseController" />
-                </td>
-              </tr>
             </tbody>
             <tfooter>
               <tr class="footer">
                 <td class="unity">TOTAL GASTO</td>
-                <td class="unity success" ng-controller="expenseController">{{ getTotalExpenses(liquidation.expenses) }}</td>
+                <td class="unity success" ng-controller="expenseController">{{ getTotalExpenses(liquidation.expenses) | number:2 }}</td>
               </tr>
             </tfooter>
           </table>

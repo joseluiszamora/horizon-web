@@ -1,5 +1,5 @@
-var url = "http://localhost/horizon/index.php/";
-//var url = "https://mariani.bo/horizon-sc/index.php/";
+//var url = "http://localhost/horizon/index.php/";
+var url = "https://mariani.bo/horizon-sc/index.php/";
 
 idliquidation = $("#idLiquidation").html();
 mark = $("#markLiquidation").html();
@@ -80,6 +80,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
 
   this.addExpense = function (val) {
     liquidation.expenses.push({ "title" : val.title, "ammount" : 0 });
+    $("#expenseFormTitle").val("");
   };
   this.saveAll = function () {
     var datasend = {
@@ -738,15 +739,22 @@ var expenseController = function ($scope){
   $scope.updateAmmount = function ($expense){
     $sum = 0;
     //console.log($scope.expenseController.ammount);
-    $expense.ammount = $scope.expenseController.ammount;
+    //$expense.ammount = $scope.expenseController.ammount;
+    if (!isNaN(parseFloat($expense.ammount)) && isFinite($expense.ammount)){
+      console.log("GOODD");
+      $expense.ammount = parseFloat($scope.expenseController.ammount);
+    }else{
+      console.log("BADDD");
+      $expense.ammount = 0;
+      //$scope.expenseController.ammount = 0;
+    }
   };
 
   $scope.getTotalExpenses = function (expense){
     $sum = 0;
     angular.forEach(expense, function(expense) {
-      $sum += expense.ammount;  
+      $sum += expense.ammount;
     });
-    
     return $sum;
   };
 };
