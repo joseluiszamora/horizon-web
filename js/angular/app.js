@@ -78,6 +78,9 @@ app.controller('LiquidationController', ['$http', function( $http ){
     liquidation.lines = data;
   });
 
+  this.addExpense = function (val) {
+    liquidation.expenses.push({ "title" : val.title, "ammount" : 0 });
+  };
   this.saveAll = function () {
     var datasend = {
       lines: liquidation.lines,
@@ -91,7 +94,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
     });
   };
 
-  this.getAmmountLineTotal= function (){
+  this.getAmmountLineTotal = function (){
     $sum = 0;
     angular.forEach(liquidation.lines, function(line) {
       angular.forEach(line.products, function(product) {
@@ -99,9 +102,21 @@ app.controller('LiquidationController', ['$http', function( $http ){
       });
     });
 
-    //console.log(expenseController.getTotalExpenses(liquidation.expenses));
-    //console.log($scope.getTotalExpenses(liquidation.expenses));
+    return $sum;
+  };
 
+  this.getTotalSendMoney = function (){
+    $sum = 0;
+    angular.forEach(liquidation.lines, function(line) {
+      angular.forEach(line.products, function(product) {
+        $sum += product.totalAmmount;
+      });
+    });
+
+    angular.forEach(liquidation.expenses, function(expense) {
+      $sum -= expense.ammount;
+    });
+    
     return $sum;
   };
 
@@ -748,36 +763,7 @@ angular.module('numberFilter', []).controller('LiquidationController', ['$scope'
 }]);
 
 
-
-
-
-
-
-
-
-
-app.controller("StoreController", function(){
-  this.products = [
-    {
-      name: 'Awesome Multi-touch Keyboard',
-      price: 250.00,
-      description: "...",
-      images: [],
-      reviews: [
-        {
-          stars: 5,
-          body: "I love this product!",
-          author: "joe@thomas.com"
-        },{
-          stars: 1,
-          body: "This product sucks",
-          author: "tim@hater.com"
-        }
-      ]
-    }
-  ]
-});
-
+/*
 app.controller("ReviewController", function(){
   this.review = {}; 
 
@@ -786,4 +772,4 @@ app.controller("ReviewController", function(){
     this.review.push(review);
   };
 
-});
+});*/

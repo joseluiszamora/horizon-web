@@ -121,3 +121,9 @@
 .bold{
   font-weight: bold;
 }
+
+
+/* Expense form */
+#expenseFormTitle{
+  width: 245px;
+}
