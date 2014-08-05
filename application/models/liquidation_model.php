@@ -285,6 +285,13 @@ class Liquidation_model extends CI_Model {
     return FALSE;
   }
 
+  function create_expense($data) {
+    if ($this->db->insert('gastos', $data)) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
   function update($data, $id) {
     $this->db->where('idLiquidacion', $id);
 

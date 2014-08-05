@@ -84,13 +84,15 @@ app.controller('LiquidationController', ['$http', function( $http ){
   this.saveAll = function () {
     var datasend = {
       lines: liquidation.lines,
+      expenses: liquidation.expenses,
       liquidation: $("#idLiquidation").html(),
       mark: $("#markLiquidation").html()
     };
     //console.log(datasend.lines);
     $http.post(url + 'liquidation/save_lines', datasend).success(
       function (data, status, headers){
-      window.location = url + "liquidation/charge_list";
+      //window.location = url + "liquidation/charge_list";
+     console.log(data);
     });
   };
 

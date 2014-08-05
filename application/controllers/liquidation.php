@@ -308,6 +308,13 @@
       }
 
       $this->Liquidation_Model->update($data_liq, $data['liquidation']);
+
+      $data_exp['idliquidacion'] = $data['liquidation'];
+      foreach($data['expenses'] as $rowExpense){
+        $data_exp['Detalle'] = $rowExpense['title'];
+        $data_exp['Monto'] = $rowExpense['ammount'];
+        $this->Liquidation_Model->create_expense($data_exp);
+      }
     }
 
     function save() {
