@@ -116,6 +116,11 @@
             <span class="badge">'.$this->Liquidation_Model->count("active", "completado").'</span>', array(''));
           ?>
         </li>
+        <li>
+          <?php
+            echo anchor('routes/index', '<i class="fa fa-pencil-square-o fa-fw"></i> Rutas', array(''));
+          ?>
+        </li>
       </ul>
     </div>
   </div>
