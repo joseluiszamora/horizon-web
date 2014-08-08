@@ -406,9 +406,9 @@
       $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
       $data['lines'] = $this->get_lines_view($liquidation);
       $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/horizon/';
-      $this->load->view('liquidation/pdf_2', $data);
-      //$templateView = $this->load->view('liquidation/pdf_1', $data, TRUE);
-      //exportMeAsDOMPDF($templateView, "report");
+      //$this->load->view('liquidation/pdf_2', $data);
+      $templateView = $this->load->view('liquidation/pdf_2', $data, TRUE);
+      exportMeAsDOMPDF($templateView, "report");
     }
 
     function deactive($liquidation) {
