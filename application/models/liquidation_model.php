@@ -1,7 +1,6 @@
 <?php
 
 class Liquidation_model extends CI_Model {
-
   function __construct() {
     parent::__construct();
     $this->load->database();
@@ -36,7 +35,6 @@ class Liquidation_model extends CI_Model {
     return $query->result();
   }
 
-
   // get all users distributor, with his zones
   function get_users_and_zones() {
     $this->db->select(
@@ -61,6 +59,32 @@ class Liquidation_model extends CI_Model {
 
     $drop .= '</select>';
     return $drop;
+  }
+
+  function get_users_and_zones_clear() {
+    $this->db->select(
+      'users.idUser,
+      users.Nombre, 
+      users.Apellido,
+      zona.idZona,
+      zona.Descripcion'
+    );
+    $this->db->from('users');
+    $this->db->join('zona', 'zona.idZona = users.idZona');
+    $this->db->order_by('idUser', "asc");
+    $this->db->where('users.NivelAcceso !=', 1);
+
+    $query = $this->db->get();
+
+    $dropdown = array();
+    $dropdown[0] = 'Seleccione Usuario';
+
+    $result = $query->result_array();
+    foreach ($result as $r) {
+      $dropdown[$r['idUser']] = $r['Nombre']." ".$r['Apellido'];
+    }
+
+    return $dropdown;
   }
 
   function get_enabled_users_and_zones() {

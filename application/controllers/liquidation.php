@@ -73,7 +73,7 @@
     }
 
     function history_list() {
-      $data['distributor'] = $this->Liquidation_Model->get_users_and_zones();
+      $data['distributor'] = $this->Liquidation_Model->get_users_and_zones_clear();
       $data['charges'] = $this->Liquidation_Model->report("active", "completado");
       $data['category'] = 'liquidation';
       $data['page'] = 'history_list';
@@ -400,6 +400,17 @@
       exportMeAsDOMPDF($templateView, "report");
     }
 
+    function pdf_complet($liquidation) {
+      $this->load->helper('pdfexport_helper.php');
+      $data['title'] = 'PLANILLA DE LIQUIDACIÓN';
+      $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
+      $data['lines'] = $this->get_lines_view($liquidation);
+      $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/horizon/';
+      $this->load->view('liquidation/pdf_2', $data);
+      //$templateView = $this->load->view('liquidation/pdf_1', $data, TRUE);
+      //exportMeAsDOMPDF($templateView, "report");
+    }
+
     function deactive($liquidation) {
       // desactivar liquidacion
       $data_liq['status'] = "deactive";
@@ -434,7 +445,7 @@
       $data_in['dateFinish'] = $this->input->post('dateFinish');
 
       $data['parameters'] = $data_in;
-      $data['distributor'] = $this->Liquidation_Model->get_users_and_zones();
+      $data['distributor'] = $this->Liquidation_Model->get_users_and_zones_clear();
       $data['charges'] = $this->Liquidation_Model->search($data_in);
       $data['category'] = 'liquidation';
       $data['page'] = 'history_list';

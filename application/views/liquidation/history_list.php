@@ -8,12 +8,20 @@
   <div class="col-md-11 form-horizontal">
     <div class="span9 offset1">
       <div class="block_content row jumbotron">
-          <?php echo form_open('liquidation/search'); ?>
+          <?php 
+          //print_r($distributor);
+          echo form_open('liquidation/search'); ?>
           <fieldset>
             <div class="form-group">
               <label for="distributor" class="control-label col-xs-2">Distribuidor</label>
-              <div class="col-xs-4">
-                <?php echo $distributor; ?>
+              <div class="col-xs-4">  
+                <?php 
+                  if (isset($parameters['distributor'])) {
+                    echo form_dropdown('distributor', $distributor, $parameters['distributor'], 'class="chosen-select form-control"' );
+                  }else{
+                    echo form_dropdown('distributor', $distributor, '', 'class="chosen-select form-control"' );
+                  }
+                ?>
               </div>
 
               <!--<label for="distributor" class="control-label col-xs-1">Estado</label>
@@ -44,9 +52,9 @@
               <div class="col-xs-3">
                 <?php
                   if (isset($parameters['dateStart'])) {
-                    echo form_input(array('name' => 'dateStart', 'class' => 'datecontainer datepicker datemedium', 'value' => $parameters['dateStart']));
+                    echo form_input(array('name' => 'dateStart', 'class' => 'datecontainer datepicker2 datemedium', 'value' => $parameters['dateStart']));
                   }else{
-                    echo form_input(array('name' => 'dateStart', 'class' => 'datecontainer datepicker datemedium'));
+                    echo form_input(array('name' => 'dateStart', 'class' => 'datecontainer datepicker2 datemedium', 'value' =>"" ));
                   }
                 ?>
               </div>
@@ -54,9 +62,9 @@
               <div class="col-xs-3">
                 <?php
                   if (isset($parameters['dateFinish'])) {
-                    echo form_input(array('name' => 'dateFinish', 'class' => 'datecontainer datepicker datemedium', 'value' => $parameters['dateFinish']));
+                    echo form_input(array('name' => 'dateFinish', 'class' => 'datecontainer datepicker2 datemedium', 'value' => $parameters['dateFinish']));
                   }else{
-                    echo form_input(array('name' => 'dateFinish', 'class' => 'datecontainer datepicker datemedium'));
+                    echo form_input(array('name' => 'dateFinish', 'class' => 'datecontainer datepicker2 datemedium', 'value' =>"" ));
                   }
                 ?>
               </div>
@@ -64,9 +72,10 @@
 
             <div class="form-group">
               <div class="col-xs-offset-5 col-xs-5">
-                <input id="saveform" type="submit" value="Buscar" name="submit" class="btn btn-primary">
-                <a class="btnTitle btn btn-info" href="http://localhost/horizon/index.php/user">Cancelar</a>
-
+                <input type="submit" value="Buscar" name="submit" class="btn btn-primary">
+                <?php
+                  echo anchor('liquidation/history_list', 'Cancelar', array('class'=>"btnTitle btn btn-info"));
+                ?>
               </div>
             </div>
 
@@ -98,6 +107,7 @@
             <td class="center"><?php echo $row->mark; ?></td>
             <td class="center"><?php echo $row->detalle; ?></td>
             <td class="center">
+              <?php echo anchor('liquidation/pdf_complet/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-download-alt"></span> Pdf', array('class' => 'btn btn-info')); ?>
               <?php echo anchor('liquidation/show/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-th-large"></span> Ver', array('class' => 'btn btn-info')); ?>
             </td>
           </tr>
