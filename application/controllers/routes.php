@@ -54,27 +54,71 @@
       $this->load->view('template/template_liquidation', $data);
     }
 
+    public function calendar($id = "") {
+      $clients = array();
+      //$dates = $this->Routes_Model->get_dates_and_zones($id);
+      $dates = $this->Routes_Model->get_dates_and_zones();
+      // looping through each album
+      foreach ($dates as $row) {
+        $tmp = array();
+        $tmp["id"] = $row->idprogrutas;
+        $tmp["title"] = $row->Descripcion;
+        $tmp["start"] = $row->fecha;
+        $tmp["end"] = $row->fecha;
+        // push album
+        array_push($clients, $tmp);
+      }
+      // printing json
+      //echo json_encode($clients);
+
+      //$data['distributor'] = $this->Routes_Model->get($id);
+      //$data['dates'] = $this->Routes_Model->get_dates_and_zones($id);
+      $data['dates'] = json_encode($clients);
+      $data['category'] = 'routes';
+      $data['page'] = 'calendar';
+      $this->load->view('template/template_liquidation', $data);
+    }
+
+    public function get_calendar($id = "") {
+      $clients = array();
+      //$dates = $this->Routes_Model->get_dates_and_zones($id);
+      $dates = $this->Routes_Model->get_dates_and_zones();
+      // looping through each album
+      foreach ($dates as $row) {
+        $tmp = array();
+        $tmp["id"] = $row->idprogrutas;
+        $tmp["title"] = $row->Nombre." ".$row->Apellido." - ".$row->Descripcion;
+        $tmp["start"] = $row->fecha;
+        $tmp["end"] = $row->fecha;
+        // push album
+        array_push($clients, $tmp);
+      }
+      // printing json
+      echo json_encode($clients);
+    }
+
     public function edit($id = "") {
       if ($id != "") {
-        $data['idCity'] = $id;
-        $city = $this->City_Model->get($id);
-        if (empty($city)) {
+        $data['idRoute'] = $id;
+        $route = $this->Routes_Model->get($id);
+        if (empty($route)) {
             show_404();
         }
-        $data['city'] = $city[0];
-        $data['category'] = 'city';
+        $data['route'] = $route[0];
+        $data['category'] = 'routes';
         $data['action'] = 'edit';
         $data['page'] = 'form';
-        $this->load->view('template/template', $data);
+        $this->load->view('template/template_liquidation', $data);
       }
       else
-        redirect('city');
+        redirect('route');
     }
 
     function save() {
-      $this->form_validation->set_rules('desc', 'Nombre de la ciudad', 'xss_clean|required');
-        
-      $this->form_validation->set_message('required', '%s es obligatorio.');        
+      $this->form_validation->set_rules('distributor', 'Distribuidor', 'xss_clean|required');
+      $this->form_validation->set_rules('zone', 'Zona', 'xss_clean|required');
+      $this->form_validation->set_rules('date', 'Fecha', 'xss_clean|required');
+      $this->form_validation->set_message('required', '%s es obligatorio.');
       $this->form_validation->set_error_delimiters('<div class="text-error">', '</div>');
 
       if ($this->form_validation->run() == FALSE) {
@@ -83,29 +127,30 @@
         }else {
           $data['action'] = 'edit';
         }
-        
-        $data['category'] = 'city';
+        $data['category'] = 'routes';
         $data['page'] = 'form';
         $this->load->view('template/template', $data);
       } else {
-        $data_in['NombreCiudad'] = $this->input->post('desc');          
+        $data_in['idUser'] = $this->input->post('distributor');
+        $data_in['fecha'] = $this->input->post('date');
+        $data_in['idZona'] = $this->input->post('zone');
 
         // Check if Save or Edit
         if($this->input->post('form_action') == "save") {
-          if ($this->City_Model->create($data_in) === TRUE) {
-            redirect('city');
+          if ($this->Routes_Model->create($data_in) === TRUE) {
+            redirect('routes');
           } else {
-            $data['category'] = 'city';
+            $data['category'] = 'routes';
             $data['action'] = 'new';
             $data['page'] = 'form';
             $this->load->view('template/template', $data);
           }
         }else{
-          $data_in['idCiudad'] = $this->input->post('idCity');
-          if ($this->City_Model->update($data_in, $data_in['idCiudad']) === TRUE) {
-            redirect('city');
+          $data_in['idprogrutas'] = $this->input->post('idRoute');
+          if ($this->Routes_Model->update($data_in, $data_in['idprogrutas']) === TRUE) {
+            redirect('routes');
           } else {
-            $data['category'] = 'city';
+            $data['category'] = 'routes';
             $data['action'] = 'edit';
             $data['page'] = 'form';
             $this->load->view('template/template', $data);

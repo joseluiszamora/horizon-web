@@ -16,7 +16,8 @@
         <td>
           <div class="btnActionsForm">
             <?php
-              echo anchor('routes/edit/'.$row->idprogrutas, 'Editar', array('class' => 'btn btn-info'));
+              //echo anchor('routes/edit/'.$row->idprogrutas, 'Editar', array('class' => 'btn btn-info'));
+              echo anchor('routes/calendar/'.$row->idUser, 'Calendario', array('class' => 'btn btn-info'));
             ?>
           </div>
         </td>

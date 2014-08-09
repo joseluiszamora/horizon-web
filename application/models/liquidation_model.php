@@ -39,7 +39,7 @@ class Liquidation_model extends CI_Model {
   function get_users_and_zones() {
     $this->db->select(
       'users.idUser,
-      users.Nombre, 
+      users.Nombre,
       users.Apellido,
       zona.idZona,
       zona.Descripcion'
@@ -54,7 +54,7 @@ class Liquidation_model extends CI_Model {
 
     $result = $query->result_array();
     foreach ($result as $r) {
-      $drop .= '<option value="'.$r['idUser'].'">'.$r['Nombre']." ".$r['Apellido']." ".$r['Apellido'].'</option>';
+      $drop .= '<option data-zone="'.$r['idZona'].'" value="'.$r['idUser'].'">'.$r['Nombre']." ".$r['Apellido']." ".$r['Apellido'].'</option>';
     }
 
     $drop .= '</select>';
@@ -64,7 +64,7 @@ class Liquidation_model extends CI_Model {
   function get_users_and_zones_clear() {
     $this->db->select(
       'users.idUser,
-      users.Nombre, 
+      users.Nombre,
       users.Apellido,
       zona.idZona,
       zona.Descripcion'

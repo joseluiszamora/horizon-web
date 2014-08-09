@@ -25,12 +25,45 @@ class Routes_model extends CI_Model {
       $query = $this->db->get();
       return $query->result();
     }
-/*
+
     function get($id) {
-      $query = $this->db->get_where('ciudad',array('idCiudad'=>$id));
+      $this->db->select(
+        'progrutas.idprogrutas,
+        progrutas.fecha,
+        users.idUser,
+        users.Nombre,
+        users.Apellido,
+        zona.idZona,
+        zona.Descripcion'
+      );
+      $this->db->from('progrutas');
+      $this->db->join('users', 'users.idUser = progrutas.idUser');
+      $this->db->join('zona', 'zona.idZona = progrutas.idZona');
+      $this->db->where('progrutas.idprogrutas', $id);
+      $query = $this->db->get();
+
       return $query->result();
     }
 
+    function get_dates_and_zones() {
+      $this->db->select(
+        'progrutas.idprogrutas,
+        progrutas.fecha,
+        users.idUser,
+        users.Nombre,
+        users.Apellido,
+        zona.idZona,
+        zona.Descripcion'
+      );
+      $this->db->from('progrutas');
+      $this->db->join('users', 'users.idUser = progrutas.idUser');
+      $this->db->join('zona', 'zona.idZona = progrutas.idZona');
+      //$this->db->where('users.idUser', $id);
+      $query = $this->db->get();
+
+      return $query->result();
+    }
+/*
     function update($data, $id) {
       $this->db->where('idCiudad', $id);
       if ($this->db->update('ciudad', $data)) {
@@ -42,23 +75,23 @@ class Routes_model extends CI_Model {
         $this->Log_Model->create($data_log);
         return TRUE;
       }
-      return FALSE;                        
+      return FALSE;
     }
-
+*/
     function create($data_in) {
-      if ($this->db->insert('ciudad', $data_in)) {
+      if ($this->db->insert('progrutas', $data_in)) {
         // Save log for this action
         $id = $this->db->insert_id();
-        $data_log['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
+        /*$data_log['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
         $data_log['idAction'] = '1';
         $data_log['idReferencia'] = $id;
         $data_log['FechaHora'] = date("y-m-d, g:i");
-        $this->Log_Model->create($data_log);
+        $this->Log_Model->create($data_log);*/
         return TRUE;
       }
       return FALSE;
     }
-
+/*
     // get user category/profile list
     function get_cities($idprofile) {
       $dropdown = array();

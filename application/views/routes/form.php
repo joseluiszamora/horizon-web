@@ -1,5 +1,18 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="page-header">Nueva Ruta</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tab-content">
+        <div id="home" class="row tab-pane active">
+
 <?php
-  echo form_open('city/save');
+  echo form_open('routes/save');
 
   if ($action === "new"){
     echo form_hidden('form_action', "save");
@@ -12,9 +25,7 @@
   if (isset($idRoute)) echo form_hidden('idRoute', $idRoute);
 ?>
 
-
-
-
+<br><br>
 <div class="row" >
   <div class="col-md-offset-1 col-md-9 form-horizontal">
       <fieldset>
@@ -50,14 +61,25 @@
         <div class="form-group">
           <div class="col-xs-offset-2 col-xs-10">
             <input id="saveform" type="submit" value="Crear" name="submit" class="btn btn-primary">
-            <a class="btnTitle btn btn-info" href="http://localhost/horizon/index.php/user">Cancelar</a>
-
+            <?php echo anchor('routes', 'Cancelar', array('class' => 'btnTitle btn btn-info')); ?>
           </div>
         </div>
 
       </fieldset>
   </div>
 </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
 if (isset($idCity))
   echo form_input(array('name' => 'desc', 'class' => 'span3', 'value' => $city->NombreCiudad));
 else
