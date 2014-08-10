@@ -48,22 +48,12 @@
   }
 </style>
 
-<div class="container">
-  <br><br>
-  <div class="row">
-    <div class="col-lg-12">
-      <h3 class="page-header">Calendario</h3>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="tab-content">
-        <div id="home" class="row tab-pane active">
-          <div id='calendar'></div>
-        </div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="tab-content">
+      <div id="home" class="row tab-pane active">
+        <div id='calendar'></div>
       </div>
     </div>
   </div>
-
 </div>

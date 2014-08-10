@@ -35,19 +35,6 @@
         </div>
 
         <div class="form-group">
-          <label for="route" class="control-label col-xs-2">Ruta</label>
-          <div class="col-xs-7">
-            <?php
-              foreach ($dropdown_list as $key=>$zones){
-                echo '<div id='.$key.' class="routedropdown">';
-                echo form_dropdown('zone', $zones, '', 'class="chosen-select form-control"');
-                echo "</div>";
-              }
-            ?>
-          </div>
-        </div>
-
-        <div class="form-group">
           <label for="date" class="control-label col-xs-2">Fecha</label>
           <div class="col-xs-3">
             <?php

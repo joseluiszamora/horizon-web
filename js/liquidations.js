@@ -41,7 +41,7 @@ $(document).ready(function(){
 
   // save form
   $("#saveform").click(function(){
-  	$(this).prop( "disabled", true );
+    $(this).prop( "disabled", true );
     $flag = false;
     // check distrib
     $distrib = $('select[name="distributor"]');
@@ -102,8 +102,8 @@ $(document).ready(function(){
         async: false,
         cache: false
       }).done(function( data ) {
-      	//console.log(data);
-      	window.location.href = url + "liquidation/add_products/" + data;
+        //console.log(data);
+        window.location.href = url + "liquidation/add_products/" + data;
       });
     };
   });
@@ -132,4 +132,65 @@ $(document).ready(function(){
     });
   });
   // END SECTION DEVOLUTION
+
+  // SECTION ROUTES
+  $("#saveformroute").click(function(){
+    console.log("mm");
+    $(this).prop( "disabled", true );
+    $flag = false;
+    // check distrib
+    $distrib = $('select[name="distributor"]');
+    $distribval = $('select[name="distributor"]').val();
+    if ($distribval == 0 || $distribval == "") {
+      $flag = false;
+      $distrib.addClass("has-error");
+      $distrib.parents(".form-group").find("label").addClass("has-error");
+      $(this).prop( "disabled", false );
+      return false;
+    }else{
+      $flag = true;
+      $distrib.removeClass("has-error");
+      $distrib.parents(".form-group").find("label").removeClass("has-error");
+    }
+    // check Route
+    $zone = $(".routedropdown.selected").find('select[name="zone"]');
+    $zoneval = $zone.val();
+    if ($zoneval == 0 || $zoneval == "") {
+      $flag = false;
+      $zone.parents(".form-group").find("label").addClass("has-error");
+      $(this).prop( "disabled", false );
+      return false;
+    }else{
+      $flag = true;
+      $zone.parents(".form-group").find("label").removeClass("has-error");
+    }
+    // check Date
+    $date = $('input[name="date"]');
+    $dateval = $('input[name="date"]').val();
+    if ($dateval == 0 || $dateval == "") {
+      $flag = false;
+      $date.addClass("has-error");
+      $date.parents(".form-group").find("label").addClass("has-error");
+      $(this).prop( "disabled", false );
+      return false;
+    }else{
+      $flag = true;
+      $date.removeClass("has-error");
+      $date.parents(".form-group").find("label").removeClass("has-error");
+    }
+    
+    if ($flag) {
+      $.ajax({
+        type: "POST",
+        url: url+'routes/save/',
+        data: 'distributor='+$distribval+'&route='+$zoneval+'&date='+$dateval,
+        async: false,
+        cache: false
+      }).done(function( data ) {
+        window.location.href = url + "routes/";
+      });
+
+    };
+  });
+  // ENDSECTION ROUTES
 });

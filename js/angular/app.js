@@ -436,39 +436,53 @@ var productControllerObj = function ($scope){
 
   $scope.getCargaP = function ($product){
     $sum = 0;
+    $sumu = 0;
     $sum += parseInt($product.previousDayP);
-
+    $sumu += parseInt($product.previousDayU);
     mark = $("#markLiquidation").html();
-    //console.log(mark);
     switch(mark) {
     case "creado":
       $sum += parseInt($scope.productControllerObj.cargaP);
+      $sumu += parseInt($scope.productControllerObj.cargaU);
       break;
     case "cargado":
       $sum += parseInt($product.chargeP);
       $sum += parseInt($scope.productControllerObj.cargaExtraP1);
+      $sumu += parseInt($product.chargeU);
+      $sumu += parseInt($scope.productControllerObj.cargaExtraU1);
       break;
     case "cargaextra1":
       $sum += parseInt($product.chargeP);
       $sum += parseInt($product.chargeExtraP1);
       $sum += parseInt($scope.productControllerObj.cargaExtraP2);
+      $sumu += parseInt($product.chargeU);
+      $sumu += parseInt($product.chargeExtraU1);
+      $sumu += parseInt($scope.productControllerObj.cargaExtraU2);
       break;
     case "cargaextra2":
       $sum += parseInt($product.chargeP);
       $sum += parseInt($product.chargeExtraP1);
       $sum += parseInt($product.chargeExtraP3);
       $sum += parseInt($scope.productControllerObj.cargaExtraP3);
+      $sumu += parseInt($product.chargeU);
+      $sumu += parseInt($product.chargeExtraU1);
+      $sumu += parseInt($product.chargeExtraU3);
+      $sumu += parseInt($scope.productControllerObj.cargaExtraU3);
       break;
     case "liquidation":
       $sum += parseInt($product.chargeP);
       $sum += parseInt($product.chargeExtraP1);
       $sum += parseInt($product.chargeExtraP3);
       $sum += parseInt($scope.productControllerObj.cargaExtraP3);
+      $sumu += parseInt($product.chargeU);
+      $sumu += parseInt($product.chargeExtraU1);
+      $sumu += parseInt($product.chargeExtraU3);
+      $sumu += parseInt($scope.productControllerObj.cargaExtraU3);
       break;
     default:
       return 0;
     }
-    
+    $sum += parseInt(Math.floor($sumu / $product.uxp));
     return $sum;
   };
 
@@ -505,6 +519,8 @@ var productControllerObj = function ($scope){
     default:
       return 0;
     }
+
+    $sum = parseInt(Math.round($sum % $product.uxp));
 
     return $sum;
   };

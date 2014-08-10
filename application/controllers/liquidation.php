@@ -8,6 +8,7 @@
       $this->load->model('Product_Model');
       $this->load->model('User_Model');
       $this->load->model('Liquidation_Model');
+      $this->load->model('Routes_Model');
       $this->load->model('City_Model');
       $this->load->model('Area_Model');
 
@@ -357,7 +358,10 @@
       $data_in['fechaRegistro'] = $this->input->post('date');
       $data_in['horaRegistro'] = mdate("%h:%i:%a");
       $data_in['idUser'] = $this->input->post('distributor');
-      $data_in['ruta'] = $this->input->post('route');
+      // check if exist route
+      //$data_in['ruta'] = $this->input->post('route');
+      $data_in['ruta'] = $this->Routes_Model->get_route($this->input->post('distributor'), $this->input->post('date'));
+
       $data_in['detalle'] = $this->input->post('desc');
       $data_in['fechaFin'] = $this->input->post('date');
       $data_in['horaFin'] = mdate("%h:%i:%a");
@@ -373,8 +377,7 @@
         $data_pro['idProduct'] = $rowproduct->idProduct;
         $this->Liquidation_Model->create_detail($data_pro);
       }
-
-      //add NO regular products
+      // add NO regular products
       $lines = explode("***", $this->input->post('noregular'));
       foreach ($lines as $line) {
         $productsnoregular = $this->Product_Model->get_products_by_line($line);

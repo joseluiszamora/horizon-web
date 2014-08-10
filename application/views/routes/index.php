@@ -1,3 +1,4 @@
+<br>
 <div class="container">
 
   <div class="row">
@@ -21,7 +22,7 @@
         <div id="home" class="row tab-pane active">
           <?php
             $data['category'] = 'routes';
-            $this->load->view('routes/list', $data);
+            $this->load->view('routes/calendar', $data);
           ?>
         </div>
       </div>

@@ -115,47 +115,14 @@
     }
 
     function save() {
-      $this->form_validation->set_rules('distributor', 'Distribuidor', 'xss_clean|required');
-      $this->form_validation->set_rules('zone', 'Zona', 'xss_clean|required');
-      $this->form_validation->set_rules('date', 'Fecha', 'xss_clean|required');
-      $this->form_validation->set_message('required', '%s es obligatorio.');
-      $this->form_validation->set_error_delimiters('<div class="text-error">', '</div>');
+      $data_in['idUser'] = $this->input->post('distributor');
+      $data_in['fecha'] = $this->input->post('date');
+      $data_in['idZona'] = $this->input->post('route');
 
-      if ($this->form_validation->run() == FALSE) {
-        if($this->input->post('form_action') == "save") {
-          $data['action'] = 'new';
-        }else {
-          $data['action'] = 'edit';
-        }
-        $data['category'] = 'routes';
-        $data['page'] = 'form';
-        $this->load->view('template/template', $data);
+      if ($this->Routes_Model->create($data_in) === TRUE) {
+        echo TRUE;
       } else {
-        $data_in['idUser'] = $this->input->post('distributor');
-        $data_in['fecha'] = $this->input->post('date');
-        $data_in['idZona'] = $this->input->post('zone');
-
-        // Check if Save or Edit
-        if($this->input->post('form_action') == "save") {
-          if ($this->Routes_Model->create($data_in) === TRUE) {
-            redirect('routes');
-          } else {
-            $data['category'] = 'routes';
-            $data['action'] = 'new';
-            $data['page'] = 'form';
-            $this->load->view('template/template', $data);
-          }
-        }else{
-          $data_in['idprogrutas'] = $this->input->post('idRoute');
-          if ($this->Routes_Model->update($data_in, $data_in['idprogrutas']) === TRUE) {
-            redirect('routes');
-          } else {
-            $data['category'] = 'routes';
-            $data['action'] = 'edit';
-            $data['page'] = 'form';
-            $this->load->view('template/template', $data);
-          }
-        }
+        echo FALSE;
       }
     }
 

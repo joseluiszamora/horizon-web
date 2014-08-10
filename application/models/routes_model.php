@@ -45,6 +45,45 @@ class Routes_model extends CI_Model {
       return $query->result();
     }
 
+    // get route for parameters
+    function get_route($user, $date) {
+      $this->db->select(
+        'progrutas.idprogrutas,
+        progrutas.fecha,
+        progrutas.idZona,
+        progrutas.idUser'
+      );
+
+      $this->db->from('progrutas');
+      $this->db->where('progrutas.idUser', $user);
+      $this->db->where('progrutas.fecha', $date);
+
+      if ($this->db->count_all_results() > 0) {
+        //$query = $this->db->get();
+        //return $query->result();
+        $this->db->select(
+          'progrutas.idprogrutas,
+          progrutas.fecha,
+          progrutas.idZona,
+          progrutas.idUser'
+        );
+
+        $this->db->from('progrutas');
+        $this->db->where('progrutas.idUser', $user);
+        $this->db->where('progrutas.fecha', $date);
+        
+        $query = $this->db->get();
+        $result = $query->result_array();
+        foreach ($result as $r) {
+          $val = $r['idZona'];
+        }
+        return $val;
+      }else{
+        return 0;
+      }
+      //return $query->result();
+    }
+
     function get_dates_and_zones() {
       $this->db->select(
         'progrutas.idprogrutas,
