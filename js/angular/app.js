@@ -255,7 +255,7 @@ var lineControllerObj = function ($scope, sharedProperties){
     });
 
     if (uxpline > 0) {
-      $sumCargaExtra2PLine += parseInt(Math.floor(($scope.getCargaExtra2RealULine(products)) / uxpline));
+      //$sumCargaExtra2PLine += parseInt(Math.floor(($scope.getCargaExtra2RealULine(products)) / uxpline));
     }
 
     return $sumCargaExtra2PLine;
@@ -271,8 +271,8 @@ var lineControllerObj = function ($scope, sharedProperties){
   };
   $scope.getCargaExtra2RealULine = function (products){
     $sum = 0;
-    angular.forEach(products, function(value) {
-      $sum += value.chargeExtraU2;
+    angular.forEach(products, function(product) {
+      $sum += product.chargeExtraU2;
     });
 
     return $sum;
@@ -320,6 +320,13 @@ var lineControllerObj = function ($scope, sharedProperties){
     return $sumTotalPLine;
   };
   $scope.getTotalULine = function (products, uxpline){
+/*    $sum = 0;
+    angular.forEach(products, function(product) {
+      //$sumCargaExtra3PLine += value.chargeExtraP3;
+      $sum += getTotalU(product, productControllerObj);
+      //$sum++;
+    });
+*/
     $sum = 0;
     $sum += $scope.getCargaInicialULine(products);
     $sum += $scope.getCargaULine(products);
@@ -330,6 +337,22 @@ var lineControllerObj = function ($scope, sharedProperties){
     if (uxpline > 0) {
       $sum = parseInt(Math.round($sum % uxpline));
     };
+    return $sum;
+
+    /*
+    $scope.getCargaP = function ($product){
+      $sum = getTotalP($product, $scope.productControllerObj);
+      $sum += parseInt(Math.floor(getTotalU($product, $scope.productControllerObj) / $product.uxp));
+      
+      
+    };
+
+    $scope.getCargaU = function ($product){
+      $sum = getTotalU($product, $scope.productControllerObj);
+      $sum = parseInt(Math.round($sum % $product.uxp));
+      return $sum;
+    };
+    */
     return $sum;
   };
 
@@ -435,93 +458,15 @@ var productControllerObj = function ($scope){
   };
 
   $scope.getCargaP = function ($product){
-    $sum = 0;
-    $sumu = 0;
-    $sum += parseInt($product.previousDayP);
-    $sumu += parseInt($product.previousDayU);
-    mark = $("#markLiquidation").html();
-    switch(mark) {
-    case "creado":
-      $sum += parseInt($scope.productControllerObj.cargaP);
-      $sumu += parseInt($scope.productControllerObj.cargaU);
-      break;
-    case "cargado":
-      $sum += parseInt($product.chargeP);
-      $sum += parseInt($scope.productControllerObj.cargaExtraP1);
-      $sumu += parseInt($product.chargeU);
-      $sumu += parseInt($scope.productControllerObj.cargaExtraU1);
-      break;
-    case "cargaextra1":
-      $sum += parseInt($product.chargeP);
-      $sum += parseInt($product.chargeExtraP1);
-      $sum += parseInt($scope.productControllerObj.cargaExtraP2);
-      $sumu += parseInt($product.chargeU);
-      $sumu += parseInt($product.chargeExtraU1);
-      $sumu += parseInt($scope.productControllerObj.cargaExtraU2);
-      break;
-    case "cargaextra2":
-      $sum += parseInt($product.chargeP);
-      $sum += parseInt($product.chargeExtraP1);
-      $sum += parseInt($product.chargeExtraP3);
-      $sum += parseInt($scope.productControllerObj.cargaExtraP3);
-      $sumu += parseInt($product.chargeU);
-      $sumu += parseInt($product.chargeExtraU1);
-      $sumu += parseInt($product.chargeExtraU3);
-      $sumu += parseInt($scope.productControllerObj.cargaExtraU3);
-      break;
-    case "liquidation":
-      $sum += parseInt($product.chargeP);
-      $sum += parseInt($product.chargeExtraP1);
-      $sum += parseInt($product.chargeExtraP3);
-      $sum += parseInt($scope.productControllerObj.cargaExtraP3);
-      $sumu += parseInt($product.chargeU);
-      $sumu += parseInt($product.chargeExtraU1);
-      $sumu += parseInt($product.chargeExtraU3);
-      $sumu += parseInt($scope.productControllerObj.cargaExtraU3);
-      break;
-    default:
-      return 0;
-    }
-    $sum += parseInt(Math.floor($sumu / $product.uxp));
+    $sum = getTotalP($product, $scope.productControllerObj);
+    $sum += parseInt(Math.floor(getTotalU($product, $scope.productControllerObj) / $product.uxp));
+    
     return $sum;
   };
 
   $scope.getCargaU = function ($product){
-    $sum = 0;
-    $sum += parseInt($product.previousDayU);
-
-    mark = $("#markLiquidation").html();
-    switch(mark) {
-    case "creado":
-      $sum += parseInt($scope.productControllerObj.cargaU);
-      break;
-    case "cargado":
-      $sum += parseInt($product.chargeU);
-      $sum += parseInt($scope.productControllerObj.cargaExtraU1);
-      break;
-    case "cargaextra1":
-      $sum += parseInt($product.chargeU);
-      $sum += parseInt($product.chargeExtraU1);
-      $sum += parseInt($scope.productControllerObj.cargaExtraU2);
-      break;
-    case "cargaextra2":
-      $sum += parseInt($product.chargeU);
-      $sum += parseInt($product.chargeExtraU1);
-      $sum += parseInt($product.chargeExtraU3);
-      $sum += parseInt($scope.productControllerObj.cargaExtraU3);
-      break;
-    case "liquidation":
-      $sum += parseInt($product.chargeU);
-      $sum += parseInt($product.chargeExtraU1);
-      $sum += parseInt($product.chargeExtraU3);
-      $sum += parseInt($scope.productControllerObj.cargaExtraU3);
-      break;
-    default:
-      return 0;
-    }
-
+    $sum = getTotalU($product, $scope.productControllerObj);
     $sum = parseInt(Math.round($sum % $product.uxp));
-
     return $sum;
   };
 
@@ -627,10 +572,7 @@ var productControllerObj = function ($scope){
     }
   };
 
-  $scope.updateCargaExtraP1 = function (product) {
-    product.chargeExtraP1 = $scope.productControllerObj.cargaExtraP1;
-  };
-  $scope.updateCargaExtraU1 = function (product) {
+  $scope.updateCargaExtra1 = function (product) {
     if ($scope.productControllerObj.cargaExtraU1 >= product.uxp) {
       product.chargeExtraU1 = Math.round($scope.productControllerObj.cargaExtraU1 % product.uxp);
       
@@ -640,13 +582,11 @@ var productControllerObj = function ($scope){
       $scope.productControllerObj.cargaExtraU1 = product.chargeExtraU1;
     }else{
       product.chargeExtraU1 = $scope.productControllerObj.cargaExtraU1;
+      product.chargeExtraP1 = $scope.productControllerObj.cargaExtraP1;
     }
   };
 
-  $scope.updateCargaExtraP2 = function (product) {
-    product.chargeExtraP2 = $scope.productControllerObj.cargaExtraP2;
-  };
-  $scope.updateCargaExtraU2 = function (product) {
+  $scope.updateCargaExtra2 = function (product) {
     if ($scope.productControllerObj.cargaExtraU2 >= product.uxp) {
       product.chargeExtraU2 = Math.round($scope.productControllerObj.cargaExtraU2 % product.uxp);
 
@@ -656,13 +596,11 @@ var productControllerObj = function ($scope){
       $scope.productControllerObj.cargaExtraU2 = product.chargeExtraU2;
     }else{
       product.chargeExtraU2 = $scope.productControllerObj.cargaExtraU2;
+      product.chargeExtraP2 = $scope.productControllerObj.cargaExtraP2;
     }
   };
 
-  $scope.updateCargaExtraP3 = function (product) {
-    product.chargeExtraP3 = $scope.productControllerObj.cargaExtraP3;
-  };
-  $scope.updateCargaExtraU3 = function (product) {
+  $scope.updateCargaExtra3 = function (product) {
     if ($scope.productControllerObj.cargaExtraU3 >= product.uxp) {
       product.chargeExtraU3 = Math.round($scope.productControllerObj.cargaExtraU3 % product.uxp);
 
@@ -672,6 +610,7 @@ var productControllerObj = function ($scope){
       $scope.productControllerObj.cargaExtraU3 = product.chargeExtraU3;
     }else{
       product.chargeExtraU3 = $scope.productControllerObj.cargaExtraU3;
+      product.chargeExtraP3 = $scope.productControllerObj.cargaExtraP3;
     }
   };
 
@@ -787,6 +726,79 @@ app.directive('ngBlur', function() {
 angular.module('numberFilter', []).controller('LiquidationController', ['$scope', function($scope) {
   $scope.val = 1234.56789;
 }]);
+
+
+function getTotalU($objProduct, $objProductScope){
+  $sum = 0;
+  $sum += parseInt($objProduct.previousDayU);
+
+  mark = $("#markLiquidation").html();
+  switch(mark) {
+  case "creado":
+    $sum += parseInt($objProductScope.cargaU);
+    break;
+  case "cargado":
+    $sum += parseInt($objProduct.chargeU);
+    $sum += parseInt($objProductScope.cargaExtraU1);
+    break;
+  case "cargaextra1":
+    $sum += parseInt($objProduct.chargeU);
+    $sum += parseInt($objProduct.chargeExtraU1);
+    $sum += parseInt($objProductScope.cargaExtraU2);
+    break;
+  case "cargaextra2":
+    $sum += parseInt($objProduct.chargeU);
+    $sum += parseInt($objProduct.chargeExtraU1);
+    $sum += parseInt($objProduct.chargeExtraU3);
+    $sum += parseInt($objProductScope.cargaExtraU3);
+    break;
+  case "liquidation":
+    $sum += parseInt($objProduct.chargeU);
+    $sum += parseInt($objProduct.chargeExtraU1);
+    $sum += parseInt($objProduct.chargeExtraU3);
+    $sum += parseInt($objProductScope.cargaExtraU3);
+    break;
+  default:
+    return 0;
+  }
+
+  return $sum;
+}
+
+function getTotalP($objProduct, $objProductScope){
+  $sum = 0;
+  $sum += parseInt($objProduct.previousDayP);
+  mark = $("#markLiquidation").html();
+  switch(mark) {
+  case "creado":
+    $sum += parseInt($objProductScope.cargaP);
+    break;
+  case "cargado":
+    $sum += parseInt($objProduct.chargeP);
+    $sum += parseInt($objProductScope.cargaExtraP1);
+    break;
+  case "cargaextra1":
+    $sum += parseInt($objProduct.chargeP);
+    $sum += parseInt($objProduct.chargeExtraP1);
+    $sum += parseInt($objProductScope.cargaExtraP2);
+    break;
+  case "cargaextra2":
+    $sum += parseInt($objProduct.chargeP);
+    $sum += parseInt($objProduct.chargeExtraP1);
+    $sum += parseInt($objProduct.chargeExtraP3);
+    $sum += parseInt($objProductScope.cargaExtraP3);
+    break;
+  case "liquidation":
+    $sum += parseInt($objProduct.chargeP);
+    $sum += parseInt($objProduct.chargeExtraP1);
+    $sum += parseInt($objProduct.chargeExtraP3);
+    $sum += parseInt($objProductScope.cargaExtraP3);
+    break;
+  default:
+    return 0;
+  }
+  return $sum;
+}
 
 
 /*
