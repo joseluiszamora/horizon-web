@@ -218,7 +218,7 @@
 
                             <!-- total venta -->
                             <!--<td class="unity">{{ getTotalAmmount(product) }}</td>-->
-                            <td class="unity">{{ product.totalAmmount | number:2 }}</td>
+                            <td class="unity">{{ totalAmmountProduct(product) | number:2 }}</td>
                           </tr>
                         </tbody>
                         <tfooter>
@@ -254,8 +254,8 @@
                             <td class="unity">{{ getAjustePLine(line.products, line.lineUxp) }}</td>
                             <td class="unity">{{ getAjusteULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">0</td>
-                            <td class="unity">0</td>
+                            <td class="unity">{{ getCalculatedPLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getCalculatedULine(line.products, line.lineUxp) }}</td>
 
                             <td class="unity">0</td>
                             <td class="unity">0</td>
