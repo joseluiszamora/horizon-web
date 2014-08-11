@@ -177,16 +177,16 @@
                             <td class="unity" ng-show="liquidation.mark === 'completado'">{{ product.ajusteU }}</td>
 
                             <!-- TOTAL venta CALC -->
-                            <td class="unity info" ng-show="liquidation.mark === 'completado'">{{ product.calculatedP }}</td>
-                            <td class="unity info" ng-show="liquidation.mark === 'completado'">{{ product.calculatedU }}</td>
+                            <td class="unity info">{{ calculateSoldP(product) }}</td>
+                            <td class="unity info">{{ calculateSoldU(product) }}</td>
 
                             <!-- Venta Android -->
-                            <td class="unity success" ng-show="liquidation.mark === 'completado'">0</td>
-                            <td class="unity success" ng-show="liquidation.mark === 'completado'">0</td>
+                            <td class="unity success">0</td>
+                            <td class="unity success">0</td>
 
                             <!-- total venta -->
                             <!--<td class="unity">{{ getTotalAmmount(product) }}</td>-->
-                            <td class="unity" ng-show="liquidation.mark === 'completado'">{{ product.totalAmmount | number:2 }}</td>
+                            <td class="unity">{{ totalAmmountProduct(product) | number:2 }}</td>
                           </tr>
                         </tbody>
                         <tfooter>
@@ -219,11 +219,11 @@
                             <td class="unity" ng-show="liquidation.mark === 'completado'">0</td>
                             <td class="unity" ng-show="liquidation.mark === 'completado'">0</td>
 
-                            <td class="unity" ng-show="liquidation.mark === 'completado'">0</td>
-                            <td class="unity" ng-show="liquidation.mark === 'completado'">0</td>
-
                             <td class="unity" ng-show="liquidation.mark === 'completado'">{{ getAjustePLine(line.products, line.lineUxp) }}</td>
                             <td class="unity" ng-show="liquidation.mark === 'completado'">{{ getAjusteULine(line.products, line.lineUxp) }}</td>
+
+                            <td class="unity" ng-show="liquidation.mark === 'completado'">{{ getCalculatedPLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'completado'">{{ getCalculatedULine(line.products, line.lineUxp) }}</td>
 
                             <td class="unity" ng-show="liquidation.mark === 'completado'">0</td>
                             <td class="unity" ng-show="liquidation.mark === 'completado'">0</td>

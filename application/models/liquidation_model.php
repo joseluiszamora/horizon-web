@@ -136,6 +136,7 @@ class Liquidation_model extends CI_Model {
       detalleliquidacion.prestamo as prestamo,
       detalleliquidacion.bonificacion as bonificacion,
       detalleliquidacion.devolucion as devolucion,
+      detalleliquidacion.ajuste as ajuste,
       detalleliquidacion.status as estado,
       detalleliquidacion.detalle as detalle,
       detalleliquidacion.excepcion as excepcion

@@ -1,5 +1,5 @@
-var url = "http://localhost/horizon/index.php/";
-//var url = "https://mariani.bo/horizon-sc/index.php/";
+//var url = "http://localhost/horizon/index.php/";
+var url = "https://mariani.bo/horizon-sc/index.php/";
 
 idliquidation = $("#idLiquidation").html();
 mark = $("#markLiquidation").html();
@@ -83,6 +83,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
     $("#expenseFormTitle").val("");
   };
   this.saveAll = function () {
+    $("#btnsave").prop( "disabled", true );
     var datasend = {
       lines: liquidation.lines,
       expenses: liquidation.expenses,
@@ -312,7 +313,7 @@ var lineControllerObj = function ($scope, sharedProperties){
     $sumTotalPLine += $scope.getCargaExtra1PLine(products);
     $sumTotalPLine += $scope.getCargaExtra2PLine(products);
     $sumTotalPLine += $scope.getCargaExtra3PLine(products);
-    
+
     if (uxpline > 0) {
       $sumUlines = $scope.getCountTotalULine(products, uxpline);
       $sumTotalPLine += parseInt(Math.floor($sumUlines / uxpline));
@@ -335,50 +336,35 @@ var lineControllerObj = function ($scope, sharedProperties){
   };
   // TOTAL AJUSTADO
   $scope.getCalculatedPLine = function (products, uxpline){
-    $sumTotalPLine = 0;
-    $sumUlines = 0;
-    $adjustP = 0;
-    $adjustU = 0;
-    $sumTotalPLine += $scope.getCargaInicialPLine(products);
-    $sumTotalPLine += $scope.getCargaPLine(products);
-    $sumTotalPLine += $scope.getCargaExtra1PLine(products);
-    $sumTotalPLine += $scope.getCargaExtra2PLine(products);
-    $sumTotalPLine += $scope.getCargaExtra3PLine(products);
-
-    angular.forEach(products, function(value) {
-      $adjustP += value.ajusteP;
-      $adjustU += value.ajusteU;
-    });
+    $sum = 0;
+    $sum += calculatedTotal(products);
 
     if (uxpline > 0) {
-      $adjustP += parseInt(Math.floor($adjustU / uxpline));
-      $sumUlines = $scope.getCountTotalULine(products, uxpline);
-      $sumTotalPLine += parseInt(Math.floor($sumUlines / uxpline));
-    }
-    $sumTotalPLine += $adjustP;
+      $sum = parseInt(Math.floor($sum / uxpline));
+    };
 
-    return $sumTotalPLine;
+    return $sum;
   };
   $scope.getCalculatedULine = function (products, uxpline){
     $sum = 0;
-    $adjust = 0;
-    $sum += $scope.getCargaInicialULine(products);
-    $sum += $scope.getCargaULine(products);
-    $sum += $scope.getCargaExtra1ULine(products);
-    $sum += $scope.getCargaExtra2ULine(products);
-    $sum += $scope.getCargaExtra3ULine(products);
-    
-    angular.forEach(products, function(value) {
-      $adjust += value.ajusteU;
-    });
-
-    $sum += $adjust;
+    $sum += calculatedTotal(products);
 
     if (uxpline > 0) {
       $sum = parseInt(Math.round($sum % uxpline));
     };
+
     return $sum;
   };
+
+  function calculatedTotal($products){
+    $sum = 0;
+    angular.forEach($products, function(product) {
+      $sum += parseInt(product.calculatedP * product.uxp);
+      $sum += product.calculatedU;
+    });
+
+    return $sum;
+  }
 
   $scope.getCountTotalULine = function (products, uxpline){
     $sumlocal = 0;
@@ -484,7 +470,7 @@ var productControllerObj = function ($scope){
   $scope.getCargaP = function ($product){
     $sum = getTotalP($product, $scope.productControllerObj);
     $sum += parseInt(Math.floor(getTotalU($product, $scope.productControllerObj) / $product.uxp));
-    
+
     return $sum;
   };
 
@@ -646,9 +632,8 @@ var productControllerObj = function ($scope){
   $scope.calculateSoldP = function ($product) {
     $sum = calculateSold($product, $scope.productControllerObj);
     $sum = parseInt(Math.floor($sum / $product.uxp));
-
     // set ammount
-    //$product.totalAmmount = $sum;
+    $product.calculatedP = $sum;
 
     return $sum;
   };
@@ -657,7 +642,7 @@ var productControllerObj = function ($scope){
     $sum = calculateSold($product, $scope.productControllerObj);
     $sum = parseInt(Math.round($sum % $product.uxp));
     // set ammount
-    //$product.totalAmmount = $sum;
+    $product.calculatedU = $sum;
 
     return $sum;
   };
@@ -683,12 +668,13 @@ var productControllerObj = function ($scope){
 
   // MONTO TOTAL
   $scope.totalAmmountProduct = function ($product) {
-    /*$total = $scope.calculateSoldP($product) * $product.uxp;
-    $total += $scope.calculateSoldU($product);
-    $total = ($total * $product.price);
+    $total = 0;
+    $total += parseInt($product.calculatedP * $product.uxp);
+    $total += parseInt($product.calculatedU);
+    $total = ($total * parseFloat($product.price));
 
-    return $total;*/
-    return ($product.totalAmmount);
+    $product.totalAmmount = $total;
+    return ($total);
   };
 
 
@@ -732,10 +718,8 @@ var expenseController = function ($scope){
     //console.log($scope.expenseController.ammount);
     //$expense.ammount = $scope.expenseController.ammount;
     if (!isNaN(parseFloat($expense.ammount)) && isFinite($expense.ammount)){
-      console.log("GOODD");
       $expense.ammount = parseFloat($scope.expenseController.ammount);
     }else{
-      console.log("BADDD");
       $expense.ammount = 0;
       //$scope.expenseController.ammount = 0;
     }

@@ -1,6 +1,6 @@
 //var url = "https://mariani.bo/horizon/index.php/";
-//var url = "https://mariani.bo/horizon-sc/index.php/";
-var url = "http://localhost/horizon/index.php/";
+var url = "https://mariani.bo/horizon-sc/index.php/";
+//var url = "http://localhost/horizon/index.php/";
 
 $(document).ready(function(){
   $('.datepicker, .datepicker2').datepicker({

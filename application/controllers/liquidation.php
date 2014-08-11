@@ -181,12 +181,14 @@
             'bonosP'         => 0,
             'bonosU'         => 0,
 
-            'ajusteP'     => 0,
-            'ajusteU'     => 0,
+            'ajusteP'    => floor($rowproduct->ajuste / $rowproduct->uxp),
+            'ajusteU'    => round(($rowproduct->ajuste % $rowproduct->uxp), 0),
 
-            'calculatedP' => floor(($partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) / $rowproduct->uxp),
+            //'calculatedP' => floor(($partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) / $rowproduct->uxp),
 
-            'calculatedU' => round((($partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) % $rowproduct->uxp), 0),
+            //'calculatedU' => round((($partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) % $rowproduct->uxp), 0),
+            'calculatedP' => 0,
+            'calculatedU' => 0,
 
             'ventaP'         => 0,
             'ventaU'         => 0,
@@ -250,8 +252,8 @@
             'bonosP'         => 0,
             'bonosU'         => 0,
 
-            'ajusteP'     => 0,
-            'ajusteU'     => 0,
+            'ajusteP'    => floor($rowproduct->ajuste / $rowproduct->uxp),
+            'ajusteU'    => round(($rowproduct->ajuste % $rowproduct->uxp), 0),
 
             'calculatedP' => floor(($rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3 - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) / $rowproduct->uxp),
 
@@ -289,6 +291,7 @@
           $data_in['carga3'] = $rowProduct['chargeExtraU2'] + ( $rowProduct['chargeExtraP2'] * $rowProduct['uxp'] );
           $data_in['carga4'] = $rowProduct['chargeExtraU3'] + ( $rowProduct['chargeExtraP3'] * $rowProduct['uxp'] );
           $data_in['devolucion'] = $rowProduct['devolutionU'] + ( $rowProduct['devolutionP'] * $rowProduct['uxp'] );
+          $data_in['ajuste'] = $rowProduct['ajusteU'] + ( $rowProduct['ajusteP'] * $rowProduct['uxp'] );
 
           $this->Liquidation_Model->update_detail($data_in, $rowProduct['idDetalleLiquidacion']);
         }

@@ -57,7 +57,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button ng-click="liquidation.saveAll()" type="button" class="btn btn-primary">Guardar cambios</button>
+                    <button id="btnsave" ng-click="liquidation.saveAll()" type="button" class="btn btn-primary">Guardar cambios</button>
                   </div>
                 </div>
               </div>
