@@ -614,55 +614,42 @@ var productControllerObj = function ($scope){
     }
   };
 
-  $scope.updateAjusteP = function (product) {
-    $subtotal = product.previousDayP + product.chargeP + product.chargeExtraP1 + product.chargeExtraP2 + product.chargeExtraP3 - product.devolutionP - product.prestamosP - product.bonosP;
+  // venta calculada
+  $scope.calculateSoldP = function ($product) {
+    $rest = 0;
+    $rest += ($product.devolutionP * $product.uxp);
+    $rest += ($product.prestamosP * $product.uxp);
+    $rest += ($product.bonosP * $product.uxp);
+    $rest += ($product.devolutionU);
+    $rest += ($product.prestamosU);
+    $rest += ($product.bonosU);
 
-    //product.calculatedP = $scope.productControllerObj.calculatedP + $subtotal;
-    product.calculatedP = $scope.productControllerObj.calculatedP;
-    //$scope.productControllerObj.calculatedP = product.calculatedP;
-
-    product.ajusteP = $scope.productControllerObj.calculatedP;
-
-    //console.log($scope.productControllerObj.calculatedP);
+    $sum = 0;
+    $sum = getTotalP($product, $scope.productControllerObj);
+    $sum += $product.ajusteP;
+    $sum += parseInt(Math.floor(getTotalU($product, $scope.productControllerObj) / $product.uxp));
+    $sum -= parseInt(Math.round($rest / $product.uxp));
+    return $sum;
   };
+  $scope.calculateSoldU = function ($product) {
+    $sum = 0;
+    $sum = getTotalU($product, $scope.productControllerObj);
+    $sum -= $product.devolutionU;
+    $sum -= $product.prestamosU;
+    $sum -= $product.bonosU;
+    $sum += $product.ajusteU;
+    $sum = parseInt(Math.round($sum % $product.uxp));
+    return $sum;
+  };  
 
-  $scope.updateAjusteU = function (product) {
-    $subtotal = product.previousDayU + product.chargeU + product.chargeExtraU1 + product.chargeExtraU2 + product.chargeExtraU3 - product.devolutionU - product.prestamosU - product.bonosU;
+  $scope.updateAjuste = function (product){
+    if ($scope.productControllerObj.ajusteU >= product.uxp){
+      $scope.productControllerObj.ajusteP += parseInt(Math.floor($scope.productControllerObj.ajusteU / product.uxp)); 
 
-    $subtotal += $scope.productControllerObj.calculatedU;
-
-    //product.calculatedU = $subtotal;
-    if ($subtotal >= product.uxp) {
-      product.calculatedU = Math.round($subtotal % product.uxp);
-
-      $subtotalP = product.previousDayP + product.chargeP + product.chargeExtraP1 + product.chargeExtraP2 + product.chargeExtraP3 - product.devolutionP - product.prestamosP - product.bonosP;
-
-      $subtotalP += $scope.productControllerObj.calculatedP;
-
-      product.calculatedP = $subtotalP + Math.floor($subtotal / product.uxp);
-
-      product.totalAmmount = ((product.calculatedP + product.calculatedU)*product.price);
-      //$scope.productControllerObj.calculatedP = product.calculatedP;
-      //$scope.productControllerObj.calculatedU = product.calculatedU;
-    }else{
-      product.calculatedU = $subtotal;
+      $scope.productControllerObj.ajusteU = parseInt(Math.round($scope.productControllerObj.ajusteU % product.uxp));
     }
-
-    //product.ajusteU = $scope.productControllerObj.ajusteU;
-
-    // Change ajuste U
-    $calculatedU = $scope.productControllerObj.calculatedU;
-    product.calculatedU = Math.round($calculatedU % product.uxp);
-
-    $scope.productControllerObj.calculatedU = Math.round($calculatedU % product.uxp);
-
-    // Change ajuste P
-    $calculatedP = Math.floor((product.calculatedP + $calculatedU) / product.uxp);
-    console.log($calculatedP);
-    product.calculatedP += $calculatedP;
-    $scope.productControllerObj.calculatedP += $calculatedP;
-
-    console.log(product);
+    product.ajusteU = $scope.productControllerObj.ajusteU;
+    product.ajusteP = $scope.productControllerObj.ajusteP;
   };
 
   $scope.updateDevolutionP = function (product) {
@@ -755,11 +742,19 @@ function getTotalU($objProduct, $objProductScope){
   case "liquidation":
     $sum += parseInt($objProduct.chargeU);
     $sum += parseInt($objProduct.chargeExtraU1);
+    $sum += parseInt($objProduct.chargeExtraU2);
     $sum += parseInt($objProduct.chargeExtraU3);
-    $sum += parseInt($objProductScope.cargaExtraU3);
     break;
   default:
-    return 0;
+    $sum += parseInt($objProduct.chargeU);
+    $sum += parseInt($objProduct.chargeExtraU1);
+    $sum += parseInt($objProduct.chargeExtraU2);
+    $sum += parseInt($objProduct.chargeExtraU3);
+
+    $sum += parseInt($objProductScope.cargaU);
+    $sum += parseInt($objProductScope.cargaExtraU1);
+    $sum += parseInt($objProductScope.cargaExtraU2);
+    $sum += parseInt($objProductScope.cargaExtraU3);
   }
 
   return $sum;
@@ -791,11 +786,19 @@ function getTotalP($objProduct, $objProductScope){
   case "liquidation":
     $sum += parseInt($objProduct.chargeP);
     $sum += parseInt($objProduct.chargeExtraP1);
+    $sum += parseInt($objProduct.chargeExtraP2);
     $sum += parseInt($objProduct.chargeExtraP3);
-    $sum += parseInt($objProductScope.cargaExtraP3);
     break;
   default:
-    return 0;
+    $sum += parseInt($objProduct.chargeP);
+    $sum += parseInt($objProduct.chargeExtraP1);
+    $sum += parseInt($objProduct.chargeExtraP2);
+    $sum += parseInt($objProduct.chargeExtraP3);
+
+    $sum += parseInt($objProductScope.cargaP);
+    $sum += parseInt($objProductScope.cargaExtraP1);
+    $sum += parseInt($objProductScope.cargaExtraP2);
+    $sum += parseInt($objProductScope.cargaExtraP3);
   }
   return $sum;
 }

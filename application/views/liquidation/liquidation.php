@@ -201,16 +201,16 @@
 
                             <!-- Ajuste -->
                             <td class="unity danger">
-                              <!--<input name="cargap" ng-model="productControllerObj.calculatedP" type="number" min="0" class="inputSmall" ng-blur="updateAjusteP(product)" ng-change="updateAjusteP(product)" ng-keyup="updateAjusteP(product)" />-->
-                              <input name="cargap" ng-model="productControllerObj.calculatedP" type="number" class="inputSmall" ng-blur="updateAjusteP(product)" />
+                              <input name="cargap" ng-model="productControllerObj.ajusteP" type="number" class="inputSmall" ng-blur="updateAjuste(product)" ng-change="updateAjuste(product)" ng-keyup="updateAjuste(product)" />
                             </td>
+                            
                             <td class="unity danger">
-                              <input name="cargau" ng-model="productControllerObj.calculatedU" type="number" class="inputSmall" ng-blur="updateAjusteU(product)" />
+                              <input name="cargau" ng-model="productControllerObj.ajusteU" type="number" class="inputSmall" ng-blur="updateAjuste(product)" ng-change="updateAjuste(product)" ng-keyup="updateAjuste(product)" />
                             </td>
 
                             <!-- TOTAL venta CALC -->
-                            <td class="unity info">{{ product.calculatedP }}</td>
-                            <td class="unity info">{{ product.calculatedU }}</td>
+                            <td class="unity info">{{ calculateSoldP(product) }}</td>
+                            <td class="unity info">{{ calculateSoldU(product) }}</td>
 
                             <!-- Venta Android -->
                             <td class="unity success">0</td>
@@ -251,11 +251,11 @@
                             <td class="unity">0</td>
                             <td class="unity">0</td>
 
-                            <td class="unity">0</td>
-                            <td class="unity">0</td>
-
                             <td class="unity">{{ getAjustePLine(line.products, line.lineUxp) }}</td>
                             <td class="unity">{{ getAjusteULine(line.products, line.lineUxp) }}</td>
+
+                            <td class="unity">0</td>
+                            <td class="unity">0</td>
 
                             <td class="unity">0</td>
                             <td class="unity">0</td>
