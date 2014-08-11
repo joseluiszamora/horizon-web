@@ -644,39 +644,41 @@ var productControllerObj = function ($scope){
   product.totalAmmount = ((product.ajusteP * product.uxp) + product.ajusteU);
   */
   $scope.calculateSoldP = function ($product) {
-    $rest = 0;
-    $rest += ($product.devolutionP * $product.uxp);
-    $rest += ($product.prestamosP * $product.uxp);
-    $rest += ($product.bonosP * $product.uxp);
-    $rest += ($product.devolutionU);
-    $rest += ($product.prestamosU);
-    $rest += ($product.bonosU);
+    $sum = calculateSold($product, $scope.productControllerObj);
+    $sum = parseInt(Math.floor($sum / $product.uxp));
 
-    $sum = 0;
-    $sum = getTotalP($product, $scope.productControllerObj);
-    $sum += $product.ajusteP;
-    $sum += parseInt(Math.floor(getTotalU($product, $scope.productControllerObj) / $product.uxp));
-    $sum -= parseInt(Math.round($rest / $product.uxp));
-    // set ammount 
+    // set ammount
     //$product.totalAmmount = $sum;
 
     return $sum;
   };
 
   $scope.calculateSoldU = function ($product) {
-    $sum = 0;
-    $sum = getTotalU($product, $scope.productControllerObj);
-    $sum -= $product.devolutionU;
-    $sum -= $product.prestamosU;
-    $sum -= $product.bonosU;
-    $sum += $product.ajusteU;
-    
+    $sum = calculateSold($product, $scope.productControllerObj);
     $sum = parseInt(Math.round($sum % $product.uxp));
-    // set ammount 
+    // set ammount
     //$product.totalAmmount = $sum;
 
     return $sum;
   };
+
+  function calculateSold($product, $objProductScope){
+    $sum = 0;
+    // sum
+    $sum += (getTotalP($product, $objProductScope) * $product.uxp);
+    $sum += getTotalU($product, $objProductScope);
+    $sum += ($product.ajusteP * $product.uxp);
+    $sum += $product.ajusteU;
+    // rest
+    $sum -= ($product.devolutionP * $product.uxp);
+    $sum -= $product.devolutionU;
+    $sum -= ($product.prestamosP * $product.uxp);
+    $sum -= $product.prestamosU;
+    $sum -= ($product.bonosP * $product.uxp);
+    $sum -= $product.bonosU;
+
+    return $sum;
+  }
 
 
   // MONTO TOTAL
@@ -692,7 +694,7 @@ var productControllerObj = function ($scope){
 
   $scope.updateAjuste = function (product){
     if ($scope.productControllerObj.ajusteU >= product.uxp){
-      $scope.productControllerObj.ajusteP += parseInt(Math.floor($scope.productControllerObj.ajusteU / product.uxp)); 
+      $scope.productControllerObj.ajusteP += parseInt(Math.floor($scope.productControllerObj.ajusteU / product.uxp));
 
       $scope.productControllerObj.ajusteU = parseInt(Math.round($scope.productControllerObj.ajusteU % product.uxp));
     }

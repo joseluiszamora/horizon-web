@@ -203,7 +203,6 @@
                             <td class="unity danger">
                               <input name="cargap" ng-model="productControllerObj.ajusteP" type="number" class="inputSmall" ng-blur="updateAjuste(product)" ng-change="updateAjuste(product)" ng-keyup="updateAjuste(product)" />
                             </td>
-                            
                             <td class="unity danger">
                               <input name="cargau" ng-model="productControllerObj.ajusteU" type="number" class="inputSmall" ng-blur="updateAjuste(product)" ng-change="updateAjuste(product)" ng-keyup="updateAjuste(product)" />
                             </td>
