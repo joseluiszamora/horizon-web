@@ -8,7 +8,7 @@ var app = angular.module('myModule', []);
 
 app.factory('mySharedService', function($rootScope) {
     var sharedService = {};
-    
+
     sharedService.message = '';
 
     sharedService.prepForBroadcast = function(msg) {
@@ -66,8 +66,8 @@ app.controller('LiquidationController', ['$http', function( $http ){
   $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
   var liquidation = this;
   liquidation.lines = [ ];
-  liquidation.expenses = [ 
-    { "title" : "refrigerios", "ammount" : 0 }, 
+  liquidation.expenses = [
+    { "title" : "refrigerios", "ammount" : 0 },
     { "title" : "gasolina", "ammount" : 0 }
   ];
 
@@ -94,7 +94,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
     $http.post(url + 'liquidation/save_lines', datasend).success(
       function (data, status, headers){
       window.location = url + "liquidation/charge_list";
-     console.log(data);
+      console.log(data);
     });
   };
 
@@ -715,13 +715,10 @@ var expenseController = function ($scope){
 
   $scope.updateAmmount = function ($expense){
     $sum = 0;
-    //console.log($scope.expenseController.ammount);
-    //$expense.ammount = $scope.expenseController.ammount;
     if (!isNaN(parseFloat($expense.ammount)) && isFinite($expense.ammount)){
       $expense.ammount = parseFloat($scope.expenseController.ammount);
     }else{
       $expense.ammount = 0;
-      //$scope.expenseController.ammount = 0;
     }
   };
 

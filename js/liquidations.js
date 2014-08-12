@@ -12,6 +12,26 @@ $(document).ready(function(){
   // chosen selects
   $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("});
 
+
+  // SECTION LIQUIDATIONS
+  $(".btn-exceptions").click(function(){
+    $this = $(this).attr("data-target");
+    $id = $(this).attr("data-id");
+
+    $($this).modal('show');
+
+    $.ajax({
+      type: "POST",
+      url: url+'liquidation/get_products_exception/',
+      data: 'liquidation=' + $id,
+      async: false,
+      cache: false
+    }).done(function( data ) {
+      $($this).find(".list-group").append(data);
+    });
+  });
+  // END SECTION LIQUIDATIONS
+
   // SECTION CREATE NEW CHARGE
   $(".routedropdown").hide();
   $("#noRegularSelect").hide();
@@ -192,5 +212,4 @@ $(document).ready(function(){
 
     };
   });
-  // ENDSECTION ROUTES
 });

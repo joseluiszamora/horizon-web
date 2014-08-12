@@ -177,16 +177,16 @@
                             <td class="unity" ng-show="liquidation.mark === 'completado'">{{ product.ajusteU }}</td>
 
                             <!-- TOTAL venta CALC -->
-                            <td class="unity info">{{ calculateSoldP(product) }}</td>
-                            <td class="unity info">{{ calculateSoldU(product) }}</td>
+                            <td class="unity info" ng-show="liquidation.mark === 'completado'">{{ calculateSoldP(product) }}</td>
+                            <td class="unity info" ng-show="liquidation.mark === 'completado'">{{ calculateSoldU(product) }}</td>
 
                             <!-- Venta Android -->
-                            <td class="unity success">0</td>
-                            <td class="unity success">0</td>
+                            <td class="unity success" ng-show="liquidation.mark === 'completado'">0</td>
+                            <td class="unity success" ng-show="liquidation.mark === 'completado'">0</td>
 
                             <!-- total venta -->
                             <!--<td class="unity">{{ getTotalAmmount(product) }}</td>-->
-                            <td class="unity">{{ totalAmmountProduct(product) | number:2 }}</td>
+                            <td class="unity" ng-show="liquidation.mark === 'completado'">{{ totalAmmountProduct(product) | number:2 }}</td>
                           </tr>
                         </tbody>
                         <tfooter>

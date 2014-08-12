@@ -123,7 +123,7 @@
       $data['irregularlines'] = $this->Liquidation_Model->get_no_regular_lines($liquidation);
       $data['category'] = 'liquidation';
       $data['page'] = 'devolution';
-      $this->load->view('template/template_liquidation', $data);  
+      $this->load->view('template/template_liquidation', $data);
     }
 
     function liquidation_mod($liquidation) {
@@ -134,20 +134,48 @@
     }
 
     function complete_charge($liquidation) {
-      $this->Liquidation_Model->clean_products_without_charges($liquidation);
       $data['mark'] = "cargafinal";
       $this->Liquidation_Model->update($data, $liquidation);
 
       redirect("liquidation/charge_list");
     }
 
+    function get_products_exception(){
+      $idLiquidation = $this->input->post('liquidation');
+      $res = "";
+      $line = $this->Liquidation_Model->get_lines_actives($idLiquidation, 1);
+      foreach ($line as $rowline){
+        $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine, 1);
+        foreach ($products as $rowproduct){
+          $res .= '<li class="list-group-item">';
+          $res .= '<span class="badge">'.$rowproduct->devolucion.'</span>';
+          $res .= $rowproduct->Nombre;
+          $res .= '</li>';
+        }
+      }
+      echo $res;
+    }
+
+    function get_products_exception_count(){
+      $idLiquidation = $this->input->post('liquidation');
+      $res = 0;
+      $line = $this->Liquidation_Model->get_lines_actives($idLiquidation, 1);
+      foreach ($line as $rowline){
+        $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine, 1);
+        foreach ($products as $rowproduct){
+          $res++;
+        }
+      }
+      echo $res;
+    }
+
     function get_lines($idLiquidation){
       $mainArray = array();
-      $line = $this->Liquidation_Model->get_lines_actives($idLiquidation);
+      $line = $this->Liquidation_Model->get_lines_actives($idLiquidation, 0);
 
       foreach ($line as $rowline) {
         $productsContainer = array();
-        $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine);
+        $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine, 0);
         foreach ($products as $rowproduct){
           $partialcharge = $rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3;
           $arrayProducts = array(
@@ -215,11 +243,11 @@
 
     function get_lines_view($idLiquidation){
       $mainArray = array();
-      $line = $this->Liquidation_Model->get_lines_actives($idLiquidation);
+      $line = $this->Liquidation_Model->get_lines_actives($idLiquidation, 0);
 
       foreach ($line as $rowline) {
         $productsContainer = array();
-        $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine);
+        $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine, 0);
         foreach ($products as $rowproduct){
           $arrayProducts = array(
             'idDetalleLiquidacion'     => $rowproduct->idDetalleLiquidacion,
@@ -293,6 +321,12 @@
           $data_in['devolucion'] = $rowProduct['devolutionU'] + ( $rowProduct['devolutionP'] * $rowProduct['uxp'] );
           $data_in['ajuste'] = $rowProduct['ajusteU'] + ( $rowProduct['ajusteP'] * $rowProduct['uxp'] );
 
+          if (intval($data_in['carga1']) <= 0 && intval($data_in['carga2']) <= 0 && intval($data_in['carga3']) <= 0 && intval($data_in['carga4']) <= 0 && intval($data_in['devolucion']) > 0 ) {
+            $data_in['excepcion'] = 1;
+          }else{
+            $data_in['excepcion'] = 0;
+          }
+
           $this->Liquidation_Model->update_detail($data_in, $rowProduct['idDetalleLiquidacion']);
         }
       }
@@ -305,6 +339,9 @@
         $data_liq['mark'] = "cargaextra2";
       }elseif ($data['mark'] == "cargaextra2") {
         $data_liq['mark'] = "cargafinal";
+      }elseif ($data['mark'] == "cargafinal") {
+        $data_liq['mark'] = "liquidation";
+        $this->Liquidation_Model->clean_products_without_charges($data['liquidation']);
       }elseif ($data['mark'] == "liquidation"){
         $data_liq['mark'] = "completado";
       }else{

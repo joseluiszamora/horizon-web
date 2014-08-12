@@ -119,7 +119,7 @@ class Liquidation_model extends CI_Model {
     return $drop;
   }
 
-  function get_detail_list($id, $line) {
+  function get_detail_list($id, $line, $exception) {
     $this->db->select(
       'products.idProduct as idProduct,
       volume.Descripcion as volume,
@@ -148,7 +148,41 @@ class Liquidation_model extends CI_Model {
     $this->db->join('linevolume', 'products.idLineVolume = linevolume.idLineVolume');
     $this->db->join('line', 'linevolume.idLine = line.idLine');
     $this->db->join('volume', 'linevolume.idVolume = volume.idVolume');
-    $this->db->where(array( 'detalleliquidacion.idLiquidacion' => $id, 'line.idLine' => $line ));
+    $this->db->where(array( 'detalleliquidacion.idLiquidacion' => $id, 'line.idLine' => $line, 'detalleliquidacion.excepcion' => $exception ));
+    $query = $this->db->get();
+    return $query->result();
+  }
+
+  function get_detail_list_exception($id, $line) {
+    $this->db->select(
+      'products.idProduct as idProduct,
+      volume.Descripcion as volume,
+      products.Nombre as Nombre,
+      products.PrecioUnit as price,
+      products.uxp as uxp,
+      detalleliquidacion.idDetalleLiquidacion as idDetalleLiquidacion,
+      detalleliquidacion.carga0 as previousDay,
+      detalleliquidacion.carga1 as charge,
+      detalleliquidacion.carga2 as chargeExtra1,
+      detalleliquidacion.carga3 as chargeExtra2,
+      detalleliquidacion.carga4 as chargeExtra3,
+      detalleliquidacion.venta as venta,
+      detalleliquidacion.prestamo as prestamo,
+      detalleliquidacion.bonificacion as bonificacion,
+      detalleliquidacion.devolucion as devolucion,
+      detalleliquidacion.ajuste as ajuste,
+      detalleliquidacion.status as estado,
+      detalleliquidacion.detalle as detalle,
+      detalleliquidacion.excepcion as excepcion
+      '
+    );
+
+    $this->db->from('detalleliquidacion');
+    $this->db->join('products', 'products.idProduct = detalleliquidacion.idProduct');
+    $this->db->join('linevolume', 'products.idLineVolume = linevolume.idLineVolume');
+    $this->db->join('line', 'linevolume.idLine = line.idLine');
+    $this->db->join('volume', 'linevolume.idVolume = volume.idVolume');
+    $this->db->where(array( 'detalleliquidacion.idLiquidacion' => $id, 'line.idLine' => $line, 'detalleliquidacion.excepcion' => 1 ));
     $query = $this->db->get();
     return $query->result();
   }
@@ -160,7 +194,6 @@ class Liquidation_model extends CI_Model {
     $this->db->order_by('Descripcion', "asc");
     $this->db->where('regular', "no");
     $query = $this->db->get();
-    
     $result = $query->result_array();
     foreach ($result as $r) {
 /*
@@ -179,7 +212,7 @@ class Liquidation_model extends CI_Model {
     return $dropdown;
   }
 
-  function get_lines_actives($idLiquidation) {
+  function get_lines_actives($idLiquidation, $exception) {
     $this->db->select(
       'line.idLine,
       line.Descripcion,
@@ -193,6 +226,8 @@ class Liquidation_model extends CI_Model {
     $this->db->join('linevolume', 'products.idLineVolume = linevolume.idLineVolume');
     $this->db->join('line', 'linevolume.idLine = line.idLine');
     $this->db->where('detalleliquidacion.idLiquidacion', $idLiquidation);
+    $this->db->where('detalleliquidacion.excepcion', $exception);
+
     $this->db->group_by("line.idLine");
     $query = $this->db->get();
     return $query->result();
@@ -350,6 +385,7 @@ class Liquidation_model extends CI_Model {
     $this->db->where('carga2', 0);
     $this->db->where('carga3', 0);
     $this->db->where('carga4', 0);
+    $this->db->where('excepcion', 0);
     $this->db->delete('detalleliquidacion');
   }
 

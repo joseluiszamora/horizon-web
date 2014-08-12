@@ -16,6 +16,7 @@
           <th class="center">Detalle</th>
           <th class="center">&nbsp;</th>
           <th class="center">&nbsp;</th>
+          <th class="center">&nbsp;</th>
         </tr>
       </thead>
       <tbody id="diaryTable">
@@ -27,10 +28,17 @@
             <td class="center"><?php echo $row->mark; ?></td>
             <td class="center"><?php echo $row->detalle; ?></td>
             <td class="center">
-              <?php 
+              <?php
                 if ($row->mark == "liquidation") {
-                  echo anchor('liquidation/liquidation_mod/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-ok"></span> Liquidación', array('class' => 'btn btn-success')); 
+                  echo anchor('liquidation/liquidation_mod/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-ok"></span> Liquidación', array('class' => 'btn btn-success'));
                 }
+              ?>
+            </td>
+            <td class="center">
+              <?php
+                /*if(get_products_exception_count($row->idLiquidacion) > 0){
+                  echo "Excepciones: <span class='badge'>42</span>";
+                }*/
               ?>
             </td>
             <td class="center">

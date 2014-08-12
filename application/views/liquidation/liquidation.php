@@ -38,7 +38,36 @@
         <?php echo $liquidation[0]->detalle; ?>
       </div>
 
-      <div class="form-group col-md-3 col-xs-4">
+      <div class="form-group col-md-1 col-xs-4">
+        <div style="float:right;">
+          <button class="btn btn-warning btn-exceptions" data-target="<?php echo "#myModalException".$liquidation[0]->idLiquidacion;?>" data-id="<?php echo $liquidation[0]->idLiquidacion;?>">
+            <span class="glyphicon glyphicon-link"></span> Excepciones
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="<?php echo "myModalException".$liquidation[0]->idLiquidacion;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Excepciones</h4>
+                </div>
+                <div class="modal-body">
+                  <h6>Un producto se convierte en excepción cuando es devuelto sin haberse cargado previamente.</h6>
+                  <ul class="list-group">
+                  </ul>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  <?php echo anchor('liquidation/deactive/'.$liquidation[0]->idLiquidacion, 'Imprimir', array('class' => 'btn btn-danger')); ?>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-2 col-xs-4">
         <div style="float:right;">
             <!-- Button trigger modal -->
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Guardar</button>
@@ -64,6 +93,7 @@
             </div>
           </div>
       </div>
+
     </fieldset>
   </div>
 </div>
@@ -295,7 +325,7 @@
               <tr ng-repeat="expense in liquidation.expenses">
                 <td class="unity">{{ expense.title | uppercase }}</td>
                 <td class="unity">
-                  <input ng-model="expenseController.ammount" type="number" min=0 class="inputSmall" ng-change="updateAmmount(expense)" ng-controller="expenseController" />
+                  <input ng-model="expenseController.ammount" min=0 class="inputSmall" ng-change="updateAmmount(expense)" ng-controller="expenseController" />
                 </td>
               </tr>
 
