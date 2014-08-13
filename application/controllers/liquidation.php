@@ -146,6 +146,9 @@
       $line = $this->Liquidation_Model->get_lines_actives($idLiquidation, 1);
       foreach ($line as $rowline){
         $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine, 1);
+        $res .= '<li class="list-group-item" style="background-color:  #428BCA; color: #FFF;">';
+        $res .= "LINEA ".$rowline->Descripcion;
+        $res .= '</li>';
         foreach ($products as $rowproduct){
           $res .= '<li class="list-group-item">';
           $res .= '<span class="badge">'.$rowproduct->devolucion.'</span>';
@@ -453,6 +456,40 @@
       $templateView = $this->load->view('liquidation/pdf_2', $data, TRUE);
       exportMeAsDOMPDF($templateView, "report");
     }
+
+
+
+
+    function exception_pdf($liquidation){
+      $line = $this->Liquidation_Model->get_lines_actives($liquidation, 1);
+      foreach ($line as $rowline){
+        $products = $this->Liquidation_Model->get_detail_list($liquidation, $rowline->idLine, 1);
+        $res .= '<li class="list-group-item" style="background-color:  #428BCA; color: #FFF;">';
+        $res .= "LINEA ".$rowline->Descripcion;
+        $res .= '</li>';
+        foreach ($products as $rowproduct){
+          $res .= '<li class="list-group-item">';
+          $res .= '<span class="badge">'.$rowproduct->devolucion.'</span>';
+          $res .= $rowproduct->Nombre;
+          $res .= '</li>';
+        }
+      }
+      echo $res;
+
+
+
+      $this->load->helper('pdfexport_helper.php');
+      $data['title'] = 'EXCEPCIONES';
+      $data['liquidationid'] = $liquidation;
+      $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
+      $data['lines'] = $this->Liquidation_Model->get_lines_actives($liquidation, 0);
+      $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/horizon/';
+      $this->load->view('liquidation/pdf_exception', $data);
+      //$templateView = $this->load->view('liquidation/pdf_1', $data, TRUE);
+      //exportMeAsDOMPDF($templateView, "report");
+    }
+
+
 
     function deactive($liquidation) {
       // desactivar liquidacion

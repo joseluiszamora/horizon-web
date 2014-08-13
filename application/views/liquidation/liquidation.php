@@ -59,7 +59,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                  <?php echo anchor('liquidation/deactive/'.$liquidation[0]->idLiquidacion, 'Imprimir', array('class' => 'btn btn-danger')); ?>
+                  <?php echo anchor('liquidation/exception_pdf/'.$liquidation[0]->idLiquidacion, 'Imprimir', array('class' => 'btn btn-danger')); ?>
                 </div>
               </div>
             </div>
