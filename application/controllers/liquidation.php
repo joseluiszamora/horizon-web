@@ -461,32 +461,67 @@
 
 
     function exception_pdf($liquidation){
+      $excepcion = array();
+      $res = "";
       $line = $this->Liquidation_Model->get_lines_actives($liquidation, 1);
       foreach ($line as $rowline){
         $products = $this->Liquidation_Model->get_detail_list($liquidation, $rowline->idLine, 1);
-        $res .= '<li class="list-group-item" style="background-color:  #428BCA; color: #FFF;">';
-        $res .= "LINEA ".$rowline->Descripcion;
-        $res .= '</li>';
+
+        $res .= '<table class="table table-bordered tableLine">';
+        $res .= '<tbody>';
+        $res .= '<tr>';
+        $res .= '<td class="line titlecontainer">';
+        $res .= '  <span class="">'.$rowline->Descripcion.'</span>';
+        $res .= '</td>';
+        $res .= ' <td colspan="3" class="subTableContainer" >';
+        $res .= '<table class="table table-bordered subTable" style="width:960px;">';
+        $res .= '      <thead>';
+        $res .= '        <tr>';
+        $res .= '          <th class="vol">VOLUMEN</th>';
+        $res .= '          <th class="productname">PRODUCTO</th>';
+        $res .= '          <th class="title">';
+        $res .= '            <div class="main">PAQUETES</div>';
+        $res .= '          </th>';
+        $res .= '         <th class="title">';
+        $res .= '            <div class="main">UNIDADES</div>';
+        $res .= '          </th>';
+        $res .= '        </tr>';
+        $res .= '      </thead>';
+        $res .= '      <tbody>';
         foreach ($products as $rowproduct){
-          $res .= '<li class="list-group-item">';
-          $res .= '<span class="badge">'.$rowproduct->devolucion.'</span>';
-          $res .= $rowproduct->Nombre;
-          $res .= '</li>';
+          $res .= '<tr>';
+          $res .= '  <td class="vol">'.$rowproduct->Nombre.'</td>';
+          $res .= '  <td class="productname">'.$rowproduct->Nombre.'</td>';
+          $res .= '  <td class="unity">'.$rowproduct->devolucion.'</td>';
+          $res .= '  <td class="unity">'.$rowproduct->devolucion.'</td>';
+          $res .= '</tr>';
+
+          //$excepcion[$r['idLine']] = $r['Descripcion'];
         }
+
+        $res .= '    <tr class="footer">';
+        $res .= '      <td class="vol" colspan="2"><span style="float: right; font-weight: bold;">TOTAL: &nbsp;&nbsp;&nbsp;&nbsp; </span></td>';
+        $res .= '      <td class="unity">33</td>';
+        $res .= '      <td class="unity">33</td>';
+        $res .= '    </tr>';
+        $res .= '   </tbody>';
+        $res .= '</td>';
+        $res .= '</tr>';
+        $res .= '</tbody>';
+        $res .= '</table>';
       }
-      echo $res;
-
-
+      //echo $res;
 
       $this->load->helper('pdfexport_helper.php');
       $data['title'] = 'EXCEPCIONES';
       $data['liquidationid'] = $liquidation;
       $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
+      $data['temp'] = $res;
       $data['lines'] = $this->Liquidation_Model->get_lines_actives($liquidation, 0);
       $data['base_url']=$_SERVER["DOCUMENT_ROOT"].'/horizon/';
-      $this->load->view('liquidation/pdf_exception', $data);
-      //$templateView = $this->load->view('liquidation/pdf_1', $data, TRUE);
-      //exportMeAsDOMPDF($templateView, "report");
+      //$this->load->view('liquidation/pdf_exception', $data);
+      $templateView = $this->load->view('liquidation/pdf_exception', $data, TRUE);
+      exportMeAsDOMPDF($templateView, "report");
     }
 
 

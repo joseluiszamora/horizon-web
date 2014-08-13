@@ -128,64 +128,15 @@
   </div>
 
   <div id="bodywrapper">
-    <?php //print_r($lines); ?>
+    <?php //print_r($temp); ?>
     <div id="liquidations" class="row" >
       <div class="col-lg-12">
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="table-responsive">
-              <?php foreach ($lines as $line) { ?>
-                <table class="table table-bordered tableLine">
-                  <tbody>
-                    <tr>
-                      <td class="line titlecontainer">
-                        <span class=""><?php echo $line->Descripcion;?></span>
-                      </td>
-                      <td colspan="3" class="subTableContainer" >
-                        <table class="table table-bordered subTable" ng-show="getVisible(line)">
-                          <thead>
-                            <tr>
-                              <th class="vol">VOLUMEN</th>
-                              <th class="productname">PRODUCTO</th>
-                              <th class="title">
-                                <div class="main">PAQUETES</div>
-                              </th>
-                              <th class="title">
-                                <div class="main">UNIDADES</div>
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <?php
-                            $products = $this->Liquidation_Model->get_detail_list($liquidationid, $line->idLine, 1);
-                            print_r($products);
-                            foreach ($products as $product) {
-                              
-                              $devolutionP = $product->devolutionP;
-                              $devolutionU = $product->devolutionU;
-                            ?>
-                              <tr>
-                                <td class="vol"><?php echo $product['volume'];?></td>
-                                <td class="productname"><?php echo $product['Nombre'];?></td>
-
-                                <!-- devolution charge -->
-                                <td class="unity"><?php echo $product['devolutionP'];?></td>
-                                <td class="unity"><?php echo $product['devolutionU'];?></td>
-                              </tr>
-                            <?php } ?>
-                            <tr class="footer">
-                              <td class="vol" colspan="2"><span style="float: right; font-weight: bold;">TOTAL: &nbsp;&nbsp;&nbsp;&nbsp; </span></td>
-                              <!-- devoluciones -->
-                              <td class="unity"><?php echo floor($devolutionP); ?></td>
-                              <td class="unity"><?php echo floor($devolutionU); ?></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              <?php } ?>
+              <?php
+                echo ($temp) ;
+              ?>
             </div>
           </div>
 
