@@ -16,6 +16,7 @@
       $this->load->model('User_Model');
       $this->load->model('Track_Model');
       $this->load->model('Diary_Model');
+      $this->load->model('Bonus_model');
     }
 
     function index() {
@@ -72,6 +73,11 @@
     function get_linevolumes(){
       $linevolumes = json_encode($this->Linevolume_Model->report_android());
       echo $linevolumes;
+    }
+
+    function get_bonus(){
+      $bonus = json_encode($this->Bonus_model->report(array()));
+      echo $bonus;
     }
 
     function get_customers(){

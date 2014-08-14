@@ -1,6 +1,10 @@
+//var url = "https://mariani.bo/horizon/index.php/";
+var url = "https://mariani.bo/horizon-sc/index.php/";
+//var url = "http://localhost/horizon/index.php/";
+
 //var loader = "https://mariani.bo/horizon/img/loader.gif";
-//var loader = "http://www.ruizmier.com/systems/horizon/img/loader.gif";
-var loader = "http://localhost/horizon/img/loader.gif";
+var loader = "https://mariani.bo/horizon-sc/img/loader.gif";
+//var loader = "http://localhost/horizon/img/loader.gif";
 
 function showLoadingAnimation(obj){
  // console.log(obj);
@@ -18,13 +22,35 @@ function hideLoadingAnimation(obj){
 function hideLoadingAnimation_td(obj){
   $(obj).find("img").remove();
 }
-$(document).ready(function(){
-  //var url = "http://www.ruizmier.com/systems/horizon/";
-  //var url = "https://mariani.bo/horizon/index.php/";
-  var url = "http://localhost/horizon/index.php/";
 
+
+// update PRODUCTS for LINE ON BONUS
+function updateProductDropdown($from, $to){
+  $($to).find('option').remove();
+  var idLine = $($from).val();
+
+  showLoadingAnimation($($to));
+  $.getJSON(url+"product/get_products_by_line_dropdown/"+idLine, {
+    format: "jsonp",
+    async: true,
+    contentType: 'application/json; charset=utf-8',
+    cache: false,
+    crossDomain: true
+  })
+  .done(function( cities ) {
+    $.each(cities,function(id,name){
+      var opt = $('<option>');
+      opt.val(id);
+      opt.text(name);
+      $($to).append(opt);
+    });
+    hideLoadingAnimation($($to));
+  });
+}
+
+$(document).ready(function(){
   // chosen selects
-  //$(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
+  $(".chosen-select").chosen({no_results_text: "Ningún resultado encontrado :("}); 
 
   // money mask
   //$('.money').mask('000,000,000,000,000.00', {reverse: true});
@@ -63,7 +89,6 @@ $(document).ready(function(){
       })
     }
   });
-
 
   // update AREA for selected CITY 
   $('.formContainer select[name="city"]').change(function(){
@@ -215,21 +240,20 @@ $(document).ready(function(){
       });
       hideLoadingAnimation($('.formContainer select[name="area"]'));
       hideLoadingAnimation($('.formContainer select[name="subarea"]'));
-    });    
+    });
   });
 
-  
   // update VOLUMES for LINE
   $('.formContainer select[name="line"]').change(function(){
     $('.formContainer select[name="volume"] > option').remove();
     var idCustom = $(this).parents(".formContainer").find('select[name="line"]').val();
     //var idCustom = $('.formContainer select[name="line"]').val();
-    showLoadingAnimation($('.formContainer select[name="volume"]'));   
-    
+    showLoadingAnimation($('.formContainer select[name="volume"]'));
+
     $.getJSON(url+"volume/get_volumes_by_line/"+idCustom, {
       format: "jsonp",
       async: true,
-      contentType: 'application/json; charset=utf-8', 
+      contentType: 'application/json; charset=utf-8',
       cache: false,
       crossDomain: true
     })
@@ -242,7 +266,6 @@ $(document).ready(function(){
       });
       hideLoadingAnimation($('.formContainer select[name="volume"]'));
     });
-    
 
     /*$.ajax({
       type: "POST",
@@ -266,7 +289,7 @@ $(document).ready(function(){
       dataType: "html",
       url: url+"volume/get_volumes_by_line/"+idCustom,
       data: { }
-    }).done(function( products ) {      
+    }).done(function( products ) {
       console.log(products);
       $('.formContainer select[name="volume"]').append(products);
       hideLoadingAnimation($('.formContainer select[name="volume"]'));
@@ -274,7 +297,6 @@ $(document).ready(function(){
 
 
   });
-
 
   // update PRODUCTS for LINE VOLUME
   $('.formContainer select[name="volume"]').change(function(){

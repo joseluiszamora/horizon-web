@@ -151,6 +151,10 @@
       echo(json_encode($this->Product_Model->get_products_by_line($idLine)));
     }
 
+    function get_products_by_line_dropdown($idLine=-1) {
+      echo(json_encode($this->Product_Model->get_products_by_line_dropdown($idLine)));
+    }
+
     function get_products_by_line_volume($idLine=-1, $idVolume=-1) {
       $idLine = $this->input->post('line');
       $idVolume = $this->input->post('volume');

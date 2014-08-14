@@ -97,7 +97,8 @@
                 echo anchor('track', 'Tracker', array('class'=>'')); }?></li>
               <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'diary')){
                 echo anchor('diary', 'Diario', array('class'=>'')); }?></li>
-              
+              <li><?php if ($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'city')){
+                    echo anchor('bonus', 'Bonos', array('class'=>'')); }?></li>
 
               <li class="dropdown">
                 <a href="#" data-toggle="dropdown" role="button" id="drop5" class="dropdown-toggle">Configuracion<b class="caret"></b></a>

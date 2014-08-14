@@ -281,7 +281,34 @@ class Product_model extends CI_Model {
       $query = $this->db->get();
       return $query->result();
     }
-    
+
+    function get_products_by_line_dropdown($line=-1) {
+      $this->db->select(
+        'products.idProduct,
+        products.Nombre,
+        products.idLineVolume,
+        products.PrecioUnit,
+        products.uxp,
+        products.Descripcion,
+        volume.Descripcion as volume'
+      );
+      $this->db->from('products');
+      $this->db->join('linevolume', 'products.idLineVolume = linevolume.idLineVolume');
+      $this->db->join('line', 'linevolume.idLine = line.idLine');
+      $this->db->join('volume', 'volume.idVolume = linevolume.idVolume');
+      $this->db->where('products.Estado', '1');
+      $this->db->where('line.idLine', $line);
+      $query = $this->db->get();
+      $result = $query->result_array();
+      $dropdown = array();
+      $dropdown[0] = 'Seleccione Producto';
+
+      foreach ($result as $r) {
+        $dropdown[$r['idProduct']] = $r['volume']." - ".$r['Nombre'];
+      }
+      return $dropdown;
+    }
+
     // get lines volumes dropdown
     function get_products_by_line_volume($line=-1, $volume=-1) {
       $this->db->select('*');
