@@ -323,13 +323,13 @@
           $data_in['carga4'] = $rowProduct['chargeExtraU3'] + ( $rowProduct['chargeExtraP3'] * $rowProduct['uxp'] );
           $data_in['devolucion'] = $rowProduct['devolutionU'] + ( $rowProduct['devolutionP'] * $rowProduct['uxp'] );
           $data_in['ajuste'] = $rowProduct['ajusteU'] + ( $rowProduct['ajusteP'] * $rowProduct['uxp'] );
+          $data_in['total'] = ((($data_in['carga1'] + $data_in['carga2'] + $data_in['carga3'] + $data_in['carga4'] + $data_in['ajuste']) - ($data_in['devolucion'])) * $rowProduct['price']);
 
           if (intval($data_in['carga1']) <= 0 && intval($data_in['carga2']) <= 0 && intval($data_in['carga3']) <= 0 && intval($data_in['carga4']) <= 0 && intval($data_in['devolucion']) > 0 ) {
             $data_in['excepcion'] = 1;
           }else{
             $data_in['excepcion'] = 0;
           }
-
           $this->Liquidation_Model->update_detail($data_in, $rowProduct['idDetalleLiquidacion']);
         }
       }
@@ -470,41 +470,26 @@
         $res .= '<table class="table table-bordered tableLine">';
         $res .= '<tbody>';
         $res .= '<tr>';
-        $res .= '<td class="line titlecontainer">';
-        $res .= '  <span class="">'.$rowline->Descripcion.'</span>';
-        $res .= '</td>';
         $res .= ' <td colspan="3" class="subTableContainer" >';
-        $res .= '<table class="table table-bordered subTable" style="width:960px;">';
-        $res .= '      <thead>';
-        $res .= '        <tr>';
-        $res .= '          <th class="vol">VOLUMEN</th>';
-        $res .= '          <th class="productname">PRODUCTO</th>';
-        $res .= '          <th class="title">';
-        $res .= '            <div class="main">PAQUETES</div>';
-        $res .= '          </th>';
-        $res .= '         <th class="title">';
-        $res .= '            <div class="main">UNIDADES</div>';
-        $res .= '          </th>';
-        $res .= '        </tr>';
-        $res .= '      </thead>';
-        $res .= '      <tbody>';
+        $res .= '<table>';
+        $res .= '<thead>';
+        $res .= '   <tr>';
+        $res .= '     <th>PRODUCTO</th>';
+        $res .= '     <th>TOTAL</th>';
+        $res .= '   </tr>';
+        $res .= '</thead>';
+        $res .= '<tbody>';
+        $res .= '   <tr>';
+        $res .= '     <td class="linea nameline">'.$rowline->Descripcion.'</td>';
+        $res .= '     <td class="pieza linea">U</td>';
+        $res .= '   </tr>';
         foreach ($products as $rowproduct){
-          $res .= '<tr>';
-          $res .= '  <td class="vol">'.$rowproduct->Nombre.'</td>';
-          $res .= '  <td class="productname">'.$rowproduct->Nombre.'</td>';
-          $res .= '  <td class="unity">'.$rowproduct->devolucion.'</td>';
-          $res .= '  <td class="unity">'.$rowproduct->devolucion.'</td>';
-          $res .= '</tr>';
-
-          //$excepcion[$r['idLine']] = $r['Descripcion'];
+          $res .= ' <tr>';
+          $res .= '   <td class="producto">'.$rowproduct->Nombre.'</td>';
+          $res .= '   <td class="unidad">'.$rowproduct->devolucion.'</td>';
+          $res .= ' </tr>';
         }
-
-        $res .= '    <tr class="footer">';
-        $res .= '      <td class="vol" colspan="2"><span style="float: right; font-weight: bold;">TOTAL: &nbsp;&nbsp;&nbsp;&nbsp; </span></td>';
-        $res .= '      <td class="unity">33</td>';
-        $res .= '      <td class="unity">33</td>';
-        $res .= '    </tr>';
-        $res .= '   </tbody>';
+        $res .= '</tbody>';
         $res .= '</td>';
         $res .= '</tr>';
         $res .= '</tbody>';
@@ -513,7 +498,7 @@
       //echo $res;
 
       $this->load->helper('pdfexport_helper.php');
-      $data['title'] = 'EXCEPCIONES';
+      //$data['title'] = 'EXCEPCIONES';
       $data['liquidationid'] = $liquidation;
       $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
       $data['temp'] = $res;
@@ -523,8 +508,6 @@
       $templateView = $this->load->view('liquidation/pdf_exception', $data, TRUE);
       exportMeAsDOMPDF($templateView, "report");
     }
-
-
 
     function deactive($liquidation) {
       // desactivar liquidacion

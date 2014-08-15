@@ -35,6 +35,15 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="date" class="control-label col-xs-2">Fecha</label>
+                  <div class="col-xs-3">
+                    <?php
+                      echo form_input(array('name' => 'date', 'class' => 'datecontainer datepicker datemedium form-control'));
+                    ?>
+                  </div>
+                </div>
+
+                <div class="form-group">
                   <label for="route" class="control-label col-xs-2">Ruta</label>
                   <div class="col-xs-7">
                     <?php
@@ -43,15 +52,6 @@
                         echo form_dropdown('zone', $zones, '', 'class="form-control chosen-select"');
                         echo "</div>";
                       }
-                    ?>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="date" class="control-label col-xs-2">Fecha</label>
-                  <div class="col-xs-3">
-                    <?php
-                      echo form_input(array('name' => 'date', 'class' => 'datecontainer datepicker datemedium form-control'));
                     ?>
                   </div>
                 </div>

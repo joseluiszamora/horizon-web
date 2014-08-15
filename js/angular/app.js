@@ -82,8 +82,38 @@ app.controller('LiquidationController', ['$http', function( $http ){
     liquidation.expenses.push({ "title" : val.title, "ammount" : 0 });
     $("#expenseFormTitle").val("");
   };
+
+  function ckeckIfSave($mark, $lines){
+    $flag = false;
+
+    switch($mark) {
+      case "creado":
+        angular.forEach($lines, function(line) {
+          angular.forEach(line.products, function(product) {
+            if (product.chargeP > 0 && product.chargeU > 0)
+              $flag = true;
+          });
+        });
+        break;
+      case "cargado":
+        break;
+      case "cargaextra1":
+        break;
+      case "cargaextra2":
+        break;
+      case "liquidation":
+        break;
+      default:
+    }
+
+    return $flag;
+  }
+
   this.saveAll = function () {
-    $("#btnsave").prop( "disabled", true );
+    $mark = $("#markLiquidation").html();
+    console.log(liquidation.lines);
+    console.log(ckeckIfSave($mark, liquidation.lines));
+    /*$("#btnsave").prop( "disabled", true );
     var datasend = {
       lines: liquidation.lines,
       expenses: liquidation.expenses,
@@ -95,7 +125,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
       function (data, status, headers){
       window.location = url + "liquidation/charge_list";
       console.log(data);
-    });
+    });*/
   };
 
   this.getAmmountLineTotal = function (){

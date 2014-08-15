@@ -1,145 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title>Horizon</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Horizon">
-    <meta name="author" content="Jose Luis Zamora">
+<style type="text/css">
+  .factura {
+    font-family: monospace;
+  }
+  .factura center, .factura section {
+    padding: 0 10px;
+  }
+  .factura .title {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 1.2em;
+  }
+  .factura .subtitle {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  .factura .underline {
+    text-decoration: underline;
+  }
+  .factura .separador {
+    border-top: 1px dashed #000;
+    margin: 15px 0;
+  }
+  .factura .item1 {
+    margin-top: 5px;
+  }
+  .factura .item1 .almacen {
+    float: right;
+  }
+  .factura table {
+    border-spacing: 0;
+    font-size: 0.9em;
+    width: 100%;
+  }
+  .factura table .section {
+    float: left;
+    width: 50%;
+  }
+  .factura table .linea {
+    padding-top: 7px;
+    border-bottom: 1px dashed #000;
+  }
+  .factura table tr .codigo {
+    padding-left: 15px;
+  }
+  .factura .fecha-hora {
+    margin: 15px 0;
+    font-size: 0.8em;
+  }
+  .factura .firma {
+    border-top: 1px dashed #000;
+    margin: 100px auto 20px;
+    padding: 10px 0 0;
+    text-align: center;
+    width: 200px;
+  }
+</style>
 
-    <link href="<?php echo $base_url; ?>css/normalize.css" rel="stylesheet">
-    <!--<link href="<?php //echo $base_url; ?>css/bootstrap.min.css" rel="stylesheet">-->
-    <link href="<?php echo $base_url; ?>css/angular/liquidation.css" rel="stylesheet">
-    <link href="<?php echo $base_url; ?>css/fonts.css" rel="stylesheet">
-    <link href="<?php echo $base_url; ?>font-awesome/css/font-awesome.css" rel="stylesheet">
-    <style>
-      .topbar .header {
-        padding: 0;
-        float: left;
-      }
-      .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
-        width: 960px;
-        position: relative;
-      }
-      #headerwrapper{
-        width: 960px;
-        float: left;
-      }
-      #headerwrapper .logo{
-        float: left;
-      }
-      #headerwrapper .titles {
-        text-align: center;
-        color: #000000;
-        width: 100%;
-        float: left;
-      }
-      #headerwrapper .filters {
-        color: #000000;
-        width: 100%;
-        float: right;
-      }
-      #headerwrapper .filters ul{
-        list-style: none;
-        color: #000000;
-        float: left;
-      }
-      .info ul li, .filters ul li{
-        color: #000000;
-        float: left;
-      }
-      #bodywrapper{
-        width: 960px;
-        margin-top: 10px;
-        float: left;
-      }
-      .container {
-        color: #000000;
-      }
-      .container table {
-        width: 960px;
-      }
-      .table th, .table td{
-        border: 1px solid #000;
-      }
-      .topbar {
-        position: inherit;
-        height: auto;
-      }
-      th, td {
-        text-align: center;
-        color: #000000;
-        font-size: 10px;
-      }
-      #footerwrapper-bottom {
-        background: none;
-      }
-      .infodesc{
-        float: left;
-        text-decoration: underline;
-      }
-      .infodesc2{
-        float: right;
-        text-decoration: underline;
-        margin-right: 30px;
-      }
-      .infodesc3{
-        float: right;
-        text-decoration: underline;
-      }
-      .line.titlecontainer{
-        position: relative;
-        float: left;
-        width: 50px;
-      }
-      .rotate {
-        color: #000;
-        position: relative;
-        /* Safari */
-        -webkit-transform: rotate(-90deg);
-        /* Firefox */
-        -moz-transform: rotate(-90deg);
-        /* IE */
-        -ms-transform: rotate(-90deg);
-        /* Opera */
-        -o-transform: rotate(-90deg);
-        /* Internet Explorer */
-        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-      }
-      .section{
-        float: left;
-        width: 50%;
-      }
-    </style>
-</head>
-
-<body class="container">
-  <div id="headerwrapper">
-    <img class="logo" alt="Horizon" src="<?php echo $base_url; ?>img/logo_horizon.png" width="100" style="margin: 10px 0 0 10px;" />
-    <div class="titles">
-      <h2 class="bold"><?php echo $title; ?></h2>
-    </div>
-    <div class="filters">
-      <div class="infodesc"><span class="bold">DISTRIBUIDOR : </span> <?php echo $liquidation[0]->Nombre." ".$liquidation[0]->Apellido; ?></div>
-      <div class="infodesc3"><span class="bold">RUTA : </span> <?php echo $liquidation[0]->Descripcion; ?></div>
-      <div class="infodesc2"><span class="bold">FECHA : </span> <?php echo $liquidation[0]->fechaRegistro." ".$liquidation[0]->horaRegistro; ?></div>
-    </div>
-  </div>
-
-  <div id="bodywrapper">
-    <?php //print_r($temp); ?>
-    <div id="liquidations" class="row" >
-      <div class="col-lg-12">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="table-responsive">
-              <?php
-                echo ($temp) ;
-              ?>
-            </div>
-          </div>
-
-        </div>
+<div class="row factura">
+  <div class="col-md-offset-1 col-md-9">
+    <center>
+      <div class="title">DISTRIBUIDORA AD</div>
+      <div class="title">HORIZON</div>
+      <div class="subtitle underline">EXCEPCIONES</div>
+      <div class="subtitle">ORIGINAL</div>
+    </center>
+    <div class="separador"></div>
+    <section>
+      <div class="item1">
+        <span class="nro">Nro. 000625</span>
+        <span class="almacen">Alm. 001</span>
       </div>
-    </div>
+      <div class="item1">
+        Fecha <?php echo $liquidation[0]->fechaRegistro." ".$liquidation[0]->horaRegistro; ?>
+      </div>
+      <div class="item1">
+        Usuario: <?php echo "Pepito de los Palotes" ?>
+      </div>
+      <div class="item1">
+        Distribuidor: <?php echo $liquidation[0]->Nombre." ".$liquidation[0]->Apellido; ?>
+      </div>
+      <?php
+        if (isset($liquidation[0]->Descripcion)) { ?>
+          <div class="item1">
+            Ruta: <?php echo $liquidation[0]->Descripcion; ?>
+          </div>
+      <?php } ?>
+    </section>
+    <div class="separador"></div>
+    <section>
+      <?php
+        echo ($temp) ;
+      ?>
+    </section>
+    <div class="separador"></div>
+    <section>
+      <div class="fecha-hora">Fecha Hora Imp. 24/07/2014 - 11:23</div>
+      <div class="revisar-verificar">Revise y verifique el detalle de los productos antes de firmar.</div>
+
+      <div class="firma entregado">Entregado</div>
+      <div class="firma recibido">Recibido</div>
+    </section>
+  </div>
+</div>
