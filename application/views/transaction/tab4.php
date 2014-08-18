@@ -7,7 +7,8 @@
       <th>Precio Unitario (Bs)</th>
       <th>Precio Total (Bs)</th>
       <th>Estado</th>
-      <th>Observaciones</th>      
+      <th>Tipo</th>
+      <th>Observaciones</th>
       <th>&nbsp;</th>
     </tr>
   </thead>  
@@ -37,6 +38,7 @@
             echo "<span style='color: red;'>Cancelado</span>";            
             
         ?></td>
+        <td class="text-info districtDesc"><?php echo $row->type; ?></td>
         <td class="text-info districtDesc"><?php echo $row->Observacion; ?></td>
         <td>
           <div class="btnActionsForm">

@@ -223,15 +223,15 @@
           }
 
           // save transaction and get insert code
-          $insertcode = $this->Transaction_Model->create($data_in); 
-          
+          $insertcode = $this->Transaction_Model->create($data_in);
+
           // Save Blog Transaction
           if ( $insertcode === FALSE) {
             $result = "FAIL";
           } else {
             $data_blog['idTransaction'] = $insertcode;
             $data_blog['idUser'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
-            $data_blog['Operation'] = $JSON_decode->transactionType;              
+            $data_blog['Operation'] = $JSON_decode->transactionType;
             $data_blog['FechaHoraInicio'] = date("Y-m-d H:i:s",strtotime($JSON_decode->timeStart));
             $data_blog['FechaHoraFin'] = date("Y-m-d H:i:s",strtotime($JSON_decode->timeFinish));
             $data_blog['CoordenadaInicio'] = $JSON_decode->coordinateStart;
@@ -242,7 +242,7 @@
             } else {
               $result = "FAIL";
             }
-          } 
+          }
 
 
           // VAR total Prestamo ammount
@@ -251,9 +251,12 @@
 
           // Save Product for this transaction
           foreach ( $JSON_decode->TransactionsArray as $transactions ){
-            
+            // 0 =>(trans.getCodeProduct());
+            // 1 =>(trans.getQuantity());
+            // 2 =>(trans.getObs());
+            // 3 =>(trans.getType());
             $data_products['idTransaction'] = $insertcode;
-            
+
             // get client id
             $product = $this->Product_Model->get($transactions[0]);
             foreach ($product as $row) {
@@ -271,9 +274,11 @@
             if ($JSON_decode->transactionType == "venta_directa")
               $data_products['Estado'] = "3";
 
+            $data_products['Observacion'] = $transactions[2];
+            $data_products['type'] = $transactions[3];
 
             if ($this->Detailtransaction_Model->create($data_products) === TRUE) {
-            } else {          
+            } else {
               $result = "FAIL";
             }
           }
