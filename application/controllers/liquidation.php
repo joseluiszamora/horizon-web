@@ -128,9 +128,23 @@
 
     function liquidation_mod($liquidation) {
       $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
+
+      $this->charge_liquidation_extras($liquidation, $data['liquidation'][0]->idUser, $data['liquidation'][0]->fechaRegistro);
+
       $data['category'] = 'liquidation';
       $data['page'] = 'liquidation';
       $this->load->view('template/template_liquidation', $data);
+    }
+
+    function charge_liquidation_extras($liquidation, $user, $date){
+      $result = $this->Liquidation_Model->charge_liquidation_bonus($user, $date);
+
+      foreach ($result as $r){
+        $data['bonificacion'] = $r->Cantidad;
+        $product = $r->idProduct;
+        //print_r($data);
+        $this->Liquidation_Model->update_detail_liquidations_by_product($data, $liquidation, $product);
+      }
     }
 
     function complete_charge($liquidation) {
@@ -209,8 +223,8 @@
             'prestamosP'     => 0,
             'prestamosU'     => 0,
 
-            'bonosP'         => 0,
-            'bonosU'         => 0,
+            'bonosP'         => floor($rowproduct->bonificacion / $rowproduct->uxp),
+            'bonosU'         => round(($rowproduct->bonificacion % $rowproduct->uxp), 0),
 
             'ajusteP'    => floor($rowproduct->ajuste / $rowproduct->uxp),
             'ajusteU'    => round(($rowproduct->ajuste % $rowproduct->uxp), 0),
@@ -418,6 +432,8 @@
       foreach ($products as $rowproduct){
         $data_pro['idLiquidacion'] = $idLiquidacion;
         $data_pro['idProduct'] = $rowproduct->idProduct;
+        //$data_pro['bonificacion'] = $rowproduct->idProduct;
+
         $this->Liquidation_Model->create_detail($data_pro);
       }
       // add NO regular products

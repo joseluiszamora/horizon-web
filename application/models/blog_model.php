@@ -4,7 +4,7 @@ class Blog_model extends CI_Model {
 
     function __construct() {
         parent::__construct();
-        $this->load->database();        
+        $this->load->database();
     }
 
     function report() {
@@ -18,7 +18,7 @@ class Blog_model extends CI_Model {
         blog.CoordenadaInicio, 
         blog.CoordenadaFin'
       );
-      $this->db->from('blog');      
+      $this->db->from('blog');
       $query = $this->db->get();
       return $query->result();
     }
@@ -35,7 +35,7 @@ class Blog_model extends CI_Model {
       if ($this->db->update('blog', $data)) {
         return TRUE;
       }
-      return FALSE;                        
+      return FALSE;
     }
 
     function delete($id) {

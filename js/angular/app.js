@@ -111,9 +111,9 @@ app.controller('LiquidationController', ['$http', function( $http ){
 
   this.saveAll = function () {
     $mark = $("#markLiquidation").html();
-    console.log(liquidation.lines);
-    console.log(ckeckIfSave($mark, liquidation.lines));
-    /*$("#btnsave").prop( "disabled", true );
+    //console.log(liquidation.lines);
+    //console.log(ckeckIfSave($mark, liquidation.lines));
+    $("#btnsave").prop( "disabled", true );
     var datasend = {
       lines: liquidation.lines,
       expenses: liquidation.expenses,
@@ -125,7 +125,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
       function (data, status, headers){
       window.location = url + "liquidation/charge_list";
       console.log(data);
-    });*/
+    });
   };
 
   this.getAmmountLineTotal = function (){

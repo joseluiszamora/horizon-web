@@ -15,28 +15,30 @@
   <tbody>
     <?php 
       $totalPrice = 0;
+      $partialPrice = 0;
       foreach ($transdetail as $row) {
-
-     // if ( $row->Estado == '1') {
-        $partialPrice = ($row->Cantidad * $row->precio);
-
+        if ($row->type == "normal") {
+          $partialPrice = ($row->Cantidad * $row->precio);
+        }else{
+          $partialPrice = 0;
+        }
         $totalPrice += $partialPrice;
+     // if ( $row->Estado == '1') {
     ?>
       <tr>
         <td class="text-info districtDesc"><strong><?php echo $row->productName; ?></strong></td>
         <td class="text-info districtDesc" style="text-align:center;"><?php echo $row->Cantidad; ?></td>
         <td class="text-info districtDesc align-right"><?php echo $this->Transaction_Model->roundnumber($row->precio, 2); ?></td>
         <td class="text-info districtDesc align-right"><?php echo $this->Transaction_Model->roundnumber($partialPrice, 2); ?></td>
-        <td class="text-info districtDesc"><?php 
+        <td class="text-info districtDesc"><?php
           if($row->Estado == "1")
-            echo "Prevendido"; 
+            echo "Prevendido";
           if($row->Estado == "2")
-            echo "<span style='color: green;'>Distribuido</span>"; 
+            echo "<span style='color: green;'>Distribuido</span>";
           if($row->Estado == "3")
-            echo "Venta Directa"; 
+            echo "Venta Directa";
           if($row->Estado == "4")
-            echo "<span style='color: red;'>Cancelado</span>";            
-            
+            echo "<span style='color: red;'>Cancelado</span>";
         ?></td>
         <td class="text-info districtDesc"><?php echo $row->type; ?></td>
         <td class="text-info districtDesc"><?php echo $row->Observacion; ?></td>

@@ -3,8 +3,8 @@
 var url = "http://localhost/horizon/index.php/";
 
 //var loader = "https://mariani.bo/horizon/img/loader.gif";
-var loader = "https://mariani.bo/horizon-sc/img/loader.gif";
-//var loader = "http://localhost/horizon/img/loader.gif";
+//var loader = "https://mariani.bo/horizon-sc/img/loader.gif";
+var loader = "http://localhost/horizon/img/loader.gif";
 
 function showLoadingAnimation(obj){
  // console.log(obj);

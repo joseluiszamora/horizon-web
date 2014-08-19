@@ -42,6 +42,7 @@ class Detailtransaction_model extends CI_Model {
         detailtransaction.Cantidad,
         detailtransaction.Estado,
         detailtransaction.Observacion,
+        detailtransaction.type,
         products.Nombre as productName,
         products.Descripcion as description,
         products.PrecioUnit as precio'
