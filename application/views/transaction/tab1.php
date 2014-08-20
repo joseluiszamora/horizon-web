@@ -7,13 +7,14 @@
       <th>Codigo de Cliente</th>
       <th>Fecha</th>
       <th>Estado</th>
+      <th>Prestamo</th>
       <th>Observaciones</th>
       <th>&nbsp;</th> 
     </tr>
   </thead>  
   <tbody>
     <?php foreach ($transaction as $row) {
-     // print_r($row);
+        print_r($row);
         // get datetime coordinate
         $Blog = $this->Blog_Model->get_by_transaction($row->idTransaction);
         //print_r($Blog);
@@ -32,7 +33,7 @@
         <td class="text-info districtDesc"><?php echo $row->codecustomer; ?></td>
 
         <td class="text-info districtDesc"><?php echo $timeStart; ?></td>
-        
+
         <td class="text-info districtDesc"><?php 
           if($row->Estado == "1")
             echo "Preventa";
@@ -49,8 +50,8 @@
           if($row->Estado == "7")
             echo "Transaccion0";
         ?></td>
-
-         <td class="text-info districtDesc"><?php 
+        <td class="text-info districtDesc"><?php echo $row->prestamo; ?></td>
+        <td class="text-info districtDesc"><?php 
          echo $row->Observacion;
          //echo date('Y-m-d', strtotime($row->FechaHoraInicio));
 

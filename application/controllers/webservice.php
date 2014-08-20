@@ -204,7 +204,7 @@
               $data_in['idCustomer'] = $row->idCustomer;
               $customer_id = $row->idCustomer;
             }
-
+//transactionPrestamo
             if ($JSON_decode->transactionType == "preventa") {
               $data_in['Estado'] = "1";
             }
@@ -219,7 +219,11 @@
 
             if ($JSON_decode->transactionType == "prestamo") {
               $data_in['Estado'] = "1";
-            }  
+            }
+
+            //if ($JSON_decode->transactionPrestamo == "1"){
+              $data_in['prestamo'] = "1";
+            //}
           }
 
           // save transaction and get insert code
@@ -282,7 +286,6 @@
               $result = "FAIL";
             }
           }
-
 
           // if transaction is PRESTAMO
           if ($JSON_decode->transactionType == "prestamo") {

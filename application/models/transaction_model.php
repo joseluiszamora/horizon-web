@@ -87,7 +87,8 @@ class Transaction_model extends CI_Model {
         blog.Operation,
         blog.FechaHoraInicio,
         blog.FechaHoraFin,
-        transaction.Estado'
+        transaction.Estado,
+        transaction.prestamo'
       );
  
       $this->db->from('transaction');
@@ -405,7 +406,8 @@ class Transaction_model extends CI_Model {
         blog.Operation,
         blog.FechaHoraInicio,
         blog.FechaHoraFin,
-        transaction.Estado'
+        transaction.Estado,
+        transaction.prestamo'
       );
  
       $this->db->from('transaction');

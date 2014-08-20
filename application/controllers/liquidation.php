@@ -137,13 +137,17 @@
     }
 
     function charge_liquidation_extras($liquidation, $user, $date){
+      // CHARGE BONUS
       $result = $this->Liquidation_Model->charge_liquidation_bonus($user, $date);
-
       foreach ($result as $r){
         $data['bonificacion'] = $r->Cantidad;
-        $product = $r->idProduct;
-        //print_r($data);
-        $this->Liquidation_Model->update_detail_liquidations_by_product($data, $liquidation, $product);
+        $this->Liquidation_Model->update_detail_liquidations_by_product($data, $liquidation, $r->idProduct);
+      }
+      // CHARGE VENTA ANDROID
+      $result = $this->Liquidation_Model->charge_liquidation_android($user, $date);
+      foreach ($result as $r){
+        $data['prestamo'] = $r->Cantidad;
+        $this->Liquidation_Model->update_detail_liquidations_by_product($data, $liquidation, $r->idProduct);
       }
     }
 
@@ -220,8 +224,8 @@
             'devolutionP'    => floor($rowproduct->devolucion / $rowproduct->uxp),
             'devolutionU'    => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
 
-            'prestamosP'     => 0,
-            'prestamosU'     => 0,
+            'prestamosP'    => floor($rowproduct->prestamo / $rowproduct->uxp),
+            'prestamosU'    => round(($rowproduct->prestamo % $rowproduct->uxp), 0),
 
             'bonosP'         => floor($rowproduct->bonificacion / $rowproduct->uxp),
             'bonosU'         => round(($rowproduct->bonificacion % $rowproduct->uxp), 0),

@@ -216,58 +216,41 @@ class Liquidation_model extends CI_Model {
 
   function charge_liquidation_bonus($user, $date) {
     $this->db->select(
-      'detailtransaction.idDetailTransaction,
-      detailtransaction.idTransaction,
-      detailtransaction.idProduct,
-      detailtransaction.Cantidad,
-      detailtransaction.Estado,
-      detailtransaction.type,
-      transaction.idTransaction'
+      'detailtransaction.idProduct,
+      detailtransaction.Cantidad'
     );
     $this->db->from('detailtransaction');
     $this->db->join('transaction', 'detailtransaction.idTransaction = transaction.idTransaction');
     $this->db->join('blog', 'blog.idTransaction = transaction.idTransaction');
     $this->db->where('transaction.idUser', $user);
     $this->db->where('detailtransaction.type', "bonus");
-    
+
     $nuevafecha = strtotime ( '-1 day' , strtotime ( $date ) ) ;
     $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
     $this->db->where('DATE(blog.FechaHoraInicio) >', $nuevafecha);
-/*
-    $nuevafecha2 = strtotime ( '+1 day' , strtotime ( $date ) ) ;
-    $nuevafecha2 = date ( 'Y-m-j' , $nuevafecha2 );
-    $this->db->where('DATE(blog.FechaHoraInicio) <', $nuevafecha2);
-*/
+
     $query = $this->db->get();
     return $query->result();
-    /*$query = $this->db->get();
-    $result = $query->result_array();
-    foreach ($result as $r){
+  }
 
-    }
+  function charge_liquidation_android($user, $date) {
+    $this->db->select(
+      'detailtransaction.idProduct,
+      detailtransaction.Cantidad'
+    );
+    $this->db->from('detailtransaction');
+    $this->db->join('transaction', 'detailtransaction.idTransaction = transaction.idTransaction');
+    $this->db->join('blog', 'blog.idTransaction = transaction.idTransaction');
+    $this->db->where('transaction.idUser', $user);
+    $this->db->where('detailtransaction.type', "normal");
+    $this->db->where('detailtransaction.Estado', "3");
 
-    /*$dropdown = array();
-    $this->db->select('*');
-    $this->db->from('line');
-    $this->db->order_by('Descripcion', "asc");
-    $this->db->where('regular', "no");
+    $nuevafecha = strtotime ( '-1 day' , strtotime ( $date ) ) ;
+    $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+    $this->db->where('DATE(blog.FechaHoraInicio) >', $nuevafecha);
+
     $query = $this->db->get();
-    $result = $query->result_array();
-    foreach ($result as $r) {
-
-      $this->db->from('detalleliquidacion');
-      $this->db->join('products', 'products.idProduct = detalleliquidacion.idProduct');
-      $this->db->join('linevolume', 'products.idLineVolume = linevolume.idLineVolume');
-      $this->db->join('line', 'linevolume.idLine = line.idLine');
-      $this->db->where('line.idLine', $r['idLine']);
-
-      if ($this->db->count_all_results() <= 0) {
-        $dropdown[$r['idLine']] = $r['Descripcion'];
-      }
-
-      $dropdown[$r['idLine']] = $r['Descripcion'];
-    }
-    return $dropdown;*/
+    return $query->result();
   }
 
 
