@@ -759,6 +759,15 @@ var expenseController = function ($scope){
     });
     return $sum;
   };
+
+  $scope.deleteExpense = function (expense){
+    console.log(expense);
+
+    var index = $scope.liquidation.expenses.indexOf(expense);
+    if (index != -1) {
+      $scope.liquidation.expenses.splice(index, 1);
+    }
+  };
 };
 
 app.directive('ngBlur', function() {

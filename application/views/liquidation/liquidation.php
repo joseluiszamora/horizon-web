@@ -326,6 +326,7 @@
                 <td class="unity">{{ expense.title | uppercase }}</td>
                 <td class="unity">
                   <input ng-model="expenseController.ammount" min=0 class="inputSmall" ng-change="updateAmmount(expense)" ng-controller="expenseController" />
+                   <button type="button" class="close" ng-controller="expenseController" ng-click="deleteExpense(expense)">X</button>
                 </td>
               </tr>
 
