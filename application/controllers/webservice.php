@@ -193,7 +193,7 @@
           if ($JSON_decode->clientType == "temporal") {
             $data_in['Estado'] = "5";
             $data_in['idCustomer'] = "607";   // ojo con esta huevada
-            if ($JSON_decode->transactionType == "transaccion_0") 
+            if ($JSON_decode->transactionType == "transaccion_0")
               $data_in['Estado'] = "7";
           }else{
             //$data_in['Observacion'] = $JSON_decode->obs;
@@ -204,7 +204,15 @@
               $data_in['idCustomer'] = $row->idCustomer;
               $customer_id = $row->idCustomer;
             }
-//transactionPrestamo
+
+            if ($JSON_decode->transactionPrestamo == "1") {
+              $data_in['prestamo'] = "1";
+            }
+
+            if ($JSON_decode->transactionType == "preventa") {
+              $data_in['Estado'] = "1";
+            }
+
             if ($JSON_decode->transactionType == "preventa") {
               $data_in['Estado'] = "1";
             }
@@ -222,7 +230,7 @@
             }
 
             //if ($JSON_decode->transactionPrestamo == "1"){
-              $data_in['prestamo'] = "1";
+              //$data_in['prestamo'] = "1";
             //}
           }
 
@@ -288,7 +296,8 @@
           }
 
           // if transaction is PRESTAMO
-          if ($JSON_decode->transactionType == "prestamo") {
+          if ($JSON_decode->transactionPrestamo == "1") {
+          //if ($JSON_decode->transactionType == "prestamo") {
             $data_diary['FechaRegistro'] = date("y-m-d");
             $data_diary['FechaTransaction'] = date("Y-m-d",strtotime($JSON_decode->timeStart));
             $data_diary['idUser'] = $this->Account_Model->get_user_id($JSON_decode->userMail);

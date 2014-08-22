@@ -476,7 +476,7 @@
       // add last liquidation products
       if (!$this->input->post('lastliquid')) {
         //$data_in['lastliquid'] = $this->input->post('lastliquid');
-        $lastliquid = explode("***", $this->input->post('noregular'));
+        /*$lastliquid = explode("***", $this->input->post('noregular'));
         foreach ($lines as $line) {
           $productsnoregular = $this->Product_Model->get_products_by_line($line);
           foreach ($productsnoregular as $rowproduct){
