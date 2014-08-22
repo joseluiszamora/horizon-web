@@ -261,7 +261,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="expense in liquidation.expenses">
+              <tr ng-repeat="expense in liquidation.expenses" ng-show="expense.ammount > 0">
                 <td class="unity">{{ expense.title | uppercase }}</td>
                 <td class="unity">{{ expense.ammount | uppercase }}</td>
               </tr>

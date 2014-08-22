@@ -61,7 +61,7 @@
                     'name'        => 'lastliquid',
                     'id'        => 'lastliquid',
                     'value'       => 'accept',
-                    'checked'     => FALSE
+                    'checked'     => TRUE
                   );
                   echo form_checkbox($data);
                 ?>

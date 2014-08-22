@@ -762,7 +762,7 @@ var expenseController = function ($scope){
   $scope.getTotalExpenses = function (expense){
     $sum = 0;
     angular.forEach(expense, function(expense) {
-      $sum += expense.ammount;
+      $sum += parseFloat(expense.ammount);
     });
     return $sum;
   };
