@@ -275,6 +275,22 @@ class Liquidation_model extends CI_Model {
     return $query->result();
   }
 
+  function get_expenses($idLiquidation) {
+    $this->db->select(
+      'gastos.idGastos,
+      gastos.idliquidacion,
+      gastos.Monto,
+      gastos.Detalle
+      '
+    );
+
+    $this->db->from('gastos');
+    $this->db->join('liquidacion', 'gastos.idliquidacion = liquidacion.idLiquidacion');
+    $this->db->where('gastos.idliquidacion', $idLiquidation);
+    $query = $this->db->get();
+    return $query->result();
+  }
+
   function report($status="active", $mark="all") {
     $this->db->select(
       'liquidacion.idLiquidacion,

@@ -262,6 +262,25 @@
       echo json_encode($mainArray);
     }
 
+
+    function get_expenses($idLiquidation){
+      $mainArray = array();
+      $line = $this->Liquidation_Model->get_expenses($idLiquidation, 0);
+
+      foreach ($line as $rowline) {
+        $line = array(
+          'ammount'   => $rowline->Monto,
+          'title'   => $rowline->Detalle
+        );
+        array_push($mainArray, $line);
+      }
+
+      echo json_encode($mainArray);
+    }
+
+
+
+
     function get_lines_view($idLiquidation){
       $mainArray = array();
       $line = $this->Liquidation_Model->get_lines_actives($idLiquidation, 0);
@@ -374,8 +393,11 @@
       $data_exp['idliquidacion'] = $data['liquidation'];
       foreach($data['expenses'] as $rowExpense){
         $data_exp['Detalle'] = strtoupper($rowExpense['title']);
-        $data_exp['Monto'] = $rowExpense['ammount'];
-        $this->Liquidation_Model->create_expense($data_exp);
+
+        if (floatval($rowExpense['ammount']) > 0) {
+          $data_exp['Monto'] = floatval($rowExpense['ammount']);
+          $this->Liquidation_Model->create_expense($data_exp);
+        }
       }
     }
 

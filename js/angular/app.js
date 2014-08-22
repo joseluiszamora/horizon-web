@@ -66,13 +66,20 @@ app.controller('LiquidationController', ['$http', function( $http ){
   $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
   var liquidation = this;
   liquidation.lines = [ ];
-  liquidation.expenses = [
-    { "title" : "refrigerios", "ammount" : 0 },
-    { "title" : "gasolina", "ammount" : 0 }
-  ];
 
   liquidation.mark = $("#markLiquidation").html();
   liquidation.idLiquidation = $("#idLiquidation").html();
+
+  if (liquidation.mark == "completado") {
+    $http.get(url + 'liquidation/get_expenses/' + liquidation.idLiquidation).success(function(data){
+      liquidation.expenses = data;
+    });
+  }else{
+    liquidation.expenses = [
+      { "title" : "refrigerios", "ammount" : 0 },
+      { "title" : "gasolina", "ammount" : 0 }
+    ];
+  };
 
   $http.get(url + 'liquidation/get_lines/' + liquidation.idLiquidation).success(function(data){
     liquidation.lines = data;
@@ -110,8 +117,8 @@ app.controller('LiquidationController', ['$http', function( $http ){
   }
 
   this.saveAll = function () {
+    //console.log(liquidation.expenses);
     $mark = $("#markLiquidation").html();
-    //console.log(liquidation.lines);
     //console.log(ckeckIfSave($mark, liquidation.lines));
     $("#btnsave").prop( "disabled", true );
     var datasend = {
@@ -124,7 +131,7 @@ app.controller('LiquidationController', ['$http', function( $http ){
     $http.post(url + 'liquidation/save_lines', datasend).success(
       function (data, status, headers){
       window.location = url + "liquidation/charge_list";
-      console.log(data);
+      //console.log(data);
     });
   };
 

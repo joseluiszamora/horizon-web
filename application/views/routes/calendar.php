@@ -4,8 +4,8 @@
 <script src='<?php echo base_url(); ?>js/calendar/fullcalendar.min.js'></script>
 
 <script>
-  var url = "http://localhost/horizon/index.php/";
-  //var url = "https://mariani.bo/horizon-sc/index.php/";
+  //var url = "http://localhost/horizon/index.php/";
+  var url = "https://mariani.bo/horizon-sc/index.php/";
   $(document).ready(function() {
     $('#calendar').fullCalendar({
       header: {
