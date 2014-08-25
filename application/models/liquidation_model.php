@@ -88,6 +88,29 @@ class Liquidation_model extends CI_Model {
     return $dropdown;
   }
 
+  function charge_last_devolutions($idproduct, $distributor, $date){
+    // date previous day
+    $nuevafecha = strtotime ( '-1 day' , strtotime ( $date ) ) ;
+    $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+    
+    $this->db->select(
+      'detalleliquidacion.devolucion as devolucion'
+    );
+
+    $this->db->from('detalleliquidacion');
+    $this->db->join('liquidacion', 'detalleliquidacion.idLiquidacion = liquidacion.idLiquidacion');
+    $this->db->where(array( 'detalleliquidacion.idProduct' => $idproduct, 'liquidacion.idUser' => $distributor, 'liquidacion.fechaRegistro' => $nuevafecha ));
+    
+    $query = $this->db->get();
+    $carga0 = 0;
+    $result = $query->result_array();
+    foreach ($result as $r) {
+      $carga0 = $r['devolucion'];
+    }
+
+    return $carga0;
+  }
+
   function get_enabled_users_and_zones() {
     $this->db->select(
       'users.idUser,

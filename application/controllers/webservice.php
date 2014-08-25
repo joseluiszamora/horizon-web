@@ -43,12 +43,11 @@
           }
         }else
           $result = "FAIL";
-//        OK PASS MAIL
+          // OK PASS MAIL
       }
       
       echo $result;
     }
-
 
     function check_user_mail(){
       $verifyMail = $this->Account_Model->user_exists($code = $this->input->Post('codeCustomer'));
@@ -320,7 +319,7 @@
       echo $result;
       //echo $userc."##".$userq."##".$userd1."##".$userd2;
       //echo $ifexist;
-    }  
+    }
 
     // SAVE GPS POSITION
     function trackGPS (){

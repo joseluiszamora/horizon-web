@@ -458,9 +458,13 @@
       foreach ($products as $rowproduct){
         $data_pro['idLiquidacion'] = $idLiquidacion;
         $data_pro['idProduct'] = $rowproduct->idProduct;
-        //$data_pro['bonificacion'] = $rowproduct->idProduct;
+        if (!($this->input->post('lastliquid') == "true")){
+          $data_pro['carga0'] = $this->Liquidation_Model->charge_last_devolutions($rowproduct->idProduct, $this->input->post('distributor'), $this->input->post('date'));
+        }
 
         $this->Liquidation_Model->create_detail($data_pro);
+
+        //print_r($this->Liquidation_Model->charge_last_devolutions($rowproduct->idProduct, $this->input->post('distributor'), $this->input->post('date')));
       }
       // add NO regular products
       $lines = explode("***", $this->input->post('noregular'));
@@ -469,22 +473,11 @@
         foreach ($productsnoregular as $rowproduct){
           $data_pro['idLiquidacion'] = $idLiquidacion;
           $data_pro['idProduct'] = $rowproduct->idProduct;
+          if (!($this->input->post('lastliquid') == "true")){
+            $data_pro['carga0'] = $this->Liquidation_Model->charge_last_devolutions($rowproduct->idProduct, $this->input->post('distributor'), $this->input->post('date'));
+          }
           $this->Liquidation_Model->create_detail($data_pro);
         }
-      }
-
-      // add last liquidation products
-      if (!$this->input->post('lastliquid')) {
-        //$data_in['lastliquid'] = $this->input->post('lastliquid');
-        /*$lastliquid = explode("***", $this->input->post('noregular'));
-        foreach ($lines as $line) {
-          $productsnoregular = $this->Product_Model->get_products_by_line($line);
-          foreach ($productsnoregular as $rowproduct){
-            $data_pro['idLiquidacion'] = $idLiquidacion;
-            $data_pro['idProduct'] = $rowproduct->idProduct;
-            $this->Liquidation_Model->create_detail($data_pro);
-          }
-        }*/
       }
       echo $idLiquidacion;
     }
