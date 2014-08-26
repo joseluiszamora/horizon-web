@@ -128,7 +128,7 @@
 
     function liquidation_mod($liquidation) {
       $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
-
+      // update extras
       $this->charge_liquidation_extras($liquidation, $data['liquidation'][0]->idUser, $data['liquidation'][0]->fechaRegistro);
 
       $data['category'] = 'liquidation';
@@ -143,8 +143,16 @@
         $data['bonificacion'] = $r->Cantidad;
         $this->Liquidation_Model->update_detail_liquidations_by_product($data, $liquidation, $r->idProduct);
       }
+      /*
       // CHARGE VENTA ANDROID
       $result = $this->Liquidation_Model->charge_liquidation_android($user, $date);
+      foreach ($result as $r){
+        $data['prestamo'] = $r->Cantidad;
+        $this->Liquidation_Model->update_detail_liquidations_by_product($data, $liquidation, $r->idProduct);
+      }*/
+
+      // CHARGE PRESTAMOS
+      $result = $this->Liquidation_Model->charge_liquidation_prestamos($user, $date);
       foreach ($result as $r){
         $data['prestamo'] = $r->Cantidad;
         $this->Liquidation_Model->update_detail_liquidations_by_product($data, $liquidation, $r->idProduct);
@@ -204,40 +212,43 @@
             'idProduct'     => $rowproduct->idProduct,
             'volume'        => $rowproduct->volume,
             'Nombre'        => $rowproduct->Nombre,
-            'price'        => $rowproduct->price,
-            'uxp'        => $rowproduct->uxp,
+            'price'         => $rowproduct->price,
+            'uxp'           => $rowproduct->uxp,
             'previousDayP'  => floor($rowproduct->previousDay / $rowproduct->uxp),
             'previousDayU'  => round(($rowproduct->previousDay % $rowproduct->uxp), 0),
             'chargeP'       => floor($rowproduct->charge / $rowproduct->uxp),
             'chargeU'       => round(($rowproduct->charge % $rowproduct->uxp), 0),
-            'chargeExtraP1'  => floor($rowproduct->chargeExtra1 / $rowproduct->uxp),
-            'chargeExtraU1'  => round(($rowproduct->chargeExtra1 % $rowproduct->uxp), 0),
-            'chargeExtraP2'  => floor($rowproduct->chargeExtra2 / $rowproduct->uxp),
-            'chargeExtraU2'  => round(($rowproduct->chargeExtra2 % $rowproduct->uxp), 0),
+            'chargeExtraP1' => floor($rowproduct->chargeExtra1 / $rowproduct->uxp),
+            'chargeExtraU1' => round(($rowproduct->chargeExtra1 % $rowproduct->uxp), 0),
+            'chargeExtraP2' => floor($rowproduct->chargeExtra2 / $rowproduct->uxp),
+            'chargeExtraU2' => round(($rowproduct->chargeExtra2 % $rowproduct->uxp), 0),
 
-            'chargeExtraP3'  => floor($rowproduct->chargeExtra3 / $rowproduct->uxp),
-            'chargeExtraU3'  => round(($rowproduct->chargeExtra3 % $rowproduct->uxp), 0),
+            'chargeExtraP3' => floor($rowproduct->chargeExtra3 / $rowproduct->uxp),
+            'chargeExtraU3' => round(($rowproduct->chargeExtra3 % $rowproduct->uxp), 0),
 
-            'chargeTotalP'   => floor(($partialcharge) / $rowproduct->uxp),
-            'chargeTotalU'   => round((($partialcharge) % $rowproduct->uxp), 0),
+            'chargeTotalP'  => floor(($partialcharge) / $rowproduct->uxp),
+            'chargeTotalU'  => round((($partialcharge) % $rowproduct->uxp), 0),
 
-            'devolutionP'    => floor($rowproduct->devolucion / $rowproduct->uxp),
-            'devolutionU'    => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
+            'devolutionP'   => floor($rowproduct->devolucion / $rowproduct->uxp),
+            'devolutionU'   => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
 
             'prestamosP'    => floor($rowproduct->prestamo / $rowproduct->uxp),
             'prestamosU'    => round(($rowproduct->prestamo % $rowproduct->uxp), 0),
 
-            'bonosP'         => floor($rowproduct->bonificacion / $rowproduct->uxp),
-            'bonosU'         => round(($rowproduct->bonificacion % $rowproduct->uxp), 0),
+            'bonosP'        => floor($rowproduct->bonificacion / $rowproduct->uxp),
+            'bonosU'        => round(($rowproduct->bonificacion % $rowproduct->uxp), 0),
 
-            'ajusteP'    => floor($rowproduct->ajuste / $rowproduct->uxp),
-            'ajusteU'    => round(($rowproduct->ajuste % $rowproduct->uxp), 0),
+            'ajusteP'       => floor($rowproduct->ajuste / $rowproduct->uxp),
+            'ajusteU'       => round(($rowproduct->ajuste % $rowproduct->uxp), 0),
 
             //'calculatedP' => floor(($partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) / $rowproduct->uxp),
 
             //'calculatedU' => round((($partialcharge - $rowproduct->devolucion - $rowproduct->prestamo - $rowproduct->bonificacion) % $rowproduct->uxp), 0),
-            'calculatedP' => 0,
-            'calculatedU' => 0,
+            'calculatedP'   => 0,
+            'calculatedU'   => 0,
+
+            'androidP'      => floor($rowproduct->android / $rowproduct->uxp),
+            'androidU'      => round(($rowproduct->android % $rowproduct->uxp), 0),
 
             'ventaP'         => 0,
             'ventaU'         => 0,

@@ -489,7 +489,8 @@ class Transaction_model extends CI_Model {
         customer.CodeCustomer as codecustomer,
         customer.idSubZona,
         transaction.Observacion,
-        transaction.Estado'
+        transaction.Estado,
+        transaction.prestamo'
       );
       $this->db->from('transaction');
       $this->db->join('users', 'users.idUser = transaction.idUser', 'left');

@@ -241,9 +241,9 @@
                             <td class="unity info">{{ calculateSoldP(product) }}</td>
                             <td class="unity info">{{ calculateSoldU(product) }}</td>
 
-                            <!-- Venta Android -->
-                            <td class="unity success">0</td>
-                            <td class="unity success">0</td>
+                            <!-- android -->
+                            <td class="unity success">{{ product.androidP }}</td>
+                            <td class="unity success">{{ product.androidU }}</td>
 
                             <!-- total venta -->
                             <!--<td class="unity">{{ getTotalAmmount(product) }}</td>-->

@@ -765,17 +765,17 @@
 
     function Todas(){
       $data_view = $this->Transaction_Model->report();
-      $this->redirect_tab("tab1", $data_view);    
+      $this->redirect_tab("tab1", $data_view);
     }
 
     function Pendientes(){
       $data_view = $this->Transaction_Model->report_2();
-      $this->redirect_tab("tab2", $data_view);    
+      $this->redirect_tab("tab2", $data_view);
     }
 
     function Distribuidas(){
       $data_view = $this->Transaction_Model->report();
-      $this->redirect_tab("tab3", $data_view);    
+      $this->redirect_tab("tab3", $data_view);
     }
     function Canceladas(){
       $data_in['status'] = "4";
@@ -783,7 +783,7 @@
       //echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br>**************";
       //print_r($data_view);
       //echo "**************";
-      $this->redirect_tab("tab5", $data_view);    
+      $this->redirect_tab("tab5", $data_view);
     }
     function Transaccion_Temporal(){
       $data_view = $this->Transaction_Model->report_3();
@@ -792,17 +792,17 @@
 
     function Venta_Directa(){
       $data_view = $this->Transaction_Model->report();
-      $this->redirect_tab("tab6", $data_view);    
+      $this->redirect_tab("tab6", $data_view);
     }
 
     function Transaccion_0(){
       $data_view = $this->Transaction_Model->report();
-      $this->redirect_tab("tab8", $data_view);    
+      $this->redirect_tab("tab8", $data_view);
     }
-    
+
     function search(){
       $data_view = $this->Transaction_Model->report();
-      $this->redirect_tab("search", $data_view);    
+      $this->redirect_tab("search", $data_view);
     }
 
     function reporte1(){

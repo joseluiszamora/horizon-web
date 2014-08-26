@@ -228,9 +228,9 @@
               $data_in['Estado'] = "1";
             }
 
-            //if ($JSON_decode->transactionPrestamo == "1"){
-              //$data_in['prestamo'] = "1";
-            //}
+            if ($JSON_decode->transactionPrestamo == "1") {
+              $data_in['prestamo'] = "1";
+            }
           }
 
           // save transaction and get insert code

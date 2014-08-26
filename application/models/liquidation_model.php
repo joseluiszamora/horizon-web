@@ -161,6 +161,7 @@ class Liquidation_model extends CI_Model {
       detalleliquidacion.bonificacion as bonificacion,
       detalleliquidacion.devolucion as devolucion,
       detalleliquidacion.ajuste as ajuste,
+      detalleliquidacion.android as android,
       detalleliquidacion.status as estado,
       detalleliquidacion.detalle as detalle,
       detalleliquidacion.excepcion as excepcion
@@ -251,6 +252,22 @@ class Liquidation_model extends CI_Model {
     $nuevafecha = strtotime ( '-1 day' , strtotime ( $date ) ) ;
     $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
     $this->db->where('DATE(blog.FechaHoraInicio) >', $nuevafecha);
+
+    $query = $this->db->get();
+    return $query->result();
+  }
+
+  function charge_liquidation_prestamos($user, $date) {
+    $this->db->select(
+      'detailtransaction.idProduct,
+      detailtransaction.Cantidad'
+    );
+    $this->db->from('detailtransaction');
+    $this->db->join('transaction', 'detailtransaction.idTransaction = transaction.idTransaction');
+    $this->db->join('blog', 'blog.idTransaction = transaction.idTransaction');
+    $this->db->where('transaction.idUser', $user);
+    $this->db->where('transaction.prestamo', "1");
+    $this->db->where((string)'DATE(blog.FechaHoraInicio)', $date);
 
     $query = $this->db->get();
     return $query->result();

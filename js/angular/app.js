@@ -499,6 +499,8 @@ var productControllerObj = function ($scope){
     ajusteU: 0,
     calculatedP: 0,
     calculatedU: 0,
+    androidP: 0,
+    androidU: 0,
     ventaP: 0,
     ventaU: 0,
     totalAmmount: 0

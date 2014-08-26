@@ -14,7 +14,7 @@
   </thead>  
   <tbody>
     <?php foreach ($transaction as $row) {
-        print_r($row);
+        //print_r($row);
         // get datetime coordinate
         $Blog = $this->Blog_Model->get_by_transaction($row->idTransaction);
         //print_r($Blog);
@@ -34,15 +34,15 @@
 
         <td class="text-info districtDesc"><?php echo $timeStart; ?></td>
 
-        <td class="text-info districtDesc"><?php 
+        <td class="text-info districtDesc"><?php
           if($row->Estado == "1")
             echo "Preventa";
           //if($row->Estado == "2")
-          //  echo "Conciliado"; 
+          //  echo "Conciliado";
           if($row->Estado == "3")
-            echo "Distribuidas"; 
+            echo "Distribuidas";
           if($row->Estado == "4")
-            echo "Canceladas"; 
+            echo "Canceladas";
           if($row->Estado == "5")
             echo "Transaccion Temporal";
           if($row->Estado == "6")
@@ -50,7 +50,13 @@
           if($row->Estado == "7")
             echo "Transaccion0";
         ?></td>
-        <td class="text-info districtDesc"><?php echo $row->prestamo; ?></td>
+        <td class="text-info districtDesc"><?php
+          if ($row->prestamo == "1") {
+            echo "Si";
+          }else{
+            echo "No";
+          }
+        ?></td>
         <td class="text-info districtDesc"><?php 
          echo $row->Observacion;
          //echo date('Y-m-d', strtotime($row->FechaHoraInicio));
