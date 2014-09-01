@@ -79,7 +79,16 @@ app.controller('LiquidationController', ['$http', function( $http ){
       { "title" : "refrigerios", "ammount" : 0 },
       { "title" : "gasolina", "ammount" : 0 }
     ];
+    liquidation.cobros = [];
   };
+
+  if (liquidation.mark == "liquidation") {
+    $http.get(url + 'liquidation/get_cobros/' + liquidation.idLiquidation).success(function(data){
+      liquidation.cobros = data;
+    });
+  }else{
+    liquidation.cobros = [];
+  }
 
   $http.get(url + 'liquidation/get_lines/' + liquidation.idLiquidation).success(function(data){
     liquidation.lines = data;
@@ -153,11 +162,12 @@ app.controller('LiquidationController', ['$http', function( $http ){
         $sum += product.totalAmmount;
       });
     });
-
     angular.forEach(liquidation.expenses, function(expense) {
       $sum -= expense.ammount;
     });
-    
+    angular.forEach(liquidation.cobros, function(expense) {
+      $sum -= expense.ammount;
+    });
     return $sum;
   };
 
@@ -765,6 +775,14 @@ var expenseController = function ($scope){
     $sum = 0;
     angular.forEach(expense, function(expense) {
       $sum += parseFloat(expense.ammount);
+    });
+    return $sum;
+  };
+
+  $scope.getTotalCobros = function (cobro){
+    $sum = 0;
+    angular.forEach(cobro, function(cobro) {
+      $sum += parseFloat(cobro.ammount);
     });
     return $sum;
   };

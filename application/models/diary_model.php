@@ -145,7 +145,7 @@ Detalle
     foreach ($result as $r) {
       $saldo = $r['saldo'];
     }
-    return $saldo;   
+    return $saldo;
   }
 
   // monto total de prestamos
@@ -361,6 +361,35 @@ Detalle
     }
     return TRUE;
   }
-}
 
+  function get_cobros($idLiquidation) {
+    $this->db->select(
+      'daily.NumVoucher,
+      daily.Monto
+      '
+    );/*
+    iddiario
+    FechaRegistro
+    FechaTransaction
+    idUser
+    idUserSupervisor
+    idTransaction
+    NumVoucher
+    idCustomer
+    Type
+    Monto
+    Estado
+    Detalle
+    Origen
+    */
+    //fechaRegistro
+    //$this->db->from('gastos');
+    $this->db->from('daily');
+    $this->db->join('liquidacion', 'daily.idUser = liquidacion.idUser');
+    //$this->db->where('gastos.idliquidacion', $idLiquidation);
+    //$this->db->where('liquidacion.idLiquidacion', $idLiquidation);
+    $query = $this->db->get();
+    return $query->result();
+  }
+}
 ?>

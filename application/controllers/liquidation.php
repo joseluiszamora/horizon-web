@@ -8,6 +8,7 @@
       $this->load->model('Product_Model');
       $this->load->model('User_Model');
       $this->load->model('Liquidation_Model');
+      $this->load->model('Diary_Model');
       $this->load->model('Routes_Model');
       $this->load->model('City_Model');
       $this->load->model('Area_Model');
@@ -289,7 +290,20 @@
       echo json_encode($mainArray);
     }
 
+    function get_cobros($idLiquidation){
+      $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
 
+      $mainArray = array();
+      $line = $this->Diary_Model->get_cobros($data['liquidation'][0]->idUser, $data['liquidation'][0]->fechaRegistro);
+      foreach ($line as $rowline) {
+        $line = array(
+          'ammount'   => $rowline->Monto,
+          'recibo'   => $rowline->NumVoucher
+        );
+        array_push($mainArray, $line);
+      }
+      echo json_encode($mainArray);
+    }
 
 
     function get_lines_view($idLiquidation){

@@ -367,15 +367,17 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="unity">0</td>
-                <td class="unity">0</td>
+              <tr ng-repeat="cobro in liquidation.cobros">
+                <td class="unity">{{ cobro.recibo }}</td>
+                <td class="unity">{{ cobro.ammount }}</td>
               </tr>
             </tbody>
             <tfooter>
               <tr class="footer">
                 <td class="unity">TOTAL</td>
-                <td class="unity success">0</td>
+                <td class="unity success" ng-controller="expenseController">
+                  {{ getTotalCobros(liquidation.cobros) | number:2 }}
+                </td>
               </tr>
             </tfooter>
           </table>
@@ -401,8 +403,8 @@
               </tr>
               <tr>
                 <td class="unity bold">+ COBRANZAS</td>
-                <td class="unity success">
-                  0
+                <td class="unity success" ng-controller="expenseController">
+                  {{ getTotalCobros(liquidation.cobros) | number:2 }}
                 </td>
               </tr>
               <tr>
