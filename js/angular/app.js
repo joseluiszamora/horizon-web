@@ -1,5 +1,5 @@
-var url = "http://localhost/horizon/index.php/";
-//var url = "https://mariani.bo/horizon-sc/index.php/";
+//var url = "http://localhost/horizon/index.php/";
+var url = "https://mariani.bo/horizon-sc/index.php/";
 
 idliquidation = $("#idLiquidation").html();
 mark = $("#markLiquidation").html();

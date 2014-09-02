@@ -1,6 +1,6 @@
 //var url = "https://mariani.bo/horizon/index.php/";
-//var url = "https://mariani.bo/horizon-sc/index.php/";
-var url = "http://localhost/horizon/index.php/";
+var url = "https://mariani.bo/horizon-sc/index.php/";
+//var url = "http://localhost/horizon/index.php/";
 
 //var loader = "https://mariani.bo/horizon/img/loader.gif";
 //var loader = "https://mariani.bo/horizon-sc/img/loader.gif";
