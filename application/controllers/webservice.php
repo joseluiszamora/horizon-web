@@ -1,4 +1,6 @@
 <?php
+
+namespace var\www\horizon\application\controllers;
   class Webservice extends  CI_Controller {    
     public function __construct() {
       parent::__construct();
@@ -437,7 +439,7 @@
 
         $transaction = array(
           'idTransaction'   =>    $row->idTransaction,
-          'customer'    =>    $row->customer,          
+          'customer'    =>    $row->customer,
           'transactionsList'=>    $transactionsDetailContainer
         ); 
         array_push($mainArray, $transaction);
@@ -452,7 +454,7 @@
       $mail = "distribuidorlp8@horizon.com";
 
       $transactions = json_encode($this->Detailtransaction_Model->get_detailtransactions_for_this_user($mail));
-      echo $transactions;      
+      echo $transactions;
     }
 
     function saveCobro(){
@@ -463,11 +465,11 @@
       }
 
       $JSON_decode = json_decode($code);
-    
+
       $data_in['FechaRegistro'] = date("y-m-d");
       $data_in['FechaTransaction'] = $JSON_decode->FechaTransaction;
       $data_in['idUser'] =  $this->Account_Model->get_user_id($JSON_decode->idUser);
-      $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));;
+      $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
       $data_in['idTransaction'] = $JSON_decode->idTransaction;
       $data_in['NumVoucher'] = $JSON_decode->NumVoucher;
       $data_in['idCustomer'] = $JSON_decode->idCustomer;
@@ -479,9 +481,8 @@
       if ($this->Diary_Model->create($data_in) != null) {
         $result = "ok";
       }
-      
       echo $result;
     }
-    
+
   }
 ?>
