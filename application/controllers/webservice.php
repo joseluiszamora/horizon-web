@@ -1,6 +1,4 @@
 <?php
-
-namespace var\www\horizon\application\controllers;
   class Webservice extends  CI_Controller {    
     public function __construct() {
       parent::__construct();
@@ -469,7 +467,7 @@ namespace var\www\horizon\application\controllers;
       $data_in['FechaRegistro'] = date("y-m-d");
       $data_in['FechaTransaction'] = $JSON_decode->FechaTransaction;
       $data_in['idUser'] =  $this->Account_Model->get_user_id($JSON_decode->idUser);
-      $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
+      $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($JSON_decode->idUser);
       $data_in['idTransaction'] = $JSON_decode->idTransaction;
       $data_in['NumVoucher'] = $JSON_decode->NumVoucher;
       $data_in['idCustomer'] = $JSON_decode->idCustomer;
@@ -477,9 +475,12 @@ namespace var\www\horizon\application\controllers;
       $data_in['Monto'] = $JSON_decode->Monto;
       $data_in['Estado'] = "1";
       $data_in['Detalle'] = $JSON_decode->Detalle;
+      $data_in['Origen'] = "A";
 
       if ($this->Diary_Model->create($data_in) != null) {
         $result = "ok";
+      }else{
+        $result = "FAILLL";
       }
       echo $result;
     }
