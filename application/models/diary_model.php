@@ -362,7 +362,7 @@ Detalle
     return TRUE;
   }
 
-  function get_cobros($idLiquidation) {
+  function get_cobros($user, $date) {
     $this->db->select(
       'daily.NumVoucher,
       daily.Monto
@@ -375,12 +375,17 @@ Detalle
     idUserSupervisor
     idTransaction
     NumVoucher
-    idCustomer
+    idCustomer 79173739
     Type
     Monto
     Estado
     Detalle
     Origen
+
+
+    FechaTransaction
+    idUser
+
     */
     //fechaRegistro
     //$this->db->from('gastos');

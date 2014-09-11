@@ -1,5 +1,5 @@
 <?php
-  class Webservice extends  CI_Controller {    
+  class Webservice extends  CI_Controller {
     public function __construct() {
       parent::__construct();
       $this->load->model('Account_Model');
@@ -37,7 +37,7 @@
         if (isset($res) && $res != "" && $res != null){
           if($res == "OK"){
             $user = json_encode($this->Account_Model->get_user($mail));
-            $result = $user;            
+            $result = $user;
           }else{
             $result = $res;
           }
@@ -45,7 +45,7 @@
           $result = "FAIL";
           // OK PASS MAIL
       }
-      
+
       echo $result;
     }
 
@@ -170,7 +170,7 @@
       }
 
       $JSON_decode = json_decode($code);
-      
+
       $userc = $this->Account_Model->get_user_id($JSON_decode->userMail);
       $userq = $JSON_decode->transactionType;
       $userd1 = date("Y-m-d H:i:s",strtotime($JSON_decode->timeStart));
@@ -314,11 +314,9 @@
         }else{
           $result = "FAIL_USER";
         }
-      } 
+      }
 
       echo $result;
-      //echo $userc."##".$userq."##".$userd1."##".$userd2;
-      //echo $ifexist;
     }
 
     // SAVE GPS POSITION
@@ -367,7 +365,7 @@
           if ($this->Detailtransaction_Model->update($data_detail, $transactions[0]) === TRUE) {
             if ($transactions[1] == "por_entregar")
               $swStatus = FALSE;
-          } else {        
+          } else {
             $result = "FAIL22";
           }
         }
@@ -376,7 +374,7 @@
       }
 
       // Save Blog Transaction
-      $data_blog['idTransaction'] = $JSON_decode->idWeb;      
+      $data_blog['idTransaction'] = $JSON_decode->idWeb;
       $data_blog['idUser'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
       if($swStatus){
         $data_blog['Operation'] = 'transaccion entregada';
@@ -404,11 +402,10 @@
         //echo "SAVE_BLOG";
       } else {
         $result = "FAIL44";
-      }  
+      }
 
       echo $result;
     }
-
 
     function get_transactions_for_this_user(){
       $code = $this->input->Post('codeCustomer');
@@ -416,9 +413,8 @@
       $mail = $JSON_decode->userMail;
       $mainArray = array();
       $transactions = $this->Transaction_Model->get_deliveries_for_this_user($mail);
-      
+
       foreach ($transactions as $row) {
-       
         $transactionsDetailContainer = array();
         $transactionsDetail = $this->Detailtransaction_Model->get_detailtransactions_for_this_transaction($row->idTransaction);
         foreach ($transactionsDetail as $rowt) {
@@ -439,17 +435,16 @@
           'idTransaction'   =>    $row->idTransaction,
           'customer'    =>    $row->customer,
           'transactionsList'=>    $transactionsDetailContainer
-        ); 
+        );
         array_push($mainArray, $transaction);
       }
 
       echo json_encode($mainArray);
     }
 
-
     function get_transactions_details_for_this_user(){
-      //$mail = $this->input->Post('codeCustomer');
-      $mail = "distribuidorlp8@horizon.com";
+      $mail = $this->input->Post('codeCustomer');
+      //$mail = "distribuidorlp8@horizon.com";
 
       $transactions = json_encode($this->Detailtransaction_Model->get_detailtransactions_for_this_user($mail));
       echo $transactions;
@@ -477,13 +472,26 @@
       $data_in['Detalle'] = $JSON_decode->Detalle;
       $data_in['Origen'] = "A";
 
-      if ($this->Diary_Model->create($data_in) != null) {
+      $id = $this->Diary_Model->create($data_in);
+      if ($id != null) {
+        $allpays = $this->Diary_Model->get_all_pay_for($data_in);
+        $balance = $this->Diary_Model->get_ammount($data_in);
+
+        if ($allpays >= $balance[0]->Monto ){
+          $this->Diary_Model->set_status($balance[0]->iddiario, 2);
+          $diaries_list = $this->Diary_Model->get_diaries_by_params($balance[0]->NumVoucher, $balance[0]->idCustomer, "C");
+
+          foreach ($diaries_list as $dl) {
+            $this->Diary_Model->set_status($dl->iddiario, 2);
+          }
+        }
         $result = "ok";
+
       }else{
         $result = "FAILLL";
       }
+
       echo $result;
     }
-
   }
 ?>

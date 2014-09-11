@@ -512,7 +512,7 @@
 
          $this->_customercode = $this->input->post('customerCode');
          $this->_idtransaction = $this->input->post('id_transaction');
-         
+
         if($this->input->post('transactionType') == "venta_directa")
           $this->_status = "6";
         else
@@ -526,6 +526,30 @@
           $data['idCustomer'] = $this->Client_Model->get_id_by_code($this->_customercode);
           $data['Estado'] = $this->_status;
           $this->Transaction_Model->update($data, $this->_idtransaction);
+
+
+
+
+          // here create daily
+
+          $data_diary['FechaRegistro'] = date("y-m-d");
+          $data_diary['FechaTransaction'] = date("Y-m-d",strtotime($JSON_decode->timeStart));
+          $data_diary['idUser'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
+          $data_diary['idUserSupervisor'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
+          $data_diary['idTransaction'] = $insertcode;
+          $data_diary['NumVoucher'] = "9999";
+          $data_diary['idCustomer'] = $customer_id;
+          $data_diary['Type'] = "P";
+          $data_diary['Monto'] = $ammount;
+          $data_diary['Estado'] = "1";
+          $data_diary['Detalle'] = "Android";
+
+          $this->Diary_Model->create($data_diary);
+
+          // END create daily
+
+
+
 
           $data_view = $this->Transaction_Model->report("idTransaction");
           $this->redirect_tab("tab7", $data_view);
