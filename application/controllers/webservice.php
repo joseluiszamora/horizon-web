@@ -192,8 +192,10 @@
           if ($JSON_decode->clientType == "temporal") {
             $data_in['Estado'] = "5";
             $data_in['idCustomer'] = "607";   // ojo con esta huevada
-            if ($JSON_decode->transactionType == "transaccion_0")
+            $customer_id = "607";
+            if ($JSON_decode->transactionType == "transaccion_0"){
               $data_in['Estado'] = "7";
+            }
           }else{
             //$data_in['Observacion'] = $JSON_decode->obs;
             // get client id
@@ -202,10 +204,6 @@
             foreach ($client_id as $row) {
               $data_in['idCustomer'] = $row->idCustomer;
               $customer_id = $row->idCustomer;
-            }
-
-            if ($JSON_decode->transactionPrestamo == "1") {
-              $data_in['prestamo'] = "1";
             }
 
             if ($JSON_decode->transactionType == "preventa") {
@@ -227,10 +225,10 @@
             if ($JSON_decode->transactionType == "prestamo") {
               $data_in['Estado'] = "1";
             }
+          }
 
-            if ($JSON_decode->transactionPrestamo == "1") {
-              $data_in['prestamo'] = "1";
-            }
+          if ($JSON_decode->transactionPrestamo == "1") {
+            $data_in['prestamo'] = "1";
           }
 
           // save transaction and get insert code
@@ -255,10 +253,8 @@
             }
           }
 
-
           // VAR total Prestamo ammount
           $ammount = 0;
-
 
           // Save Product for this transaction
           foreach ( $JSON_decode->TransactionsArray as $transactions ){
@@ -296,18 +292,22 @@
 
           // if transaction is PRESTAMO
           if ($JSON_decode->transactionPrestamo == "1") {
-          //if ($JSON_decode->transactionType == "prestamo") {
             $data_diary['FechaRegistro'] = date("y-m-d");
             $data_diary['FechaTransaction'] = date("Y-m-d",strtotime($JSON_decode->timeStart));
             $data_diary['idUser'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
             $data_diary['idUserSupervisor'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
             $data_diary['idTransaction'] = $insertcode;
-            $data_diary['NumVoucher'] = "9999";
+            if (isset($JSON_decode->voucher) && $JSON_decode->voucher!= "") {
+              $data_diary['NumVoucher'] = $JSON_decode->voucher;
+            }else{
+              $data_diary['NumVoucher'] = "000";
+            }
             $data_diary['idCustomer'] = $customer_id;
             $data_diary['Type'] = "P";
             $data_diary['Monto'] = $ammount;
             $data_diary['Estado'] = "1";
-            $data_diary['Detalle'] = "Android";
+            $data_diary['Detalle'] = "Android, transaccion temporal";
+            $data_diary['Origen'] = "A";
 
             $this->Diary_Model->create($data_diary);
           }
