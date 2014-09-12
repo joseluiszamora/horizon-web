@@ -527,11 +527,7 @@
           $data['Estado'] = $this->_status;
           $this->Transaction_Model->update($data, $this->_idtransaction);
 
-
-
-
           // here create daily
-
           $data_diary['FechaRegistro'] = date("y-m-d");
           $data_diary['FechaTransaction'] = date("Y-m-d",strtotime($JSON_decode->timeStart));
           $data_diary['idUser'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
@@ -543,13 +539,8 @@
           $data_diary['Monto'] = $ammount;
           $data_diary['Estado'] = "1";
           $data_diary['Detalle'] = "Android";
-
           $this->Diary_Model->create($data_diary);
-
           // END create daily
-
-
-
 
           $data_view = $this->Transaction_Model->report("idTransaction");
           $this->redirect_tab("tab7", $data_view);

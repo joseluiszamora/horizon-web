@@ -105,7 +105,7 @@
         // push album
         array_push($clients, $tmp);
       }
-        
+
       // printing json
       echo json_encode($clients);
     }
@@ -295,9 +295,10 @@
             $data_diary['FechaRegistro'] = date("y-m-d");
             $data_diary['FechaTransaction'] = date("Y-m-d",strtotime($JSON_decode->timeStart));
             $data_diary['idUser'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
-            $data_diary['idUserSupervisor'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
+            $data_diary['idUserSupervisor'] = "1";
             $data_diary['idTransaction'] = $insertcode;
-            if (isset($JSON_decode->voucher) && $JSON_decode->voucher!= "") {
+
+            if (isset($JSON_decode->voucher) && $JSON_decode->voucher != "") {
               $data_diary['NumVoucher'] = $JSON_decode->voucher;
             }else{
               $data_diary['NumVoucher'] = "000";
@@ -365,7 +366,7 @@
           if ($this->Detailtransaction_Model->update($data_detail, $transactions[0]) === TRUE) {
             if ($transactions[1] == "por_entregar")
               $swStatus = FALSE;
-          } else {
+          } else {        
             $result = "FAIL22";
           }
         }
@@ -374,7 +375,7 @@
       }
 
       // Save Blog Transaction
-      $data_blog['idTransaction'] = $JSON_decode->idWeb;
+      $data_blog['idTransaction'] = $JSON_decode->idWeb;      
       $data_blog['idUser'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
       if($swStatus){
         $data_blog['Operation'] = 'transaccion entregada';
@@ -402,10 +403,11 @@
         //echo "SAVE_BLOG";
       } else {
         $result = "FAIL44";
-      }
+      }  
 
       echo $result;
     }
+
 
     function get_transactions_for_this_user(){
       $code = $this->input->Post('codeCustomer');
@@ -413,8 +415,9 @@
       $mail = $JSON_decode->userMail;
       $mainArray = array();
       $transactions = $this->Transaction_Model->get_deliveries_for_this_user($mail);
-
+      
       foreach ($transactions as $row) {
+       
         $transactionsDetailContainer = array();
         $transactionsDetail = $this->Detailtransaction_Model->get_detailtransactions_for_this_transaction($row->idTransaction);
         foreach ($transactionsDetail as $rowt) {
@@ -435,12 +438,13 @@
           'idTransaction'   =>    $row->idTransaction,
           'customer'    =>    $row->customer,
           'transactionsList'=>    $transactionsDetailContainer
-        );
+        ); 
         array_push($mainArray, $transaction);
       }
 
       echo json_encode($mainArray);
     }
+
 
     function get_transactions_details_for_this_user(){
       $mail = $this->input->Post('codeCustomer');
@@ -461,6 +465,7 @@
 
       $data_in['FechaRegistro'] = date("y-m-d");
       $data_in['FechaTransaction'] = $JSON_decode->FechaTransaction;
+      $data_in['HoraTransaction'] = $JSON_decode->HoraTransaction;
       $data_in['idUser'] =  $this->Account_Model->get_user_id($JSON_decode->idUser);
       $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($JSON_decode->idUser);
       $data_in['idTransaction'] = $JSON_decode->idTransaction;
@@ -472,26 +477,13 @@
       $data_in['Detalle'] = $JSON_decode->Detalle;
       $data_in['Origen'] = "A";
 
-      $id = $this->Diary_Model->create($data_in);
-      if ($id != null) {
-        $allpays = $this->Diary_Model->get_all_pay_for($data_in);
-        $balance = $this->Diary_Model->get_ammount($data_in);
-
-        if ($allpays >= $balance[0]->Monto ){
-          $this->Diary_Model->set_status($balance[0]->iddiario, 2);
-          $diaries_list = $this->Diary_Model->get_diaries_by_params($balance[0]->NumVoucher, $balance[0]->idCustomer, "C");
-
-          foreach ($diaries_list as $dl) {
-            $this->Diary_Model->set_status($dl->iddiario, 2);
-          }
-        }
+      if ($this->Diary_Model->create($data_in) != null) {
         $result = "ok";
-
       }else{
         $result = "FAILLL";
       }
-
       echo $result;
     }
+
   }
 ?>
