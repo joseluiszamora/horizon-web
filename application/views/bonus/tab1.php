@@ -19,7 +19,7 @@
         <td class="text-info districtDesc"><strong><?php echo $row->line; ?></strong></td>
         <td class="text-info districtDesc"><strong><?php echo $row->volume." - ".$row->nombreproduct; ?></strong></td>
         <td class="text-info districtDesc"><strong><?php echo $row->cantidad; ?></strong></td>
-        <td class="text-info districtDesc"><strong><?php echo $row->idProduct_bonus; ?></strong></td>
+        <td class="text-info districtDesc"><strong><?php echo $this->Product_model->get_name_by_code($row->idProduct_bonus); ?></strong></td>
         <td class="text-info districtDesc"><strong><?php echo $row->cantidad_bonus; ?></strong></td>
         <td>
           <div class="btnActionsForm">

@@ -116,6 +116,29 @@ class Product_model extends CI_Model {
       return $query->result();
     }
 
+
+
+    function get_name_by_code($id) {
+      $this->db->select(
+        'products.Nombre,
+        volume.Descripcion as volumeDescription'
+      );
+      $this->db->from('products');
+      $this->db->join('linevolume', 'products.idLineVolume = linevolume.idLineVolume');
+      $this->db->join('line', 'linevolume.idLine = line.idLine');
+      $this->db->join('volume', 'linevolume.idVolume = volume.idVolume');
+      $this->db->where(array('idProduct'=>$id,'Estado'=>'1'));
+      $query = $this->db->get();
+
+      $result = $query->result_array();
+      $name = "";
+      foreach ($result as $r) {
+        $name = $r['volumeDescription']." - ".$r['Nombre'];
+      }
+      return $name;
+    }
+
+
     function get_price($id) {
       $this->db->where('idProduct', $id);
       $this->db->where('Estado', '1');
@@ -340,8 +363,6 @@ class Product_model extends CI_Model {
       return $query->result();
     }
 
-
-
     function csv ($search){
       $querystring = '
       SELECT 
@@ -445,5 +466,4 @@ class Product_model extends CI_Model {
       return $this->dbutil->csv_from_result($query, $delimiter, $newline); 
     }
 }
-
 ?>

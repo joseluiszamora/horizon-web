@@ -19,8 +19,7 @@
       $this->load->model('Bonus_model');
     }
 
-    function index() {
-    }
+    function index() { }
 
     function check_if_user(){
       $result = "FAIL";  //default var
@@ -75,8 +74,33 @@
     }
 
     function get_bonus(){
-      $bonus = json_encode($this->Bonus_model->report(array()));
-      echo $bonus;
+      $bonus = array();
+      $bonus_list  = $this->Bonus_model->report(array());
+
+      foreach ($bonus_list as $row) {
+        $tmp = array();
+        $tmp["id"] = $row->idbonus;
+        $tmp["type"] = $row->type;
+        $tmp["status"] = $row->status;
+
+        $tmp["idline_from"] = $row->idLine;
+        $tmp["idproduct_from"] = $row->idProduct;
+        $tmp["quantity_from"] = $row->cantidad;
+        //$tmp["name_from"] = $this->Product_Model->get_name_by_code($row->idProduct);
+        if ($row->type == "P") {
+          $tmp["name_from"] = $row->nombreproduct;
+        }else{
+          $tmp["name_from"] = $row->line;
+        }
+
+        $tmp["idproduct_to"] = $row->idProduct_bonus;
+        $tmp["quantity_to"] = $row->cantidad_bonus;
+        $tmp["name_to"] = $this->Product_Model->get_name_by_code($row->idProduct_bonus);
+
+        array_push($bonus, $tmp);
+      }
+      echo json_encode($bonus);
+
     }
 
     function get_customers(){
