@@ -126,7 +126,8 @@
                     <th class="center">Recibo</th>
                     <th class="center">Total</th>
                     <th class="center">Saldo</th>
-                    <th class="center">Detalle</th>
+                    <th class="center">Origen</th>
+                    <!--<th class="center">Detalle</th>-->
                     <th class="center">&nbsp;</th>
                     <th class="center">&nbsp;</th>
                   </tr>
@@ -151,7 +152,14 @@
                       <td class="center"><?php echo $row->NumVoucher; ?></td>
                       <td class="center"><?php echo $this->Diary_Model->roundnumber($row->Monto, 2); ?></td>
                       <td class="center"><?php echo $this->Diary_Model->roundnumber($saldo, 2); ?></td>
-                      <td class="center"><?php echo $row->Detalle; ?></td>
+                      <td class="center"><?php 
+                      if ($row->Origen == "A") {
+                        echo "Android";
+                      }else{
+                        echo "Web";
+                      }
+                      ?></td>
+                      <!--<td class="center"><?php //echo $row->Detalle; ?></td>-->
                       <td class="center">
                         <!--<input value="Adicionar pago" class="btn btn-primary" id="btnAdd" >-->
                       
@@ -252,7 +260,6 @@
                             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
                             <button class="btn btn-primary btnSaveAddPay">Guardar</button>
                           </div>
-
                         </div>
                        
                       </td>

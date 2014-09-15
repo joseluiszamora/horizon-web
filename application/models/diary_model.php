@@ -227,6 +227,7 @@ Detalle
     daily.Monto,
     daily.Estado,
     daily.Detalle,
+    daily.Origen,
     customer.idCustomer,
     customer.CodeCustomer as code,
     customer.NombreTienda as custname,
