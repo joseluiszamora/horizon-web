@@ -135,20 +135,16 @@
 
 
     function getpays(){
-      // customer  011884 - ALBERTO BALCAZAR
       $data_in['voucher'] = $this->input->post('voucher');
       $data_in['distributor'] = $this->input->post('distributor');
       $data_in['customer'] = $this->Client_Model->get_id_by_code_and_name($this->input->post('customer'));
       $data['pays'] = $this->Diary_Model->getpays($data_in);
 
-
-
-
       $res = '<tbody>';
       $total = 0; 
       foreach ($data['pays'] as $r) {
         $res .= '<tr>';
-        $res .= '<td class="center">'.$r->FechaTransaction.'</td>';
+        $res .= '<td class="center">'.$r->FechaTransaction." - ".$r->HoraTransaction.'</td>';
         $res .= '<td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td>';
         $res .= '<td class="center">'.$r->Detalle.'</td>';
         $res .= '<td class="center">';
