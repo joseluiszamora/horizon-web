@@ -82,15 +82,18 @@ app.controller('LiquidationController', ['$http', function( $http ){
     liquidation.cobros = [];
   };
 
+
   if (liquidation.mark == "liquidation") {
-    console.log("liquidation");
     $http.get(url + 'liquidation/get_cobros/' + liquidation.idLiquidation).success(function(data){
       liquidation.cobros = data;
     });
   }else{
     liquidation.cobros = [];
-    console.log("No liquidation");
   }
+  /*liquidation.cobros = [
+    { "recibo" : "1111", "ammount" : 20 },
+    { "recibo" : "2222", "ammount" : 80 }
+  ];*/
 
   $http.get(url + 'liquidation/get_lines/' + liquidation.idLiquidation).success(function(data){
     liquidation.lines = data;
@@ -168,8 +171,9 @@ app.controller('LiquidationController', ['$http', function( $http ){
       $sum -= expense.ammount;
     });
     angular.forEach(liquidation.cobros, function(expense) {
-      $sum -= expense.ammount;
+      $sum += expense.ammount;
     });
+
     return $sum;
   };
 
@@ -475,6 +479,35 @@ var lineControllerObj = function ($scope, sharedProperties){
     $sum = 0;
     angular.forEach(products, function(value) {
       $sum += value.prestamosU;
+    });
+
+    if (uxpline > 0) {
+      $sum = parseInt(Math.round($sum % uxpline));
+    };
+
+    return $sum;
+  };
+
+  $scope.getBonoPLine = function (products, uxpline){
+    $sum = 0;
+    $sumU = 0;
+
+    angular.forEach(products, function(value) {
+      $sum += value.bonosP;
+      $sumU += value.bonosU;
+    });
+
+    if (uxpline > 0) {
+      $sum += parseInt(Math.floor($sumU / uxpline));
+    }
+    
+    return $sum;
+  };
+  
+  $scope.getBonoULine = function (products, uxpline){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.bonosU;
     });
 
     if (uxpline > 0) {

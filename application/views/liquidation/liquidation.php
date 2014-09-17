@@ -277,8 +277,8 @@
                             <td class="unity">{{ getPrestamoPLine(line.products, line.lineUxp) }}</td>
                             <td class="unity">{{ getPrestamoULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">0</td>
-                            <td class="unity">0</td>
+                            <td class="unity">{{ getBonoPLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getBonoULine(line.products, line.lineUxp) }}</td>
 
                             <td class="unity">{{ getAjustePLine(line.products, line.lineUxp) }}</td>
                             <td class="unity">{{ getAjusteULine(line.products, line.lineUxp) }}</td>

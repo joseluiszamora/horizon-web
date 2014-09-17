@@ -304,8 +304,8 @@
       $line = $this->Diary_Model->get_cobros($data['liquidation'][0]->idUser, $data['liquidation'][0]->fechaRegistro);
       foreach ($line as $rowline) {
         $line = array(
-          'ammount'   => $rowline->Monto,
-          'recibo'   => $rowline->NumVoucher
+          'recibo'   => intval($rowline->NumVoucher),
+          'ammount'   => intval($rowline->Monto)
         );
         array_push($mainArray, $line);
       }
