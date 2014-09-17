@@ -496,6 +496,6 @@ class Liquidation_model extends CI_Model {
     $this->db->delete('detalleliquidacion');
   }
 
-}
 
+}
 ?>

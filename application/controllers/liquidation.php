@@ -202,12 +202,17 @@
     function get_lines($idLiquidation){
       $mainArray = array();
       $line = $this->Liquidation_Model->get_lines_actives($idLiquidation, 0);
+      
+      $liquidation = $this->Liquidation_Model->get($idLiquidation);
 
       foreach ($line as $rowline) {
         $productsContainer = array();
         $products = $this->Liquidation_Model->get_detail_list($idLiquidation, $rowline->idLine, 0);
         foreach ($products as $rowproduct){
           $partialcharge = $rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3;
+          //get prestamos
+          $prestamo = $this->Diary_Model->get_prestamos($liquidation[0]->idUser, $liquidation[0]->fechaRegistro, $rowproduct->idProduct);
+
           $arrayProducts = array(
             'idDetalleLiquidacion'     => $rowproduct->idDetalleLiquidacion,
             'idProduct'     => $rowproduct->idProduct,
@@ -233,8 +238,10 @@
             'devolutionP'   => floor($rowproduct->devolucion / $rowproduct->uxp),
             'devolutionU'   => round(($rowproduct->devolucion % $rowproduct->uxp), 0),
 
-            'prestamosP'    => floor($rowproduct->prestamo / $rowproduct->uxp),
-            'prestamosU'    => round(($rowproduct->prestamo % $rowproduct->uxp), 0),
+            //'prestamosP'    => floor($rowproduct->prestamo / $rowproduct->uxp),
+            //'prestamosU'    => round(($rowproduct->prestamo % $rowproduct->uxp), 0),
+            'prestamosP'    => floor($prestamo / $rowproduct->uxp),
+            'prestamosU'    => round(($prestamo % $rowproduct->uxp), 0),
 
             'bonosP'        => floor($rowproduct->bonificacion / $rowproduct->uxp),
             'bonosU'        => round(($rowproduct->bonificacion % $rowproduct->uxp), 0),
@@ -291,7 +298,7 @@
     }
 
     function get_cobros($idLiquidation){
-      $data['liquidation'] = $this->Liquidation_Model->get($liquidation);
+      $data['liquidation'] = $this->Liquidation_Model->get($idLiquidation);
 
       $mainArray = array();
       $line = $this->Diary_Model->get_cobros($data['liquidation'][0]->idUser, $data['liquidation'][0]->fechaRegistro);

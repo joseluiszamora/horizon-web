@@ -1,5 +1,5 @@
-var url = "http://localhost/horizon/index.php/";
-//var url = "https://mariani.bo/horizon-sc/index.php/";
+//var url = "http://localhost/horizon/index.php/";
+var url = "https://mariani.bo/horizon-sc/index.php/";
 
 idliquidation = $("#idLiquidation").html();
 mark = $("#markLiquidation").html();
@@ -83,11 +83,13 @@ app.controller('LiquidationController', ['$http', function( $http ){
   };
 
   if (liquidation.mark == "liquidation") {
+    console.log("liquidation");
     $http.get(url + 'liquidation/get_cobros/' + liquidation.idLiquidation).success(function(data){
       liquidation.cobros = data;
     });
   }else{
     liquidation.cobros = [];
+    console.log("No liquidation");
   }
 
   $http.get(url + 'liquidation/get_lines/' + liquidation.idLiquidation).success(function(data){
@@ -444,6 +446,35 @@ var lineControllerObj = function ($scope, sharedProperties){
     $sum = 0;
     angular.forEach(products, function(value) {
       $sum += value.devolutionU;
+    });
+
+    if (uxpline > 0) {
+      $sum = parseInt(Math.round($sum % uxpline));
+    };
+
+    return $sum;
+  };
+
+  $scope.getPrestamoPLine = function (products, uxpline){
+    $sum = 0;
+    $sumU = 0;
+
+    angular.forEach(products, function(value) {
+      $sum += value.prestamosP;
+      $sumU += value.prestamosU;
+    });
+
+    if (uxpline > 0) {
+      $sum += parseInt(Math.floor($sumU / uxpline));
+    }
+    
+    return $sum;
+  };
+  
+  $scope.getPrestamoULine = function (products, uxpline){
+    $sum = 0;
+    angular.forEach(products, function(value) {
+      $sum += value.prestamosU;
     });
 
     if (uxpline > 0) {

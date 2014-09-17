@@ -368,34 +368,136 @@ Detalle
       'daily.NumVoucher,
       daily.Monto
       '
-    );/*
-    iddiario
-    FechaRegistro
-    FechaTransaction
-    idUser
-    idUserSupervisor
-    idTransaction
-    NumVoucher
-    idCustomer 79173739
-    Type
-    Monto
-    Estado
-    Detalle
-    Origen
-
-
-    FechaTransaction
-    idUser
-
-    */
-    //fechaRegistro
-    //$this->db->from('gastos');
+    );
     $this->db->from('daily');
-    $this->db->join('liquidacion', 'daily.idUser = liquidacion.idUser');
-    //$this->db->where('gastos.idliquidacion', $idLiquidation);
-    //$this->db->where('liquidacion.idLiquidacion', $idLiquidation);
+    $this->db->where('daily.idUser', $user);
+
+    $fecha = $date;
+    $nuevafecha = strtotime ( '-1 day' , strtotime ( $fecha ) ) ;
+    $nuevafecha = date ( 'y-m-d' , $nuevafecha );
+    $this->db->where('DATE(daily.FechaTransaction) >', $nuevafecha);
+
+    $nuevafecha2 = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
+    $nuevafecha2 = date ( 'y-m-d' , $nuevafecha2 );
+    $this->db->where('DATE(daily.FechaTransaction) <', $nuevafecha2);
+
+    //$this->db->where('daily.Estado', "1");
+    $this->db->where('daily.Type', "C");
     $query = $this->db->get();
     return $query->result();
+  }
+
+  function get_prestamos($user, $date, $idProduct) {
+
+    $this->db->select( 'detailtransaction.Cantidad' );
+    $this->db->from('transaction');
+    $this->db->join('detailtransaction', 'detailtransaction.idTransaction = transaction.idTransaction');
+    $this->db->join('blog', 'transaction.idTransaction = blog.idTransaction', 'left');
+    $this->db->where('transaction.idUser', $user);
+    $this->db->where('detailtransaction.idProduct', $idProduct);
+
+    $fecha = $date;
+    $nuevafecha = strtotime ( '-1 day' , strtotime ( $fecha ) ) ;
+    $nuevafecha = date ( 'y-m-d' , $nuevafecha );
+    $this->db->where('DATE(blog.FechaHoraInicio) >', $nuevafecha);
+
+    $nuevafecha2 = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
+    $nuevafecha2 = date ( 'y-m-d' , $nuevafecha2 );
+    $this->db->where('DATE(blog.FechaHoraInicio) <', $nuevafecha2);
+
+    $this->db->where('transaction.prestamo', "1");
+
+//    $this->db->group_by('daily.FechaTransaction');
+    $query = $this->db->get();
+    $result = $query->result_array();
+
+    $sum = 0;
+    foreach ($result as $r) {
+      $sum += $r['Cantidad'];
+    }
+
+    return $sum;
+
+
+    /*$this->db->select( 'daily.Monto' );
+    $this->db->from('daily');
+    $this->db->join('transaction', 'transaction.idUser = daily.idUser');
+    $this->db->join('detailtransaction', 'detailtransaction.idTransaction = transaction.idTransaction');
+    $this->db->where('daily.idUser', $user);
+    $this->db->where('detailtransaction.idProduct', $idProduct);
+
+    $fecha = $date;
+    $nuevafecha = strtotime ( '-1 day' , strtotime ( $fecha ) ) ;
+    $nuevafecha = date ( 'y-m-d' , $nuevafecha );
+    $this->db->where('DATE(daily.FechaTransaction) >', $nuevafecha);
+
+    $nuevafecha2 = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
+    $nuevafecha2 = date ( 'y-m-d' , $nuevafecha2 );
+    $this->db->where('DATE(daily.FechaTransaction) <', $nuevafecha2);
+
+    $this->db->where('daily.Estado', "1");
+    $this->db->where('daily.Type', "C");
+    $this->db->group_by('daily.FechaTransaction');
+    $query = $this->db->get();
+    $result = $query->result_array();
+
+    $sum = 0;
+    foreach ($result as $r) {
+      $sum += $r['Monto'];
+    }
+
+    return $sum;
+*/
+    /*$this->db->select( '
+    daily.iddiario,
+    daily.FechaRegistro,
+    daily.FechaTransaction,
+    daily.idUser,
+    daily.idUserSupervisor,
+    daily.idTransaction,
+    daily.NumVoucher,
+    daily.idCustomer,
+    daily.Type,
+    daily.Monto,
+    daily.Estado,
+    daily.Detalle,
+    daily.Origen,
+    customer.idCustomer,
+    customer.CodeCustomer as code,
+    customer.NombreTienda as custname,
+    customer.Direccion as custaddress,
+    users.Email as customer' );
+    $this->db->from('daily');
+    $this->db->join('customer', 'daily.idCustomer = customer.idCustomer');
+    $this->db->join('users', 'daily.idUser = users.idUser');
+    $this->db->join('liquidacion', 'daily.idUser = liquidacion.idUser');
+    $this->db->join('detalleliquidacion', 'detalleliquidacion.idLiquidacion = liquidacion.idLiquidacion');
+
+    //$this->db->where('daily.Estado', "1");
+    $this->db->where('daily.Type', "p");
+    $this->db->where('daily.idUser',$iduser);
+    $this->db->where('detalleliquidacion.idProduct', $idProduct);
+
+    $fecha = $date;
+    $nuevafecha = strtotime ( '-1 day' , strtotime ( $fecha ) ) ;
+    $nuevafecha = date ( 'y-m-d' , $nuevafecha );
+    $this->db->where('DATE(FechaTransaction) >', $nuevafecha);
+
+    $nuevafecha2 = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
+    $nuevafecha2 = date ( 'y-m-d' , $nuevafecha2 );
+    $this->db->where('DATE(FechaTransaction) <', $nuevafecha2);
+
+    $this->db->group_by('daily.idCustomer');
+    $this->db->order_by('daily.NumVoucher', "asc");
+    $query = $this->db->get();
+    $result = $query->result_array();
+
+    $sum = 0;
+    foreach ($result as $r) {
+      $sum += $r['Monto'];
+    }
+
+    return $sum;*/
   }
 }
 ?>

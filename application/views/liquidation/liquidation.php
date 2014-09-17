@@ -274,8 +274,8 @@
                             <td class="unity">{{ getDevolutionPLine(line.products, line.lineUxp) }}</td>
                             <td class="unity">{{ getDevolutionULine(line.products, line.lineUxp) }}</td>
 
-                            <td class="unity">0</td>
-                            <td class="unity">0</td>
+                            <td class="unity">{{ getPrestamoPLine(line.products, line.lineUxp) }}</td>
+                            <td class="unity">{{ getPrestamoULine(line.products, line.lineUxp) }}</td>
 
                             <td class="unity">0</td>
                             <td class="unity">0</td>
