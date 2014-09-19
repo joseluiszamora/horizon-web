@@ -388,7 +388,6 @@ Detalle
   }
 
   function get_prestamos($user, $date, $idProduct) {
-
     $this->db->select( 'detailtransaction.Cantidad' );
     $this->db->from('transaction');
     $this->db->join('detailtransaction', 'detailtransaction.idTransaction = transaction.idTransaction');
@@ -407,7 +406,6 @@ Detalle
 
     $this->db->where('transaction.prestamo', "1");
 
-//    $this->db->group_by('daily.FechaTransaction');
     $query = $this->db->get();
     $result = $query->result_array();
 
@@ -417,87 +415,36 @@ Detalle
     }
 
     return $sum;
+  }
 
-
-    /*$this->db->select( 'daily.Monto' );
-    $this->db->from('daily');
-    $this->db->join('transaction', 'transaction.idUser = daily.idUser');
+  function get_bonos($user, $date, $idProduct) {
+    $this->db->select( 'detailtransaction.Cantidad' );
+    $this->db->from('transaction');
     $this->db->join('detailtransaction', 'detailtransaction.idTransaction = transaction.idTransaction');
-    $this->db->where('daily.idUser', $user);
+    $this->db->join('blog', 'transaction.idTransaction = blog.idTransaction', 'left');
+    $this->db->where('transaction.idUser', $user);
     $this->db->where('detailtransaction.idProduct', $idProduct);
 
     $fecha = $date;
     $nuevafecha = strtotime ( '-1 day' , strtotime ( $fecha ) ) ;
     $nuevafecha = date ( 'y-m-d' , $nuevafecha );
-    $this->db->where('DATE(daily.FechaTransaction) >', $nuevafecha);
+    $this->db->where('DATE(blog.FechaHoraInicio) >', $nuevafecha);
 
     $nuevafecha2 = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
     $nuevafecha2 = date ( 'y-m-d' , $nuevafecha2 );
-    $this->db->where('DATE(daily.FechaTransaction) <', $nuevafecha2);
+    $this->db->where('DATE(blog.FechaHoraInicio) <', $nuevafecha2);
 
-    $this->db->where('daily.Estado', "1");
-    $this->db->where('daily.Type', "C");
-    $this->db->group_by('daily.FechaTransaction');
+    $this->db->where('detailtransaction.type', "bonus");
+
     $query = $this->db->get();
     $result = $query->result_array();
 
     $sum = 0;
     foreach ($result as $r) {
-      $sum += $r['Monto'];
+      $sum += $r['Cantidad'];
     }
 
     return $sum;
-*/
-    /*$this->db->select( '
-    daily.iddiario,
-    daily.FechaRegistro,
-    daily.FechaTransaction,
-    daily.idUser,
-    daily.idUserSupervisor,
-    daily.idTransaction,
-    daily.NumVoucher,
-    daily.idCustomer,
-    daily.Type,
-    daily.Monto,
-    daily.Estado,
-    daily.Detalle,
-    daily.Origen,
-    customer.idCustomer,
-    customer.CodeCustomer as code,
-    customer.NombreTienda as custname,
-    customer.Direccion as custaddress,
-    users.Email as customer' );
-    $this->db->from('daily');
-    $this->db->join('customer', 'daily.idCustomer = customer.idCustomer');
-    $this->db->join('users', 'daily.idUser = users.idUser');
-    $this->db->join('liquidacion', 'daily.idUser = liquidacion.idUser');
-    $this->db->join('detalleliquidacion', 'detalleliquidacion.idLiquidacion = liquidacion.idLiquidacion');
-
-    //$this->db->where('daily.Estado', "1");
-    $this->db->where('daily.Type', "p");
-    $this->db->where('daily.idUser',$iduser);
-    $this->db->where('detalleliquidacion.idProduct', $idProduct);
-
-    $fecha = $date;
-    $nuevafecha = strtotime ( '-1 day' , strtotime ( $fecha ) ) ;
-    $nuevafecha = date ( 'y-m-d' , $nuevafecha );
-    $this->db->where('DATE(FechaTransaction) >', $nuevafecha);
-
-    $nuevafecha2 = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
-    $nuevafecha2 = date ( 'y-m-d' , $nuevafecha2 );
-    $this->db->where('DATE(FechaTransaction) <', $nuevafecha2);
-
-    $this->db->group_by('daily.idCustomer');
-    $this->db->order_by('daily.NumVoucher', "asc");
-    $query = $this->db->get();
-    $result = $query->result_array();
-
-    $sum = 0;
-    foreach ($result as $r) {
-      $sum += $r['Monto'];
-    }
-
-    return $sum;*/
   }
 }
 ?>

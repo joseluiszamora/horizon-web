@@ -493,8 +493,8 @@ var lineControllerObj = function ($scope, sharedProperties){
     $sumU = 0;
 
     angular.forEach(products, function(value) {
-      $sum += value.bonosP;
-      $sumU += value.bonosU;
+      $sum += parseInt(value.bonosP);
+      $sumU += parseInt(value.bonosU);
     });
 
     if (uxpline > 0) {
@@ -507,7 +507,7 @@ var lineControllerObj = function ($scope, sharedProperties){
   $scope.getBonoULine = function (products, uxpline){
     $sum = 0;
     angular.forEach(products, function(value) {
-      $sum += value.bonosU;
+      $sum += parseInt(value.bonosU);
     });
 
     if (uxpline > 0) {

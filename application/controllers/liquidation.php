@@ -212,6 +212,8 @@
           $partialcharge = $rowproduct->previousDay + $rowproduct->charge + $rowproduct->chargeExtra1 + $rowproduct->chargeExtra2 + $rowproduct->chargeExtra3;
           //get prestamos
           $prestamo = $this->Diary_Model->get_prestamos($liquidation[0]->idUser, $liquidation[0]->fechaRegistro, $rowproduct->idProduct);
+          //get bonos
+          $bono = $this->Diary_Model->get_bonos($liquidation[0]->idUser, $liquidation[0]->fechaRegistro, $rowproduct->idProduct);
 
           $arrayProducts = array(
             'idDetalleLiquidacion'     => $rowproduct->idDetalleLiquidacion,
@@ -243,8 +245,10 @@
             'prestamosP'    => floor($prestamo / $rowproduct->uxp),
             'prestamosU'    => round(($prestamo % $rowproduct->uxp), 0),
 
-            'bonosP'        => floor($rowproduct->bonificacion / $rowproduct->uxp),
-            'bonosU'        => round(($rowproduct->bonificacion % $rowproduct->uxp), 0),
+            //'bonosP'        => floor($rowproduct->bonificacion / $rowproduct->uxp),
+            //'bonosU'        => round(($rowproduct->bonificacion % $rowproduct->uxp), 0),
+            'bonosP'        => floor($bono / $rowproduct->uxp),
+            'bonosU'        => round(($bono % $rowproduct->uxp), 0),
 
             'ajusteP'       => floor($rowproduct->ajuste / $rowproduct->uxp),
             'ajusteU'       => round(($rowproduct->ajuste % $rowproduct->uxp), 0),
