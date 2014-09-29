@@ -498,7 +498,7 @@
       $data_in['Type'] = "C";
       $data_in['Monto'] = $JSON_decode->Monto;
       $data_in['Estado'] = "1";
-      $data_in['Detalle'] = $JSON_decode->Detalle;
+      $data_in['Detalle'] = $JSON_decode->NumVoucherPrestamo;
       $data_in['Origen'] = "A";
 
       if ($this->Diary_Model->create($data_in) != null) {

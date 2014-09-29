@@ -36,6 +36,13 @@
       $this->load->view('template/template', $data);
     }
 
+    function last() { // show
+      $data_in['dateStart'] = date('y-m-d');
+      $data_in['dateFinish'] = date('y-m-d');
+      $data['diaries'] = $this->Diary_Model->search_last($data_in);
+      $this->load->view('diary/last', $data);
+    }
+
     function chartsAmmount(){
       $data['category'] = 'diary';
       $data['page'] = 'chartsammount';
@@ -144,9 +151,9 @@
       $total = 0; 
       foreach ($data['pays'] as $r) {
         $res .= '<tr>';
-        $res .= '<td class="center">'.$r->FechaTransaction." - ".$r->HoraTransaction.'</td>';
-        $res .= '<td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td>';
         $res .= '<td class="center">'.$r->Detalle.'</td>';
+        $res .= '<td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td>';
+        $res .= '<td class="center">'.$r->FechaTransaction." - ".$r->HoraTransaction.'</td>';
         $res .= '<td class="center">';
         
         if( $this->Account_Model->get_profile() == "1" ){
