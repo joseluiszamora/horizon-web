@@ -154,6 +154,13 @@
         $res .= '<td class="center">'.$r->Detalle.'</td>';
         $res .= '<td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td>';
         $res .= '<td class="center">'.$r->FechaTransaction." - ".$r->HoraTransaction.'</td>';
+        
+        if ($r->Origen == "A") {
+          $res .= '<td class="center">Android</td>';
+        }else{
+          $res .= '<td class="center">Web</td>';
+        }
+        
         $res .= '<td class="center">';
         
         if( $this->Account_Model->get_profile() == "1" ){

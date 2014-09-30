@@ -318,6 +318,8 @@
           if ($JSON_decode->transactionPrestamo == "1") {
             $data_diary['FechaRegistro'] = date("y-m-d");
             $data_diary['FechaTransaction'] = date("Y-m-d",strtotime($JSON_decode->timeStart));
+            $data_diary['HoraTransaction'] = date("H:i:s",strtotime($JSON_decode->timeStart));
+
             $data_diary['idUser'] = $this->Account_Model->get_user_id($JSON_decode->userMail);
             $data_diary['idUserSupervisor'] = "1";
             $data_diary['idTransaction'] = $insertcode;
@@ -501,11 +503,34 @@
       $data_in['Detalle'] = $JSON_decode->NumVoucherPrestamo;
       $data_in['Origen'] = "A";
 
-      if ($this->Diary_Model->create($data_in) != null) {
+      /*if ($this->Diary_Model->create($data_in) != null) {
+        $result = "ok";
+      }else{
+        $result = "FAILLL";
+      }*/
+
+      $id = $this->Diary_Model->create($data_in);
+      if ($id != null) {
+        $allpays = $this->Diary_Model->get_all_pay_for($data_in);
+        $balance = $this->Diary_Model->get_ammount($data_in);
+
+        if ($allpays >= $balance[0]->Monto ){
+          $this->Diary_Model->set_status($balance[0]->iddiario, 2);
+          $diaries_list = $this->Diary_Model->get_diaries_by_params($balance[0]->NumVoucher, $balance[0]->idCustomer, "C");
+
+          foreach ($diaries_list as $dl) {
+            $this->Diary_Model->set_status($dl->iddiario, 2);
+          }
+        }
+
         $result = "ok";
       }else{
         $result = "FAILLL";
       }
+
+
+
+
       echo $result;
     }
 
