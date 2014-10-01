@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>js/highcharts.js"></script>
+<script src="<?php echo base_url(); ?>js/highcharts/highcharts.js"></script>
 <script src="<?php echo base_url(); ?>js/data.js"></script>
 <script src="<?php echo base_url(); ?>js/exporting.js"></script>
 

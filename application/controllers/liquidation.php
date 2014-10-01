@@ -21,9 +21,11 @@
     }
 
     function index() {
-      $data['category'] = 'liquidation';
-      $data['page'] = 'index';
-      $this->load->view('template/template_liquidation', $data);
+      /*$data['category'] = 'liquidation';
+      $data['page'] = 'template_estatistics';
+      $data['section'] = 'statistics_1';
+      $this->load->view('template/template_liquidation', $data);*/
+      $this->statistics_1(null);
     }
 
     function create() {
@@ -632,6 +634,14 @@
       $data['charges'] = $this->Liquidation_Model->search($data_in);
       $data['category'] = 'liquidation';
       $data['page'] = 'history_list';
+      $this->load->view('template/template_liquidation', $data);
+    }
+
+    /* Estadisticas */
+    function statistics_1($data_in) {
+      $data['category'] = 'liquidation';
+      $data['page'] = 'template_estatistics';
+      $data['section'] = 'statistics_1';
       $this->load->view('template/template_liquidation', $data);
     }
   }

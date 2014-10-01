@@ -111,18 +111,57 @@ app.controller('LiquidationController', ['$http', function( $http ){
       case "creado":
         angular.forEach($lines, function(line) {
           angular.forEach(line.products, function(product) {
-            if (product.chargeP > 0 && product.chargeU > 0)
+            if (product.chargeP > 0 || product.chargeU > 0){
               $flag = true;
+            }
           });
         });
         break;
       case "cargado":
+        angular.forEach($lines, function(line) {
+          angular.forEach(line.products, function(product) {
+            if (product.chargeExtraP1 > 0 || product.chargeExtraU1 > 0){
+              $flag = true;
+            }
+          });
+        });
         break;
       case "cargaextra1":
+        angular.forEach($lines, function(line) {
+          angular.forEach(line.products, function(product) {
+            if (product.chargeExtraP2 > 0 || product.chargeExtraU2 > 0){
+              $flag = true;
+            }
+          });
+        });
         break;
       case "cargaextra2":
+        angular.forEach($lines, function(line) {
+          angular.forEach(line.products, function(product) {
+            if (product.chargeExtraP3 > 0 || product.chargeExtraU3 > 0){
+              $flag = true;
+            }
+          });
+        });
+        break;
+      case "cargafinal":
+        angular.forEach($lines, function(line) {
+          angular.forEach(line.products, function(product) {
+            if (product.devolutionP > 0 || product.devolutionU > 0){
+              $flag = true;
+            }
+          });
+        });
         break;
       case "liquidation":
+        /*angular.forEach($lines, function(line) {
+          angular.forEach(line.products, function(product) {
+            if (product.ajusteP > 0 || product.ajusteU > 0){
+              $flag = true;
+            }
+          });
+        });*/
+        $flag = true;
         break;
       default:
     }
@@ -133,20 +172,25 @@ app.controller('LiquidationController', ['$http', function( $http ){
   this.saveAll = function () {
     //console.log(liquidation.expenses);
     $mark = $("#markLiquidation").html();
-    //console.log(ckeckIfSave($mark, liquidation.lines));
-    $("#btnsave").prop( "disabled", true );
-    var datasend = {
-      lines: liquidation.lines,
-      expenses: liquidation.expenses,
-      liquidation: $("#idLiquidation").html(),
-      mark: $("#markLiquidation").html()
-    };
-    //console.log(datasend.lines);
-    $http.post(url + 'liquidation/save_lines', datasend).success(
-      function (data, status, headers){
-      window.location = url + "liquidation/charge_list";
-      //console.log(data);
-    });
+    console.log(ckeckIfSave($mark, liquidation.lines));
+    
+    if (ckeckIfSave($mark, liquidation.lines)) {
+      $("#btnsave").prop( "disabled", true );
+      var datasend = {
+        lines: liquidation.lines,
+        expenses: liquidation.expenses,
+        liquidation: $("#idLiquidation").html(),
+        mark: $("#markLiquidation").html()
+      };
+      //console.log(datasend.lines);
+      $http.post(url + 'liquidation/save_lines', datasend).success(
+        function (data, status, headers){
+        window.location = url + "liquidation/charge_list";
+        //console.log(data);
+      });
+    }else{
+       alert("Para guardar esta carga debe ingresar algun producto");
+    }
   };
 
   this.getAmmountLineTotal = function (){
@@ -176,8 +220,6 @@ app.controller('LiquidationController', ['$http', function( $http ){
 
     return $sum;
   };
-
-
 }]);
 
 app.controller('ProductController', function(){
