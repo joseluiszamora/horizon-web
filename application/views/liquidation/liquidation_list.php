@@ -39,6 +39,7 @@
                 /*if(get_products_exception_count($row->idLiquidacion) > 0){
                   echo "Excepciones: <span class='badge'>42</span>";
                 }*/
+                echo anchor('liquidation/complete_charge/'.$row->idLiquidacion, '<span class="glyphicon glyphicon-ok"></span> Recontar Devoluciones', array('class' => 'btn btn-warning'));
               ?>
             </td>
             <td class="center">
