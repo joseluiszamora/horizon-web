@@ -111,9 +111,10 @@
       $this->form_validation->set_message('required', '%s es obligatorio.');
       $data_in['FechaRegistro'] = date("y-m-d");
       $data_in['FechaTransaction'] = $this->input->post('date');
+      $data_in['HoraTransaction'] = date("H:i:s");
       $data_in['idUser'] = $this->input->post('client');
       $data_in['idUserSupervisor'] = $this->Account_Model->get_user_id($this->session->userdata('email'));;
-      $data_in['idTransaction'] = "1";
+      $data_in['idTransaction'] = $this->input->post('transaction');
       $data_in['NumVoucher'] = $this->input->post('voucher');
       $data_in['idCustomer'] = $this->input->post('idCustomer');
       $data_in['Type'] = "C";
@@ -142,7 +143,7 @@
 
 
     function getpays(){
-      $data_in['voucher'] = $this->input->post('voucher');
+      $data_in['transaction'] = $this->input->post('transaction');
       $data_in['distributor'] = $this->input->post('distributor');
       $data_in['customer'] = $this->Client_Model->get_id_by_code_and_name($this->input->post('customer'));
       $data['pays'] = $this->Diary_Model->getpays($data_in);

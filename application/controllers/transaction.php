@@ -15,6 +15,7 @@
       $this->load->model('District_Model');
       $this->load->model('Channel_Model');
       $this->load->model('Client_Model');
+      $this->load->model('Diary_Model');
       if (!($this->Account_Model->logged_in() === TRUE)) {
         redirect('account/login');
       } else if (!($this->Permission_Model->check_if_access($this->Account_Model->get_profile(), 'transaction'))) {
@@ -283,6 +284,16 @@
       $this->load->view('template/template', $data);
     }
 
+    function create_diary() {
+      $data['category'] = 'transaction';
+      $data['city'] = $this->City_Model->get_cities($this->Account_Model->get_profile());
+      $data['area'] = $this->Area_Model->get_area($this->Account_Model->get_city());
+      $data['client'] = $this->Client_Model->get_clients();
+      $data['action'] = 'new';
+      $data['page'] = 'form_diary';
+      $this->load->view('template/template', $data);
+    }
+
     public function edit($id = "") {
       if ($id != "") {
         $transaction = $this->Transaction_Model->get($id);
@@ -395,6 +406,115 @@
             $data['category'] = 'transaction';
             $data['action'] = 'edit';
             $data['page'] = 'form';
+            $data['client'] = $this->Client_Model->get_clients();
+            $this->load->view('template/template', $data);
+          }
+        }
+      }
+    }
+
+    function save_diary() {
+      $this->form_validation->set_rules('code', 'Codigo', 'xss_clean|required|callback_code_check');
+      $this->form_validation->set_rules('status', 'Tipo de Transaccion', 'xss_clean|required');
+      $this->form_validation->set_rules('voucher', 'Numero de Factura', 'xss_clean|required');
+      $this->form_validation->set_message('required', 'El %s es obligatorio.');
+      $this->form_validation->set_error_delimiters('<div class="text-error">', '</div>'); 
+      $this->_code = $this->input->post('code');
+
+      if ($this->form_validation->run() == FALSE) {
+        if($this->input->post('form_action') == "save") {
+          $data['action'] = 'new';
+        }else {
+          $data['action'] = 'edit';
+        }
+        $data['client'] = $this->Client_Model->get_clients();
+        $data['category'] = 'transaction';
+        $data['page'] = 'form_diary';
+        $this->load->view('template/template', $data);
+      } else {
+        $data_in['idCustomer'] = $this->Client_Model->get_id_by_code($this->input->post('code'));
+        $data_in['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
+        //$data_in['Observacion'] = $this->input->post('obs');
+        if ($this->input->post('obs') == ""){
+          $data_in['Observacion'] = "Web";
+        }else{
+          $data_in['Observacion'] = $this->input->post('obs');
+        }
+        
+        //idUser  idCustomer  Observacion   Estado  Conciliado 
+
+        // Check if Save or Edit
+        if($this->input->post('form_action') == "save") {
+          $data_in['Estado'] = $this->input->post('status');
+          $data_in['Conciliado'] = "1";
+          $insertcode = $this->Transaction_Model->create($data_in);  // get new transaction code
+
+          if ( $insertcode === FALSE) {
+            $data['category'] = 'transaction';
+            $data['action'] = 'new';
+            $data['page'] = 'form_diary';
+            $data['client'] = $this->Client_Model->get_clients();
+            $this->load->view('template/template', $data);
+          } else {
+
+            // create diary
+
+            $data_diary['FechaRegistro'] = date("y-m-d");
+            $data_diary['FechaTransaction'] = date("Y-m-d");
+            $data_diary['HoraTransaction'] = date("H:i:s");
+
+            $data_diary['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
+            $data_diary['idUserSupervisor'] = "1";
+            $data_diary['idTransaction'] = $insertcode;
+            $data_diary['NumVoucher'] = $this->session->userdata('voucher');
+            
+            $data_diary['idCustomer'] = $data_in['idCustomer'];
+            $data_diary['Type'] = "P";
+            $data_diary['Monto'] = 0;
+            $data_diary['Estado'] = "1";
+            $data_diary['Detalle'] = "Web, desde una transaccion";
+            $data_diary['Origen'] = "W";
+
+            $this->Diary_Model->create($data_diary);
+
+
+            // create blog
+
+            $data_blog['idTransaction'] = $insertcode;
+            $data_blog['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
+            if ( $data_in['Estado'] == "1")
+              $data_blog['Operation'] = 'Preventa';
+            if ( $data_in['Estado'] == "6")
+              $data_blog['Operation'] = 'Venta Directa';
+            if ( $data_in['Estado'] == "7")
+              $data_blog['Operation'] = 'Transaccion 0';
+            $data_blog['FechaHoraInicio'] = date("y-m-d, g:i");
+            $data_blog['FechaHoraFin'] = date("y-m-d, g:i");
+            $data_blog['CoordenadaInicio'] = '0.0;0.0';
+            $data_blog['CoordenadaFin'] = '0.0;0.0';
+
+            if ($this->Blog_Model->create($data_blog) === TRUE) {
+              if ($this->input->post('status') != '7'){
+                $datainsert['statuscreate'] = "create";
+                redirect('transaction/products/'.$insertcode, $datainsert);
+              }
+              else
+                redirect('transaction');
+            } else {
+              $data['category'] = 'transaction';
+              $data['action'] = 'new';
+              $data['page'] = 'form_diary';
+              $data['client'] = $this->Client_Model->get_clients();
+              $this->load->view('template/template', $data);
+            }
+          }
+        }else{
+          if ($this->Transaction_Model->update($data_in, $idtransaction) === TRUE) {
+            redirect('transaction');
+          } else {
+            $data['category'] = 'transaction';
+            $data['action'] = 'edit';
+            $data['page'] = 'form_diary';
             $data['client'] = $this->Client_Model->get_clients();
             $this->load->view('template/template', $data);
           }

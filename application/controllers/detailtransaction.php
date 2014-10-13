@@ -5,6 +5,7 @@
       $this->load->model('Product_Model');
       $this->load->model('Detailtransaction_Model');
       $this->load->model('Linevolume_Model');
+      $this->load->model('Diary_Model');
     }
 
     function index() {
@@ -77,6 +78,7 @@
           $data['products'] = $products;
           $this->load->view('template/template', $data);
         } else {
+
           $data_in['idTransaction'] = $this->input->post('idtransaction');
           $data_in['idProduct'] = $this->input->post('product');
           $data_in['Cantidad'] = $this->input->post('cantidad');
@@ -97,13 +99,24 @@
             $data_in['Observacion'] = $this->input->post('obs');
           }
 
-          // verify if exist product
-          
+
+          /** SAVE DAILY **/
+          if ($this->Diary_Model->check_if_exist_by_transaction($data_in['idTransaction'])) {
+            // update diary ammount
+            $diary = $this->Diary_Model->get_by_transaction($data_in['idTransaction']);
+            $newAmmount = ($diary[0]->Monto + ($this->Product_Model->get_price($data_in['idProduct']) * $data_in['Cantidad']));
+            //print_r($newAmmount);
+            //new ammount
+            $data_diary['Monto'] = $newAmmount;
+            
+            print_r($this->Diary_Model->update($data_diary, $diary[0]->iddiario));
+          }
+          /** SAVE DAILY **/
+
+
           if ($this->Detailtransaction_Model->check_if_exist_product($this->input->post('idtransaction'), $this->input->post('product')) === TRUE) {
 
             $objtrans = $this->Detailtransaction_Model->get_by_trans_prod($this->input->post('idtransaction'), $this->input->post('product'));
-            //echo "<br><br><br><br><br><br><br>";
-            //print_r($objtrans);
             $data_in['Cantidad'] = $objtrans[0]->Cantidad + $this->input->post('cantidad');  
             $result = $this->Detailtransaction_Model->update($data_in, $objtrans[0]->idDetailTransaction);
 

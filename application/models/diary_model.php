@@ -31,8 +31,27 @@ class Diary_model extends CI_Model {
     return $query->result();
   }
 
+  function get_by_transaction($idtransaction) {
+    $query = $this->db->get_where('daily',array('idTransaction'=>$idtransaction));
+    return $query->result();
+  }
+
   function check_if_exist($code) {
     $this->db->where('NumVoucher', $code);
+    //$this->db->where('idCustomer', $customer);
+    $this->db->where('Type', "P");
+    $this->db->where('Estado', "1");
+    $this->db->from('daily');
+    if ($this->db->count_all_results() > 0) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  // check by transaction
+  function check_if_exist_by_transaction($transaction) {
+    $this->db->where('idTransaction', $transaction);
     //$this->db->where('idCustomer', $customer);
     $this->db->where('Type', "P");
     $this->db->where('Estado', "1");
@@ -120,11 +139,11 @@ Detalle
     $querystring .= '
       SELECT * 
       FROM daily
-      WHERE NumVoucher = "'.$data_in['voucher'].'" 
+      WHERE idTransaction = "'.$data_in['transaction'].'" 
     ';
-    if(isset($data_in['customer'])){
+    /*if(isset($data_in['customer'])){
       $querystring .= ' AND idCustomer = "'.$data_in['customer'].'" ';
-    }
+    }*/
     $querystring .= ' AND Type = "C" ';
     $query = $this->db->query($querystring);
     return $query->result();
@@ -498,6 +517,14 @@ Detalle
     }
 
     return $sum;
+  }
+
+  function update($data, $id) {
+    $this->db->where('iddiario', $id);
+    if ($this->db->update('daily', $data)) {
+      return TRUE;
+    }
+    return FALSE;
   }
 }
 ?>

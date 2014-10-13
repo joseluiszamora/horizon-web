@@ -119,7 +119,8 @@
                     <th class="center"  colspan="3">&nbsp;</th>
                   </tr>
                   <tr>
-                    <th class="center">Fecha(Transacción)</th>
+                    <th class="center">Transacción</th>
+                    <th class="center">Fecha</th>
                     <th class="center">Mora(Dias)</th>
                     <th class="center">Distribuidor</th>
                     <th class="center">Cliente</th>
@@ -145,6 +146,9 @@
                       $moradate = dateDiff(date("Y-m-d"), $row->FechaTransaction);
                   ?>
                     <tr class="even gradeX">
+                      <td class="center">
+                        <?php echo $row->idTransaction; ?>
+                      </td>
                       <td class="center"><?php echo $row->FechaTransaction; ?></td>
                       <td class="center"><?php echo $moradate; ?></td>
                       <td class="center"><?php echo $row->customer; ?></td>
@@ -184,6 +188,7 @@
                               echo form_hidden('idCustomer', $row->idCustomer);
                               echo form_hidden('distributor', $row->idCustomer);
                               echo form_hidden('client', $row->idUser);
+                              echo form_hidden('transaction', $row->idTransaction);
                             ?>
 
                               <fieldset>
@@ -292,7 +297,8 @@
                 <tfoot>
                   <tr>
                     <th class="center">&nbsp;</th>
-                    <th class="center">Fecha(Transacción)</th>
+                    <th class="center">Transacción</th>
+                    <th class="center">Fecha</th>
                     <th class="center">Mora</th>
                     <th class="center">Distribuidor</th>
                     <th class="center">Cliente</th>
@@ -304,21 +310,6 @@
                     <th class="center">&nbsp;</th>
                   </tr>
                 </tfoot>
-                <!--<tfoot>
-                  <tr>
-                    <th class="center">&nbsp;</th>
-                    <th><input type="text" name="search_engine" placeholder="fecha" class="search_init span1" /></th>
-                    <th><input type="text" name="search_browser" placeholder="mora" class="search_init span1" /></th>
-                    <th><input type="text" name="search_platform" placeholder="distribuidor" class="search_init span1" /></th>
-                    <th><input type="text" name="search_platform" placeholder="cliente" class="search_init span1" /></th>
-                    <th><input type="text" name="search_version" placeholder="Voucher" class="search_init span1" /></th>
-                    <th><input type="text" name="search_grade" placeholder="Total" class="search_init span1" /></th>
-                    <th><input type="text" name="search_version" placeholder="Saldo" class="search_init span1" /></th>
-                    <th><input type="text" name="search_grade" placeholder="detalle" class="search_init span1" /></th>
-                    <th class="center">&nbsp;</th>
-                    <th class="center">&nbsp;</th>
-                  </tr>
-                </tfoot>-->
             </table>
 
           </fieldset>
@@ -351,13 +342,15 @@
   /* Formating function for row details */
   function fnFormatDetails ( oTable, nTr ){
     var aData = oTable.fnGetData( nTr );
+    
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" class="table table-striped table-bordered">';
     sOut +=  '<thead><tr><th class="center" style="text-align:center;">Recibo</th><th class="center" style="text-align:center;">Monto</th><th class="center" style="text-align:center;">Fecha  y Hora de Pago</th><th class="center" style="text-align:center;">Origen</th><th class="center">&nbsp;</th></tr></thead>';
-     
+
+    
     $.ajax({
       type: "POST",
       url: '<?php echo base_url(); ?>index.php/diary/getpays',
-      data: 'voucher='+aData[5]+'&distributor='+aData[3]+'&customer='+aData[4],
+      data: 'transaction='+aData[1]+'&distributor='+aData[4]+'&customer='+aData[5],
       dataType: "text",
       cache: false,
       async: false,
@@ -369,6 +362,8 @@
     sOut += '</table>';
 
     return sOut;
+
+    //transactionCode
   }
 
   // add row details
@@ -456,6 +451,7 @@
       "sPaginationType": "full_numbers",
       "aoColumns": [
           null,
+          { "sType" : "string" },
           { "sType" : "date" },
           { "sType" : "numeric" },
           { "sType" : "string" },

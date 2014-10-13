@@ -12,9 +12,15 @@
           <li class="active"><a href="#tab1" data-toggle="tab">Todos</a></li>
           <li><?php if($this->Account_Model->get_profile() == '1' || $this->Account_Model->get_profile() == '2'){ ?>
             <!-- Button to trigger modal -->
-            <a href="#modal-diarycreate" role="button" class="btnAdd btnTitle btn btn-primary" data-toggle="modal">PRESTAMOS</a>
+            <?php echo anchor('transaction/create_diary', 'Prestamos', array('class'=>'btnAdd btnTitle btn btn-primary')); ?>
 
-            <!-- Modal -->
+            <!-- Button to trigger modal
+            <a href="#modal-diarycreate" role="button" class="btnAdd btnTitle btn btn-primary" data-toggle="modal">PRESTAMOS</a> -->
+
+            <!-- Button to trigger modal
+            <a href="#modal-diarycreate" role="button" class="btnAdd btnTitle btn btn-primary" data-toggle="modal">PRESTAMOS</a> -->
+
+            <!-- Modal 
             <div id="modal-diarycreate" class="modal hide fade modalbig" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -38,17 +44,17 @@
                       <tr class="even gradeX">
                         <td class="center" id ="distributorDropdown">
                           <?php
-                            echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
+                            //echo form_dropdown('distributor', $distributor, '', 'class="chosen-select2"');
                           ?>
                         </td>
                         <td class="" id ="clientDropdown">
                           <?php
-                            echo form_dropdown('client', $clients, '', 'class="chosen-select2"');
+                            //echo form_dropdown('client', $clients, '', 'class="chosen-select2"');
                           ?>
                         </td>
                         <td class="center">
                           <?php 
-                            echo form_input(array('name' => 'date', 'class' => 'datecontainer datepicker datemedium', 'value' => date("Y-m-d"))); 
+                            //echo form_input(array('name' => 'date', 'class' => 'datecontainer datepicker datemedium', 'value' => date("Y-m-d"))); 
                           ?>
                         </td> 
                         <td class="center"><input id="voucher" type="text" class="span1" value="" ></td>
@@ -79,14 +85,14 @@
               </div>
               <div class="modal-footer">
                 <div id="formSaveBlock">
-                  <?php echo form_open('diary/saveblock'); ?>  
+                  <?php //echo form_open('diary/saveblock'); ?>  
                   <input type="hidden" value="" name="distributor" id="distributor" >
                   <input type="hidden" value="" name="date" id="date" >
                   <input type="hidden" value="" name="voucher" id="voucher" >
                   <input type="hidden" value="" name="client" id="client" >
                   <input type="hidden" value="" name="ammount" id="ammount" >
                   <input type="hidden" value="" name="detail" id="detail" >
-                  <?php echo form_close(); ?>  
+                  <?php //echo form_close(); ?>  
                 </div>
 
 
@@ -96,10 +102,10 @@
 
                 <input class="btn btn-primary" type="submit" name="submit" id="btnSave" value="Guardar" />
               </div>
-            </div>
+            </div> -->
 
 
-            <!-- Modal cancel prestamos -->
+            <!-- Modal cancel prestamos 
             <div id="modal-cancel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -112,9 +118,7 @@
                 <button class="btn" id="cancelPrestamosNo">No</button>
                 <button class="btn btn-primary" id="cancelPrestamosOk">Si, cancelar</button>
               </div>
-            </div>
-
-
+            </div> -->
 
 
           <?php } ?></li>
