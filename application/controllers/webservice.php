@@ -491,16 +491,18 @@
 
       $data_in['FechaRegistro'] = date("y-m-d");
       $data_in['FechaTransaction'] = $JSON_decode->FechaTransaction;
-      $data_in['HoraTransaction'] = $JSON_decode->HoraTransaction;
+      if (isset($JSON_decode->HoraTransaction) && $JSON_decode->HoraTransaction != "") {
+        $data_in['HoraTransaction'] = $JSON_decode->HoraTransaction;
+      }
       $data_in['idUser'] =  $this->Account_Model->get_user_id($JSON_decode->idUser);
       $data_in['idUserSupervisor'] = "1";
       $data_in['idTransaction'] = $JSON_decode->idTransaction;
-      $data_in['NumVoucher'] = $JSON_decode->NumVoucher;
+      $data_in['NumVoucher'] = $JSON_decode->NumVoucherPrestamo;
       $data_in['idCustomer'] = $JSON_decode->idCustomer;
       $data_in['Type'] = "C";
       $data_in['Monto'] = $JSON_decode->Monto;
       $data_in['Estado'] = "1";
-      $data_in['Detalle'] = $JSON_decode->NumVoucherPrestamo;
+      $data_in['Detalle'] = "";
       $data_in['Origen'] = "A";
 
       /*if ($this->Diary_Model->create($data_in) != null) {

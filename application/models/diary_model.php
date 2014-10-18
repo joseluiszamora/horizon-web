@@ -209,7 +209,7 @@ Detalle
       SUM(daily.Monto) as saldo
     ' );
     $this->db->from('daily');
-    $this->db->where('NumVoucher', $data_in['NumVoucher']);
+    $this->db->where('idTransaction', $data_in['idTransaction']);
     $this->db->where('idCustomer', $data_in['idCustomer']);
     $this->db->where('Type', "C");
     $query = $this->db->get();
@@ -225,8 +225,8 @@ Detalle
   function get_ammount($data_in){
     $this->db->select( ' * ' );
     $this->db->from('daily');
-    $this->db->where('NumVoucher', $data_in['NumVoucher']);
-    $this->db->where('idCustomer', $data_in['idCustomer']);
+    $this->db->where('idTransaction', $data_in['idTransaction']);
+    //$this->db->where('idCustomer', $data_in['idCustomer']);
     $this->db->where('Type', "P");
     $query = $this->db->get();
     return $query->result();

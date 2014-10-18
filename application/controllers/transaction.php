@@ -466,7 +466,7 @@
             $data_diary['idUser'] = $this->Account_Model->get_user_id($this->session->userdata('email'));
             $data_diary['idUserSupervisor'] = "1";
             $data_diary['idTransaction'] = $insertcode;
-            $data_diary['NumVoucher'] = $this->session->userdata('voucher');
+            $data_diary['NumVoucher'] = $this->input->post('voucher');
             
             $data_diary['idCustomer'] = $data_in['idCustomer'];
             $data_diary['Type'] = "P";
@@ -475,8 +475,9 @@
             $data_diary['Detalle'] = "Web, desde una transaccion";
             $data_diary['Origen'] = "W";
 
-            $this->Diary_Model->create($data_diary);
+            print_r($data_diary);
 
+            $this->Diary_Model->create($data_diary);
 
             // create blog
 

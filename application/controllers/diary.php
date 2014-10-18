@@ -152,7 +152,7 @@
       $total = 0; 
       foreach ($data['pays'] as $r) {
         $res .= '<tr>';
-        $res .= '<td class="center">'.$r->Detalle.'</td>';
+        $res .= '<td class="center">'.$r->NumVoucher.'</td>';
         $res .= '<td class="center">'.$this->Diary_Model->roundnumber($r->Monto, 2).'</td>';
         $res .= '<td class="center">'.$r->FechaTransaction." - ".$r->HoraTransaction.'</td>';
         

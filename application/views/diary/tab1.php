@@ -137,7 +137,7 @@
                   <?php 
                     foreach ($diaries as $row) {
                       
-                      $data_in['NumVoucher'] = $row->NumVoucher;
+                      $data_in['idTransaction'] = $row->idTransaction;
                       $data_in['idCustomer'] = $row->idCustomer;
 
                       $pagado = $this->Diary_Model->get_all_pay_for($data_in);                      
@@ -184,7 +184,7 @@
                               $attributes = array('class' => 'formaddpay');
 
                               echo form_open('diary/addpay', $attributes);
-                              echo form_hidden('voucher', $row->NumVoucher);
+                              //echo form_hidden('voucher', $row->NumVoucher);
                               echo form_hidden('idCustomer', $row->idCustomer);
                               echo form_hidden('distributor', $row->idCustomer);
                               echo form_hidden('client', $row->idUser);
@@ -210,9 +210,11 @@
 
                                 <div class="well well-small row logincontainer">
                                     <div class="control-group span2">
-                                      <label class="control-label" for="ammount">Monto (Max: <?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>):</label>
+                                      <label class="control-label" for="voucher">Factura:</label>
                                       <div class="controls">
-                                        <input type="text" max="<?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>" class="ammountfield money" value="" name="ammount" id="ammount" required/><br>
+                                        <?php 
+                                          echo form_input(array('name' => 'voucher', 'id' => 'voucher', 'class' => 'span1', 'value' => '')); 
+                                        ?>
                                       </div>
                                     </div>
 
@@ -224,8 +226,15 @@
                                         ?>
                                       </div>
                                     </div>
-
+                                    
                                     <div class="control-group span3">
+                                      <label class="control-label" for="ammount">Monto (Max: <?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>):</label>
+                                      <div class="controls">
+                                        <input type="text" max="<?php echo $this->Diary_Model->roundnumber($saldo, 2); ?>" class="ammountfield money" value="" name="ammount" id="ammount" required/><br>
+                                      </div>
+                                    </div>
+
+                                    <div class="control-group span6">
                                       <label class="control-label" for="ammount">Detalle:</label>
                                       <div class="controls">
                                         <?php
@@ -305,7 +314,7 @@
                     <th class="center">Recibo</th>
                     <th class="center">Total</th>
                     <th class="center">Saldo</th>
-                    <th class="center">Detalle</th>
+                    <th class="center">Origen</th>
                     <th class="center">&nbsp;</th>
                     <th class="center">&nbsp;</th>
                   </tr>
@@ -391,6 +400,15 @@
       $(obj).find(".text-error").remove();
       ammount = Number($(obj).find("#ammount").val().replace(/[^0-9\.]+/g,""));
       max = Number($(obj).find("#ammount").attr("max").replace(/[^0-9\.]+/g,""));
+      voucher = $(obj).find("#voucher").val();
+      console.log(obj);
+      console.log(voucher);
+
+
+      if (voucher.trim() == "" || voucher.trim() == null) {
+        flag = false;
+        $(obj).find("#voucher").parents(".controls").append("<span class='text-error'>Introduzca una Factura</span>");
+      }
 
       if (ammount == "" || ammount == "0") {
         flag = false;
