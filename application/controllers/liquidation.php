@@ -496,7 +496,7 @@
       foreach ($products as $rowproduct){
         $data_pro['idLiquidacion'] = $idLiquidacion;
         $data_pro['idProduct'] = $rowproduct->idProduct;
-        if (!($this->input->post('lastliquid') == "true")){
+        if ($this->input->post('lastliquid') == "true"){
           $data_pro['carga0'] = $this->Liquidation_Model->charge_last_devolutions($rowproduct->idProduct, $this->input->post('distributor'), $this->input->post('date'));
         }
 

@@ -65,7 +65,7 @@
                   );
                   echo form_checkbox($data);
                 ?>
-                <b>NO cargar la ultima liquidación</b>
+                <b>Cargar la ultima liquidación</b>
               </label>
             </div>
           </div>
@@ -101,7 +101,8 @@
         <div class="form-group">
           <div class="col-xs-offset-2 col-xs-10">
             <input id="saveform" type="submit" value="Crear" name="submit" class="btn btn-primary">
-            <a class="btnTitle btn btn-info" href="http://localhost/horizon/index.php/user">Cancelar</a>
+
+            <?php echo anchor('liquidation', 'Cancelar', array('class'=>'btnTitle btn btn-info')); ?>
 
           </div>
         </div>

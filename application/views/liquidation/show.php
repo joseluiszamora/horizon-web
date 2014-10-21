@@ -181,8 +181,8 @@
                             <td class="unity info" ng-show="liquidation.mark === 'completado'">{{ calculateSoldU(product) }}</td>
 
                             <!-- Venta Android -->
-                            <td class="unity success" ng-show="liquidation.mark === 'completado'">0</td>
-                            <td class="unity success" ng-show="liquidation.mark === 'completado'">0</td>
+                            <td class="unity success" ng-show="liquidation.mark === 'completado'">{{ product.androidP }}</td>
+                            <td class="unity success" ng-show="liquidation.mark === 'completado'">{{ product.androidU }}</td>
 
                             <!-- total venta -->
                             <!--<td class="unity">{{ getTotalAmmount(product) }}</td>-->
