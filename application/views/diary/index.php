@@ -122,6 +122,7 @@
 
 
           <?php } ?></li>
+          <li class="tab2"><?php echo anchor('diary/chartsClients', 'Clientes', array('class' => '')); ?></li>
           <li class="tab2"><?php echo anchor('diary/chartsAmmount', 'Estadisticas Montos', array('class' => '')); ?></li>
           <li class="tab2"><?php echo anchor('diary/chartsDistrib', 'Estadisticas Distribuidores', array('class' => '')); ?></li>
         </ul>

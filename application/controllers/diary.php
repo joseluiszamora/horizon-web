@@ -54,6 +54,27 @@
       $data['page'] = 'chartsdistrib';
       $this->load->view('template/template', $data);
     }
+    // busqueda y estadistica de clientes
+    function chartsClients(){
+      $data_in['status'] = "1";
+      $data_in['type'] = "P";
+      $data['total'] = $this->Diary_Model->ammounts_search($data_in);
+      $data['diaries'] = $this->Diary_Model->search($data_in);
+      $data_in['type'] = "C";
+      $data['saldo'] = $this->Diary_Model->ammounts_search($data_in);
+      //$data['diaries'] = $this->Diary_Model->get_diaries();
+      $data['balance'] = $this->Diary_Model->get_balance();
+      $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
+      $data['clients'] = $this->Client_Model->get_clients();
+      $data_index['order'] = "customer.NombreTienda";
+      $data_index['status'] = "1";
+      $search_parameters = http_build_query($data_index);
+      $data['search_parameters'] = $search_parameters;
+
+      $data['category'] = 'diary';
+      $data['page'] = 'chartsclients';
+      $this->load->view('template/template', $data);
+    }
 
     function create() {
       $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
