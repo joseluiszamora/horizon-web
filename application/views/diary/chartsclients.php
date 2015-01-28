@@ -13,7 +13,6 @@
       $diff = 0;
     return $diff;
   }
-
 ?>
 
 <div class="row" style="overflow:hidden;">

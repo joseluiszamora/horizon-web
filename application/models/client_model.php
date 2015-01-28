@@ -555,6 +555,29 @@ class Client_model extends CI_Model {
       return $this->db->count_all_results();
     }
 
+    function get_client_by_name($Code) {
+      $query = $this->db->get_where('customer',array('NombreTienda'=>$Code, 'Estado'=>'1'));
+      return $query->result();
+    }
+
+    public function buscador_por_nombre_cliente($abuscar){
+      //usamos after para decir que empiece a buscar por
+      //el principio de la cadena
+      //ej SELECT localidad from localidades_es 
+      //WHERE localidad LIKE '%$abuscar' limit 12
+      $this->db->select('NombreTienda, CodeCustomer');
+      $this->db->like('NombreTienda',$abuscar);
+      $this->db->where('Estado', '1');
+      $resultados = $this->db->get('customer', 12);
+      //si existe algún resultado lo devolvemos
+      if($resultados->num_rows() > 0) {
+        return $resultados->result();
+      //en otro caso devolvemos false
+      }else{
+        return FALSE;
+      }
+    }
+
 }
 
 ?>

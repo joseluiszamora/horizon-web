@@ -265,6 +265,9 @@ Detalle
     if(isset($data_in['distributor']) && $data_in['distributor'] != "" && $data_in['distributor'] != "0"){
       $this->db->where('daily.idUser',$data_in['distributor']);
     }
+    if(isset($data_in['codeCustomer']) && $data_in['codeCustomer'] != "" && $data_in['codeCustomer'] != "0"){
+      $this->db->where('customer.CodeCustomer',$data_in['codeCustomer']);
+    }
     if(isset($data_in['dateStart']) && $data_in['dateStart'] != ""){
       $fecha = $data_in['dateStart'];
       $nuevafecha = strtotime ( '-1 day' , strtotime ( $fecha ) ) ;

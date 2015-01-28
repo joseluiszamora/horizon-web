@@ -2,6 +2,8 @@
   class Diary extends  CI_Controller {   
     public function __construct() {
       parent::__construct();
+
+      $this->load->helper('url');
       
       $this->load->model('Diary_Model');
       $this->load->model('User_Model');
@@ -27,6 +29,28 @@
       $data['clients'] = $this->Client_Model->get_clients();
       $data['category'] = 'diary';
       $data['page'] = 'index';
+
+      $data_index['order'] = "customer.NombreTienda";
+      $data_index['status'] = "1";
+      $search_parameters = http_build_query($data_index);
+      $data['search_parameters'] = $search_parameters;
+
+      $this->load->view('template/template', $data);
+    }
+
+    function searchByClient() {
+      $data_in['status'] = "1";
+      $data_in['type'] = "P";
+      $data['total'] = $this->Diary_Model->ammounts_search($data_in);
+      $data['diaries'] = $this->Diary_Model->search($data_in);
+      $data_in['type'] = "C";
+      $data['saldo'] = $this->Diary_Model->ammounts_search($data_in);
+      //$data['diaries'] = $this->Diary_Model->get_diaries();
+      $data['balance'] = $this->Diary_Model->get_balance();
+      $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
+      $data['clients'] = $this->Client_Model->get_clients();
+      $data['category'] = 'diary';
+      $data['page'] = 'searchByClient';
 
       $data_index['order'] = "customer.NombreTienda";
       $data_index['status'] = "1";
@@ -325,6 +349,63 @@
       //print_r($parameters);
       $templateView = $this->load->view('template/template_pdf', $data, TRUE);
       exportMeAsDOMPDF($templateView, "report");
+    }
+
+    public function autocompletar() {
+      //si es una petición ajax y existe una variable post
+      if($this->input->is_ajax_request() && $this->input->post('info')){
+        $abuscar = $this->security->xss_clean($this->input->post('info'));
+        $search = $this->Client_Model->buscador_por_nombre_cliente($abuscar);
+        //si search es distinto de false significa que hay resultados
+        //y los mostramos con un loop foreach
+        if($search !== FALSE) {
+            foreach($search as $fila) { ?>
+            <p><a href=""><?php echo $fila->CodeCustomer." - ".$fila->NombreTienda; ?></a></p>
+              <?php }
+        //en otro caso decimos que no hay resultados
+        }else{
+          ?>
+          <p><?php echo 'No hay resultados' ?></p>
+          <?php
+        }
+      }
+    }
+
+    public function user_data_submit() {
+      $data_in = array(
+        'client' => $this->input->post('client'),
+        'status' => $this->input->post('status'),
+        'datestart' => $this->input->post('datestart'),
+        'datefinish' => $this->input->post('datefinish'),
+        //'codecustomer' => "03120",
+        'type' => "P"
+      );
+      
+      $resultSearch = $this->Diary_Model->search($data_in);
+      echo json_encode($resultSearch);
+      /*
+      $data['balance'] = $this->Diary_Model->get_balance();
+      
+      $data['parameters'] = $data_in;
+      $data['total'] = $this->Diary_Model->ammounts_search($data_in);
+      $data_in['type'] = "C";
+      $data['saldo'] = $this->Diary_Model->ammounts_search($data_in);
+      $data['distributor'] = $this->User_Model->get_users_by_profile_no_admin();
+      $data['clients'] = $this->Client_Model->get_clients();
+      $data['category'] = 'diary';
+      $data['page'] = 'index';
+      
+      // remake customer by name
+      if (isset($data_in['distributor']) && ($data_in['distributor']!="") && ($data_in['distributor']!="0")){
+        $dist = $this->User_Model->get($data_in['distributor']);
+        $data_in['distributor_name'] = $dist[0]->Nombre." ".$dist[0]->Apellido;
+      }
+      $data_index['order'] = "customer.NombreTienda";
+      $search_parameters = http_build_query($data_in);
+      $data['search_parameters'] = $search_parameters;
+      
+      $this->load->view('template/template', $data);
+      */
     }
   }
 ?>
