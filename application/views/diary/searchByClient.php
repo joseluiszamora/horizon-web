@@ -46,7 +46,7 @@
                 <label class="control-label" for="city">Cliente</label>
                 <div class="controls">
                   <div class="wrapper">
-                    <input id="clientInput" type="text" name="autocompletar" maxlength="15" onpaste="return false" class="autocompletar" placeholder="Escribe tu búsqueda" />
+                    <input customerid="0" id="clientInput" type="text" name="autocompletar" maxlength="15" onpaste="return false" class="autocompletar" placeholder="Escribe tu búsqueda" />
                     <div class="contenedor"></div>
                   </div>
                 </div>
@@ -64,9 +64,9 @@
                     );
 
                     if (isset($parameters['status'])) {
-                      echo form_dropdown('status', $options, $parameters['status'], 'class="chosen-select" ', 'id="statusInput" ');
+                      echo form_dropdown('statusInput', $options, $parameters['status'], 'class="chosen-select" ', 'id="statusInput" ');
                     }else{
-                      echo form_dropdown('status', $options, '', 'class="chosen-select" ', 'id="statusInput" ');
+                      echo form_dropdown('statusInput', $options, '', 'class="chosen-select" ', 'id="statusInput" ');
                     }
                   ?>
                 </div>
@@ -154,9 +154,18 @@
         }else{
           $(".contenedor").html('');
         }
+
+        $(".customerElement").click(function() {
+          var customer = $(this).html();
+          cust = customer.split(" - ");
+
+          $("#clientInput").attr("customerid", cust[0]);
+          $("#clientInput").val(cust[1]);
+          $(".contenedor").css("display", "none");
+        });
       })
     })
-    $(".contenedor").find("a").live('click',function(e){
+    $(".contenedor").find("a").on('click',function(e){
       e.preventDefault();
       alert($(this).html());
     });
@@ -164,8 +173,8 @@
 
   $("#btnSearch").click(function(event) {
     event.preventDefault();
-    var client = $("#clientInput").val();
-    var status = $("#statusInput").val();
+    var client = $("#clientInput").attr("customerid");
+    var status = $("select[name=statusInput]").val();
     var datestart = $("#dateStartInput").val();
     var datefinish = $("#dateFinishInput").val();
 
@@ -182,16 +191,12 @@
           /*jQuery("div#result").show();
           jQuery("div#value").html(res.username);
           jQuery("div#value_pwd").html(res.pwd);*/
-
           $res='';
           $.each(res,function(code,name){
             /*opt.val(id);
             opt.text(name);
             $($to).append(opt);*/
             //console.log(this.iddiario)
-
-
-
             $res+='<tr class="even gradeX">';
               $res+='<td class="center">'+this.idTransaction+'</td>';
               $res+='<td class="center">'+this.FechaTransaction+'</td>';
@@ -229,5 +234,10 @@
   .contenedor p a {
     color: #fff;
     text-decoration: none;
+  }
+  .customerElement{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
   }
 </style>

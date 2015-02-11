@@ -360,8 +360,10 @@
         //y los mostramos con un loop foreach
         if($search !== FALSE) {
             foreach($search as $fila) { ?>
-            <p><a href=""><?php echo $fila->CodeCustomer." - ".$fila->NombreTienda; ?></a></p>
-              <?php }
+              <p>
+                <a class="customerElement"><?php echo $fila->CodeCustomer." - ".$fila->NombreTienda; ?></a>
+              </p>
+            <?php }
         //en otro caso decimos que no hay resultados
         }else{
           ?>
@@ -373,11 +375,11 @@
 
     public function user_data_submit() {
       $data_in = array(
-        'client' => $this->input->post('client'),
-        'status' => $this->input->post('status'),
-        'datestart' => $this->input->post('datestart'),
-        'datefinish' => $this->input->post('datefinish'),
-        //'codecustomer' => "03120",
+        
+        //'codeCustomer' => $this->input->post('client'),
+        //'status' => $this->input->post('status'),
+        //'datestart' => $this->input->post('datestart'),
+        //'datefinish' => $this->input->post('datefinish'),
         'type' => "P"
       );
       

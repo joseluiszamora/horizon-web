@@ -259,7 +259,7 @@ Detalle
     if(isset($data_in['type']) && $data_in['type'] != ""){
       $this->db->where('daily.Type', $data_in['type']);
     }
-    if(isset($data_in['status']) && $data_in['status'] != ""){
+    if(isset($data_in['status']) && $data_in['status'] != "" && $data_in['status'] != "0"){
       $this->db->where('daily.Estado', $data_in['status']);
     }
     if(isset($data_in['distributor']) && $data_in['distributor'] != "" && $data_in['distributor'] != "0"){
